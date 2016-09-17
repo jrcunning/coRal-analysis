@@ -1,0 +1,98 @@
+---
+title: "Untitled"
+author: "Ross Cunning, Erik B. Muller, Ruth D. Gates, Roger R. Nisbet"
+date: "September 15, 2016"
+output: html_document
+---
+```{r setup, include=FALSE}
+
+# Initialize SU function
+synth <- function(x, y, m) 1/((1/m)+(1/x)+(1/y)-(1/(x+y)))
+# Source default parameters and functions
+sapply(list.files(path="../R", pattern="*.R", full.names=T), source, .GlobalEnv)
+```
+
+```{r lightamp, fig.width=5, fig.height=5, eval=F}
+source("conversions.R")  # import conversion factors for transforming data
+# Import data from Marcelino et al. 2013
+md <- read.csv("marcelino2013_fig2a.csv")
+md$S.R <- md$density * cm2.m2 / CmolR.m2 * CmolS.cellS  # Convert units of symbiont density to CmolS/CmolR
+md$A <- md$E + 1  # Convert "E"=excess light metric of Marcelino to "A"=amplification factor
+# Plot data
+plot(md$A ~ md$S.R, pch=c(21,23,22)[factor(md$spp)], bg=c("white", "black", "gray")[factor(md$spp)], 
+     ylab="internal/external light", ylim=c(1,3.2),
+     xlab="Symbiont density (CmolS/CmolR)",
+     main="Light Amplification")
+legend("topright", legend=levels(md$spp), pch=c(21,23,22), pt.bg=c("white", "black", "gray"), inset=0.02)
+# Fit exponential decay model and plot fitted values
+mod <- nls(A ~ x + y * exp(z * S.R), data=md, start=list(x=1, y=2, z=-3))
+fit <- predict(mod, list(S.R=seq(0, 0.5, 0.01)))
+lines(fit ~ seq(0, 0.5, 0.01))
+# Get parameters of fit
+formula(mod); coef(mod)
+```
+
+### Run 1
+```{r run1}
+# Set run time vector
+time <- seq(1, 365, 1)  # if single model run, use time input
+
+# Initialize environment
+env <- init_env(time=time, L=c(10,40,2), N=c(1e-7,1e-7,0), X=c(0,0,0))
+
+# Set parameters
+pars <- def_pars()  # Get default parameters
+#pars$rpars$gammaR <- 0.03  # Change any default parameters
+
+# Run simulation
+run <- run_coral(time=time, env=env, pars=pars)
+```
+
+##### Plot run 1 symbiont PI curve
+```{r run1_PI, fig.height=1}
+sym_PI(pars)
+```
+
+##### Plot run 1 output
+```{r run1_plots}
+plot_run(run)
+```
+
+### Run 2 - tolerant symbiont
+```{r run2, echo=F}
+pars2 <- pars
+pars2$spars$L50 <- 80
+pars2$spars$UCSm <- 1.4
+
+run2 <- run_coral(time=time, env=env, pars=pars2)
+```
+
+##### Plot symbiont PI curve
+```{r run2_PI, fig.height=2}
+sym_PI(pars2)
+```
+
+##### Plot run 2 output
+```{r run2_plots}
+plot_run(run2)
+```
+
+##### Increase light to bleach tolerant symbiont
+```{r}
+env <- init_env(time=time, L=c(10,60,2), N=c(1e-7,1e-7,0), X=c(0,0,0))
+run <- run_coral(time=time, env=env, pars=pars2)
+plot_run(run)
+```
+
+
+##### Back to Run 1 with sensitive symbiont
+Does carbon limitation affect bleaching susceptibility?
+```{r clim}
+plot_PSU(run)
+pars$rpars$UCPaf <- 10
+run3 <- run_coral(time=time, env=env, pars=pars)
+plot_PSU(run3)
+plot_sh(run)
+plot_sh(run3)
+```
+

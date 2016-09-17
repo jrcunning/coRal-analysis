@@ -1,0 +1,129 @@
+---
+title: A simplified dynamic bioenergetic model for coral-*Symbiodinium* symbioses
+author:
+  - name: Ross Cunning
+    email: ross.cunning@gmail.com
+    affiliation: University of Hawaii
+    footnote: Corresponding Author
+  - name: Erik B. Muller
+    affiliation: University of California
+  - name: Ruth D. Gates
+    affiliation: University of Hawaii
+  - name: Roger M. Nisbet
+    affiliation: University of California
+address:
+  - code: University of Hawaii
+    address: Hawaii Institute of Marine Biology, Kaneohe, HI 96744, USA
+  - code: University of California
+    address: Department of Ecology, Evolution, and Marine Biology, Santa Barbara, CA 93106, USA
+abstract: |
+  This is the abstract.
+
+bibliography: ~/library.bib
+output: 
+  rticles::elsevier_article:
+    fig_caption: yes
+
+---
+
+# Introduction
+
+The nutritional exchange between corals and *Symbiodinium* directly underlies the capacity of corals to build coral reef ecosystems, worth trillions of US Dollars annually [@Costanza:2014ex]. However, the complex symbiotic metabolism of corals is vulnerable to disruption by numerous anthropogenic environmental perturbations [@Baker:2015kp], jeopardizing their future persistence. In order to understand and predict coral responses to complex changes in the environment, a mechanistic understanding of how multiple interacting factors drive the individual and emergent physiology of both symbiotic partners is necessary. Such a task is well suited for theoretical modeling frameworks such as Dynamic Energy Budget (DEB) theory [@Kooijman:2010vd], although the complexity of such theory makes these efforts inaccessible to many biologists [@Jager:2013bj]. In order to bridge this gap, we present here a simplified dynamic bioenergetic model for coral-*Symbiodinium* symbioses that aims to mechanistically integrate the impacts of complex environmental change on the physiological ecology of reef corals.
+
+In reef coral symbioses, intracellular *Symbiodinium* translocate photosynthetically-fixed carbon to support coral metabolism, and utilize the animal’s metabolic waste products, including nitrogenous compounds and carbon dioxide, in return [@Muscatine:1977p4220]. Previous application of DEB theory to this syntrophic system [@Muller:2009io] demonstrated a stable symbiotic relationship and qualitatively realistic growth and biomass ratios across gradients of ambient irradiance, nutrients, and food. This model assumed that 1) *Symbiodinium* has priority access to carbon through photosynthesis, 2) the coral animal has priority access to dissolved nitrogen through contact with seawater, and 3) each partner shares with the other only what it cannot use itself. In its simplest form, this principle of sharing the surplus sufficiently describes diverse syntrophic interactions among organs and organisms (e.g., trees, duckweeds, corals), suggesting the mechanism is mathematically and evolutionarily robust (Nisbet et al., submitted).
+
+While the work of @Muller:2009io applying DEB formalism to this system represents the most significant theoretical contribution in coral symbiosis research to date, we aim to strengthen the role of theory and broaden its potential application in three primary ways:
+
+1. _Develop a detailed module of environmental stress._ Of primary interest to coral biologists and ecologists is symbiosis dysfunction under environmental stress, resulting in coral “bleaching”--the loss of algal symbionts from the association [@Jokiel:1977p7353]. Photooxidative stress in *Symbiodinium* is considered a primary trigger of bleaching in response to high temperature and/or light [@Weis:2008p944], and prolonged or severe bleaching can result in mortality, though corals sometimes recover their symbionts. Bleaching susceptibility, severity, and recovery may by influenced by interacting factors such as heterotrophy and nutrient availability [@Wooldridge:2014hc], and the genetic identity of *Symbiodinium* [@Glynn:2001p7571]. To simulate these bleaching-related phenomena, we develop a generalized framework linking overreduction of the photosynthetic light reactions to downstream impacts of photoinhibition and photodamage.
+
+2. _Reduce theoretical and mathematical complexity._ Following the logic of @Jager:2013bj, we exclude certain features of formal DEB models in order to capture behaviors of interest with the simplest possible formulation. Here, we present a model without reserves, maturity, or reproduction [see @Kooijman:2010vd]. This formulation restricts the model's scope to the bioenergetics of growth and symbiosis dynamics in adult corals, but greatly reduces theoretical complexity and parameter numbers, which is advantageous given the relative paucity of data for corals. However, our primary motivation for reducing complexity was to increase accessibility and applicability for biologists and ecologists without requiring significant expertise in DEB theory.
+
+3. _Provide well-documented, open-access code._ In order to facilitate the continued development and application of theoretical modeling tools for coral symbioses, we provide open access to the model in the form of detailed, commented code written in the R language [@RALanguageandEn:2014wf]. With an accessible and modular framework, we envision this as a resource for futher development by the scientific community to include additional complexity and problem-specific components. The R language was chosen because it is freely available and in common use by biologists and ecologists, to widen the audience for this work.
+
+With these as our primary motivations, we describe a simplified approach to dynamic bioenergetic modeling of coral-algal symbioses that tracks carbon and nitrogen acquisition and sharing between partners. This theoretical framework dynamically integrates the influence of external irradiance, nutrients, and prey availability on coral growth and symbiosis dynamics (i.e., symbiont:host biomass ratios), allowing for the possibility of coral bleaching in the event of photooxidative stress. In the following sections, we describe the formulation of this model and justify its structure and parameter values based on relevant literature. We then demonstrate the model's behavior and discuss some of its major implications and outcomes, and the wide range of potential applications for this model in the study of cnidarian-algal symbioses.
+
+# Model description
+In this model of coral-algal symbiosis, carbon and nitrogen are acquired by each partner and used to construct biomass. A graphical representation of the model is presented in Fig. 1. We use C-moles as the unit of biomass for consistency with the rigorous mass balance of DEB theory: 1 C-mole is equivalent to the amount of biomass containing 1 mole of Carbon atoms. Coral biomass, symbiont biomass, and prey biomass have fixed, but different, molar N:C ratios (Table 1). Carbon and nitrogen are combined to produce biomass by synthesizing units (SU), which are mathematical specifications of the formation of a product from two substrates; we use the "parallel complementary" formulation of @Kooijman:2010vd to specify these fluxes. The two state variables in this dynamical system are symbiont biomass and coral biomass; because resources are acquired proportionally to surface area (and surface area is assumed proportional to volume for corals (i.e., they are "V1-morphs" in DEB terminology [@Kooijman:2010vd])), biomass increases exponentially during growth. The rate of increase in coral biomass (i.e. growth) and the ratio of symbiont to host biomass are the (i.e. symbiosis dynamics) are the responses of interest of the system. Below we describe the formulation of each flux involved in producing these responses.
+
+```{r Fig1, fig.width=5, fig.height=5, echo=FALSE, fig.cap="Graphical representation of coral-algal symbiosis model."}
+library(png)
+library(grid)
+img <- readPNG("../img/model.png")
+grid.raster(img)
+```
+
+## Coral animal fluxes
+
+The coral animal acquires both carbon and nitrogen from feeding on prey from the environment. Prey acquisition is specified by Michaelis-Menten kinetics using a maximum area-specific feeding rate and half-saturation constant:
+
+\begin{equation} U_X = {{UX_m \cdot X} \over {X + X_{KX}}} \end{equation}
+
+Additionally, the coral animal can acquire nitrogen from the surrounding seawater. This nitrogen source is assumed to represent ammonium, the primary form utilized by corals [@Wang:1998p128; @Yellowlees:2008p331]. The uptake of nitrogen from the environment is specified by Michaelis-Menten kinetics using a maximum area-specific uptake rate and half-saturation constant:
+
+\begin{equation} U_N = {{UN_m \cdot N} \over {N + X_{KN}}} \end{equation}
+
+Coral biomass formation is specified by a parallel complementary SU that combines carbon and nitrogen to form biomass. In addition to the carbon and nitrogen acquired by direct uptake (Eqs. 1 and 2), the coral recycles a portion of the nitrogen liberated by biomass turnover ($r_{NR}$), and receives surplus fixed carbon shared by the symbiont ($\rho_C$), such that the total biomass formation is specified as:
+
+\begin{equation} Q_R = \bigg({1 \over Q_{Rm}} + {1 \over {\rho_C + U_X}} + {1 \over {(U_N + n_{NX}U_X + r_{NR})n_{NR}^{-1}}} - {1 \over {{\rho_C + U_X} + (U_N + n_{NX}U_X + r_{NR})n_{NR}^{-1}}}\bigg)^{-1} \end{equation}
+
+where $Q_{Rm}$ is the maximum specific growth rate. Finally, a fixed portion of coral biomass is turned over to pay maintenance costs:
+
+\begin{equation} T_R = \gamma_R \end{equation}
+
+\begin{equation} {dR \over dt} = Q_R - \gamma_R \end{equation}
+
+where $\gamma_R$ is the parameter specifying the turnover rate.
+
+The amount of nitrogen input to the coral biomass SU in excess of what is actually consumed in biomass formation (i.e., surplus nitrogen, or the "rejection flux" in SU terminology) is then made available to the symbiont, and is specified as:
+
+\begin{equation} \rho_N = U_N + n_{NX}U_X + r_{NR} - n_{NR}Q_R \end{equation}
+
+Due to the inherent "leakiness" of the parallel complementary SU formulation, there will always be some nitrogen shared with the symbiont even when coral biomass formation is strongly nitrogen-limited. Likewise, there is always a non-zero rejection flux of carbon from the coral biomass SU, which is assumed to be lost to the environment.
+
+## *Symbiodinium* fluxes
+
+The symbiont produces fixed carbon through photosynthesis, a process represented here by a single SU with two substrates: light (photons) and inorganic carbon (CO~2~). The amount of light absorbed by the symbiont depends on the scalar irradiance at the site of light absorption, which is modified substantially relative to external downwelling irradiance owing to multiple scattering by the coral skeleton and self-shading by surrounding symbionts [@Enriquez:2005p142; Wangpraseurt et al., in prep.]. The ratio of internal scalar irradiance to external downwelling irradiance can take a theoretical maximum value of 3 for a "flat coral model" [@Marcelino:2013hz], and may be reduced below 1 at high symbiont densities due to self-shading. We used data from Wangpraseurt et al. (in prep) to empirically derive this ratio as a function of symbiont density (expressed as symbiont to host biomass ratio), and subsequently multiply this quantity by the external downwelling irradiance $L$ and the effective light-absorbing surface area of symbiont biomass $ds$ to specify the amount of light absorbed:
+
+\begin{equation} U_L = 3 \cdot \exp(-4.905 \cdot S/R) \cdot L \cdot ds \end{equation}
+
+We then specify two pathways for input of inorganic carbon to the photosynthesis SU: 1) passive diffusion of CO~2~ from the external environment, and 2) active delivery of CO~2~ to the symbiont by the host. The passive flux ensures that some CO~2~ is always available to photosynthesis, and the active flux encompasses the potentially diverse mechanisms by which the host may enhance CO~2~ availability for the symbiont, including active transport of bicarbonate, carbonic anhydrase-catalyzed conversion of bicarbonate to CO~2~ to promote diffusion toward the symbiont, and acidification of the symbiosome to increase localized CO~2~ concentrations. Since the host physically separates the symbiont from the external environment, both the passive and active flux rates are proportional to host surface area. A more rigorous, mechanistic model of inorganic carbon processing would require spatially explicit internal pools accounting for pH and carbon speciation, which is beyond the current scope of this work. Instead, the specification of CO~2~ delivery rates offers the user the opportunity to compare different rates of CO~2~ delivery that may characterize different coral species [@Wooldridge:2014di]. The input of CO~2~ to the photosynthesis SU is therefore specified as:
+
+\begin{equation} UCP = UCP_p + UCP_a \end{equation}
+
+In addition to the inputs CO~2~ specified in Eqs. 7, additional CO~2~ representing the metabolic production of CO~2~ in the host liberated from host biomass turnover (note: recylced C from symbiont was removed so that photodamage turnover does not make tons of C available), is made available to the photosynthesis SU. fixed carbon is produced by the photosynthesis SU according to:
+
+\begin{equation} UCS = \bigg({1 \over UCS_m} + {1 \over {U_L \cdot n_{LC}}} + {1 \over {UCP + r_{CR}}} - {1 \over {U_L \cdot n_{LC} + UCP + r_{CR}}}\bigg)^{-1} \div ROS \end{equation}
+
+where $UCS_m$ is the maximum specific rate of photosynthesis, and $ROS$ is the photooxidative stress multiplier (see below). Dividing by $ROS$ causes the rate of photosynthesis to decline in response to photo-oxidative stress, a phenomenon known as photoinhibition.
+
+Light energy absorbed in excess of what is used to fix carbon is specified by the SU "rejection flux", according to:
+
+\begin{equation} e_L = U_L - UCS \cdot n_{LC} \end{equation}
+
+This excess light energy must be quenched by alternative pathways in order to prevent photo-oxidative damage. *Symbiodinium* may utilize a variety of pathways for non-photochemical quenching [NPQ; @Roth:2014wf], which we collect in a total capacity for NPQ as a parameter of the symbiont ($NPQ$). If light energy exceeds the total capacity of both carbon fixation and NPQ, then damaging reactive oxygen species (ROS) may be produced, which may have negative downstream consequences. We specify a generalized photo-oxidative stress flux $ROS$ which takes a value of 1 in the absence of stress, and increases as the amount of excess excitation energy increases. 
+
+\begin{equation} ROS = 1 + \bigg[\bigg({{e_L/S - NPQ} \over L50}\bigg)^k\bigg]_+ \end{equation}
+
+where $NPQ$, $L50$, and $k$ are parameters of the symbiont that determine the overall susceptibility to photo-oxidative stress. Importantly, $ROS$ as specified here is not a function of absolute light absorption, but rather the amount of excess light energy $e_L$ after accounting for carbon fixation and NPQ. A direct consequence of this formulation is that carbon-limitation of photosynthesis can lead to photo-oxidative stress, a mechanism of biological importance [@Wooldridge:2009p7807] that was not captured by previous representations of photo-oxidative stress [@Eynaud:2011tv]. Moreover, this formulation allows functional diversity among symbiont types to be explored by changing the parameters $NPQ$, $L50$, and $k$.
+
+Carbon fixed by photosynthesis ($UCS$) is then used in conjunction with nitrogen shared by the host ($\rho_N$) to build symbiont biomass, following the SU equation:
+
+\begin{equation} Q_S = \bigg({1 \over Q_{Sm}} + {1 \over UCS} + {1 \over {(\rho_N + r_{NS})n_{NR}^{-1}}} - {1 \over {UCS + (\rho_N + r_{NS})n_{NR}^{-1}}}\bigg)^{-1} \end{equation}
+
+The rejection flux of carbon from this SU represents the amount of fixed carbon produced by photosynthesis in excess of what can be used to produce symbiont biomass; this surplus $\rho_C$ is translocated to the coral host:
+
+\begin{equation} rho_C = UCS - Q_S \end{equation}
+
+The rejection flux of nitrogen from the symbiont biomass SU is lost to the environment.
+
+Finally, symbiont biomass is lost at a rate of
+
+\begin{equation} T_S = \gamma_S \cdot 5 \cdot ROS \end{equation}
+
+
+# Model behavior evaluation
+
+# Discussion  -  Potential applications/utility
+
+References {#references .unnumbered}
+==========
