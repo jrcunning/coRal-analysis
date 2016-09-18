@@ -5,17 +5,19 @@ date: "September 15, 2016"
 output: html_document
 ---
 ```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = normalizePath(".."))
+```
 
+```{r initialize, include=FALSE}
 # Initialize SU function
 synth <- function(x, y, m) 1/((1/m)+(1/x)+(1/y)-(1/(x+y)))
 # Source default parameters and functions
-sapply(list.files(path="../R", pattern="*.R", full.names=T), source, .GlobalEnv)
+sapply(list.files(path="R", pattern="*.R", full.names=T), source, .GlobalEnv)
 ```
 
 ```{r lightamp, fig.width=5, fig.height=5, eval=F}
-source("conversions.R")  # import conversion factors for transforming data
 # Import data from Marcelino et al. 2013
-md <- read.csv("marcelino2013_fig2a.csv")
+md <- read.csv("data/marcelino2013_fig2a.csv")
 md$S.R <- md$density * cm2.m2 / CmolR.m2 * CmolS.cellS  # Convert units of symbiont density to CmolS/CmolR
 md$A <- md$E + 1  # Convert "E"=excess light metric of Marcelino to "A"=amplification factor
 # Plot data
@@ -35,7 +37,7 @@ formula(mod); coef(mod)
 ### Run 1
 ```{r run1}
 # Set run time vector
-time <- seq(1, 365, 1)  # if single model run, use time input
+time <- seq(1, 365, 0.1)  # if single model run, use time input
 
 # Initialize environment
 env <- init_env(time=time, L=c(10,40,2), N=c(1e-7,1e-7,0), X=c(0,0,0))
@@ -56,13 +58,42 @@ sym_PI(pars)
 ##### Plot run 1 output
 ```{r run1_plots}
 plot_run(run)
+
 ```
+
+#### Run 1 with no symbiont recycling
+```{r runNR_plots}
+parsNR <- pars
+parsNR$spars$sigmaNS <- 0
+parsNR$spars$sigmaCS <- 0
+runNR <- run_coral(time=time, env=env, pars=parsNR)
+plot_run(runNR)
+with(runNR, {
+  
+})
+```
+
+#### Compare amount of recycled sym nitrogen between runs
+```{r compareN}
+proprNS <- run$S$rNS / (run$S$rNS + run$H$rhoN*run$H$H/run$S$S)
+par(mfrow=c(2,1))
+plot(time, proprNS)
+proprNS <- runNR$S$rNS / (runNR$S$rNS + runNR$H$rhoN*runNR$H$H/runNR$S$S)
+plot(time, proprNS)
+
+proprCS <- run$S$rCS / (run$S$rCS + run$H$jCO2*run$H$H/run$S$S)
+par(mfrow=c(2,1))
+plot(time, proprCS)
+proprCS <- runNR$S$rCS / (runNR$S$rCS + (runNR$H$rCH + runNR$H$jCO2)*runNR$H$H/runNR$S$S)
+plot(time, proprCS)
+```
+
 
 ### Run 2 - tolerant symbiont
 ```{r run2, echo=F}
 pars2 <- pars
-pars2$spars$L50 <- 80
-pars2$spars$UCSm <- 1.4
+pars2$spars$kROS <- 80
+pars2$spars$jCPm <- 1.4
 
 run2 <- run_coral(time=time, env=env, pars=pars2)
 ```
@@ -84,15 +115,4 @@ run <- run_coral(time=time, env=env, pars=pars2)
 plot_run(run)
 ```
 
-
-##### Back to Run 1 with sensitive symbiont
-Does carbon limitation affect bleaching susceptibility?
-```{r clim}
-plot_PSU(run)
-pars$rpars$UCPaf <- 10
-run3 <- run_coral(time=time, env=env, pars=pars)
-plot_PSU(run3)
-plot_sh(run)
-plot_sh(run3)
-```
 

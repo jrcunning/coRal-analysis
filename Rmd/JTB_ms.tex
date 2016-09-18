@@ -45,6 +45,7 @@
 \fi
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage{longtable}
 \usepackage{graphicx}
 % We will generate all images so they have a width \maxwidth. This means
 % that they will get their normal width if they fit onto the page, but
@@ -75,9 +76,11 @@
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \setcounter{secnumdepth}{0}
+\usepackage{tabularx}
 % Pandoc toggle for numbering sections (defaults to be off)
 \setcounter{secnumdepth}{0}
 % Pandoc header
+\usepackage{tabularx}
 
 
 \usepackage[nomarkers]{endfloat}
@@ -115,19 +118,19 @@ The nutritional exchange between corals and \emph{Symbiodinium} directly
 underlies the capacity of corals to build coral reef ecosystems, worth
 trillions of US Dollars annually (Costanza, Groot, and Sutton 2014).
 However, the complex symbiotic metabolism of corals is vulnerable to
-disruption by numerous anthropogenic environmental perturbations (Baker
-and Cunning 2015), jeopardizing their future persistence. In order to
-understand and predict coral responses to complex changes in the
-environment, a mechanistic understanding of how multiple interacting
-factors drive the individual and emergent physiology of both symbiotic
-partners is necessary. Such a task is well suited for theoretical
-modeling frameworks such as Dynamic Energy Budget (DEB) theory (Kooijman
-2010), although the complexity of such theory makes these efforts
-inaccessible to many biologists (Jager, Martin, and Zimmer 2013). In
-order to bridge this gap, we present here a simplified dynamic
-bioenergetic model for coral-\emph{Symbiodinium} symbioses that aims to
-mechanistically integrate the impacts of complex environmental change on
-the physiological ecology of reef corals.
+disruption by numerous anthropogenic environmental perturbations,
+jeopardizing their future persistence. In order to understand and
+predict coral responses to complex changes in the environment, a
+mechanistic understanding of how multiple interacting factors drive the
+individual and emergent physiology of both symbiotic partners is
+necessary. Such a task is well suited for theoretical modeling
+frameworks such as Dynamic Energy Budget (DEB) theory (Kooijman 2010),
+although the complexity of such theory makes these efforts inaccessible
+to many biologists (Jager, Martin, and Zimmer 2013). In order to bridge
+this gap, we present here a simplified dynamic bioenergetic model for
+coral-\emph{Symbiodinium} symbioses that aims to mechanistically
+integrate the impacts of complex environmental change on the
+physiological ecology of reef corals.
 
 In reef coral symbioses, intracellular \emph{Symbiodinium} translocate
 photosynthetically-fixed carbon to support coral metabolism, and utilize
@@ -148,7 +151,7 @@ mathematically and evolutionarily robust (Nisbet et al., submitted).
 While the work of Muller et al. (2009) applying DEB formalism to this
 system represents the most significant theoretical contribution in coral
 symbiosis research to date, we aim to strengthen the role of theory and
-broaden its potential application in three primary ways:
+broaden its potential application to corals in three primary ways:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -214,21 +217,320 @@ by each partner and used to construct biomass. A graphical
 representation of the model is presented in Fig. 1. We use C-moles as
 the unit of biomass for consistency with the rigorous mass balance of
 DEB theory: 1 C-mole is equivalent to the amount of biomass containing 1
-mole of Carbon atoms. Coral biomass, symbiont biomass, and prey biomass
-have fixed, but different, molar N:C ratios (Table 1). Carbon and
-nitrogen are combined to produce biomass by synthesizing units (SU),
-which are mathematical specifications of the formation of a product from
-two substrates; we use the ``parallel complementary'' formulation of
-Kooijman (2010) to specify these fluxes. The two state variables in this
-dynamical system are symbiont biomass and coral biomass; because
-resources are acquired proportionally to surface area (and surface area
-is assumed proportional to volume for corals (i.e., they are
-``V1-morphs'' in DEB terminology (Kooijman 2010))), biomass increases
-exponentially during growth. The rate of increase in coral biomass
-(i.e.~growth) and the ratio of symbiont to host biomass are the
-(i.e.~symbiosis dynamics) are the responses of interest of the system.
-Below we describe the formulation of each flux involved in producing
-these responses.
+mole of Carbon atoms. Host biomass (\(H\)), symbiont biomass (\(S\)),
+and prey biomass (\(X\)) have fixed, but different, molar N:C ratios
+(Table 1). Carbon and nitrogen are combined to produce biomass by
+synthesizing units (SU), which are mathematical specifications of the
+formation of a product from two substrates; we use the ``parallel
+complementary'' formulation of Kooijman (2010) to specify these fluxes.
+The two state variables in this dynamical system are symbiont biomass
+and coral biomass; because resources are acquired proportionally to
+surface area (and surface area is assumed proportional to volume for
+corals (i.e., they are ``V1-morphs'' in DEB terminology (Kooijman
+2010))), biomass increases exponentially during growth. The rate of
+increase in coral biomass (i.e.~growth) and the ratio of symbiont to
+host biomass are the (i.e.~symbiosis dynamics) are the responses of
+interest of the system. Below we describe the formulation of each flux
+involved in producing these responses.
+
+Table 1
+
+\begin{longtable}[c]{@{}llll@{}}
+\toprule
+\begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
+Symbol
+\strut\end{minipage} &
+\begin{minipage}[b]{0.48\columnwidth}\raggedright\strut
+Description
+\strut\end{minipage} &
+\begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
+Value
+\strut\end{minipage} &
+\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+Units
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(n_{NH}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+N:C molar ratio in host biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.19
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+--
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(n_{NS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+N:C molar ratio in symbiont biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.2
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+--
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(n_{NX}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+N:C molar ratio in prey biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.13
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+--
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{HT}^0\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Specific turnover rate of host biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.03
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{ST}^0\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Specific turnover rate of symbiont biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.03
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\sigma_{NH}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Proportion host nitrogen turnover recycled
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.9
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+--
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\sigma_{CH}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Proportion host carbon turnover recycled
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.9
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+--
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\sigma_{NS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Proportion symbiont nitrogen turnover recycled
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.9
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+--
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\sigma_{CS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Proportion symbiont carbon turnover recycled
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.9
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+--
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{Xm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Maximum specific feeding rate of host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.1292
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(molX \cdot CmolH^{-1} \cdot d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(K_X\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Half-saturation constant for prey uptake by host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+20e-6
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(molX \cdot L^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{Nm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Maximum specific DIN uptake rate by host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.048
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(molN \cdot CmolH^{-1} \cdot d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(K_N\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Half-saturation constant for DIN uptake by host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.46e-6
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(molN \cdot L^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{CO_2}^p\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Passive CO\textsubscript{2} delivery to symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+4.04e-3
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(molC \cdot CmolH^{-1} \cdot d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{CO_2}^a\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Active CO\textsubscript{2} delivery to symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.32--18.0
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(molC \cdot CmolH^{-1} \cdot d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{HGm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Maximum specific growth rate of host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+1
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(n_{LC}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Quantum yield of photosynthesis
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.1
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(molC \cdot mol ph^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\bar{a}^*\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Effective light-absorbing cross-section of symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+1.34
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(m^2 \cdot CmolS^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{NPQ}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Non-photochemical quenching capacity of symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+40
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(mol ph \cdot CmolS^{-1} \cdot d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(k_{ROS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Excess photon energy that doubles ROS prod.
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+40-80
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(mol ph \cdot CmolS^{-1} \cdot d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(k\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Exponent on ROS production rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+1
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+--
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{CPm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Maximum specific photosynthesis rate of symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+2.8
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(molC \cdot CmolS^{-1} \cdot d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{SGm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
+Maximum specific growth rate of symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
+0.25
+\strut\end{minipage} &
+\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\(d^{-1}\)
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Also include tables of fluxes and environmental inputs?
 
 \begin{figure}[htbp]
 \centering
@@ -243,7 +545,7 @@ from the environment. Prey acquisition is specified by Michaelis-Menten
 kinetics using a maximum area-specific feeding rate and half-saturation
 constant:
 
-\begin{equation} U_X = {{UX_m \cdot X} \over {X + X_{KX}}} \end{equation}
+\begin{equation} j_X = {{j_{Xm} \cdot X} \over {X + K_X}} \end{equation}
 
 Additionally, the coral animal can acquire nitrogen from the surrounding
 seawater. This nitrogen source is assumed to represent ammonium, the
@@ -252,34 +554,33 @@ Rees, and Leggat 2008). The uptake of nitrogen from the environment is
 specified by Michaelis-Menten kinetics using a maximum area-specific
 uptake rate and half-saturation constant:
 
-\begin{equation} U_N = {{UN_m \cdot N} \over {N + X_{KN}}} \end{equation}
+\begin{equation} j_N = {{j_{Nm} \cdot N} \over {N + K_N}} \end{equation}
 
 Coral biomass formation is specified by a parallel complementary SU that
 combines carbon and nitrogen to form biomass. In addition to the carbon
 and nitrogen acquired by direct uptake (Eqs. 1 and 2), the coral
 recycles a portion of the nitrogen liberated by biomass turnover
-(\(r_{NR}\)), and receives surplus fixed carbon shared by the symbiont
-(\(\rho_C\)), such that the total biomass formation is specified as:
+(\(r_{NH}=\sigma_{NH}j_{HT}^0\)), and receives surplus fixed carbon
+shared by the symbiont (\(\rho_C\)), such that the total biomass
+formation is specified as:
 
-\begin{equation} Q_R = \bigg({1 \over Q_{Rm}} + {1 \over {\rho_C + U_X}} + {1 \over {(U_N + n_{NX}U_X + r_{NR})n_{NR}^{-1}}} - {1 \over {{\rho_C + U_X} + (U_N + n_{NX}U_X + r_{NR})n_{NR}^{-1}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH}) / n_{NH}}} - {1 \over {{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH}) / n_{NH}}}\bigg)^{-1} \end{equation}
 
-where \(Q_{Rm}\) is the maximum specific growth rate. Finally, a fixed
-portion of coral biomass is turned over to pay maintenance costs:
+where \(j_{HGm}\) is the maximum specific growth rate. Finally, the rate
+of change in coral biomass is calculated as the specific growth rate
+minum the specific biomass turnover rate (i.e., maintenance costs),
+according to:
 
-\begin{equation} T_R = \gamma_R \end{equation}
-
-\begin{equation} {dR \over dt} = Q_R - \gamma_R \end{equation}
-
-where \(\gamma_R\) is the parameter specifying the turnover rate.
+\begin{equation} {dH \over dt} = j_{HG} - j_{HT}^0 \end{equation}
 
 The amount of nitrogen input to the coral biomass SU in excess of what
 is actually consumed in biomass formation (i.e., surplus nitrogen, or
 the ``rejection flux'' in SU terminology) is then made available to the
 symbiont, and is specified as:
 
-\begin{equation} \rho_N = U_N + n_{NX}U_X + r_{NR} - n_{NR}Q_R \end{equation}
+\begin{equation} \rho_N = j_N + n_{NX}j_X + r_{NH} - n_{NH}j_{HG} \end{equation}
 
-Due to the inherent ``leakiness'' of the parallel complementary SU
+Due to the inherent inefficiency of the parallel complementary SU
 formulation, there will always be some nitrogen shared with the symbiont
 even when coral biomass formation is strongly nitrogen-limited.
 Likewise, there is always a non-zero rejection flux of carbon from the
@@ -294,19 +595,16 @@ inorganic carbon (CO\textsubscript{2}). The amount of light absorbed by
 the symbiont depends on the scalar irradiance at the site of light
 absorption, which is modified substantially relative to external
 downwelling irradiance owing to multiple scattering by the coral
-skeleton and self-shading by surrounding symbionts {[}Enríquez, Méndez,
-and Iglesias-Prieto (2005); Wangpraseurt et al., in prep.{]}. The ratio
-of internal scalar irradiance to external downwelling irradiance can
-take a theoretical maximum value of 3 for a ``flat coral model''
-(Marcelino et al. 2013), and may be reduced below 1 at high symbiont
-densities due to self-shading. We used data from Wangpraseurt et al. (in
-prep) to empirically derive this ratio as a function of symbiont density
-(expressed as symbiont to host biomass ratio), and subsequently multiply
-this quantity by the external downwelling irradiance \(L\) and the
-effective light-absorbing surface area of symbiont biomass \(ds\) to
-specify the amount of light absorbed:
+skeleton and self-shading by surrounding symbionts (Enríquez, Méndez,
+and Iglesias-Prieto 2005; Marcelino et al. 2013). We used data from
+Marcelino et al. (2013) to empirically derive the ratio of internal
+scalar irradiance to external downwelling irradiance as a function of
+symbiont density (expressed as symbiont to host biomass ratio), and
+subsequently multiply this quantity by the external downwelling
+irradiance \(L\) and the effective light-absorbing surface area of
+symbiont biomass \(ds\) to specify the amount of light absorbed:
 
-\begin{equation} U_L = 3 \cdot \exp(-4.905 \cdot S/R) \cdot L \cdot ds \end{equation}
+\begin{equation} j_L = \big[1.26 + 1.39 \cdot \exp(-6.48 \cdot {S \over H})\big] \cdot L \cdot \bar{a}^* \end{equation}
 
 We then specify two pathways for input of inorganic carbon to the
 photosynthesis SU: 1) passive diffusion of CO\textsubscript{2} from the
@@ -330,72 +628,90 @@ that may characterize different coral species (Wooldridge 2014a). The
 input of CO\textsubscript{2} to the photosynthesis SU is therefore
 specified as:
 
-\begin{equation} UCP = UCP_p + UCP_a \end{equation}
+\begin{equation} j_{CO_2} = j_{CO_2}^p + j_{CO_2}^a \end{equation}
 
 In addition to the inputs CO\textsubscript{2} specified in Eqs. 7,
 additional CO\textsubscript{2} representing the metabolic production of
-CO\textsubscript{2} in the host liberated from host biomass turnover
-(note: recylced C from symbiont was removed so that photodamage turnover
-does not make tons of C available), is made available to the
-photosynthesis SU. fixed carbon is produced by the photosynthesis SU
-according to:
+CO\textsubscript{2} from host and symbiont biomass turnover
+(\(r_{CH}=\sigma_{CH}j_{HT}^0; r_{CS}=\sigma_{CS}j_{ST}^0\)) is made
+available to the photosynthesis SU. fixed carbon is produced by the
+photosynthesis SU according to:
 
-\begin{equation} UCS = \bigg({1 \over UCS_m} + {1 \over {U_L \cdot n_{LC}}} + {1 \over {UCP + r_{CR}}} - {1 \over {U_L \cdot n_{LC} + UCP + r_{CR}}}\bigg)^{-1} \div ROS \end{equation}
+\begin{equation} j_{CP} = \bigg({1 \over j_{CPm}} + {1 \over {n_{LC} j_L }} + {1 \over {(j_{CO_2} + r_{CH}){H \over S} + r_{CS}}} - {1 \over {n_{LC} j_L + (j_{CO_2} + r_{CH}){H \over S} + r_{CS}}}\bigg)^{-1} \div c_{ROS} \end{equation}
 
-where \(UCS_m\) is the maximum specific rate of photosynthesis, and
-\(ROS\) is the photooxidative stress multiplier (see below). Dividing by
-\(ROS\) causes the rate of photosynthesis to decline in response to
-photo-oxidative stress, a phenomenon known as photoinhibition.
+where \(j_{CPm}\) is the maximum specific rate of photosynthesis, and
+\(c_{ROS}\) is the photooxidative stress multiplier (see below).
+Dividing by \(c_{ROS}\) causes the rate of photosynthesis to decline in
+response to photo-oxidative stress, a phenomenon known as
+photoinhibition.
 
 Light energy absorbed in excess of what is used to fix carbon is
 specified by the SU ``rejection flux'', according to:
 
-\begin{equation} e_L = U_L - UCS \cdot n_{LC} \end{equation}
+\begin{equation} j_{eL} = j_L - j_{CP} / n_{LC} \end{equation}
 
 This excess light energy must be quenched by alternative pathways in
 order to prevent photo-oxidative damage. \emph{Symbiodinium} may utilize
 a variety of pathways for non-photochemical quenching (NPQ; Roth 2014),
 which we collect in a total capacity for NPQ as a parameter of the
-symbiont (\(NPQ\)). If light energy exceeds the total capacity of both
-carbon fixation and NPQ, then damaging reactive oxygen species (ROS) may
-be produced, which may have negative downstream consequences. We specify
-a generalized photo-oxidative stress flux \(ROS\) which takes a value of
-1 in the absence of stress, and increases as the amount of excess
-excitation energy increases.
+symbiont (\(j_{NPQ}\)). If light energy exceeds the total capacity of
+both carbon fixation and NPQ, then damaging reactive oxygen species
+(ROS) may be produced. We represent this as a scaled flux of ROS
+\(c_{ROS}\), which takes a value of 1 when all light absorbed is
+quenched by photochemistry and NPQ, and increases as the amount of
+excess excitation energy increases.
 
-\begin{equation} ROS = 1 + \bigg[\bigg({{e_L/S - NPQ} \over L50}\bigg)^k\bigg]_+ \end{equation}
+\begin{equation} c_{ROS} = 1 + \bigg[\bigg({{j_{eL} - j_{NPQ}} \over k_{ROS}}\bigg)^k\bigg]_+ \end{equation}
 
-where \(NPQ\), \(L50\), and \(k\) are parameters of the symbiont that
-determine the overall susceptibility to photo-oxidative stress.
-Importantly, \(ROS\) as specified here is not a function of absolute
-light absorption, but rather the amount of excess light energy \(e_L\)
+where \(j_{NPQ}\), \(k_{ROS}\), and \(k\) are parameters of the symbiont
+that determine the onset and rate of ROS production. Importantly,
+\(c_{ROS}\) as specified here is not a function of absolute light
+absorption, but rather the amount of excess light energy \(j_{eL}\)
 after accounting for carbon fixation and NPQ. A direct consequence of
 this formulation is that carbon-limitation of photosynthesis can lead to
 photo-oxidative stress, a mechanism of biological importance (Wooldridge
 2009) that was not captured by previous representations of
 photo-oxidative stress (Eynaud, Nisbet, and Muller 2011). Moreover, this
 formulation allows functional diversity among symbiont types to be
-explored by changing the parameters \(NPQ\), \(L50\), and \(k\).
+explored by changing the parameters \(j_{NPQ}\), \(k_{ROS}\), and \(k\).
 
-Carbon fixed by photosynthesis (\(UCS\)) is then used in conjunction
-with nitrogen shared by the host (\(\rho_N\)) to build symbiont biomass,
+Carbon fixed by photosynthesis (\(j_{CP}\)) is then used in conjunction
+with nitrogen shared by the host (\(\rho_N\)) and a proportion of
+nitrogen recycled from symbiont biomass turnover
+(\(r_{NS}=\sigma_{NS}j_{ST}^0\)) to build new symbiont biomass,
 following the SU equation:
 
-\begin{equation} Q_S = \bigg({1 \over Q_{Sm}} + {1 \over UCS} + {1 \over {(\rho_N + r_{NS})n_{NR}^{-1}}} - {1 \over {UCS + (\rho_N + r_{NS})n_{NR}^{-1}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS}) / n_{NH}}} - {1 \over {j_{CP} + (\rho_N{H \over S} + r_{NS}) / n_{NH}}}\bigg)^{-1} \end{equation}
 
 The rejection flux of carbon from this SU represents the amount of fixed
 carbon produced by photosynthesis in excess of what can be used to
 produce symbiont biomass; this surplus \(\rho_C\) is translocated to the
 coral host:
 
-\begin{equation} rho_C = UCS - Q_S \end{equation}
+\begin{equation} \rho_C = j_{CP} - j_{SG} \end{equation}
 
 The rejection flux of nitrogen from the symbiont biomass SU is lost to
 the environment.
 
-Finally, symbiont biomass is lost at a rate of
+Symbiont biomass turnover includes a component of constant turnover
+specified by the parameter \(j_{ST}^0\), representing fixed maintenance
+costs, plus a component that scales with the magnitude of ROS
+production.
 
-\begin{equation} T_S = \gamma_S \cdot 5 \cdot ROS \end{equation}
+\begin{equation} j_{ST} = j_{ST}^0(1 + 5 \cdot (c_{ROS}-1)) \end{equation}
+
+This second component of symbiont biomass loss can represent both
+photodamage and/or symbiont expulsion (i.e., bleaching), both of which
+happen in response to higher levels or ROS production. The constant 5 is
+included to increase biomass loss in response to ROS. (Note that
+recycling of symbiont biomass turnover (\(rNS\) and \(rCS\)) only occurs
+based on the basal maintenance related turnover (i.e., \(j_{ST}^0\)),
+and not the bleaching-related biomass loss, as this loss represents
+biomass being damaged or being expelled from the holobiont). Finally,
+the balance equation representing the change in symbiont biomass over
+time can be specified as the growth rate minus the turnover rate:
+
+\begin{equation} {dS \over dt} = j_{SG} - j_{ST} \end{equation}
 
 \section{Model behavior evaluation}\label{model-behavior-evaluation}
 
@@ -406,13 +722,6 @@ applications/utility}\label{discussion---potential-applicationsutility}
 \addcontentsline{toc}{section}{References}
 
 \hypertarget{refs}{}
-\hypertarget{ref-Baker:2015kp}{}
-Baker, Andrew C, and Ross Cunning. 2015. ``Coral 'Bleaching' as a
-Generalized Stress Response to Environmental Disturbance.'' In
-\emph{Diseases of Coral}, 396--409. Hoboken, NJ: John Wiley \& Sons,
-Inc.
-doi:\href{https://doi.org/10.1002/9781118828502.ch30}{10.1002/9781118828502.ch30}.
-
 \hypertarget{ref-Costanza:2014ex}{}
 Costanza, R, R de Groot, and P Sutton. 2014. ``Changes in the global
 value of ecosystem services.'' \emph{Global Environmental \ldots{}} 26:
