@@ -1,4 +1,12 @@
-# Environment initialization
+# This function returns a list of vectors that define the external irradiance (L), 
+# DIN concentration (N), and prey concentration (X) to be used as inputs for a model simulation.
+# The arguments to this function are:
+#   - time: a vector of time steps at which the model should be evaluated (units=days) (e.g., seq(0,365,0.1))
+#   - L, N, and X (light, DIN, and prey, respectively):
+#      - each of these arguments should be a vector with length=3, where the first element is the
+#        minimum value, the second element is the maximum value, and the third element is the functional
+#        form, where 1=linear increase, 2=linear decrease, and 3=sinusoid. The sinusoid function has a period 
+#        of one year.
 
 init_env <- function(time, L, N, X) {
   require(scales)

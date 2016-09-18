@@ -1,3 +1,9 @@
+# This function plots the photosynthetic rate and relative ROS production as a function of irradiance
+# for a given set of parameters (i.e., jCPm, jNPQ, kROS, k). The argument to this function should be a 
+# full set of model parameters (i.e., object with structure matching output of "def_pars.R"). This script 
+# is meant to show the photosynthetic performance of a given symbiont independent from a host (i.e., in 
+# a state that is not CO2-limited), so the "jCO2" parameter is set at a very high value here.
+
 sym_PI <- function(pars) {
   with(pars, {
     jL <- seq(0,200,1)
