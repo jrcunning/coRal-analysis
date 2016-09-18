@@ -10,11 +10,11 @@ sym_PI <- function(pars) {
     # Set carbon delivery rate (mol C / CmolS / d)
     jCO2 <- 100  # Extremely high carbon delivery - no carbon limitation
     # Calculate photosynthesis rate
-    jCP <- synth(jCO2, jL*spars$nLC, spars$jCPm)
+    jCP <- synth(jCO2, jL*pars$nLC, pars$jCPm)
     # Calculate light in excess of photosynthetic quenching
-    jeL <- pmax(0, jL - jCP/spars$nLC)
+    jeL <- pmax(0, jL - jCP/pars$nLC)
     # Calculate ROS (cROS) produced due to excess light
-    cROS <- pmax(1, 1 + (pmax(0, jeL-spars$jNPQ)/(spars$kROS))^spars$k)
+    cROS <- pmax(1, 1 + (pmax(0, jeL-pars$jNPQ)/(pars$kROS))^pars$k)
     # Calculate photosynthesis rate accounting for ROS-induced photoinhibition
     jCP <- jCP / cROS
     # Return ROS and photosynthesis rate for plotting

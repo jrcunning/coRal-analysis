@@ -17,15 +17,13 @@ plot_DIN <- function(run) with(run, {
 
 # Specific growth rates of host and symbiont
 plot_gr <- function(run) with(run, {
-  Sgr <- S$jSG - S$jST
-  Hgr <- H$jHG - H$jHT
-  Hgrf <- Hgr[length(Hgr)]
-  plot(time, Hgr, type="l", ylim=c(min(0, min(c(Hgr[-(1:10)], Sgr[-(1:10)]))), max(c(Hgr[-(1:10)], Sgr[-(1:10)]))),
+  Hgrf <- H$dH.Hdt[length(H$dH.Hdt)]
+  plot(time, H$dH.Hdt, type="l", ylim=c(min(0, min(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)]))), max(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)]))),
        xlab="", ylab="d-1", lwd=3, cex=1, cex.lab=1, 
        main="Specific growth rate")
-  if(any(c(Hgr[-(1:10)], Sgr[-(1:10)])<0)) abline(h=0, lwd=0.5, lty=3)
+  if(any(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)])<0)) abline(h=0, lwd=0.5, lty=3)
   text(time[0.95*length(time)], Hgrf, labels=as.character(round(Hgrf, 3)), pos=3, xpd=T, cex=0.75)
-  lines(time, Sgr, col="black", lwd=1)
+  lines(time, S$dS.Sdt, col="black", lwd=1)
   legend("topright", legend=c("Host", "Sym"), lwd=c(3,1), col="black", bty="n", y.intersp=1)
 })
 
@@ -44,7 +42,7 @@ plot_Lq <- function(run) with(run, {
        main="Light quenching")
   lines(time, S$jL, col="yellow", lty=3, lwd=3) # total amount absorbed
   lines(time, S$jL - S$jeL, col="yellow", lwd=1) # amt. used in photosynthesis
-  lines(time, (S$jL - S$jeL) + pmin(S$jeL, spars$jNPQ), col="yellow", lty=1, lwd=3) # amt. quenched by NPQ
+  lines(time, (S$jL - S$jeL) + pmin(S$jeL, pars$jNPQ), col="yellow", lty=1, lwd=3) # amt. quenched by NPQ
   legend("topright", legend=c("Excess", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(3,3,1), col="yellow", bty="n")
 })
 
@@ -85,7 +83,7 @@ plot_corSU <- function(run) with(run, {
   plot(NA, xlim=range(time), xlab="", ylim=c(0, 1), ylab="Proportion of uptake")
   title("Coral: substrate excess", adj=0.05, line=0)
   lines(time, H$jCw/(S$rhoC*S$S/H$H + H$jX), col="red", lwd=3)
-  lines(time, H$rhoN/(H$jN + H$jX*hpars$nNX + H$rNH), col="blue", lwd=3)
+  lines(time, H$rhoN/(H$jN + H$jX*pars$nNX + H$rNH), col="blue", lwd=3)
   legend("topright", legend=c("C", "N"), lwd=3, bty="n", col=c("red", "blue"))
 })
 
@@ -109,16 +107,14 @@ plot_run <- function(run) {
     title("DIN", adj=0.05, line=0)
     
     # Specific growth rates of host and symbiont
-    Sgr <- S$jSG - S$jST
-    Hgr <- H$jHG - H$jHT
-    Hgrf <- Hgr[length(Hgr)]
-    plot(time, Hgr, type="l", ylim=c(min(0, min(c(Hgr[-(1:10)], Sgr[-(1:10)]))), max(c(Hgr[-(1:10)], Sgr[-(1:10)]))), 
+    Hgrf <- H$dH.Hdt[length(H$dH.Hdt)]
+    plot(time, H$dH.Hdt, type="l", ylim=c(min(0, min(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)]))), max(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)]))), 
          xlab="", ylab="d-1", lwd=3, cex=1, cex.lab=1)
-    if(any(c(Hgr[-(1:10)], Sgr[-(1:10)])<0)) abline(h=0, lwd=0.5, lty=3)
+    if(any(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)])<0)) abline(h=0, lwd=0.5, lty=3)
     text(time[0.95*length(time)], Hgrf, labels=as.character(round(Hgrf, 3)), pos=3, xpd=T, cex=0.75)
     #title("State variable dynamics", adj=0, cex.main=2, outer = T)
     title("Specific growth rate", adj=0.05, line=0)
-    lines(time, Sgr, col="black", lwd=1)
+    lines(time, S$dS.Sdt, col="black", lwd=1)
     legend("topright", legend=c("Host", "Sym"), lwd=c(3,1), col="black", bty="n", y.intersp=1)
     
     # Symbiont to host ratio
@@ -133,7 +129,7 @@ plot_run <- function(run) {
     title("Light quenching", adj=0.05, line=0)
     lines(time, S$jL, col="yellow", lty=3, lwd=3) # total amount absorbed
     lines(time, S$jL - S$jeL, col="yellow", lwd=1) # amt. used in photosynthesis
-    lines(time, (S$jL - S$jeL) + pmin(S$jeL, spars$jNPQ), col="yellow", lty=1, lwd=3) # amt. quenched by NPQ
+    lines(time, (S$jL - S$jeL) + pmin(S$jeL, pars$jNPQ), col="yellow", lty=1, lwd=3) # amt. quenched by NPQ
     legend("topright", legend=c("Excess", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(3,3,1), col="yellow", bty="n")
     
     # Symbiont biomass SU dynamics (proportions of C and N rejected from SU)
@@ -164,7 +160,7 @@ plot_run <- function(run) {
     plot(NA, xlim=range(time), xlab="", ylim=c(0, 1), ylab="Proportion of uptake")
     title("Coral: substrate excess", adj=0.05, line=0)
     lines(time, H$jCw/(S$rhoC*S$S/H$H + H$jX), col="red", lwd=3)
-    lines(time, H$rhoN/(H$jN + H$jX*hpars$nNX + H$rNH), col="blue", lwd=3)
+    lines(time, H$rhoN/(H$jN + H$jX*pars$nNX + H$rNH), col="blue", lwd=3)
     legend("topright", legend=c("C", "N"), lwd=3, bty="n", col=c("red", "blue"))
   })
 }
