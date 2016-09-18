@@ -1,2 +1,3 @@
-.Rproj*
 Rmd/tmp*
+.Rproj.user
+Rcoral.Rproj
