@@ -25,6 +25,7 @@ output:
     fig_caption: yes
 ---
 ```{r setup, include=FALSE}
+library(reshape2); library(dplyr)
 #knitr::opts_knit$set(root.dir = normalizePath(".."))
 ```
 
@@ -162,6 +163,7 @@ A time-stepping Euler method was used to solve the state equations since the pro
 To analyze qualitative behavior, we ran the model to steady state across gradients of external irradiance and DIN, and plotted the specific growth rate (Fig. 2A) and symbiont to host biomass ratio (Fig. 2B). Results are consistent with observations in corals: specific growth rates are low at very low levels of irradiance and DIN, as these scenarios limit the availability of carbon and nitrogen, respectively, to build biomass. As these resources increase, specific growth increases, reaching its highest levels above 2 µM DIN and ~15 mol photons m^-2^ d^-1^. Peak specific growth rates are around ~0.1 d^-1^, which is consistent with values reported in the literature (@Muscatine:1981jy).
 
 ![Steady state values of (A) specific growth (Cmol Cmol^-1^ d^-1^) and (B) the symbiont to host biomass ratio (CmolS CmolH^-1^) across gradients of external irradiance and dissolved inorganic nitrogen. Simulations for each combination of light and nutrients (21 points along each axis) were run for 100 days with a time step of 1 day. Negative steady state growth rates, and corresponding S:H ratios, were set to zero.](../img/Fig2.png)
+
 
 
 
