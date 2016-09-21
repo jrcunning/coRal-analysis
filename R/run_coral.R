@@ -7,6 +7,8 @@
 
 run_coral <- function(time, env, pars) {
   require(dplyr)
+  # Define parallel complementary synthesizing unit function
+  synth <- function(x, y, m) 1/((1/m)+(1/x)+(1/y)-(1/(x+y)))
   
   # Set initial values
   # ==================
