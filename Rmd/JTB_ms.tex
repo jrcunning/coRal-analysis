@@ -76,11 +76,9 @@
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \setcounter{secnumdepth}{0}
-\usepackage{tabularx}
 % Pandoc toggle for numbering sections (defaults to be off)
 \setcounter{secnumdepth}{0}
 % Pandoc header
-\usepackage{tabularx}
 
 
 \usepackage[nomarkers]{endfloat}
@@ -534,7 +532,7 @@ Also include tables of fluxes and environmental inputs?
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{JTB_ms_files/figure-latex/Fig1-1.pdf}
+\includegraphics{../img/model.png}
 \caption{Graphical representation of coral-algal symbiosis model.}
 \end{figure}
 
@@ -566,19 +564,12 @@ formation is specified as:
 
 \begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH}) / n_{NH}}} - {1 \over {{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH}) / n_{NH}}}\bigg)^{-1} \end{equation}
 
-where \(j_{HGm}\) is the maximum specific growth rate. Finally, the rate
-of change in coral biomass is calculated as the specific growth rate
-minum the specific biomass turnover rate (i.e., maintenance costs),
-according to:
-
-\begin{equation} {dH \over dt} = j_{HG} - j_{HT}^0 \end{equation}
-
 The amount of nitrogen input to the coral biomass SU in excess of what
 is actually consumed in biomass formation (i.e., surplus nitrogen, or
 the ``rejection flux'' in SU terminology) is then made available to the
 symbiont, and is specified as:
 
-\begin{equation} \rho_N = j_N + n_{NX}j_X + r_{NH} - n_{NH}j_{HG} \end{equation}
+\begin{equation} \rho_N = (j_N + n_{NX}j_X + r_{NH} - n_{NH}j_{HG})_+ \end{equation}
 
 Due to the inherent inefficiency of the parallel complementary SU
 formulation, there will always be some nitrogen shared with the symbiont
@@ -637,7 +628,7 @@ CO\textsubscript{2} from host and symbiont biomass turnover
 available to the photosynthesis SU. fixed carbon is produced by the
 photosynthesis SU according to:
 
-\begin{equation} j_{CP} = \bigg({1 \over j_{CPm}} + {1 \over {n_{LC} j_L }} + {1 \over {(j_{CO_2} + r_{CH}){H \over S} + r_{CS}}} - {1 \over {n_{LC} j_L + (j_{CO_2} + r_{CH}){H \over S} + r_{CS}}}\bigg)^{-1} \div c_{ROS} \end{equation}
+\begin{equation} j_{CP} = \bigg({1 \over j_{CPm}} + {1 \over {n_{LC} j_L }} + {1 \over {(j_{CO_2} + r_{CH}){H \over S} + r_{CS}}} - {1 \over {n_{LC} j_L + (j_{CO_2} + r_{CH}){H \over S} + r_{CS}}}\bigg)^{-1} \cdot c_{ROS}^{-1} \end{equation}
 
 where \(j_{CPm}\) is the maximum specific rate of photosynthesis, and
 \(c_{ROS}\) is the photooxidative stress multiplier (see below).
@@ -648,7 +639,7 @@ photoinhibition.
 Light energy absorbed in excess of what is used to fix carbon is
 specified by the SU ``rejection flux'', according to:
 
-\begin{equation} j_{eL} = j_L - j_{CP} / n_{LC} \end{equation}
+\begin{equation} j_{eL} = (j_L - j_{CP} / n_{LC})_+ \end{equation}
 
 This excess light energy must be quenched by alternative pathways in
 order to prevent photo-oxidative damage. \emph{Symbiodinium} may utilize
@@ -688,7 +679,7 @@ carbon produced by photosynthesis in excess of what can be used to
 produce symbiont biomass; this surplus \(\rho_C\) is translocated to the
 coral host:
 
-\begin{equation} \rho_C = j_{CP} - j_{SG} \end{equation}
+\begin{equation} \rho_C = (j_{CP} - j_{SG})_+ \end{equation}
 
 The rejection flux of nitrogen from the symbiont biomass SU is lost to
 the environment.
@@ -707,13 +698,55 @@ included to increase biomass loss in response to ROS. (Note that
 recycling of symbiont biomass turnover (\(rNS\) and \(rCS\)) only occurs
 based on the basal maintenance related turnover (i.e., \(j_{ST}^0\)),
 and not the bleaching-related biomass loss, as this loss represents
-biomass being damaged or being expelled from the holobiont). Finally,
-the balance equation representing the change in symbiont biomass over
-time can be specified as the growth rate minus the turnover rate:
+biomass being damaged or being expelled from the holobiont).
 
-\begin{equation} {dS \over dt} = j_{SG} - j_{ST} \end{equation}
+\subsection{Model state equations}\label{model-state-equations}
+
+Finally, the balance equations representing the specific growth rates of
+symbiont and host biomass over time can be expressed as:
+
+\begin{equation} {dS \over Sdt} = j_{SG} - j_{ST} \end{equation}
+
+\begin{equation} {dH \over Hdt} = j_{HG} - j_{HT}^0 \end{equation}
+
+\subsection{Numerical analysis}\label{numerical-analysis}
+
+A time-stepping Euler method was used to solve the state equations since
+the production and rejection fluxes of the SUs are imiplicitly defined.
+Specifically, the rejection fluxes of carbon and nitrogen from the
+symbiont and host biomass SUs act as reciprocal input fluxes to the
+other SU. In addition, the rejection flux of excitation energy from the
+photosynthesis SU acts to reduce its own production flux (i.e.,
+photoinhibition), and hence a discretized time-stepping procedure was
+necessary. A vector of time values was created for each simulation run,
+along which dynamic environmental forcing functions (irradiance, DIN,
+and prey abundance) can be designed. These vectors, along with initial
+values of symbiont and host biomass, then serve as input to the
+time-stepping function, which solves for the current system state using
+values of the previous system state where necessary. A default time step
+of 0.1 days was used for all simulations, which were performed using R
+code that is available in the data repository accompanying this article:
+\url{github.com/jrcunning/Rcoral}.
 
 \section{Model behavior evaluation}\label{model-behavior-evaluation}
+
+To analyze qualitative behavior, we ran the model to steady state across
+gradients of external irradiance and DIN, and plotted the specific
+growth rate (Fig. 2A) and symbiont to host biomass ratio (Fig. 2B).
+Results are consistent with observations in corals: specific growth
+rates
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{../img/Fig2.png}
+\caption{Steady state values of (A) specific growth
+(\(Cmol \cdot Cmol^{-1} \cdot d^{-1}\)) and (B) the symbiont to host
+biomass ratio (\(CmolS \cdot CmolH^{-1}\)) across gradients of external
+irradiance and dissolved inorganic nitrogen. Simulations for each
+combination of light and nutrients (21 points along each axis) were run
+for 100 days with a time step of 1 day. Negative steady state growth
+rates, and corresponding S:H ratios, were set to zero.}
+\end{figure}
 
 \section{Discussion - Potential
 applications/utility}\label{discussion---potential-applicationsutility}
