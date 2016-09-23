@@ -1,2 +1,4 @@
 Rmd/tmp*
 .Rproj.user
+.Rhistory
+.Rdata
