@@ -3,12 +3,11 @@ library(foreach)
 library(parallel)
 library(doParallel)
 library(reshape2)
+library(dplyr)
 
 source("R/def_pars.R")
 source("R/init_env.R")
 source("R/run_coral.R")
-source("R/coral_steady_states.R")
-source("R/coral_steady_states_par.R")
 
 
 # Set time vector and default parameters
@@ -17,8 +16,8 @@ pars <- def_pars()
 #pars$jCO2a <- 1  # having higher carbon delivery from host reduces S:H ratios and causes photosynthesis to be light-limited more frequently.
 
 # Set values of L and N at which to get steady state values
-at <- expand.grid(L=seq(from=0, to=40, length.out=21),
-                  N=seq(from=0, to=2e-6, length.out=21))
+at <- expand.grid(L=seq(from=0, to=40, length.out=101),
+                  N=seq(from=0, to=2e-6, length.out=101))
 
 # Set up cluster for parallel processing
 cl <- makeCluster(detectCores())  # Initiate cluster

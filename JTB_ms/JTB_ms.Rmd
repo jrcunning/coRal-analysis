@@ -19,7 +19,7 @@ address:
 abstract: |
   This is the abstract.
 
-bibliography: ~/library.bib
+bibliography: library.bib
 output: 
   rticles::elsevier_article:
     fig_caption: yes
