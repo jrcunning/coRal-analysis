@@ -38,11 +38,12 @@ plot_sh <- function(run) with(run, {
 
 # Light quenching (carbon fixation, NPQ, and excess (=ROS producing))
 plot_Lq <- function(run) with(run, {
-  plot(NA, xlim=range(time), xlab="", ylim=c(0, max(c(S$jL, S$jeL))), ylab="mol photons/C-molS/d",
+  plot(NA, xlim=range(time), xlab="", ylim=c(0, max(c(S$jL, S$jeL), na.rm=T)), ylab="mol photons/C-molS/d",
        main="Light quenching")
   lines(time, S$jL, col="yellow", lty=3, lwd=3) # total amount absorbed
   lines(time, S$jL - S$jeL, col="yellow", lwd=1) # amt. used in photosynthesis
-  lines(time, (S$jL - S$jeL) + pmin(S$jeL, pars$jNPQ), col="yellow", lty=1, lwd=3) # amt. quenched by NPQ
+  #lines(time, (S$jL - S$jeL) + pmin(S$jeL, pars$jNPQ), col="yellow", lty=1, lwd=3) # amt. quenched by NPQ
+  lines(time, S$jNPQ, col="yellow", lty=1, lwd=3)
   legend("topright", legend=c("Excess", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(3,3,1), col="yellow", bty="n")
 })
 
@@ -125,11 +126,12 @@ plot_run <- function(run) {
     title("Symbiont to host ratio", adj=0.05, line=0)
 
     # Light quenching (carbon fixation, NPQ, and excess (=ROS producing))
-    plot(NA, xlim=range(time), xlab="", ylim=c(0, max(c(S$jL, S$jeL))), ylab="mol photons/C-molS/d")
+    plot(NA, xlim=range(time), xlab="", ylim=c(0, max(c(S$jL, S$jeL), na.rm=T)), ylab="mol photons/C-molS/d")
     title("Light quenching", adj=0.05, line=0)
     lines(time, S$jL, col="yellow", lty=3, lwd=3) # total amount absorbed
     lines(time, S$jL - S$jeL, col="yellow", lwd=1) # amt. used in photosynthesis
-    lines(time, (S$jL - S$jeL) + pmin(S$jeL, pars$jNPQ), col="yellow", lty=1, lwd=3) # amt. quenched by NPQ
+    #lines(time, (S$jL - S$jeL) + pmin(S$jeL, pars$jNPQ), col="yellow", lty=1, lwd=3) # amt. quenched by NPQ
+    lines(time, S$jNPQ, col="yellow", lty=1, lwd=3)
     legend("topright", legend=c("Excess", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(3,3,1), col="yellow", bty="n")
     
     # Symbiont biomass SU dynamics (proportions of C and N rejected from SU)

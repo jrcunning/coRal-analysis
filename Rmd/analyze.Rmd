@@ -12,7 +12,8 @@ knitr::opts_knit$set(root.dir = normalizePath(".."))
 # Initialize SU function
 synth <- function(x, y, m) 1/((1/m)+(1/x)+(1/y)-(1/(x+y)))
 # Source default parameters and functions
-sapply(list.files(path="R", pattern="*.R", full.names=T), source, .GlobalEnv)
+sapply(c("R/conversions.R", "R/def_pars.R", "R/init_env.R", "R/plot_results.R",
+         "R/run_coral.R", "R/sym_PI.R"), source, .GlobalEnv)
 ```
 
 ```{r lightamp, fig.width=5, fig.height=5, eval=F}
@@ -40,11 +41,13 @@ formula(mod); coef(mod)
 time <- seq(1, 365, 0.1)  # if single model run, use time input
 
 # Initialize environment
-env <- init_env(time=time, L=c(10,40,2), N=c(1e-7,1e-7,0), X=c(0,0,0))
+env <- init_env(time=time, L=c(20,32,2), N=c(1e-6,1e-6,0), X=c(0,0,0))
 
 # Set parameters
 pars <- def_pars()  # Get default parameters
 #pars$rpars$gammaR <- 0.03  # Change any default parameters
+#pars$jCO2a <- 1
+#pars$jCO2a <- 0.1
 
 # Run simulation
 run <- run_coral(time=time, env=env, pars=pars)
@@ -52,7 +55,7 @@ run <- run_coral(time=time, env=env, pars=pars)
 
 ##### Plot run 1 symbiont PI curve
 ```{r run1_PI, fig.height=1}
-sym_PI(pars)
+#sym_PI(pars)
 ```
 
 ##### Plot run 1 output
@@ -61,58 +64,15 @@ plot_run(run)
 
 ```
 
-#### Run 1 with no symbiont recycling
-```{r runNR_plots}
-parsNR <- pars
-parsNR$spars$sigmaNS <- 0
-parsNR$spars$sigmaCS <- 0
-runNR <- run_coral(time=time, env=env, pars=parsNR)
-plot_run(runNR)
-with(runNR, {
-  
-})
-```
-
-#### Compare amount of recycled sym nitrogen between runs
-```{r compareN}
-proprNS <- run$S$rNS / (run$S$rNS + run$H$rhoN*run$H$H/run$S$S)
-par(mfrow=c(2,1))
-plot(time, proprNS)
-proprNS <- runNR$S$rNS / (runNR$S$rNS + runNR$H$rhoN*runNR$H$H/runNR$S$S)
-plot(time, proprNS)
-
-proprCS <- run$S$rCS / (run$S$rCS + run$H$jCO2*run$H$H/run$S$S)
-par(mfrow=c(2,1))
-plot(time, proprCS)
-proprCS <- runNR$S$rCS / (runNR$S$rCS + (runNR$H$rCH + runNR$H$jCO2)*runNR$H$H/runNR$S$S)
-plot(time, proprCS)
-```
-
-
-### Run 2 - tolerant symbiont
-```{r run2, echo=F}
-pars2 <- pars
-pars2$spars$kROS <- 80
-pars2$spars$jCPm <- 1.4
-
-run2 <- run_coral(time=time, env=env, pars=pars2)
-```
-
-##### Plot symbiont PI curve
-```{r run2_PI, fig.height=2}
-sym_PI(pars2)
-```
-
-##### Plot run 2 output
+##### Run 2 -- increase jCO2a
 ```{r run2_plots}
+pars2 <- pars
+pars2$jCO2a <- 10
+run2 <- run_coral(time=time, env=env, pars=pars2)
 plot_run(run2)
+
 ```
 
-##### Increase light to bleach tolerant symbiont
-```{r}
-env <- init_env(time=time, L=c(10,60,2), N=c(1e-7,1e-7,0), X=c(0,0,0))
-run <- run_coral(time=time, env=env, pars=pars2)
-plot_run(run)
-```
+
 
 
