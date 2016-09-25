@@ -32,10 +32,10 @@ steady_states <- foreach(i=1:nrow(at), .combine='rbind', .packages='dplyr') %dop
   ss <- lapply(run[c("H", "S")], function(x) x[length(time), ])
   gr <- ss$H$dH.Hdt
   sh <- ss$S$S/ss$H$H
-  hl <- with(ss, log(S$rhoC*S$S/H$H / (H$jN+H$rNH)/pars$nNH))
-  sl <- with(ss, log((H$jCO2+H$rCH)*H$H/S$S / (H$rhoN*H$H/S$S + S$rNS)))
+  hl <- with(ss, log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  ))
+  sl <- with(ss, log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  ))
   ee <- with(ss, max(0, S$jL - (S$jCP/run$pars$nLC + run$pars$jNPQ)))
-  pl <- with(ss, log(((H$jCO2+H$rCH)*H$H/S$S + S$rCS)/(S$jL*run$pars$nLC)))
+  pl <- with(ss, log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$nLC, pars$jCPm)    ))
   data.frame(gr=gr, sh=sh, hl=hl, sl=sl, ee=ee, pl=pl)
 }
 ss <- cbind(at, steady_states)
