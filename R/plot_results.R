@@ -223,7 +223,7 @@ plot_run2 <- function(run) {
     plot(time, env$L, type="l", col="gold", ylim=c(0,60), lwd=2, xlab="", ylab="mol/m2/d")
     title("A. External irradiance", adj=0, line=0.25)
     
-    # Symbiont to host ratio
+    # Symbiont to host biomass ratio
     totSH <- S$S / H$H
     totSHf <- totSH[length(totSH)]
     plot(time, totSH, type="l", col="black", ylim=c(0, max(totSH, na.rm=T)), ylab="CmolS/CmolH", xlab="", lwd=2)
@@ -249,16 +249,16 @@ plot_run2 <- function(run) {
     lines(time, S$jL, col="gold", lty=3, lwd=2) # total amt. absorbed
     legend("topright", legend=c("ROS", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(2,2,1), col="gold", bty="n", cex=0.75)
 
-    # PL
+    # Photosynthesis: substrate-limitation
     pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$nLC, pars$jCPm)    )
     maxabs <- max(abs(pl))
     plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-maxabs, maxabs))
     title("E. Photosynthesis: substrate-limitation", adj=0, line=0.25)
     lines(time, pl, col="black", lty=1, lwd=2)
     abline(h=0, lty=3)
-    text(par("usr")[2], 0, labels="L-lim.\nC-lim.", cex=0.75, adj=1)
+    text(par("usr")[2], 0, labels="L-lim.\nCO2-lim.", cex=0.75, adj=1)
     
-    # Biomass formation - limitation
+    # Biomass formation - substrate-limitation
     sl <- log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
     hl <- log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
     maxabs <- max(c(abs(hl), abs(sl)))
@@ -271,9 +271,14 @@ plot_run2 <- function(run) {
     text(par("usr")[2], 0, labels="N-lim.\nC-lim.", cex=0.75, adj=1)
     legend("topright", legend=c("Host", "Sym"), lty=1, lwd=c(2,1), col="black", bty="n", cex=0.75)
     
-    # Sharing
-    #plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(0, max(c(H$rhoN))))
-    #lines(time, S$rhoC, col="red")
-    #lines(time, H$rhoN, col="blue")
+    # Fixed carbon fate
+    #plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(0, max(c(S$jCP))))
+    #lines(time, S$jCP, lwd=2, lty=2) # Total fixed carbon available to symbiont
+    #lines(time, S$jSG, lwd=2) # Fixed carbon used by symbiont
+    
+    # nitrogen fate
+    #plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(0, max(c(H$jN+H$rNH))))
+    #lines(time, H$jN + H$rNH + H$jX*pars$nNX, lwd=2, lty=2) # Total nitrogen available to host
+    #lines(time, H$jHG*pars$nNH, lwd=2) # Nitrogen used by host
   })
 }
