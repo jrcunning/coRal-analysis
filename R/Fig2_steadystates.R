@@ -13,7 +13,7 @@ source("R/run_coral.R")
 # Set time vector and default parameters
 time <- seq(1,120,1)
 pars <- def_pars()
-pars$jCO2a <- 1  # having higher carbon delivery from host reduces S:H ratios and causes photosynthesis to be light-limited more frequently.
+#pars$jCO2a <- 1  # having higher carbon delivery from host reduces S:H ratios and causes photosynthesis to be light-limited more frequently.
 
 # Set values of L and N at which to get steady state values
 at <- expand.grid(L=seq(from=0, to=40, length.out=41),
