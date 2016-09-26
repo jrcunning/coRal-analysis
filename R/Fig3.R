@@ -7,7 +7,7 @@ source("R/run_coral.R")
 source("R/plot_results.R")
 
 # Set run time vector
-time <- seq(1, 365, 0.5)  # if single model run, use time input
+time <- seq(1, 365, 0.1)  # if single model run, use time input
 
 # Initialize environment
 env <- init_env(time=time, 
