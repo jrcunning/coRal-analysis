@@ -90,7 +90,7 @@ run_coral <- function(time, env, pars) {
     S$jNw[t] <- max(H$rhoN[t-1]*H$H[t-1]/S$S[t-1] + S$rNS[t] - pars$nNS * S$jSG[t], 0)
     
     # Symbiont biomass loss (turnover)
-    S$jST[t] <- pars$jST0 * (1 + 5 * (S$cROS[t] - 1))
+    S$jST[t] <- pars$jST0 * (1 + 4 * (S$cROS[t] - 1))
     
     # Host biomass SU
     # ===============
