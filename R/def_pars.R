@@ -12,7 +12,7 @@ def_pars <- function() {
     jCO2p=4.04e-3,  # Specific flux of CO2 into tissue due to passive reaction-diffusion (molC/CmolH/d)
     jCO2a=0.32,  # Specific delivery of CO2 to photosynthesis by coral host (molC/CmolH/d)
     jHGm=1,  # Maximum specific host growth rate (CmolH/CmolH/d)
-    KN=0.46e-6,  # Half-saturation constant for host DIN uptake (molN/L)
+    KN=1e-6,  # Half-saturation constant for host DIN uptake (molN/L)
     KX=20e-6,  # Half-saturation constant for host feeding (molX/L)
     initH=1,  # Initial host biomass (CmolH)
     jST0=0.03,  # Symbiont specific biomass turnover rate (d^-1)
