@@ -26,12 +26,12 @@ output:
 ---
 ```{r setup, include=FALSE}
 library(reshape2); library(dplyr)
-#knitr::opts_knit$set(root.dir = normalizePath(".."))
+knitr::opts_knit$set(root.dir = normalizePath(".."))
 ```
 
 ```{r load, include=FALSE}
 # Source default parameters and functions
-sapply(list.files(path="../../R", pattern="*.R", full.names=T), source, .GlobalEnv)
+sapply(list.files(path="../../R", pattern="^[^F].*.R", full.names=T), source, .GlobalEnv)
 ```
 
 # Introduction
@@ -60,26 +60,26 @@ Table 1
 | $n_{NH}$ | N:C molar ratio in host biomass | 0.19 | -- |
 | $n_{NS}$ | N:C molar ratio in symbiont biomass | 0.2 | -- |
 | $n_{NX}$ | N:C molar ratio in prey biomass | 0.13 | -- |
-| $j_{HT}^0$ | Specific turnover rate of host biomass | 0.03 | $d^{-1}$ |
-| $j_{ST}^0$ | Specific turnover rate of symbiont biomass | 0.03 | $d^{-1}$ |
+| $j_{HT}^0$ | Specific turnover rate of host biomass | 0.03 | d^-1^ |
+| $j_{ST}^0$ | Specific turnover rate of symbiont biomass | 0.03 | d^-1^ |
 | $\sigma_{NH}$ | Proportion host nitrogen turnover recycled | 0.9 | -- |
 | $\sigma_{CH}$ | Proportion host carbon turnover recycled | 0.9 | -- |
 | $\sigma_{NS}$ | Proportion symbiont nitrogen turnover recycled | 0.9 | -- |
 | $\sigma_{CS}$ | Proportion symbiont carbon turnover recycled | 0.9 | -- |
-| $j_{Xm}$ | Maximum specific feeding rate of host | 0.1292 | $molX \cdot CmolH^{-1} \cdot d^{-1}$ |
-| $K_X$ | Half-saturation constant for prey uptake by host | 20e-6 | $molX \cdot L^{-1}$ | 
-| $j_{Nm}$ | Maximum specific DIN uptake rate by host | 0.048 | $molN \cdot CmolH^{-1} \cdot d^{-1}$ |
-| $K_N$ | Half-saturation constant for DIN uptake by host | 0.46e-6 | $molN \cdot L^{-1}$ | 
-| $j_{CO_2}^p$ | Passive CO~2~ delivery to symbiont | 4.04e-3 | $molC \cdot CmolH^{-1} \cdot d^{-1}$ |
-| $j_{CO_2}^a$ | Active CO~2~ delivery to symbiont | 0.32--18.0 | $molC \cdot CmolH^{-1} \cdot d^{-1}$ |
-| $j_{HGm}$ | Maximum specific growth rate of host | 1 | $d^{-1}$ |
-| $n_{LC}$ | Quantum yield of photosynthesis | 0.1 | $molC \cdot mol ph^{-1}$ |
-| $\bar{a}^*$ | Effective light-absorbing cross-section of symbiont | 1.34 | $m^2 \cdot CmolS^{-1}$ |
-| $j_{NPQ}$ | Non-photochemical quenching capacity of symbiont | 40 | $mol ph \cdot CmolS^{-1} \cdot d^{-1}$|
-| $k_{ROS}$ | Excess photon energy that doubles ROS prod. | 40-80 | $mol ph \cdot CmolS^{-1} \cdot d^{-1}$|
+| $j_{Xm}$ | Maximum specific feeding rate of host | 0.1292 | molX CmolH^-1^ d^-1^ |
+| $K_X$ | Half-saturation constant for prey uptake by host | 20e-6 | molX L^-1^ | 
+| $j_{Nm}$ | Maximum specific DIN uptake rate by host | 0.048 | molN CmolH^-1^ d^-1^ |
+| $K_N$ | Half-saturation constant for DIN uptake by host | 0.46e-6 | molN L^-1^ | 
+| $j_{CO_2}^p$ | Passive CO~2~ delivery to symbiont | 4.04e-3 | molC CmolH^-1^ d^-1^ |
+| $j_{CO_2}^a$ | Active CO~2~ delivery to symbiont | 0.32--18.0 | molC CmolH^-1^ d^-1^ |
+| $j_{HGm}$ | Maximum specific growth rate of host | 1 | d^-1^ |
+| $n_{LC}$ | Quantum yield of photosynthesis | 0.1 | molC mol ph^-1^ |
+| $\bar{a}^*$ | Effective light-absorbing cross-section of symbiont | 1.34 | m^2^ CmolS^-1^ |
+| $j_{NPQ}$ | Non-photochemical quenching capacity of symbiont | 40 | mol ph CmolS^-1^ d^-1^ |
+| $k_{ROS}$ | Excess photon energy that doubles ROS prod. | 40-80 | mol ph CmolS^-1^ d^-1^ |
 | $k$ | Exponent on ROS production rate | 1 | -- |
-| $j_{CPm}$ | Maximum specific photosynthesis rate of symbiont | 2.8 | $molC \cdot CmolS^{-1} \cdot d^{-1}$ |
-| $j_{SGm}$ | Maximum specific growth rate of symbiont | 0.25 | $d^{-1}$ |
+| $j_{CPm}$ | Maximum specific photosynthesis rate of symbiont | 2.8 | molC CmolS^-1^ d^-1^ |
+| $j_{SGm}$ | Maximum specific growth rate of symbiont | 0.25 | d^-1^ |
 
 Also include tables of fluxes and environmental inputs?
 
@@ -156,18 +156,39 @@ Finally, the balance equations representing the specific growth rates of symbion
 
 ## Numerical analysis
 
-A time-stepping Euler method was used to solve the state equations since the production and rejection fluxes of the SUs are imiplicitly defined. Specifically, the rejection fluxes of carbon and nitrogen from the symbiont and host biomass SUs act as reciprocal input fluxes to the other SU. In addition, the rejection flux of excitation energy from the photosynthesis SU acts to reduce its own production flux (i.e., photoinhibition), and hence a discretized time-stepping procedure was necessary. A vector of time values was created for each simulation run, along which dynamic environmental forcing functions (irradiance, DIN, and prey abundance) can be designed. These vectors, along with initial values of symbiont and host biomass, then serve as input to the time-stepping function, which solves for the current system state using values of the previous system state where necessary. A default time step of 0.1 days was used for all simulations, which were performed using R code that is available in the data repository accompanying this article: [github.com/jrcunning/Rcoral](github.com/jrcunning/Rcoral).
+A time-stepping Euler method was used to solve the state equations since the production and rejection fluxes of the SUs are imiplicitly defined. Specifically, the rejection fluxes of carbon and nitrogen from the symbiont and host biomass SUs act as reciprocal input fluxes to the other SU. In addition, the rejection flux of excitation energy from the photosynthesis SU acts to reduce its own production flux (i.e., photoinhibition), and hence a discretized time-stepping procedure was necessary. A vector of time values was created for each simulation run, along which dynamic environmental forcing functions (irradiance, DIN, and prey abundance) can be designed. These vectors, along with initial values of symbiont and host biomass, then serve as input to the time-stepping function, which solves for the current system state using values of the previous system state where necessary. A default time step of 0.1 days was used for all simulations, which were performed using R code that is available in the data repository accompanying this article: [github.com/jrcunning/Rcoral](github.com/jrcunning/Rcoral). 
+
+To aid in visualizing model results, we calculated values to indicate the degree to which product formation at an SU was limited by availability of either of its two substrates
+
+\begin{equation} \log \bigg({{\min(j_{S1}, j_{Pm})} \over {\min(j_{S2}, j_{Pm})}}\bigg) \end{equation}
+
+where $j_{S1}$ and $j_{S2}$ are the specific input fluxes of the two substrates and $j_{Pm}$ is the maximum specific product formation rate, all with units of Cmol Cmol^-1^ d^-1^.
 
 # Model behavior evaluation
 
-To analyze qualitative behavior, we ran the model to steady state across gradients of external irradiance and DIN, and plotted the specific growth rate (Fig. 2A) and symbiont to host biomass ratio (Fig. 2B). Results are consistent with observations in corals: specific growth rates are low at very low levels of irradiance and DIN, as these scenarios limit the availability of carbon and nitrogen, respectively, to build biomass. As these resources increase, specific growth increases, reaching its highest levels above 2 µM DIN and ~15 mol photons m^-2^ d^-1^. Peak specific growth rates are around ~0.1 d^-1^, which is consistent with values reported in the literature (@Muscatine:1981jy).
+To analyze qualitative behavior, we ran the model to steady state across gradients of external irradiance and nutrients (Fig. 2), which revealed patterns that are consistent with observed phenomena in corals. 
 
-![Steady state values of (A) specific growth (Cmol Cmol^-1^ d^-1^) and (B) the symbiont to host biomass ratio (CmolS CmolH^-1^) across gradients of external irradiance and dissolved inorganic nitrogen. Simulations for each combination of light and nutrients (21 points along each axis) were run for 100 days with a time step of 1 day. Negative steady state growth rates, and corresponding S:H ratios, were set to zero.](../img/Fig2.png)
+_Specific growth rates_ are low at low light and DIN (~0.01-0.03 d^-1^), and begin increasing as both of these factors increase (Fig. 2A). Higher light alleviates light-limitation of photosynthesis (Fig. 2D), and consequently carbon-limitation of host growth (Fig. 2B). Similarly, elevated DIN alleviates nitrogen-limitation of host growth (Fig. 2B), a trend that was also predicted by the DEB model of @Muller:2009io, and has been observed experimentally [@MullerParker:1994uo; @Tanaka:2013dj]. Very high nutrient levels may have negative direct and indirect impacts on growth [@Shantz:2015dz], though these are not likely to occur until beyond the range of concentrations considered here [@FerrierPages:2000p1950]. The maximum specific growth rates of ~0.09 d^-1^, occurring between ~10-15 mol photons m^-2^ s^-1^ light and >1 µM DIN, are an order of magnitude higher than those typically observed for corals [@Osinga:2011kq]. The primary reasons for this overestimation of host growth are 1) the model does not account for calcification, and 2) it does not account for size-dependent reductions in growth that likely occur as individual polyps and/or colonies grow (Sebens1980?, probably better refs)... (i.e., the system continues growing exponentially in this model). However, the estimated specific growth rates are consistent with rates of biomass increase in *Aiptasia*, measured at 0.04 d^-1^ [@ArmozaZvuloni:2014ju], suggesting they are biologically realistic. They also match the values predicted by the full DEB model of @Muller2009:io. Furthermore, the relative differences across environmental gradients are likely to be the same.
+
+As irradiance continues to increase above ~15-20 mol photons m^-2^ d^-1^, growth rates decline until the symbiosis is no longer viable above ~30 µmol photons m^-2^ d^-1^. The mechanism underlying this breakdown is the production of ROS caused by excitation energy in excess of what can be quenched by symbiont photosynthesis and non-photochemical quenching. ROS production has the consequence of increasing symbiont biomass loss (photodamage) and decreasing photosynthesis rates (photoinhibition), which have the net effect of reducing fixed carbon input to the system below levels necessary to sustain the symbiosis.
+
+_Symbiont to host biomass ratios_ at low DIN (e.g. <1 µM) and high light (e.g., ~20 mol ph m^-2^ d^-2^) typical of coral reef environments are around ~0.1-0.3, which are consistent with values reported in the literature (@Muscatine:1981jy; @Edmunds:2011bv). S:H ratios increase under higher nutrients () and lower light (). 
+
+_
+
+![Steady state values of **A)** specific growth (Cmol Cmol^-1^ d^-1^), **B)** the symbiont to host biomass ratio (CmolS CmolH^-1^), **C)** relative C- or N-limitation of host biomass formation, and **D)** relative CO~2~- or light-limitation of symbiont photosynthesis, across gradients of external irradiance and dissolved inorganic nitrogen. Simulations for each combination of light and nutrients (41 points along each axis) were run for 120 days with a time step of 1 day. Negative steady state growth rates, and corresponding S:H ratios, were set to zero.](../img/Fig2.png)
 
 
 
 
-# Discussion  -  Potential applications/utility
+# More things to show:
+## varying light: consequences of excess light and light-limitation
+## varying DIN: role of N-limitation and consequences of elevated N
+## elevated nutrients cause system to become C-limited (photo: CO2 limited; host: fixed C limited)
+## C-limitation increases susceptibility to bleaching
+## consequences of a less efficient but more tolerant symbiont
+## Rate of symbiont repopulation (Berner et al. 1993)
+## Bicarbonate addition promotes coral growth (Marubini and Thake 1999)
 
 References {#references .unnumbered}
 ==========
