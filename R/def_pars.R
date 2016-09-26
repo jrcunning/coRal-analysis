@@ -18,7 +18,7 @@ def_pars <- function() {
     jST0=0.03,  # Symbiont specific biomass turnover rate (d^-1)
     nNS=0.13,  # N:C ratio in symbiont biomass (-)
     nLC=0.1,  # L:C ratio in fixed carbon (=quantum yield) (molC/mol ph)
-    jNPQ=4,  # capacity of non-photochemical quenching (mol ph/CmolS/d)
+    kNPQ=4,  # capacity of non-photochemical quenching (mol ph/CmolS/d)
     kROS=40,  # amount of (jeL-jNPQ) that doubles ROS production (mol ph/CmolS/d)
     k=1,  # exponent on ROS production (-)
     astar=1.34,  # Symbiont specific cross-sectional area (m^2/C-molS)

@@ -75,7 +75,7 @@ Table 1
 | $j_{HGm}$ | Maximum specific growth rate of host | 1 | d^-1^ |
 | $n_{LC}$ | Quantum yield of photosynthesis | 0.1 | molC mol ph^-1^ |
 | $\bar{a}^*$ | Effective light-absorbing cross-section of symbiont | 1.34 | m^2^ CmolS^-1^ |
-| $j_{NPQ}$ | Non-photochemical quenching capacity of symbiont | 40 | mol ph CmolS^-1^ d^-1^ |
+| $k_{NPQ}$ | NPQ capacity of symbiont, relative to C-fixation | 4 | -- |
 | $k_{ROS}$ | Excess photon energy that doubles ROS prod. | 40-80 | mol ph CmolS^-1^ d^-1^ |
 | $k$ | Exponent on ROS production rate | 1 | -- |
 | $j_{CPm}$ | Maximum specific photosynthesis rate of symbiont | 2.8 | molC CmolS^-1^ d^-1^ |
@@ -125,11 +125,11 @@ Light energy absorbed in excess of what is used to fix carbon is specified by th
 
 \begin{equation} j_{eL} = (j_L - j_{CP} / n_{LC})_+ \end{equation}
 
-This excess light energy must be quenched by alternative pathways in order to prevent photo-oxidative damage. *Symbiodinium* may utilize a variety of pathways for non-photochemical quenching [NPQ; @Roth:2014wf], which we collect in a total capacity for NPQ as a parameter of the symbiont ($j_{NPQ}$). If light energy exceeds the total capacity of both carbon fixation and NPQ, then damaging reactive oxygen species (ROS) may be produced. We represent this as a scaled flux of ROS $c_{ROS}$, which takes a value of 1 when all light absorbed is quenched by photochemistry and NPQ, and increases as the amount of excess excitation energy increases. 
+This excess light energy must be quenched by alternative pathways in order to prevent photo-oxidative damage. *Symbiodinium* may utilize a variety of pathways for non-photochemical quenching [NPQ; @Roth:2014wf], which we collect in a total capacity for NPQ as a parameter of the symbiont ($k_{NPQ}$). If light energy exceeds the total capacity of both carbon fixation and NPQ, then damaging reactive oxygen species (ROS) may be produced. We represent this as a scaled flux of ROS $c_{ROS}$, which takes a value of 1 when all light absorbed is quenched by photochemistry and NPQ, and increases as the amount of excess excitation energy increases. 
 
 \begin{equation} c_{ROS} = 1 + \bigg[\bigg({{j_{eL} - j_{NPQ}} \over k_{ROS}}\bigg)^k\bigg]_+ \end{equation}
 
-where $j_{NPQ}$, $k_{ROS}$, and $k$ are parameters of the symbiont that determine the onset and rate of ROS production. Importantly, $c_{ROS}$ as specified here is not a function of absolute light absorption, but rather the amount of excess light energy $j_{eL}$ after accounting for carbon fixation and NPQ. A direct consequence of this formulation is that carbon-limitation of photosynthesis can lead to photo-oxidative stress, a mechanism of biological importance [@Wooldridge:2009p7807] that was not captured by previous representations of photo-oxidative stress [@Eynaud:2011tv]. Moreover, this formulation allows functional diversity among symbiont types to be explored by changing the parameters $j_{NPQ}$, $k_{ROS}$, and $k$.
+where $k_{NPQ}$, $k_{ROS}$, and $k$ are parameters of the symbiont that determine the onset and rate of ROS production. Importantly, $c_{ROS}$ as specified here is not a function of absolute light absorption, but rather the amount of excess light energy $j_{eL}$ after accounting for carbon fixation and NPQ. A direct consequence of this formulation is that carbon-limitation of photosynthesis can lead to photo-oxidative stress, a mechanism of biological importance [@Wooldridge:2009p7807] that was not captured by previous representations of photo-oxidative stress [@Eynaud:2011tv]. Moreover, this formulation allows functional diversity among symbiont types to be explored by changing the parameters $k_{NPQ}$, $k_{ROS}$, and $k$.
 
 Carbon fixed by photosynthesis ($j_{CP}$) is then used in conjunction with nitrogen shared by the host ($\rho_N$) and a proportion of nitrogen recycled from symbiont biomass turnover ($r_{NS}=\sigma_{NS}j_{ST}^0$) to build new symbiont biomass, following the SU equation:
 
