@@ -27,7 +27,7 @@ run_steady_states <- function(time, pars, at, outfile=NULL, runtime=F) {
     sh <- ss$S$S/ss$H$H
     hl <- with(ss, log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  ))
     sl <- with(ss, log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  ))
-    ee <- with(ss, max(0, S$jL - (S$jCP/run$pars$nLC + run$pars$jNPQ)))
+    ee <- with(ss, max(0, S$jL - (S$jCP/run$pars$nLC + run$pars$kNPQ)))
     pl <- with(ss, log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$nLC, pars$jCPm)    ))
     data.frame(gr=gr, sh=sh, hl=hl, sl=sl, ee=ee, pl=pl)
   }

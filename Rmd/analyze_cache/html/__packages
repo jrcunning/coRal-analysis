@@ -1,0 +1,7 @@
+base
+foreach
+iterators
+doParallel
+reshape2
+dplyr
+scales

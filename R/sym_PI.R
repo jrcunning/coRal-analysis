@@ -5,25 +5,39 @@
 # a state that is not CO2-limited), so the "jCO2" parameter is set at a very high value here.
 
 sym_PI <- function(pars) {
+  synth <- function(x, y, m) 1/((1/m)+(1/x)+(1/y)-(1/(x+y)))
   with(pars, {
-    jL <- seq(0,200,1)
+    # Set light range for PI curve
+    time <- seq(1,100,0.01)
+    jL <- seq(0,250,along=time)
     # Set carbon delivery rate (mol C / CmolS / d)
-    jCO2 <- 100  # Extremely high carbon delivery - no carbon limitation
-    # Calculate photosynthesis rate
-    jCP <- synth(jCO2, jL*pars$nLC, pars$jCPm)
-    # Calculate light in excess of photosynthetic quenching
-    jeL <- pmax(0, jL - jCP/pars$nLC)
-    # Calculate ROS (cROS) produced due to excess light
-    cROS <- pmax(1, 1 + (pmax(0, jeL-pars$jNPQ)/(pars$kROS))^pars$k)
-    # Calculate photosynthesis rate accounting for ROS-induced photoinhibition
-    jCP <- jCP / cROS
+    jCO2 <- 1000  # Extremely high carbon delivery - no carbon limitation
+    # Initialize values...
+    jCP <- c(pars$jCPm, rep(NA, length(time)-1))
+    jeL <- c(0, rep(NA, length(time)-1))
+    jNPQ <- c(0, rep(NA, length(time)-1))
+    cROS <- c(1, rep(NA, length(time)-1))
+    # Time-stepping solution...
+    for (t in 2:length(time)) {
+      # Calculate photosynthesis rate
+      jCP[t] <- synth(jCO2, jL[t]*pars$nLC, pars$jCPm)/cROS[t-1]
+      # Calculate light in excess of photosynthetic quenching
+      jeL[t] <- max(0, jL[t] - jCP[t]/pars$nLC)
+      # Calculate light energy quenched by NPQ
+      jNPQ[t] <- min(jeL[t], pars$kNPQ / cROS[t-1])
+      # Calculate ROS (cROS) produced due to excess light
+      cROS[t] <- 1 + ((jeL[t] - jNPQ[t]) / pars$kROS)^pars$k
+    }
     # Return ROS and photosynthesis rate for plotting
-    par(mfrow=c(1,2), mar=c(2,2,1,1), mgp=c(1.2,0.2,0), cex=0.7, tck=0.025, xaxs="i")
+    par(mfrow=c(2,2), mar=c(2,2,1,1), mgp=c(1.2,0.2,0), cex=0.7, tck=0.025, xaxs="i")
     plot(jL, jCP, xlab="Light (mol photons/C-molS/d)", ylab="Carbon fixation (mol C/C-molS/d)",
          main="Photosynthesis", type="l", lwd=3, col="red", ylim=c(0,3))
+    plot(jL, jeL, main="jeL")
+    plot(jL, jNPQ, main="jNPQ")
     plot(jL, cROS, xlab="Light (mol photons/C-molS/d)", ylab="ROS (relative to baseline)",
          main="ROS production", type="l", lwd=3, col="orange", ylim=c(1,5))
   })
 }
+
 
   

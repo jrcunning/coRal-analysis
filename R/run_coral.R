@@ -5,11 +5,11 @@
 #   - pars: an object with structure matching the output of "def_pars.R"
 
 
-run_coral <- function(time, env, pars) {
+run_coral <- function(time, env, pars, NPQ="inhibited", photoinhibition=T) {
   require(dplyr)
   # Define parallel complementary synthesizing unit function
   synth <- function(x, y, m) 1/((1/m)+(1/x)+(1/y)-(1/(x+y)))
-  
+  #synth <- function(x, y, m) (m^-2 + x^-2 + y^-2)^(-1/2)
   # Set initial values
   # ==================
   # Host
@@ -65,15 +65,24 @@ run_coral <- function(time, env, pars) {
     S$rCS[t] <- pars$jST0 * pars$sigmaCS  # metabolic CO2 recycled from symbiont biomass turnover
     H$rCH[t] <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
     # Production flux (photosynthetic carbon fixation)
-    S$jCP[t] <- synth(S$jL[t] * pars$nLC, (H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t], pars$jCPm) / S$cROS[t-1]
+    if (photoinhibition==T) {
+      S$jCP[t] <- synth(S$jL[t] * pars$nLC, (H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t], pars$jCPm) / S$cROS[t-1]
+    } else if (photoinhibition==F) {
+      S$jCP[t] <- synth(S$jL[t] * pars$nLC, (H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t], pars$jCPm)
+    }
+    
     # Rejection flux: CO2 (wasted to the environment)
     S$jCO2w[t] <- max((H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t] - S$jCP[t], 0)
     # Rejection flux: excess light energy not quenched by carbon fixation
     S$jeL[t] <- max(S$jL[t] - S$jCP[t]/pars$nLC, 0)
     # Amount of excess light energy quenched by NPQ
-    S$jNPQ[t] <- min(S$jeL[t], (S$jCP[t] * pars$kNPQ)/pars$nLC)
+    #S$jNPQ[t] <- min(S$jeL[t], (S$jCP[t] * pars$kNPQ)/pars$nLC)
+    if (NPQ=="inhibited") S$jNPQ[t] <- min(S$jeL[t], pars$kNPQ / S$cROS[t-1])
+    if (NPQ=="inhibited2") S$jNPQ[t] <- (pars$kNPQ^(-3)+S$jeL[t]^(-3))^(-1/3) / S$cROS[t-1]
+    if (NPQ=="fixed") S$jNPQ[t] <- min(S$jeL[t], pars$kNPQ)
+    if (NPQ=="fixed2") S$jNPQ[t] <- (pars$kNPQ^(-3)+S$jeL[t]^(-3))^(-1/3)
     # Scaled ROS production due to excess excitation energy (=not quenched by carbon fixation AND NPQ)
-    S$cROS[t] <- 1 + (max(0, (S$jeL[t] - S$jNPQ[t])) / pars$kROS) ^ pars$k
+    S$cROS[t] <- 1 + ((S$jeL[t] - S$jNPQ[t]) / pars$kROS)^pars$k
     
     # Symbiont biomass SU
     # ===================
@@ -90,7 +99,7 @@ run_coral <- function(time, env, pars) {
     S$jNw[t] <- max(H$rhoN[t-1]*H$H[t-1]/S$S[t-1] + S$rNS[t] - pars$nNS * S$jSG[t], 0)
     
     # Symbiont biomass loss (turnover)
-    S$jST[t] <- pars$jST0 * (1 + 4 * (S$cROS[t] - 1))
+    S$jST[t] <- pars$jST0 * (1 + pars$b * (S$cROS[t] - 1))
     
     # Host biomass SU
     # ===============
