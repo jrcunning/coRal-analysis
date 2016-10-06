@@ -53,11 +53,11 @@ plot_steady_states <- function(ss, png=NULL) {
     text(x=par("usr")[1]-par("mai")[2]*conv, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
          labels=main, xpd=NA, font=2)
     mtext(side=1, text="[DIN] (mol/L)", line=1.2, cex=0.75)
-    axis(side=1, at=seq(0,1,0.1), 
+    axis(side=1, at=seq(0,1,0.125), 
          labels=quantile(seq(as.numeric(first(colnames(r))),
                              as.numeric(last(colnames(r))),
                              length.out=100),
-                         probs=seq(0,1,0.1)))
+                         probs=seq(0,1,0.125)))
     mtext(side=2, text="Light (mol ph/m2/d)", line=1.2, cex=0.75)
     axis(side=2, at=seq(0,1,0.1), 
          labels=quantile(seq(as.numeric(first(rownames(r))),

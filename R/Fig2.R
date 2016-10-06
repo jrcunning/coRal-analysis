@@ -8,7 +8,7 @@ sapply(c("R/def_pars.R",
 time <- seq(1,100,1)  # Set time vector
 pars <- def_pars()  # Get default parameters
 # Set values of L and N at which to get steady state values
-at <- expand.grid(L=seq(from=0, to=40, length.out=41),
+at <- expand.grid(L=seq(from=0, to=60, length.out=41),
                   N=seq(from=0, to=4e-6, length.out=41))
 
 # Get steady state values and plot results to png

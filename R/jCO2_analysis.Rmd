@@ -1,0 +1,303 @@
+---
+title: "jCO2 analysis"
+author: "Ross Cunning"
+date: "October 5, 2016"
+output: html_document
+---
+
+```{r load_functions, include=F, message=F}
+sapply(c("../R/def_pars.R", "../R/init_env.R", "../R/run_coral.R", "../R/plot_results.R"), source, .GlobalEnv)
+```
+
+How many CO2's can the host deliver to photosynthesis SU per 1 C-mol of fixed carbon? The host will use this carbon to generate ATP to energize the CO2-concentrating mechanisms that deliver CO2 to the photosynthesis SU.
+```{r new_model, include=F}
+run_coral_wC <- function(time, env, pars, NPQ="inhibited") {
+  require(dplyr)
+  # Define parallel complementary synthesizing unit function
+  synth <- function(x, y, m) 1/((1/m)+(1/x)+(1/y)-(1/(x+y)))
+  #synth <- function(x, y, m) (m^-2 + x^-2 + y^-2)^(-1/2)
+  # Set initial values
+  # ==================
+  # Host
+  H <- data_frame(
+    time=time,
+    H=pars$initH,
+    jX=(pars$jXm * env$X[1] / (env$X[1] + pars$KX)),
+    jCO2a=pars$jCO2a,
+    jCO2p=pars$jCO2p,
+    jCO2=jCO2a+jCO2p,
+    jN=(pars$jNm * env$N[1] / (env$N[1] + pars$KN)),
+    rhoN=jN,
+    jCw=0,
+    jHG=0.25,
+    jHT=pars$jHT0,
+    rNH=jHT * pars$nNH * pars$sigmaNH,
+    rCH=jHT * pars$sigmaCH,
+    dH.Hdt=0
+  )
+  H[2:nrow(H), 2:ncol(H)] <- NA
+  
+  # Symbiont
+  S <- data_frame(
+    time=time,
+    S=pars$initS,
+    jL=env$L[1] * pars$astar,
+    jCP=max(0, synth(jL * pars$nLC, (H$jCO2p[1] + H$jCO2a[1])*H$H/S, pars$jCPm), na.rm=T),
+    jeL=max(jL - jCP/pars$nLC, 0),
+    jNPQ=pars$kNPQ/pars$nLC,
+    jCO2w=H$jCO2*H$H/S - jCP,
+    jSG=pars$jSGm/10,
+    rhoC=jCP, 
+    jNw=0,
+    jST=pars$jST0,
+    rNS=jST * pars$nNS * pars$sigmaNS,
+    rCS=jST * pars$sigmaCS,
+    cROS=1,
+    dS.Sdt=1)
+  S[2:nrow(S), 2:ncol(S)] <- NA
+  
+  # Run simulation by updating
+  # ==========================
+  for (t in 2:length(time)) {
+    
+    # Photosynthesis SU
+    # =================
+    # Light input flux
+    S$jL[t] <- (1.256307 + 1.385969 * exp(-6.479055 * (S$S[t-1]/H$H[t-1]))) * env$L[t] * pars$astar
+    # CO2 input flux
+    H$jCO2p[t] <- pars$jCO2p # passive CO2 flux from the environment
+    H$jCO2a[t] <- pars$jCO2a  # active delivery of CO2 from the environment (mediated by the host)
+    H$jCO2[t] <- H$jCO2p[t] + H$jCO2a[t]  # Total CO2 input from the environment
+    S$rCS[t] <- pars$jST0 * pars$sigmaCS  # metabolic CO2 recycled from symbiont biomass turnover
+    H$rCH[t] <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
+    H$jCw[t-1] <- H$jCw[t-1]  # carbon rejected from host biomass SU, given back as CO2 to photosynthesis
+    # Production flux (photosynthetic carbon fixation)
+    S$jCP[t] <- synth(S$jL[t] * pars$nLC, (5*H$jCw[t-1] + H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t], pars$jCPm) / S$cROS[t-1]
+
+    # Rejection flux: CO2 (wasted to the environment)
+    S$jCO2w[t] <- max((H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t] - S$jCP[t], 0)
+    # Rejection flux: excess light energy not quenched by carbon fixation
+    S$jeL[t] <- max(S$jL[t] - S$jCP[t]/pars$nLC, 0)
+    # Amount of excess light energy quenched by NPQ
+    #S$jNPQ[t] <- min(S$jeL[t], (S$jCP[t] * pars$kNPQ)/pars$nLC)
+    if (NPQ=="inhibited") S$jNPQ[t] <- min(S$jeL[t], pars$kNPQ / S$cROS[t-1])
+    if (NPQ=="inhibited2") S$jNPQ[t] <- (pars$kNPQ^(-3)+S$jeL[t]^(-3))^(-1/3) / S$cROS[t-1]
+    if (NPQ=="fixed") S$jNPQ[t] <- min(S$jeL[t], pars$kNPQ)
+    if (NPQ=="fixed2") S$jNPQ[t] <- (pars$kNPQ^(-3)+S$jeL[t]^(-3))^(-1/3)
+    # Scaled ROS production due to excess excitation energy (=not quenched by carbon fixation AND NPQ)
+    S$cROS[t] <- 1 + ((S$jeL[t] - S$jNPQ[t]) / pars$kROS)^pars$k
+    
+    # Symbiont biomass SU
+    # ===================
+    # Nitrogen input flux
+    S$rNS[t] <- pars$jST0 * pars$nNS * pars$sigmaNS  # Recylced N from symbiont biomass turnover.
+    H$rhoN[t-1] <- H$rhoN[t-1]  # Nitrogen shared from the host (defined below, so previous time step used)
+    # Carbon input flux
+    S$jCP[t] <- S$jCP[t]  # Production of fixed carbon from photosynthesis SU
+    # Production flux (symbiont biomass formation)
+    S$jSG[t] <- synth(S$jCP[t], (H$rhoN[t-1]*H$H[t-1]/S$S[t-1] + S$rNS[t])/pars$nNS, pars$jSGm)
+    # Rejection flux: carbon (surplus carbon shared with the host)
+    S$rhoC[t] <- max(S$jCP[t] - S$jSG[t], 0)
+    # Rejection flux: nitrogen (surplus nitrogen wasted to the environment)
+    S$jNw[t] <- max(H$rhoN[t-1]*H$H[t-1]/S$S[t-1] + S$rNS[t] - pars$nNS * S$jSG[t], 0)
+    
+    # Symbiont biomass loss (turnover)
+    S$jST[t] <- pars$jST0 * (1 + pars$b * (S$cROS[t] - 1))
+    
+    # Host biomass SU
+    # ===============
+    # Food input flux (prey=both carbon and nitrogen)
+    H$jX[t] <- (pars$jXm * env$X[t] / (env$X[t] + pars$KX))  # Prey uptake from the environment
+    # Nitrogen input flux
+    H$jN[t] <- (pars$jNm * env$N[t] / (env$N[t] + pars$KN))  # N uptake from the environment
+    H$rNH[t] <- H$jHT[t-1] * pars$nNH * pars$sigmaNH  # Recycled N from host biomass turnover
+    # Carbon input flux
+    S$rhoC[t] <- S$rhoC[t]  # Carbon shared by the symbiont (defined above)
+    # Production flux (host biomass formation)
+    H$jHG[t] <- synth(S$rhoC[t]*S$S[t-1]/H$H[t-1] + H$jX[t], (H$jN[t] + pars$nNX*H$jX[t] + H$rNH[t]) / pars$nNH, pars$jHGm)
+    # Rejection flux: nitrogen (surplus nitrogen shared with the symbiont)
+    H$rhoN[t] <- max(H$jN[t] + pars$nNX * H$jX[t] + H$rNH[t] - pars$nNH * H$jHG[t], 0)
+    # Rejection flux: carbon -- given back to symbiont as CO2 input to photosynthesis
+    H$jCw[t] <- max(H$jX[t] + S$rhoC[t]*S$S[t-1]/H$H[t-1] - H$jHG[t], 0)
+    
+    # Host biomass loss
+    H$jHT[t] <- pars$jHT0
+    
+    # State equations
+    # ===============
+    # Specific growth rates (Cmol/Cmol/d)
+    S$dS.Sdt[t] <- S$jSG[t] - S$jST[t]
+    H$dH.Hdt[t] <- H$jHG[t] - H$jHT[t]
+    # Biomass (Cmol)
+    S$S[t] <- S$S[t-1] + S$dS.Sdt[t] * S$S[t-1] * (time[2] - time[1])
+    H$H[t] <- H$H[t-1] + H$dH.Hdt[t] * H$H[t-1] * (time[2] - time[1])
+    
+  }
+  
+  # Return results
+  # ==============
+  return(list(time=time, env=env, pars=pars, H=H, S=S))
+}
+```
+
+```{r run_models, cache=T, message=F, warning=F, include=F}
+##### VARY NITROGEN
+# RUN USING WASTED CARBON AND NO JCO2A
+time <- seq(1,1230,1)
+defpars <- def_pars()
+env <- init_env(time=time, L=c(15,15,2), N=c(1e-7,1e-6,2), X=c(5e-6,5e-6,0))
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a"), 
+                              c(40,       30,    1,   5,      0.9,         0.9, 0)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+
+# RUN USING JCO2A (original version of model)
+run <- run_coral(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a"), 
+                              c(40,       30,    1,   5,      0.9,         0.9, 0.32)),
+                 NPQ="fixed2")
+plot_run(run)
+
+
+##### VARY LIGHT
+# RUN USING WASTED CARBON AND NO JCO2A
+time <- seq(1,1230,1)
+env <- init_env(time=time, L=c(10,25,2), N=c(1e-7,1e-7,2), X=c(5e-6,5e-6,0))
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a"), 
+                              c(40,       30,    1,   5,      0.9,         0.9, 0)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+
+
+# RUN USING JCO2A (original version of model)
+run <- run_coral(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a"), 
+                              c(40,       30,    1,   5,      0.9,         0.9, 0.32)),
+                 NPQ="fixed2")
+plot_run(run)
+```
+
+
+### Now remove feeding
+```{r run_models_nofeeding, cache=T, message=F, warning=F}
+##### VARY NITROGEN
+# RUN USING WASTED CARBON AND NO JCO2A OR JCO2P
+time <- seq(1,1230,1)
+defpars <- def_pars()
+env <- init_env(time=time, L=c(15,15,2), N=c(1e-7,1e-6,2), X=c(0,0,0))
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
+                              c(40,       30,    1,   5,      0.9,         0.9, 0, 0)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+
+# RUN USING JCO2A (original version of model)
+run <- run_coral(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a"), 
+                              c(40,       30,    1,   5,      0.9,         0.9, 0.32)),
+                 NPQ="fixed2")
+plot_run(run)
+
+
+##### VARY LIGHT
+# RUN USING WASTED CARBON AND NO JCO2A OR JCO2P
+time <- seq(1,1230,1)
+env <- init_env(time=time, L=c(10,25,2), N=c(1e-7,1e-7,2), X=c(0,0,0))
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
+                              c(40,       30,    1,   5,      0.9,         0.9, 0, 0)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+
+# RUN USING JCO2A (original version of model)
+run <- run_coral(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a"), 
+                              c(40,       30,    1,   5,      0.9,         0.9, 0.32)),
+                 NPQ="fixed2")
+plot_run(run)
+```
+
+### Now make jPNQ inhibited
+```{r run_models_nofeeding_jNPQinhibited, message=F, warning=F, cache=T}
+##### VARY NITROGEN
+# RUN USING WASTED CARBON AND NO JCO2A OR JCO2P
+time <- seq(1,1230,1)
+defpars <- def_pars()
+env <- init_env(time=time, L=c(15,15,2), N=c(1e-7,1e-6,2), X=c(0,0,0))
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
+                              c(60,       40,    1,   5,      0.9,         0.9, 0, 0)),
+                 NPQ="inhibited2")
+plot_run_wC(run)
+
+# RUN USING JCO2A (original version of model)
+run <- run_coral(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a"), 
+                              c(60,       40,    1,   5,      0.9,         0.9, 0.32)),
+                 NPQ="inhibited2")
+plot_run(run)
+
+
+##### VARY LIGHT
+# RUN USING WASTED CARBON AND NO JCO2A OR JCO2P
+time <- seq(1,1230,1)
+env <- init_env(time=time, L=c(10,25,2), N=c(1e-7,1e-7,2), X=c(0,0,0))
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
+                              c(60,       40,    1,   5,      0.9,         0.9, 0, 0)),
+                 NPQ="inhibited2")
+plot_run_wC(run)
+
+# RUN USING JCO2A (original version of model)
+run <- run_coral(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a"), 
+                              c(60,       40,    1,   5,      0.9,         0.9, 0.32)),
+                 NPQ="inhibited2")
+plot_run(run)
+```
+
+
+### Trying different stress parameter sets
+```{r par_tests, cache=T, warning=F, message=F}
+##### VARY LIGHT
+# RUN USING WASTED CARBON AND NO JCO2A OR JCO2P
+time <- seq(1,1230,0.5)
+env <- init_env(time=time, L=c(10,40,2), N=c(1e-7,1e-7,2), X=c(0,0,0))
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
+                              c(80,       40,    1,   5,      0.9,         0.9, 0, 0)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
+                              c(80,       80,    1,   5,      0.9,         0.9, 0, 0)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
+                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0)),
+                 NPQ="inhibited2")
+plot_run_wC(run)
+with(run, {
+  plot(time, 5*H$jCw)
+})
+```
