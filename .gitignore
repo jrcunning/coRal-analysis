@@ -2,3 +2,5 @@ Rmd/tmp*
 .Rproj.user
 .Rhistory
 .Rdata
+R/jCO2_analysis_cache
+R/jCO2_analysis_files
