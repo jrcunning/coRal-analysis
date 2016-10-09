@@ -67,7 +67,7 @@ run_coral <- function(time, env, pars) {
     # Rejection flux: excess light energy not quenched by carbon fixation
     S$jeL[t] <- max(S$jL[t] - S$jCP[t]/pars$yCL, 0)
     # Amount of excess light energy quenched by NPQ
-    S$jNPQ[t] <- (pars$kNPQ^(-3)+S$jeL[t]^(-3))^(-1/3)
+    S$jNPQ[t] <- (pars$kNPQ^(-1)+S$jeL[t]^(-1))^(-1/1)
     # Scaled ROS production due to excess excitation energy (=not quenched by carbon fixation AND NPQ)
     S$cROS[t] <- 1 + ((S$jeL[t] - S$jNPQ[t]) / pars$kROS)^pars$k
     

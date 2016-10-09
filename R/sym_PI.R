@@ -24,7 +24,7 @@ sym_PI <- function(pars) {
       # Calculate light in excess of photosynthetic quenching
       jeL[t] <- max(0, jL[t] - jCP[t]/pars$yCL)
       # Calculate light energy quenched by NPQ
-      jNPQ[t] <- (pars$kNPQ^(-3)+jeL[t]^(-3))^(-1/3)
+      jNPQ[t] <- (pars$kNPQ^(-1)+jeL[t]^(-1))^(-1/1)
       # Calculate ROS (cROS) produced due to excess light
       cROS[t] <- 1 + ((jeL[t] - jNPQ[t]) / pars$kROS)^pars$k
     }
