@@ -13,7 +13,7 @@ sym_PI <- function(pars) {
     # Set carbon delivery rate (mol C / CmolS / d)
     jCO2 <- 1000  # Extremely high carbon delivery - no carbon limitation
     # Initialize values...
-    jCP <- c(pars$jCPm, rep(NA, length(time)-1))
+    jCP <- c(0, rep(NA, length(time)-1))
     jeL <- c(0, rep(NA, length(time)-1))
     jNPQ <- c(0, rep(NA, length(time)-1))
     cROS <- c(1, rep(NA, length(time)-1))
@@ -30,14 +30,14 @@ sym_PI <- function(pars) {
     }
     # Return ROS and photosynthesis rate for plotting
     par(mfrow=c(1,1), mar=c(3,3,3,7), mgp=c(1.2,0,0), cex=0.7, tck=0.025, xaxs="i")
-    plot(jL, jCP, xlab="Light (mol photons/C-molS/d)", ylab="Carbon fixation (mol C/C-molS/d)",
-         main="P-I curve", type="l", lwd=3, col="red", ylim=c(0,3))
+    plot(jL, jCP/pars$nLC, xlab="Light (mol photons/C-molS/d)", ylab="Photochemical quenching",
+         main="P-I curve", type="l", lwd=3, col="red")
     par(new=T)
     plot(jL, jNPQ, type="l", lwd=3, axes=F, xlab="", ylab="")
     axis(side=4); mtext(side=4, text="Non-photochemical quenching", line=1, cex=0.7)
     par(new=T)
-    plot(jL, cROS, type="l", lwd=3, axes=F, col="orange", xlab="", ylab="", ylim=c(1,6))
-    axis(side=4, line=3); mtext(side=4, line=4, text = "ROS production", cex=0.7)
+    plot(jL, cROS, type="l", lwd=3, axes=F, col="orange", xlab="", ylab="")
+    axis(side=4, line=4); mtext(side=4, line=5, text = "ROS production (relative)", cex=0.7)
     legend("bottomright", legend=c("Photo.", "NPQ", "ROS"), lwd=2, col=c("red", "black", "orange"),
            inset=c(0.1, 0.05), bty="n")
   })
