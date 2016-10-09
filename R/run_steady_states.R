@@ -1,4 +1,4 @@
-run_steady_states <- function(time, pars, at, outfile=NULL, runtime=F) {
+run_steady_states <- function(pars, at, outfile=NULL, runtime=F, food=0) {
   
   # Load libraries
   require(foreach)
@@ -8,8 +8,7 @@ run_steady_states <- function(time, pars, at, outfile=NULL, runtime=F) {
   require(dplyr)
   
   # Load functions
-  source("R/init_env.R", local=TRUE)
-  source("R/run_coral.R", local=TRUE)
+  source("R/run_coral_ss.R", local=TRUE)
   
   # Set up cluster for parallel processing
   cl <- makeCluster(detectCores())  # Initiate cluster
@@ -19,10 +18,9 @@ run_steady_states <- function(time, pars, at, outfile=NULL, runtime=F) {
   start <- proc.time()  # Start timer...
   # Calculate steady states...
   steady_states <- foreach(i=1:nrow(at), .combine='rbind', .packages='dplyr') %dopar% {
-    L <- at[i,]$L; N <- at[i,]$N
-    env <- init_env(time=time, L=c(L,L,0), N=c(N,N,0), X=c(0,0,0))
-    run <- run_coral(time=time, env=env, pars=pars)
-    ss <- lapply(run[c("H", "S")], function(x) x[length(time), ])
+    env <- list(L=at[i,]$L, N=at[i,]$N, X=food)
+    run <- run_coral_ss(env=env, pars=pars)
+    ss <- lapply(run[c("H", "S")], function(x) x[nrow(x), ])
     gr <- ss$H$dH.Hdt
     sh <- ss$S$S/ss$H$H
     hl <- with(ss, log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  ))
