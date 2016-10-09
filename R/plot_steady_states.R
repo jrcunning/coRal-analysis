@@ -83,7 +83,7 @@ plot_steady_states <- function(ss, png=NULL) {
   par(mfrow=c(2,2))
   imagef(gr, bin=0.01, main="A. Specific growth", col="grayscale")
   imagef(hl, bin=0.25, main="B. Host growth limitation", col=list("#67001F","#053061"))
-  imagef(sh, bin=0.1, main="C. Symbiont:host biomass", col="grayscale")
-  imagef(pl, bin=0.3, main="D. Photosynthesis limitation", col=list("#67001F", "gray30"))
+  imagef(sh, bin=0.05, main="C. Symbiont:host biomass", col="grayscale")
+  imagef(pl, bin=0.25, main="D. Photosynthesis limitation", col=list("#67001F", "gray30"))
   if (!is.null(png)) dev.off()
 }
