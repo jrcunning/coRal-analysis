@@ -145,7 +145,7 @@ run_coral <- function(time, env, pars, NPQ="inhibited", photoinhibition=T) {
 # Code for new model
 The rejection flux of carbon from host biomass SU, $jCw$, is used as input to photosynthesis SU. A multiplier is included indicating the number of moles of CO~2~ the host can deliver to the photosynthesis SU using one mole of fixed carbon. Mechanistically, the host will use this carbon to generate ATP to energize a variety of CO~2~-concentrating mechanisms (CCM's) that enhance CO~2~ availability to photosynthesis.
 ```{r new_model, include=T}
-run_coral_wC <- function(time, env, pars, NPQ="inhibited", jDOC=0) {
+run_coral_wC <- function(time, env, pars, NPQ="inhibited", kCO2=5) {
   require(dplyr)
   # Define parallel complementary synthesizing unit function
   synth <- function(x, y, m) 1/((1/m)+(1/x)+(1/y)-(1/(x+y)))
@@ -161,8 +161,8 @@ run_coral_wC <- function(time, env, pars, NPQ="inhibited", jDOC=0) {
     jCO2p=pars$jCO2p,
     jCO2=jCO2a+jCO2p,
     jN=(pars$jNm * env$N[1] / (env$N[1] + pars$KN)),
-    rhoN=jN/2,
-    jCw=1,
+    rhoN=jN,
+    jCw=10,
     jHG=0.25,
     jHT=pars$jHT0,
     rNH=jHT * pars$nNH * pars$sigmaNH,
@@ -174,14 +174,14 @@ run_coral_wC <- function(time, env, pars, NPQ="inhibited", jDOC=0) {
   # Symbiont
   S <- data_frame(
     time=time,
-    S=.2,
+    S=pars$initS,
     jL=env$L[1] * pars$astar,
     jCP=max(0, synth(jL * pars$nLC, (H$jCw[1] + H$jCO2p[1] + H$jCO2a[1])*H$H/S, pars$jCPm), na.rm=T),
     jeL=max(jL - jCP/pars$nLC, 0),
     jNPQ=pars$kNPQ/pars$nLC,
     jCO2w=(H$jCw + H$jCO2)*H$H/S - jCP,
     jSG=pars$jSGm/10,
-    rhoC=jCP/2, 
+    rhoC=jCP, 
     jNw=0,
     jST=pars$jST0,
     rNS=jST * pars$nNS * pars$sigmaNS,
@@ -206,7 +206,7 @@ run_coral_wC <- function(time, env, pars, NPQ="inhibited", jDOC=0) {
     H$rCH[t] <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
     H$jCw[t-1] <- H$jCw[t-1]  # carbon rejected from host biomass SU, given back as CO2 to photosynthesis
     # Production flux (photosynthetic carbon fixation)
-    S$jCP[t] <- synth(S$jL[t] * pars$nLC, (5*H$jCw[t-1] + H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t], pars$jCPm) / S$cROS[t-1]
+    S$jCP[t] <- synth(S$jL[t] * pars$nLC, (kCO2*H$jCw[t-1] + H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t], pars$jCPm) / S$cROS[t-1]
 
     # Rejection flux: CO2 (wasted to the environment)
     S$jCO2w[t] <- max((H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t] - S$jCP[t], 0)
@@ -249,7 +249,7 @@ run_coral_wC <- function(time, env, pars, NPQ="inhibited", jDOC=0) {
     S$rhoC[t] <- S$rhoC[t]  # Carbon shared by the symbiont (defined above)
     # Add dissolved organic carbon uptake
     # Production flux (host biomass formation)
-    H$jHG[t] <- synth(S$rhoC[t]*S$S[t-1]/H$H[t-1] + H$jX[t] + jDOC, (H$jN[t] + pars$nNX*H$jX[t] + H$rNH[t]) / pars$nNH, pars$jHGm)
+    H$jHG[t] <- synth(S$rhoC[t]*S$S[t-1]/H$H[t-1] + H$jX[t], (H$jN[t] + pars$nNX*H$jX[t] + H$rNH[t]) / pars$nNH, pars$jHGm)
     # Rejection flux: nitrogen (surplus nitrogen shared with the symbiont)
     H$rhoN[t] <- max(H$jN[t] + pars$nNX * H$jX[t] + H$rNH[t] - pars$nNH * H$jHG[t], 0)
     # Rejection flux: carbon -- given back to symbiont as CO2 input to photosynthesis
@@ -372,19 +372,6 @@ run <- run_coral_wC(time=time, env=env,
 plot_run_wC(run)
 ```
 
-#### possibility of DOC uptake?
-```{r incr_L_DOC, cache=T, message=F, warning=F, include=F, eval=F}
-# Set up simulation
-env <- init_env(time=time, L=c(2,60,0), N=c(1e-7,1e-7,0), X=c(0,0,0))
-# Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
-run <- run_coral_wC(time=time, env=env, jDOC=0.005,
-                 pars=replace(defpars, 
-                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
-                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0)),
-                 NPQ="fixed2")
-plot_run_wC(run)
-```
-
 ### Light stress with old model
 ```{r Lstress_old, cache=T, message=F, warning=F}
 # Set up simulation
@@ -402,8 +389,11 @@ plot_run(run)
 
 ### Light stress with new model
 ```{r Lstress_new, cache=T, message=F, warning=F}
+# Set up simulation
+time <- seq(1,1230,1)
+env <- init_env(time=time, L=c(10,40,2), N=c(1e-7,1e-7,2), X=c(0,0,0))
 # Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
-run <- run_coral_wC(time=time, env=env,
+run <- run_coral_wC(time=time, env=env, kCO2=2,
                  pars=replace(defpars, 
                               c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
                               c(60,       60,    1,   5,      0.9,         0.9, 0, 0)),
@@ -510,7 +500,7 @@ plot_run_wC(run)
 
 # Steady state behavior of new model
 ```{r new_steadystates_code, message=F, warning=F, include=F}
-run_steady_states <- function(time, pars, at, outfile=NULL, runtime=F, food=0, jDOC=0) {
+run_steady_states <- function(time, pars, at, outfile=NULL, runtime=F, food=0) {
   #
   run_coral_wC <- get("run_coral_wC")
   # Load libraries
@@ -534,7 +524,7 @@ run_steady_states <- function(time, pars, at, outfile=NULL, runtime=F, food=0, j
   steady_states <- foreach(i=1:nrow(at), .combine='rbind', .packages='dplyr') %dopar% {
     L <- at[i,]$L; N <- at[i,]$N
     env <- init_env(time=time, L=c(L,L,0), N=c(N,N,0), X=c(food,food,0))
-    run <- run_coral_wC(time=time, env=env, pars=pars, jDOC=jDOC)
+    run <- run_coral_wC(time=time, env=env, pars=pars, NPQ="fixed2")
     ss <- lapply(run[c("H", "S")], function(x) x[length(time), ])
     gr <- ss$H$dH.Hdt
     sh <- ss$S$S/ss$H$H
@@ -558,20 +548,87 @@ run_steady_states <- function(time, pars, at, outfile=NULL, runtime=F, food=0, j
 }
 ```
 
-## No feeding
+## Starting biomass = 0.01
 ```{r run_new_steadystates, cache=T, message=F, warning=F}
 # Set time and parameters 
-time <- seq(1,100,1) 
-pars <- replace(defpars, c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p"), 
-                          c(60,       60,    1,   5,      0.9,     0.9,       0,       0))
+time <- seq(1,200,0.5) 
+defpars <- def_pars()
+defpars <- replace(defpars, "jHGm", 1)
+pars <- replace(defpars, c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "initS"), 
+                          c(60,       60,    1,   5,      0.9,     0.9,       0,       0,      0.01))
 # Set values of L and N at which to get steady state values 
-at <- expand.grid(L=seq(from=0, to=60, length.out=41),
-                  N=seq(from=0, to=4e-6, length.out=41))
+at <- expand.grid(L=seq(from=0, to=60, length.out=21),
+                  N=seq(from=0, to=4e-6, length.out=21))
 
 # Run to steady state and plot results
 ssdat <- run_steady_states(time=time, pars=pars, at=at, food=0)
 plot_steady_states(ssdat)
 ```
+
+## Starting biomass = 0.1
+```{r run_new_steadystates.1, cache=T, message=F, warning=F}
+# Set time and parameters 
+time <- seq(1,200,0.5) 
+defpars <- def_pars()
+defpars <- replace(defpars, "jHGm", 1)
+pars <- replace(defpars, c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "initS"), 
+                          c(60,       60,    1,   5,      0.9,     0.9,       0,       0,      0.1))
+# Set values of L and N at which to get steady state values 
+at <- expand.grid(L=seq(from=0, to=60, length.out=21),
+                  N=seq(from=0, to=4e-6, length.out=21))
+
+# Run to steady state and plot results
+ssdat <- run_steady_states(time=time, pars=pars, at=at, food=0)
+plot_steady_states(ssdat)
+```
+
+## Starting biomass = 0.5
+```{r run_new_steadystates.5, cache=T, message=F, warning=F}
+# Set time and parameters 
+time <- seq(1,200,0.5) 
+defpars <- def_pars()
+defpars <- replace(defpars, "jHGm", 1)
+pars <- replace(defpars, c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "initS"), 
+                          c(60,       60,    1,   5,      0.9,     0.9,       0,       0,      0.5))
+# Set values of L and N at which to get steady state values 
+at <- expand.grid(L=seq(from=0, to=60, length.out=21),
+                  N=seq(from=0, to=4e-6, length.out=21))
+
+# Run to steady state and plot results
+ssdat <- run_steady_states(time=time, pars=pars, at=at, food=0)
+plot_steady_states(ssdat)
+```
+
+```{r testing, cache=T, message=F, warning=F, eval=F, include=F}
+# Set up simulation
+time <- seq(1,200,0.1) 
+env <- init_env(time=time, L=c(2,2,0), N=c(1e-7,3.5e-6,0), X=c(0,0,0))
+# Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "initS"), 
+                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 1)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+# Do elevated nutrients prevent coral from recovering from bleaching? Start with 0.01 initS, constant light (10), lower DIN (1e-7) --> recovery and pos. growth; higher DIN (1e-6) --> no recovery, neg. growth...
+```
+
+## Starting symbiont biomass = 1
+```{r run_new_steadystates1, cache=T, message=F, warning=F}
+# Set time and parameters 
+time <- seq(1,200,0.5) 
+pars <- replace(defpars, c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "initS"), 
+                          c(60,       60,    1,   5,      0.9,     0.9,       0,       0,       1))
+# Set values of L and N at which to get steady state values 
+at <- expand.grid(L=seq(from=0, to=60, length.out=21),
+                  N=seq(from=0, to=4e-6, length.out=21))
+
+# Run to steady state and plot results
+ssdat <- run_steady_states(time=time, pars=pars, at=at, food=0)
+plot_steady_states(ssdat)
+```
+
+
 
 ## + feeding
 ```{r run_new_steadystates_feeding, cache=T, message=F, warning=F}
@@ -604,28 +661,75 @@ plot_steady_states(ssdat)
 ```
 
 # Stability at high nitrogen...?
-## When system starts at 2 µM DIN and increases to 4 µM DIN, outcome is negative growth.
+## When system starts at 2 µM DIN and increases to 4 µM DIN, switch is btw. 0.15 and 0.2 initS.
 ```{r incrN1, cache=T, message=F, warning=F}
-# Set up simulation
-env <- init_env(time=time, L=c(10,10,0), N=c(2e-6,4e-6,0), X=c(0,0,0))
-# Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
-run <- run_coral_wC(time=time, env=env,
-                 pars=replace(defpars, 
-                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "jHGm"), 
-                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 1)),
-                 NPQ="fixed2")
-plot_run_wC(run)
-```
-
-## When system starts at 1 µM DIN and increases to 4 µM DIN, outcome is positive growth.
-```{r incrN2, cache=T, message=F, warning=F}
 # Set up simulation
 env <- init_env(time=time, L=c(10,10,0), N=c(1e-6,4e-6,0), X=c(0,0,0))
 # Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
 run <- run_coral_wC(time=time, env=env,
                  pars=replace(defpars, 
-                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "jHGm"), 
-                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 1)),
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "initS"), 
+                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 0.15)),
                  NPQ="fixed2")
 plot_run_wC(run)
+
+# Set up simulation
+env <- init_env(time=time, L=c(10,10,0), N=c(1e-6,4e-6,0), X=c(0,0,0))
+# Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
+run <- run_coral_wC(time=time, env=env,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "initS"), 
+                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 0.2)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+```
+
+## When system starts at 2 µM DIN and increases to 4 µM DIN, switch is btw. 0.2 and 0.3 initS.
+```{r incrN2, cache=T, message=F, warning=F}
+# Set up simulation
+env <- init_env(time=time, L=c(10,10,0), N=c(2e-6,4e-6,0), X=c(0,0,0))
+# Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
+run <- run_coral_wC(time=time, env=env, kCO2=5,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "jHGm", "initS"), 
+                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 1, 0.2)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+
+
+# Set up simulation
+env <- init_env(time=time, L=c(9,9,0), N=c(2e-6,4e-6,0), X=c(0,0,0))
+# Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
+run <- run_coral_wC(time=time, env=env, kCO2=5,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "jHGm", "initS"), 
+                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 1, 0.3)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+```
+
+```{r}
+# Set up simulation
+env <- init_env(time=time, L=c(10,10,0), N=c(4e-6,4e-6,0), X=c(0,0,0))
+# Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
+run <- run_coral_wC(time=time, env=env, kCO2=5,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "jHGm", "initS"), 
+                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 1, 0.5)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+
+# Set up simulation
+env <- init_env(time=time, L=c(10,10,0), N=c(4e-6,4e-6,0), X=c(0,0,0))
+# Run new model (sets jCO2a and jCO2p to zero; CO2 is delivered by jCw)
+run <- run_coral_wC(time=time, env=env, kCO2=5,
+                 pars=replace(defpars, 
+                              c("kNPQ", "kROS", "k", "b", "sigmaCS", "sigmaCH", "jCO2a", "jCO2p", "jHGm", "initS"), 
+                              c(60,       60,    1,   5,      0.9,         0.9, 0, 0, 1, 0.01)),
+                 NPQ="fixed2")
+plot_run_wC(run)
+with(run, {
+  plot(S$S/H$H, S$jSG)
+})
+
 ```
