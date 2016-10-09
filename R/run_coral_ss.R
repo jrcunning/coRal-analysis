@@ -33,9 +33,9 @@ run_coral_ss <- function(env, pars) {
   S <- data_frame(
     S=pars$initS,
     jL=env$L * pars$astar,
-    jCP=max(0, synth(jL * pars$nLC, H$jCO2[1]*H$H/S, pars$jCPm), na.rm=T),
-    jeL=max(jL - jCP/pars$nLC, 0),
-    jNPQ=pars$kNPQ/pars$nLC,
+    jCP=max(0, synth(jL * pars$yCL, H$jCO2[1]*H$H/S, pars$jCPm), na.rm=T),
+    jeL=max(jL - jCP/pars$yCL, 0),
+    jNPQ=pars$kNPQ/pars$yCL,
     jCO2w=H$jCO2*H$H/S - jCP,
     jSG=pars$jSGm/10,
     rhoC=jCP, 
@@ -63,11 +63,11 @@ run_coral_ss <- function(env, pars) {
     H[t,]$rCH <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
     H[t,]$jCO2 <- pars$kCO2 * H$jeC[t-1]  # carbon not used in host biomass is used to activate CCM's that deliver CO2 to photosynthesis
     # Production flux (photosynthetic carbon fixation)
-    S[t,]$jCP <- synth(S[t,]$jL * pars$nLC, (H[t,]$jCO2 + H[t,]$rCH)*H$H[t-1]/S$S[t-1] + S[t,]$rCS, pars$jCPm) / S$cROS[t-1]
+    S[t,]$jCP <- synth(S[t,]$jL * pars$yCL, (H[t,]$jCO2 + H[t,]$rCH)*H$H[t-1]/S$S[t-1] + S[t,]$rCS, pars$jCPm) / S$cROS[t-1]
     # Rejection flux: CO2 (wasted to the environment)
     S[t,]$jCO2w <- max((H[t,]$jCO2 + H[t,]$rCH)*H$H[t-1]/S$S[t-1] + S[t,]$rCS - S[t,]$jCP, 0)
     # Rejection flux: excess light energy not quenched by carbon fixation
-    S[t,]$jeL <- max(S[t,]$jL - S[t,]$jCP/pars$nLC, 0)
+    S[t,]$jeL <- max(S[t,]$jL - S[t,]$jCP/pars$yCL, 0)
     # Amount of excess light energy quenched by NPQ
     S[t,]$jNPQ <- (pars$kNPQ^(-3)+S[t,]$jeL^(-3))^(-1/3)
     # Scaled ROS production due to excess excitation energy (=not quenched by carbon fixation AND NPQ)

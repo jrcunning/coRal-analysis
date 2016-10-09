@@ -20,9 +20,9 @@ sym_PI <- function(pars) {
     # Time-stepping solution...
     for (t in 2:length(time)) {
       # Calculate photosynthesis rate
-      jCP[t] <- synth(jCO2, jL[t]*pars$nLC, pars$jCPm)/cROS[t-1]
+      jCP[t] <- synth(jCO2, jL[t]*pars$yCL, pars$jCPm)/cROS[t-1]
       # Calculate light in excess of photosynthetic quenching
-      jeL[t] <- max(0, jL[t] - jCP[t]/pars$nLC)
+      jeL[t] <- max(0, jL[t] - jCP[t]/pars$yCL)
       # Calculate light energy quenched by NPQ
       jNPQ[t] <- (pars$kNPQ^(-3)+jeL[t]^(-3))^(-1/3)
       # Calculate ROS (cROS) produced due to excess light
@@ -30,7 +30,7 @@ sym_PI <- function(pars) {
     }
     # Return ROS and photosynthesis rate for plotting
     par(mfrow=c(1,1), mar=c(3,3,3,7), mgp=c(1.2,0,0), cex=0.7, tck=0.025, xaxs="i")
-    plot(jL, jCP/pars$nLC, xlab="Light (mol photons/C-molS/d)", ylab="Photochemical quenching",
+    plot(jL, jCP/pars$yCL, xlab="Light (mol photons/C-molS/d)", ylab="Photochemical quenching",
          main="P-I curve", type="l", lwd=3, col="red")
     par(new=T)
     plot(jL, jNPQ, type="l", lwd=3, axes=F, xlab="", ylab="")

@@ -16,7 +16,7 @@ def_pars <- function() {
     initH=1,  # Initial host biomass (CmolH)
     jST0=0.03,  # Symbiont specific biomass turnover rate (d^-1)
     nNS=0.13,  # N:C ratio in symbiont biomass (-)
-    nLC=0.1,  # L:C ratio in fixed carbon (=quantum yield) (molC/mol ph)
+    yCL=0.1,  # L:C ratio in fixed carbon (=quantum yield) (molC/mol ph)
     kNPQ=60,  # capacity of non-photochemical quenching (mol ph/CmolS/d)
     # calculated as twice the max photosynthesis rate, converted from C to photons...
     # A value of 40 was calculated from Gorbunov et al. 2001

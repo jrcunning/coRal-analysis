@@ -40,8 +40,8 @@ plot_sh <- function(run) with(run, {
 plot_Lq <- function(run) with(run, {
   plot(NA, xlim=range(time), xlab="", ylim=c(0, max(c(S$jL, S$jeL), na.rm=T)), ylab="mol photons/C-molS/d",
        main="Light quenching")
-  lines(time, S$jCP/pars$nLC, col="yellow", lwd=1) # amt. quenched by photosynthesis
-  lines(time, S$jCP/pars$nLC + S$jNPQ, col="yellow", lty=1, lwd=2) # amt. quenched by photo + NPQ
+  lines(time, S$jCP/pars$yCL, col="yellow", lwd=1) # amt. quenched by photosynthesis
+  lines(time, S$jCP/pars$yCL + S$jNPQ, col="yellow", lty=1, lwd=2) # amt. quenched by photo + NPQ
   lines(time, S$jL, col="yellow", lty=3, lwd=2) # total amt. absorbed
   legend("topright", legend=c("Excess", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(3,3,1), col="yellow", bty="n")
 })
@@ -54,7 +54,7 @@ plot_photo <- function(run) with(run, {
 })
 
 plot_pl <- function(run) with(run, {
-  pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$nLC, pars$jCPm)    )
+  pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    )
   maxabs <- max(abs(pl))
   plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-maxabs, maxabs))
   title("Photosynthesis C- vs. L-limitation", adj=0.05, line=0)
@@ -181,8 +181,8 @@ plot_run <- function(run) {
     # Light quenching (carbon fixation, NPQ, and excess (=ROS producing))
     plot(NA, xlim=range(time), xlab="", ylim=c(0, max(c(S$jL, S$jeL), na.rm=T)), ylab="mol photons/C-molS/d")
     title("Light quenching", adj=0.05, line=0)
-    lines(time, S$jCP/pars$nLC, col="yellow", lwd=1) # amt. quenched by photosynthesis
-    lines(time, S$jCP/pars$nLC + S$jNPQ, col="yellow", lty=1, lwd=2) # amt. quenched by photo + NPQ
+    lines(time, S$jCP/pars$yCL, col="yellow", lwd=1) # amt. quenched by photosynthesis
+    lines(time, S$jCP/pars$yCL + S$jNPQ, col="yellow", lty=1, lwd=2) # amt. quenched by photo + NPQ
     lines(time, S$jL, col="yellow", lty=3, lwd=2) # total amt. absorbed
     legend("topright", legend=c("Excess", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(3,3,1), col="yellow", bty="n")
     
@@ -194,7 +194,7 @@ plot_run <- function(run) {
     legend("topright", legend=c("C", "N"), lwd=2, bty="n", col=c("red", "blue"))
       
     # Photosynthesis SU dynamics (proportions of light and CO2 rejected from SU)
-    pl <- log(pmin(((H$jCO2+H$rCH)*H$H/S$S + S$rCS), pars$jCPm) / pmin((S$jL*run$pars$nLC), pars$jCPm))
+    pl <- log(pmin(((H$jCO2+H$rCH)*H$H/S$S + S$rCS), pars$jCPm) / pmin((S$jL*run$pars$yCL), pars$jCPm))
     maxabs <- max(abs(pl))
     plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-maxabs, maxabs))
     title("Photosynthesis C- vs. L-limitation", adj=0.05, line=0)
@@ -255,13 +255,13 @@ plot_run_v2 <- function(run) {
     # Light quenching (carbon fixation, NPQ, and excess (=ROS producing))
     plot(NA, xlim=range(time), xlab="", ylim=c(0, max(c(S$jL, S$jeL), na.rm=T)), ylab="mol ph/CmolS/d")
     title("D. Light quenching", adj=0, line=0.25)
-    lines(time, S$jCP/pars$nLC, col="gold", lwd=1) # amt. quenched by photosynthesis
-    lines(time, S$jCP/pars$nLC + S$jNPQ, col="gold", lty=1, lwd=2) # amt. quenched by photo + NPQ
+    lines(time, S$jCP/pars$yCL, col="gold", lwd=1) # amt. quenched by photosynthesis
+    lines(time, S$jCP/pars$yCL + S$jNPQ, col="gold", lty=1, lwd=2) # amt. quenched by photo + NPQ
     lines(time, S$jL, col="gold", lty=3, lwd=2) # total amt. absorbed
     legend("topright", legend=c("ROS", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(2,2,1), col="gold", bty="n", cex=0.75)
 
     # Photosynthesis: substrate-limitation
-    pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$nLC, pars$jCPm)    )
+    pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    )
     maxabs <- max(abs(pl))
     plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-maxabs, maxabs))
     title("E. Photosynthesis: substrate-limitation", adj=0, line=0.25)
