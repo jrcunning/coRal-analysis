@@ -29,13 +29,17 @@ sym_PI <- function(pars) {
       cROS[t] <- 1 + ((jeL[t] - jNPQ[t]) / pars$kROS)^pars$k
     }
     # Return ROS and photosynthesis rate for plotting
-    par(mfrow=c(2,2), mar=c(2,2,1,1), mgp=c(1.2,0.2,0), cex=0.7, tck=0.025, xaxs="i")
+    par(mfrow=c(1,1), mar=c(3,3,3,7), mgp=c(1.2,0,0), cex=0.7, tck=0.025, xaxs="i")
     plot(jL, jCP, xlab="Light (mol photons/C-molS/d)", ylab="Carbon fixation (mol C/C-molS/d)",
-         main="Photosynthesis", type="l", lwd=3, col="red", ylim=c(0,3))
-    plot(jL, jeL, main="jeL")
-    plot(jL, jNPQ, main="jNPQ")
-    plot(jL, cROS, xlab="Light (mol photons/C-molS/d)", ylab="ROS (relative to baseline)",
-         main="ROS production", type="l", lwd=3, col="orange", ylim=c(1,5))
+         main="P-I curve", type="l", lwd=3, col="red", ylim=c(0,3))
+    par(new=T)
+    plot(jL, jNPQ, type="l", lwd=3, axes=F, xlab="", ylab="")
+    axis(side=4); mtext(side=4, text="Non-photochemical quenching", line=1, cex=0.7)
+    par(new=T)
+    plot(jL, cROS, type="l", lwd=3, axes=F, col="orange", xlab="", ylab="", ylim=c(1,6))
+    axis(side=4, line=3); mtext(side=4, line=4, text = "ROS production", cex=0.7)
+    legend("bottomright", legend=c("Photo.", "NPQ", "ROS"), lwd=2, col=c("red", "black", "orange"),
+           inset=c(0.1, 0.05), bty="n")
   })
 }
 
