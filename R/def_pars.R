@@ -17,9 +17,8 @@ def_pars <- function() {
     jST0=0.03,  # Symbiont specific biomass turnover rate (d^-1)
     nNS=0.13,  # N:C ratio in symbiont biomass (-)
     yCL=0.1,  # L:C ratio in fixed carbon (=quantum yield) (molC/mol ph)
-    kNPQ=60,  # capacity of non-photochemical quenching (mol ph/CmolS/d)
-    # calculated as twice the max photosynthesis rate, converted from C to photons...
-    # A value of 40 was calculated from Gorbunov et al. 2001
+    kNPQ=112,  # capacity of non-photochemical quenching (mol ph/CmolS/d)
+    # calculated as 4x max. photochemical quenching (Gorbunov et al. 2001)
     kROS=60,  # amount of excess light beyond NPQ capacity (e.g., jeL-jNPQ) that doubles ROS production relative to baseline (mol ph/CmolS/d)
     k=1,  # exponent on ROS production (-)
     astar=1.34,  # Symbiont specific cross-sectional area (m^2/C-molS)
