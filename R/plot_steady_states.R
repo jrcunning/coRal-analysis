@@ -6,8 +6,8 @@ plot_steady_states <- function(ss, png=NULL) {
   
   # For runs that did NOT reach a steady state of positive growth, set all results to zero
   ss[which(ss$gr < 0), c("gr", "sh", "hl", "sl", "ee", "pl")] <- NA
-  # For runs where steady state value of S:H > 0.7, set S:H to 0.7
-  ss[which(ss$sh > 0.7), "sh"] <- 0.7
+  # For runs where steady state value of S:H > 0.5, set S:H to 0.5
+  ss[which(ss$sh > 0.5), "sh"] <- 0.5
   
   # Reshape steady state results into matrices for plotting cont
   sh <- acast(ss, L~N, value.var="sh")
@@ -84,6 +84,6 @@ plot_steady_states <- function(ss, png=NULL) {
   imagef(gr, bin=0.01, main="A. Specific growth", col="grayscale")
   imagef(hl, bin=0.25, main="B. Host growth limitation", col=list("#67001F","#053061"))
   imagef(sh, bin=0.05, main="C. Symbiont:host biomass", col="grayscale")
-  imagef(pl, bin=0.25, main="D. Photosynthesis limitation", col=list("#67001F", "gray30"))
+  imagef(pl, bin=0.5, main="D. Photosynthesis limitation", col=list("#67001F", "gray30"))
   if (!is.null(png)) dev.off()
 }
