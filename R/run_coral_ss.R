@@ -49,10 +49,11 @@ run_coral_ss <- function(env, pars) {
   
   # Run simulation by updating
   # ==========================
-  ss <- FALSE
+  grss <- FALSE
+  shss <- FALSE
   t <- 2
   
-  while (ss==FALSE) {
+  while (grss==FALSE | shss==FALSE) {
     
     # Photosynthesis
     # ==============
@@ -118,8 +119,13 @@ run_coral_ss <- function(env, pars) {
    
     # Test if steady state has been reached
     if (t > 21) {
-      ss <- ifelse(abs(H$dH.Hdt[t] - H$dH.Hdt[t-20]) < 0.00001, T, F)
+      grss <- ifelse(abs(H$dH.Hdt[t] - H$dH.Hdt[t-20]) < 0.00001, T, F)
+      shss <- ifelse(abs(S$S[t]/H$H[t] - S$S[t-20]/H$H[t-20]) < 0.00001, T, F)
     }
+    # Test if system is oscillating but with negative growth (e.g., L=30 & N=0)
+    if (t > 1000) {
+      if (!any(H$dH.Hdt[(t-1000):t] > 0)) grss <- T; shss <- T
+    } 
     
     # Increment time
     t <- t + 1
