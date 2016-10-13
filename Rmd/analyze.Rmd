@@ -16,6 +16,9 @@ sapply(c("R/conversions.R", "R/def_pars.R", "R/init_env.R", "R/plot_results.R",
          "R/explore_NPQ.R"), source, .GlobalEnv)
 ```
 
+![](../img/model_new.png)
+
+### Light amplification & self-shading
 ```{r lightamp, fig.width=5, fig.height=5, eval=T, include=T}
 # Import data from Marcelino et al. 2013
 md <- read.csv("data/marcelino2013_fig2a.csv")
@@ -35,6 +38,11 @@ lines(fit ~ seq(0, 0.5, 0.01))
 formula(mod); coef(mod)
 ```
 
+### PI curve
+```{r run1_PI, cache=T, fig.height=3}
+sym_PI(pars=defpars)
+```
+
 ### Steady states values with default parameters - no feeding
 ```{r ss, cache=T, fig.width=5, fig.height=4.4}
 # Set parameters
@@ -45,13 +53,12 @@ at <- expand.grid(L=seq(from=0, to=60, length.out=21),
                   N=seq(from=0, to=4e-6, length.out=21))
 
 # Run to steady state and plot results
-ssdat <- run_steady_states(pars=replace(defpars, c("initS", "kROS"), c(1, 100)), at=at, food=0, runtime=T)
+ssdat <- run_steady_states(pars=replace(defpars, c("initS", "kCO2"), c(1, 10)), at=at, food=0, runtime=T)
 plot_steady_states(ssdat)
 ```
 With default parameters, steady state values of specific growth are higher than usually observed in corals (skeletal growth), but patterns across environments are consistent with literature. 
 
-### Steady states values with default parameters + feeding
-```{r ss_feeding, cache=T, fig.width=5, fig.height=4.4}
+```{r ss_feeding, cache=T, fig.width=5, fig.height=4.4, eval=F, include=F}
 # Set parameters
 defpars <- def_pars()  # Get default parameters
 
@@ -60,7 +67,7 @@ at <- expand.grid(L=seq(from=0, to=60, length.out=21),
                   N=seq(from=0, to=4e-6, length.out=21))
 
 # Run to steady state and plot results
-ssdat <- run_steady_states(pars=replace(defpars, c("initS", "kROS"), c(1, 100)), at=at, food=5e-6, runtime=T)
+ssdat <- run_steady_states(pars=replace(defpars, c("initS", "kCO2"), c(1, 10)), at=at, food=5e-6, runtime=T)
 plot_steady_states(ssdat)
 ```
 With default parameters, steady state values of specific growth are higher than usually observed in corals (skeletal growth), but patterns across environments are consistent with literature. 
@@ -75,44 +82,27 @@ at <- expand.grid(L=seq(from=0, to=60, length.out=21),
                   N=seq(from=0, to=4e-6, length.out=21))
 
 # Run to steady state and plot results
-ssdat <- run_steady_states(pars=replace(defpars, c("initS", "kROS"), c(1, 200)), at=at, food=0, runtime=T)
+ssdat <- run_steady_states(pars=replace(defpars, c("initS", "kROS", "kCO2"), c(1, 120, 10)), at=at, food=0, runtime=T)
 plot_steady_states(ssdat)
 ```
 With some feeding (more realistic), can maintain growth with very low symbionts (bleached) at very high or low light with high nutrients.
 
-### Vary Light
-```{r varyL, eval=F, include=F}
-# Set run time vector
-time <- seq(1, 365, 0.5)  # if single model run, use time input
-
-# Initialize environment
-env <- init_env(time=time, L=c(5,30,2), N=c(1e-7,1e-7,0), X=c(5e-6,5e-6,0))
-
-# Set parameters
-defpars <- def_pars()  # Get default parameters
-
-# Run simulation
-run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", 0.2))#
-plot_run(run)
-```
-
-### Vary nutrients
+### Dynamic behavior: nutrients
 ```{r varyN, eval=F, include=F}
 # Set run time vector
 time <- seq(1, 365, 0.5)  # if single model run, use time input
 
 # Initialize environment
-env <- init_env(time=time, L=c(20,20,2), N=c(1e-7,4e-6,2), X=c(5e-6,5e-6,0))
+env <- init_env(time=time, L=c(20,20,2), N=c(1e-7,4e-6,2), X=c(0,0,0))
 
 # Set parameters
 defpars <- def_pars()  # Get default parameters
 
 # Run simulation
-run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", 0.25))#
+run <- run_coral(time=time, env=env, pars=replace(defpars, c("initS", "kCO2"), c(0.25, 10)))#
 plot_run(run)
 ```
 
-### Vary nutrients @ very low light
 ```{r varyN_lowL, eval=F, include=F}
 # Set run time vector
 time <- seq(1, 365, 0.5)  # if single model run, use time input
@@ -128,8 +118,24 @@ run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", 1))#
 plot_run(run)
 ```
 
-### Steadily increasing light
-```{r incrL, eval=F, include=F}
+### Dynamic behavior: light
+```{r varyL, eval=T, include=T, fig.width=5}
+# Set run time vector
+time <- seq(1, 365, 0.5)  # if single model run, use time input
+
+# Initialize environment
+env <- init_env(time=time, L=c(5,30,2), N=c(1e-7,1e-7,0), X=c(5e-6,5e-6,0))
+
+# Set parameters
+defpars <- def_pars()  # Get default parameters
+
+# Run simulation
+run <- run_coral(time=time, env=env, pars=replace(defpars, c("initS", "kCO2"), c(0.2, 10)))#
+plot_run(run)
+```
+
+### Dynamic behavior: steadily increasing light
+```{r incrL, eval=T, include=T, fig.width=5}
 # Set run time vector
 time <- seq(1, 365, 0.5)  # if single model run, use time input
 
@@ -140,83 +146,105 @@ env <- init_env(time=time, L=c(30,60,0), N=c(1e-7,1e-7,2), X=c(5e-6,5e-6,0))
 defpars <- def_pars()  # Get default parameters
 
 # Run simulation
-run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", 0.1))#
+run <- run_coral(time=time, env=env, pars=replace(defpars, c("initS", "kCO2"), c(0.1, 10)))#
 plot_run(run)
 ```
 
-### Steadily increasing light, + high N
-```{r incrL_highN, eval=F, include=F}
+### Dynamic behavior: steadily increasing light, + high N
+```{r incrL_highN, eval=T, include=T, fig.width=5}
 # Set run time vector
 time <- seq(1, 365, 0.5)  # if single model run, use time input
 
 # Initialize environment
-env <- init_env(time=time, L=c(15,60,0), N=c(2e-6,2e-6,2), X=c(5e-6,5e-6,0))
+env <- init_env(time=time, L=c(30,60,0), N=c(2e-6,2e-6,2), X=c(5e-6,5e-6,0))
 
 # Set parameters
 defpars <- def_pars()  # Get default parameters
 
 # Run simulation
-run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", 0.5))#
+run <- run_coral(time=time, env=env, pars=replace(defpars, c("initS", "kCO2"), c(0.15, 10)))#
 plot_run(run)
 ```
 
-### Both on same plot
-```{r incrL_multiline, eval=F, include=F}
-time <- seq(1, 365, 0.5)  # Set time
+### Dynamic behavior: high light
+```{r varyHL, eval=T, include=T, fig.width=5}
+# Set run time vector
+time <- seq(1, 365, 0.5)  # if single model run, use time input
+
+# Initialize environment
+env <- init_env(time=time, L=c(5,45,2), N=c(1e-7,1e-7,0), X=c(5e-6,5e-6,0))
+
+# Set parameters
 defpars <- def_pars()  # Get default parameters
 
-# Run 1
-env1 <- init_env(time=time, L=c(15,60,0), N=c(1e-7,1e-7,2), X=c(5e-6,5e-6,0))
-run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", 0.1))
-# Run 2
-env2 <- init_env(time=time, L=c(15,60,0), N=c(2e-6,2e-6,2), X=c(5e-6,5e-6,0))
-run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", 0.5))
-# Run 3
-env3 <- init_env(time=time, L=c(15,60,0), N=c(4e-6,4e-6,2), X=c(5e-6,5e-6,0))
-run3 <- run_coral(time=time, env=env3, pars=replace(defpars, "initS", 0.5))
-# Run 4
-env4 <- init_env(time=time, L=c(15,60,0), N=c(1e-7,1e-7,2), X=c(0,0,0))
-run4 <- run_coral(time=time, env=env4, pars=replace(defpars, "initS", 0.2))
-
-# Plot
-plot(NA, xlim=range(time), ylim=c(0,0.5))
-with(run1, lines(time, S$S/H$H, lty=1))
-with(run2, lines(time, S$S/H$H, lty=2))
-with(run3, lines(time, S$S/H$H, lty=3))
-with(run4, lines(time, S$S/H$H, lty=4))
+# Run simulation
+run <- run_coral(time=time, env=env, pars=replace(defpars, c("initS", "kCO2"), c(0.2, 10)))#
+plot_run(run)
 ```
 
-```{r incrL_multiline1, include=F, eval=F}
+### Dynamic behavior: high light - 3 years
+```{r varyHL3, eval=T, include=T, fig.width=5}
+# Set run time vector
+time <- seq(1, 1095, 0.5)  # if single model run, use time input
+
+# Initialize environment
+env <- init_env(time=time, L=c(5,45,2), N=c(1e-7,1e-7,0), X=c(5e-6,5e-6,0))
+
+# Set parameters
+defpars <- def_pars()  # Get default parameters
+
+# Run simulation
+run <- run_coral(time=time, env=env, pars=replace(defpars, c("initS", "kCO2"), c(0.2, 10)))#
+plot_run(run)
+```
+
+### Dynamic behavior: high light - 3 years - no feeding
+```{r varyHL3noF, eval=T, include=T, fig.width=5}
+# Set run time vector
+time <- seq(1, 1095, 0.5)  # if single model run, use time input
+
+# Initialize environment
+env <- init_env(time=time, L=c(20,45,2), N=c(1e-7,1e-7,0), X=c(0,0,0))
+
+# Set parameters
+defpars <- def_pars()  # Get default parameters
+
+# Run simulation
+run <- run_coral(time=time, env=env, pars=replace(defpars, c("initS", "kCO2"), c(0.2, 10)))#
+plot_run(run)
+```
+
+### Dynamic behavior: high light & interacting factors
+```{r incrL_multiline1, include=T, eval=T, fig.width=5}
 time <- seq(1, 200, 0.5)  # Set time
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "kNPQ", 112)
 
 # Run 1
-env1 <- init_env(time=time, L=c(15,40,2), N=c(1e-7,1e-7,2), X=c(5e-6,5e-6,0))
-run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", 0.12))
+env1 <- init_env(time=time, L=c(15,40,2), N=c(1e-7,1e-7,0), X=c(2e-6,2e-6,0))
+run1 <- run_coral(time=time, env=env1, pars=replace(defpars, c("initS", "kCO2"), c(0.12, 8)))
 # Run 2 - increase food
-env2 <- init_env(time=time, L=c(15,40,2), N=c(1e-7,1e-7,2), X=c(10e-6,10e-6,0))
-run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", 0.12))
+env2 <- init_env(time=time, L=c(15,40,2), N=c(1e-7,1e-7,0), X=c(8e-6,8e-6,0))
+run2 <- run_coral(time=time, env=env2, pars=replace(defpars, c("initS", "kCO2"), c(0.12, 8)))
 # Run 3 - increase DIN
-env3 <- init_env(time=time, L=c(15,40,2), N=c(2e-6,2e-6,2), X=c(10e-6,10e-6,0))
-run3 <- run_coral(time=time, env=env3, pars=replace(defpars, "initS", 0.25))
+env3 <- init_env(time=time, L=c(15,40,2), N=c(1e-6,1e-6,0), X=c(2e-6,2e-6,0))
+run3 <- run_coral(time=time, env=env3, pars=replace(defpars, c("initS", "kCO2"), c(0.16, 8)))
 
 
 # Plot
-plot(time, env1$L, col=alpha("gold", 0.5), type="l", lwd=2, axes=F)
+par(mfrow=c(1,1), mar=c(4,4,3,4))
+plot(time, env1$L, col=alpha("gold", 0.5), type="l", lwd=2, axes=F, xlab="Time", ylab="S/H biomass ratio")
+axis(side=4); mtext(side=4, text="Light (mol m-2 d-1)", line=2)
 par(new=T)
-plot(NA, xlim=range(time), ylim=c(0,0.3), yaxs="i")
+plot(NA, xlim=range(time), ylim=c(0,0.2), yaxs="i", ylab="", xlab="")
 with(run1, lines(time, S$S/H$H, lty=1))
 with(run2, lines(time, S$S/H$H, lty=2))
 with(run3, lines(time, S$S/H$H, lty=3))
+legend("topright", legend=c("default", "+feeding", "+DIN"), lty=c(1,2,3))
 
 ```
 
 
-##### Plot run 1 symbiont PI curve
-```{r run1_PI, cache=T, fig.height=3}
-sym_PI(pars=defpars)
-```
 
 ##### Plot run 1 output
 ```{r abb, fig.height=8, fig.width=3, eval=F, include=F}
