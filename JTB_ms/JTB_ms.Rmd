@@ -1,5 +1,5 @@
 ---
-title: A simplified dynamic bioenergetic model for coral-*Symbiodinium* symbioses
+title: A simplified dynamic bioenergetic model for coral bleaching
 author:
   - name: Ross Cunning
     email: ross.cunning@gmail.com
@@ -18,6 +18,10 @@ address:
     address: Department of Ecology, Evolution, and Marine Biology, Santa Barbara, CA 93106, USA
 abstract: |
   This is the abstract.
+  Some type of positive feedback is necessary.
+  Compare scenarios of recycling CO2, have photodamage increase maintenance that does recycle CO2.
+  Compare recycled N to symbiont instead of host
+  How much do you have to reduce the light to get recovery? i.e., magnitude of hysteresis?
 
 bibliography: library.bib
 output: 
@@ -62,6 +66,7 @@ Table 1. Model fluxes
 | $j_{HG}$  | Host biomass formation rate            | CmolH CmolH^-1^ d^-1^| 5 |
 | $r_{NH}$  | Recycled nitrogen from host turnover   | molN CmolH^-1^ d^-1^ | 6 |
 | $\rho_N$  | Nitrogen shared with the symbiont      | molN CmolH^-1^ d^-1^ | 7 |
+| $j_{eC}$  | Excess carbon used to activate host CCMs| molC CmolH^-1^ d^-1^ |  |
 | $j_L$     | Light absorption rate                  | molph CmolS^-1^ d^-1^| 9 |
 | $j_{CO_2}$| CO~2~ input to photosynthesis          | molCO~2~ CmolH^-1^ d^-1^| 10 |
 | $r_{CH}$  | Recycled CO~2~ from host turnover      | molCO~2~ CmolH^-1^ d^-1^| 11 |
@@ -92,19 +97,18 @@ Table 2. Model parameters
 | $K_X$ | Half-saturation constant for prey uptake by host | 20e-6 | molX L^-1^ | 
 | $j_{Nm}$ | Maximum specific DIN uptake rate by host | 0.048 | molN CmolH^-1^ d^-1^ |
 | $K_N$ | Half-saturation constant for DIN uptake by host | 0.46e-6 | molN L^-1^ | 
-| $j_{CO_2}^p$ | Passive CO~2~ delivery to symbiont | 4.04e-3 | molC CmolH^-1^ d^-1^ |
-| $j_{CO_2}^a$ | Active CO~2~ delivery to symbiont | 0.32--18.0 | molC CmolH^-1^ d^-1^ |
+| $k_{CO_2}$ | Efficacy of CO~2~ delivery by host CCMs | 5 | molCO~2~ molC^-1^ |
 | $j_{HGm}$ | Maximum specific growth rate of host | 1 | CmolH CmolH^-1^ d^-1^ |
-| $n_{LC}$ | Quantum yield of photosynthesis | 0.1 | molC mol ph^-1^ |
+| $y_{CL}$ | Quantum yield of photosynthesis | 0.1 | molC mol ph^-1^ |
 | $\bar{a}^*$ | Effective light-absorbing cross-section of symbiont | 1.34 | m^2^ CmolS^-1^ |
 | $k_{NPQ}$ | NPQ capacity of symbiont, relative to C-fixation | 4 | -- |
 | $k_{ROS}$ | Excess photon energy that doubles ROS production, relative to baseline levels | 40-80 | mol ph CmolS^-1^ d^-1^ |
 | $k$ | Exponent on ROS production rate | 1 | -- |
 | $j_{CPm}$ | Maximum specific photosynthesis rate of symbiont | 2.8 | molC CmolS^-1^ d^-1^ |
 | $j_{SGm}$ | Maximum specific growth rate of symbiont | 0.25 | CmolS CmolS^-1^ d^-1^ |
-| $b$ | Scaling parameter for strength of bleaching response | 3 | -- |
+| $b$ | Scaling parameter for strength of bleaching response | 5 | -- |
 
-![Graphical representation of coral-algal symbiosis model. Light, CO~2~, prey, and DIN are acquired from the external environment proportional to the biomass of the partner indicated by the black box for uptake. Mass fluxes (see Table 1 for definitions) are represented by $j$'s with subscripts indicating the type of mass, and in some cases the process (e.g., $j_{CP}$ is the flux of carbon produced by photosynthesis), and $\rho$'s indicate fluxes that are shared by one partner with the other. Parallel complementary synthesizing units (SUs) are represented by large circles, and rejection fluxes from these SUs are indicated by dashed lines. $c_{ROS}$ is a proportional rate that impacts other model fluxes by inhibition or acceleration. Recycled mass fluxes from biomass turnover are not shown for clarity (but see Table 1 for definitions).](../img/Fig1.png)
+![Graphical representation of coral-algal symbiosis model. Light, CO~2~, prey, and DIN are acquired from the external environment proportional to the biomass of the partner indicated by the black box for uptake. Mass fluxes (see Table 1 for definitions) are represented by $j$'s with subscripts indicating the type of mass, and in some cases the process (e.g., $j_{CP}$ is the flux of carbon produced by photosynthesis), and $\rho$'s indicate fluxes that are shared by one partner with the other. Parallel complementary synthesizing units (SUs) are represented by large circles, and rejection fluxes from these SUs are indicated by dashed lines. $c_{ROS}$ is a proportional rate that impacts other model fluxes by inhibition or acceleration; likewise, $j_{eC}$ accelerates the rate of $j_{CO_2}$. Recycled mass fluxes from biomass turnover are not shown for clarity (but see Table 1 for definitions).](../img/Fig1.png)
 
 ## State equations
 The balance equations for symbiont and host biomass are expressed as:
@@ -131,15 +135,21 @@ Coral biomass formation is then specified by a parallel complementary SU that co
 
 where $\rho_C$ is the surplus fixed carbon shared by the symbiont (see below), and $r_{NH}$ is the recycled portion of the nitrogen liberated by host biomass turnover: 
 
-\begin{equation} r_{NH}=\sigma_{NH}j_{HT}^0 \end{equation}
+\begin{equation} r_{NH}=\sigma_{NH}n_{NH}j_{HT}^0 \end{equation}
 
 The amount of nitrogen input to the coral biomass SU in excess of what is actually consumed in biomass formation (i.e., surplus nitrogen, or the rejection flux[^1] of the SU) is then made available to the symbiont:
 
 \begin{equation} \rho_N = (j_N + n_{NX}j_X + r_{NH} - n_{NH}j_{HG})_+ \end{equation} 
 
-[^1]: Rejection fluxes must always be positive, and hence are specified with the notation $(x)_+$, which means $max(x, 0)$. 
+[^1]: Rejection fluxes must always be positive, and hence are specified with the notation $(x)_+$, which means $max(x, 0)$.
 
-Due to the inherent inefficiency of the parallel complementary SU formulation, there is always some nitrogen shared with the symbiont even when coral biomass formation is strongly nitrogen-limited. Likewise, there is always a non-zero rejection flux of carbon from the coral biomass SU, which is assumed to be lost to the environment.
+The carbon rejected from this SU reflects the amount of excess fixed carbon available to the host that is not used in biomass formation:
+
+\begin{equation} j_{eC} = (jX + \rho_C{S \over H} - j_{HG})_+ \end{equation}
+
+This flux, $j_{eC}$, is assumed to be available as a respiratory substrate to support various energetically-demanding processes; of particular importance is the host's active supply of CO~2~ for symbiont photosynthesis [@Wooldridge:2013tj; @Hopkinson:2015ev] (see below).
+
+Due to the inherent inefficiency of the parallel complementary SU formulation, there is always some nitrogen shared with the symbiont even when coral biomass formation is strongly nitrogen-limited. Likewise, there is always a non-zero rejection flux of excess carbon from the coral biomass SU.
 
 ## *Symbiodinium* fluxes
 
@@ -151,9 +161,9 @@ This amplification factor is then multiplied by the external downwelling irradia
 
 \begin{equation} j_L =  A \cdot L \cdot \bar{a}^* \end{equation}
 
-We then specify two pathways for input of inorganic carbon to the photosynthesis SU: 1) passive diffusion of CO~2~ from the external environment ($j_{CO_2}^p$), and 2) active delivery of CO~2~ to the symbiont by the host ($j_{CO_2}^a$). The passive flux ensures that some CO~2~ is always available to photosynthesis, and the active flux encompasses potentially diverse mechanisms by which the host may enhance CO~2~ availability for the symbiont, including active transport of bicarbonate, carbonic anhydrase-catalyzed conversion of bicarbonate to CO~2~ to promote diffusion toward the symbiont [@Tansik:2015cm], and acidification of the symbiosome to increase localized CO~2~ concentrations around the symbiont [@Barott:2014gx]. Since the host physically separates the symbiont from the external environment, both the passive and active flux rates are proportional to host biomass. A more rigorous, mechanistic model of inorganic carbon processing would require spatially explicit internal pools accounting for pH and carbon speciation, which is beyond the current scope of this work. Instead, the specification of fixed passive and active CO~2~ input rates, $j_{CO_2}^p$ and $j_{CO_2}^a$, offers the user the opportunity to compare different rates of CO~2~ delivery that may characterize different coral species [@Wooldridge:2014di]. The input of CO~2~ to the photosynthesis SU is therefore specified as:
+We then specify the input of CO~2~ to photosynthesis as $j_{CO_2}$, which is mediated by the host. This encompasses potentially diverse mechanisms by which the host may enhance CO~2~ availability for photosynthesis (i.e., carbon-concentrating mechanisms (CCMs)), including active transport of bicarbonate, carbonic anhydrase-catalyzed conversion of bicarbonate to CO~2~ to promote diffusion toward the symbiont [@Tansik:2015cm], and acidification of the symbiosome to increase localized CO~2~ concentrations around the symbiont [@Barott:2014gx]. Since these mechanisms require energetic input by the host, the magnitude of CO~2~ delivery is set proportional to $j_{eC}$, the amount of excess carbon from the host biomass SU, assuming that some of this carbon is respired to energize these CCMs. This formulation means that the symbiont indirectly ensures its own CO~2~ supply by providing the host with fixed carbon [@Wooldridge:2013tj], which establishes a positive feedback in the model that proves to be essential in simulating the phenomenon of coral bleaching. The parameter $k_{CO_2}$ is included to scale the efficacy of host CCMs, i.e., how many moles of CO~2~ can be delivered from the environment to the symbiont per mole of fixed carbon. Adjusting this parameter offers the user the opportunity to compare different rates of CO~2~ delivery that may characterize different coral species [@Wooldridge:2014di]. The input of CO~2~ to the photosynthesis SU is therefore specified as:
 
-\begin{equation} j_{CO_2} = j_{CO_2}^p + j_{CO_2}^a \end{equation}
+\begin{equation} j_{CO_2} = k_{CO_2}j_{eC} \end{equation}
 
 Additional metabolic CO~2~ recycled from both the host and symbiont biomass turnover is also made available to the photosynthesis SU, according to:
 
@@ -162,19 +172,19 @@ Additional metabolic CO~2~ recycled from both the host and symbiont biomass turn
 
 Fixed carbon is then produced by the photosynthesis SU according to:
 
-\begin{equation} j_{CP} = \bigg({1 \over j_{CPm}} + {1 \over {n_{LC} j_L }} + {1 \over {(j_{CO_2} + r_{CH}){H \over S} + r_{CS}}} - {1 \over {n_{LC} j_L + (j_{CO_2} + r_{CH}){H \over S} + r_{CS}}}\bigg)^{-1} \cdot c_{ROS}^{-1} \end{equation}
+\begin{equation} j_{CP} = \bigg({1 \over j_{CPm}} + {1 \over {y_{CL} j_L }} + {1 \over {(j_{CO_2} + r_{CH}){H \over S} + r_{CS}}} - {1 \over {y_{CL} j_L + (j_{CO_2} + r_{CH}){H \over S} + r_{CS}}}\bigg)^{-1} \cdot c_{ROS}^{-1} \end{equation}
 
 where $j_{CPm}$ is the maximum specific rate of photosynthesis, and $c_{ROS}$ is the relative rate of reactive oxygen species production (see below). Dividing the photosynthetic rate by $c_{ROS}$ causes a decline in response to photooxidative stress (i.e., photoinhibition).
 
 Light energy absorbed in excess of what is used to fix carbon is specified by the SU "rejection flux", according to:
 
-\begin{equation} j_{eL} = (j_L - j_{CP} / n_{LC})_+ \end{equation}
+\begin{equation} j_{eL} = (j_L - j_{CP} / y_{CL})_+ \end{equation}
 
-This excess light energy must be quenched by alternative pathways in order to prevent photooxidative damage [@Powles:1984tm]. *Symbiodinium* utilize a variety of pathways for non-photochemical quenching [NPQ; @Roth:2014wf], which we collect in a relative NPQ capacity specified as a parameter of the symbiont ($k_{NPQ}$). NPQ capacity may also be susceptible to reduction by photoinhibition, so the total NPQ capacity is specified as:
+This excess light energy must be quenched by alternative pathways in order to prevent photooxidative damage [@Powles:1984tm]. *Symbiodinium* utilize a variety of pathways for non-photochemical quenching [NPQ; @Roth:2014wf], which we collect in a relative NPQ capacity specified as a parameter of the symbiont ($k_{NPQ}$). The total NPQ flux is specified as a single-substrate SU formula:
 
-\begin{equation} j_{NPQ}= k_{NPQ} \cdot c_{ROS}^{-1} \end{equation}
+\begin{equation} j_{NPQ} = \bigg({1 \over k_{NPQ}} + {1 \over j_{eL}}\bigg)^{-1} \end{equation}
 
-If light energy further exceeds the total capacity of both carbon fixation and NPQ, then reactive oxygen species (ROS) are produced. We represent this as a relative quantity $c_{ROS}$, which takes a value of 1 when all light absorbed can be quenched by photochemistry and NPQ, and increases as the amount of excess excitation energy further increases:
+If light energy further exceeds the total capacity of both photochemistry and NPQ, then reactive oxygen species (ROS) are produced. We represent this as a relative quantity $c_{ROS}$, which takes a value of 1 when all light absorbed can be quenched by photochemistry and NPQ, and increases as the amount of excess excitation energy further increases:
 
 \begin{equation} c_{ROS} = 1 + \bigg({{(j_{eL} - j_{NPQ})_+} \over k_{ROS}}\bigg)^k \end{equation}
 
@@ -182,7 +192,7 @@ where $k_{NPQ}$, $k_{ROS}$, and $k$ are parameters of the symbiont that determin
 
 Carbon fixed by photosynthesis ($j_{CP}$) is then combined with nitrogen shared by the host ($\rho_N$) and nitrogen recycled from symbiont biomass turnover
 
-\begin{equation} r_{NS}=\sigma_{NS}j_{ST}^0 \end{equation}
+\begin{equation} r_{NS}=\sigma_{NS}n_{NS}j_{ST}^0 \end{equation}
 
 to build new symbiont biomass, following the SU equation:
 
@@ -198,11 +208,11 @@ Symbiont biomass turnover includes a component of constant turnover specified by
 
 \begin{equation} j_{ST} = j_{ST}^0(1 + b(c_{ROS}-1)) \end{equation}
 
-This second component of symbiont biomass loss can represent both photodamage and/or symbiont expulsion (i.e., bleaching), both of which occur in response to high levels or ROS production. The parameter $b$ is included to scale biomass loss due to bleaching in response to ROS. (Note that recycling of symbiont biomass turnover ($rNS$ and $rCS$) only occurs based on the maintenance component of turnover (i.e., $j_{ST}^0$), and not the bleaching-related component, as this loss represents biomass that is damaged or expelled from the host). 
+This second component of symbiont biomass loss can represent both photodamage and/or symbiont expulsion (i.e., bleaching), both of which occur in response to high levels of ROS production. The parameter $b$ is included to scale biomass loss due to bleaching in response to ROS. (Note that recycling of symbiont biomass turnover ($rNS$ and $rCS$) only occurs based on the maintenance component of turnover (i.e., $j_{ST}^0$), and not the bleaching-related component, as this loss represents biomass that is damaged or expelled from the host). 
 
 ## Numerical analysis
 
-A time-stepping Euler method was used to solve the state equations since the production and rejection fluxes of the SUs are imiplicitly defined. Specifically, the rejection fluxes of carbon and nitrogen from the symbiont and host biomass SUs act as reciprocal input fluxes to the other SU. In addition, the rejection flux of excitation energy from the photosynthesis SU acts to reduce its own production flux (i.e., photoinhibition), and hence a discretized time-stepping procedure was necessary. A vector of time values was created for each simulation run, along which dynamic environmental forcing functions (irradiance, DIN, and prey abundance) can be designed. These vectors, along with initial values of symbiont and host biomass, then serve as input to the time-stepping function, which solves for the current system state using values of the previous system state where necessary. A time step of 0.1 days was used for all simulations, which were performed using R code that is available in the data repository accompanying this article: [github.com/jrcunning/Rcoral](github.com/jrcunning/Rcoral). 
+A time-stepping Euler method was used to solve the state equations since the production and rejection fluxes of the SUs are imiplicitly defined. Specifically, the rejection fluxes of carbon and nitrogen from the symbiont and host biomass SUs act as reciprocal input fluxes to the other SU. In addition, the photosynthesis SU receives CO~2~ proportional to the carbon rejection flux from the host biomass SU, and the rejection flux of excitation energy from the photosynthesis SU acts to reduce its own production (i.e., photoinhibition). A vector of time values was created for each simulation run, along which dynamic environmental forcing functions (irradiance, DIN, and prey abundance) can be designed. These vectors, along with initial values of symbiont and host biomass, then serve as input to the time-stepping function, which solves for the current system state using values of the previous system state where necessary. A time step of 0.1 days was used for all simulations, which were performed using R code that is available in the data repository accompanying this article: [github.com/jrcunning/Rcoral](github.com/jrcunning/Rcoral). 
 
 To aid in visualizing model results, we calculated values to indicate the degree to which product formation at an SU was limited by availability of either of its two substrates:
 
@@ -210,14 +220,11 @@ To aid in visualizing model results, we calculated values to indicate the degree
 
 where $j_{S1}$ and $j_{S2}$ are the specific input fluxes of the two substrates and $j_{Pm}$ is the maximum specific product formation rate, all with units of Cmol Cmol^-1^ d^-1^.
 
-# Sensitivity analysis -- should come after the steady states bc describes changes in steady states
+# Results
+## Qualitative dynamics
+In a constant environment, the system ultimately reaches a steady state of exponential growth or decline. Under some conditions, alternate steady states can be reached depending on initial values of symbiont and host biomass. The mechanism that produces these alternate steady states is the positive feedback between carbon-limitation of the host and CO~2~-limitation of photosynthesis. If the host becomes carbon-limited, the efficacy of its CCMs are reduced and photosynthesis becomes progressively more CO~2~-limited. In turn, less photosynthate is translocated to the host, causing further carbon-limitation and an ultimate decline in biomass; this steady state represents a dysfunctional symbiosis. However, if the host is not carbon-limited, it effectively delivers CO~2~ to photosynthesis and ensures its continued receipt of fixed carbon from the symbiont; this system is nitrogen-limited and represents a functional symbiosis with positive exponential growth. Either of these stable states may be reached under a constant environment depending on the initial values of symbiont and host biomass: if symbiont biomass is initially very low (i.e., a "bleached" coral), the system cannot escape the carbon-limited state and cannot grow. However, if symbiont biomass is initially high (i.e., a healthy coral), then the system maintains positive growth in a nitrogen-limited state. For practical purposes, we consider only positive growth states in the "steady state behavior" section below. In the "dynamic behavior" section, we explore the conditions that cause the system to switch from one state to another, which in a biological context indicates coral bleaching.
 
-Each default parameter value used in the model (Table 2) is based on carefully selected relevant literature. A supplementary document detailing the derivations of each of these default parameter values is provided. Nevertheless, it is important to evaluate the sensitivity of the model to changes in these parameter values. We measured fractional change in steady state values in response to fractional change in parameter values, relative to their default values (Table 2).
-
-![Sensitivity analysis. Plots show the fractional change in steady state values in response to fractional changes in default parameter values (see Table 2 for default values). Parameters are grouped by which processes they are involved in. Sensitivity in response to changes in each parameter was evaluated in each of four environments (indicated by line type): 1) LLLN=low light (2 mol ph m^-2^ d^-1^) and low DIN (1e-7 mol L^-1^), 2) LLHN=low light (2 mol ph m^-2^ d^-1^) and high DIN (4e-6 mol L^-1^), 3) HLLN=high light (30 mol ph m^-2^ d^-1^) and low DIN (1e-7 mol L^-1^), and 4) HLHN=high light (30 mol ph m^-2^ d^-1^) and high DIN (4e-6 mol L^-1^).](../img/Fig3.png)
-
-
-# Steady state behavior
+## Steady state behavior
 
 *emphasize that steady state is exponential growth, and fluxes are per unit biomass/specific rates*
 To analyze qualitative behavior, we ran the model to steady state across gradients of external irradiance and nutrients (Fig. 2), which revealed patterns consistent with observed phenomena in corals. Predicted growth rates are low at low light and DIN, and begin increasing as both of these factors increase (Fig. 2A). Low light is limiting to photosynthesis (Fig. 2D), which leads to carbon-limitation of host growth (Fig. 2B) and an associated increase in the symbiont to host biomass ratio (Fig. 2C). In agreement with this trend are many observations of negative correlation between irradiance and symbiont density [@Stimson:1997p3837; @Brown:1999p3534; @Fitt:2000p3792; @Titlyanov:2001p3631]. As higher light alleviates light-limitation of photosynthesis, growth becomes less carbon-limited. Similarly, elevating DIN up to ~2 µM alleviates nitrogen-limitation (Fig. 2B). Increased growth at higher DIN is predicted by the DEB model of @Muller:2009io, and has also been observed experimentally [@MullerParker:1994uo; @Tanaka:2007uv; @Tanaka:2013dj]. However, DIN elevation beyond a certain point (e.g., 2-3 µM in these simulations) has little effect on growth as carbon becomes limiting (Fig. 2B). Very high nutrient levels may even reduce growth [@Shantz:2015dz], although these impacts are not likely to occur within the range of concentrations considered here (<4 µM) [@FerrierPages:2000p1950]. 
@@ -234,7 +241,14 @@ While bleaching in response to high light alone has been observed experimentally
 
 The incorporation of light stress in the model sets an upper limit to the amount of light at which a stable symbiotic interaction can be maintained, but even below this threshold of breakdown, negative effects of high light reduce steady state growth and symbiont:host biomass (Fig. 2A,C). This gradual decline is consistent with experimental results showing that high light levels decrease growth [@Schutter:2011ie], and field studies documenting optimum growth rates at intermediate depths [@Baker:1975ip; @Huston:1985ec]. Consequently, the model predicts greater variation in state variables across light gradients than was predicted by the model of @Muller:2009io, which did not include photoinhibition and photodamage. It is important to recognize that these are steady state values predicted under a constant environment at the given light and nutrient levels; a dynamic system may temporarily cross this threshold and experience a period of symbiont loss (bleaching) and reduced growth, after which a return to benign conditions may restore symbiont biomass and positive growth. To explore this further and illustrate the behavior of the model in more detail, we evaluate a number of dynamic simulations below.
 
-# Dynamic behavior
+## Sensitivity analysis -- should come after the steady states bc describes changes in steady states
+
+Each default parameter value used in the model (Table 2) is based on carefully selected relevant literature. A supplementary document detailing the derivations of each of these default parameter values is provided. Nevertheless, it is important to evaluate the sensitivity of the model to changes in these parameter values. We measured fractional change in steady state values in response to fractional change in parameter values, relative to their default values (Table 2).
+
+![Sensitivity analysis. Plots show the fractional change in steady state values in response to fractional changes in default parameter values (see Table 2 for default values). Parameters are grouped by which processes they are involved in. Sensitivity in response to changes in each parameter was evaluated in each of four environments (indicated by line type): 1) LLLN=low light (2 mol ph m^-2^ d^-1^) and low DIN (1e-7 mol L^-1^), 2) LLHN=low light (2 mol ph m^-2^ d^-1^) and high DIN (4e-6 mol L^-1^), 3) HLLN=high light (30 mol ph m^-2^ d^-1^) and low DIN (1e-7 mol L^-1^), and 4) HLHN=high light (30 mol ph m^-2^ d^-1^) and high DIN (4e-6 mol L^-1^).](../img/Fig3.png)
+
+## Dynamic behavior
+Therefore, we are highly interested in the conditions under which the system switches from one state to another, representing the conditions under which corals "bleach" due to progressive, reinforcing carbon-limitation. Interestingly, this state can be reached in multiple ways, by the acceleration of photoinhibition and photodamage, or by high external DIN, which causes the symbiont to share less carbon, subsequently causing its own CO2-limitation, and progressive C-limitation of the system.
 ## varying light: consequences of excess light and light-limitation
 ## varying DIN: role of N-limitation and consequences of elevated N
 ## elevated nutrients cause system to become C-limited (photo: CO2 limited; host: fixed-C limited)
