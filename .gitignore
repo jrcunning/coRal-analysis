@@ -4,3 +4,5 @@ Rmd/tmp*
 .Rdata
 R/jCO2_analysis_cache
 R/jCO2_analysis_files
+Rmd/analyze_cache
+Rmd/analyze_files
