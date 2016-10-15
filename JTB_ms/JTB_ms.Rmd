@@ -97,13 +97,12 @@ Table 2. Model parameters
 | $K_X$ | Half-saturation constant for prey uptake by host | 20e-6 | molX L^-1^ | 
 | $j_{Nm}$ | Maximum specific DIN uptake rate by host | 0.048 | molN CmolH^-1^ d^-1^ |
 | $K_N$ | Half-saturation constant for DIN uptake by host | 0.46e-6 | molN L^-1^ | 
-| $k_{CO_2}$ | Efficacy of CO~2~ delivery by host CCMs | 5 | molCO~2~ molC^-1^ |
+| $k_{CO_2}$ | Efficacy of CO~2~ delivery by host CCMs | 10 | molCO~2~ molC^-1^ |
 | $j_{HGm}$ | Maximum specific growth rate of host | 1 | CmolH CmolH^-1^ d^-1^ |
 | $y_{CL}$ | Quantum yield of photosynthesis | 0.1 | molC mol ph^-1^ |
 | $\bar{a}^*$ | Effective light-absorbing cross-section of symbiont | 1.34 | m^2^ CmolS^-1^ |
-| $k_{NPQ}$ | NPQ capacity of symbiont, relative to C-fixation | 4 | -- |
+| $k_{NPQ}$ | NPQ capacity of symbiont | 112 | mol ph CmolS^-1^ d^-1^ |
 | $k_{ROS}$ | Excess photon energy that doubles ROS production, relative to baseline levels | 40-80 | mol ph CmolS^-1^ d^-1^ |
-| $k$ | Exponent on ROS production rate | 1 | -- |
 | $j_{CPm}$ | Maximum specific photosynthesis rate of symbiont | 2.8 | molC CmolS^-1^ d^-1^ |
 | $j_{SGm}$ | Maximum specific growth rate of symbiont | 0.25 | CmolS CmolS^-1^ d^-1^ |
 | $b$ | Scaling parameter for strength of bleaching response | 5 | -- |
@@ -186,9 +185,9 @@ This excess light energy must be quenched by alternative pathways in order to pr
 
 If light energy further exceeds the total capacity of both photochemistry and NPQ, then reactive oxygen species (ROS) are produced. We represent this as a relative quantity $c_{ROS}$, which takes a value of 1 when all light absorbed can be quenched by photochemistry and NPQ, and increases as the amount of excess excitation energy further increases:
 
-\begin{equation} c_{ROS} = 1 + \bigg({{(j_{eL} - j_{NPQ})_+} \over k_{ROS}}\bigg)^k \end{equation}
+\begin{equation} c_{ROS} = 1 + {{(j_{eL} - j_{NPQ})_+} \over k_{ROS}} \end{equation}
 
-where $k_{NPQ}$, $k_{ROS}$, and $k$ are parameters of the symbiont that determine the onset and rate of ROS production. Importantly, $c_{ROS}$ as specified here is not a function of absolute light absorption, but rather the amount of excess light energy, $j_{eL}$, after accounting for carbon fixation and NPQ. A direct consequence of this formulation is that CO~2~-limitation of photosynthesis can lead to ROS production, an important mechanism [@Wooldridge:2009p7807] that was not captured by previous representations of photooxidative stress [@Eynaud:2011tv]. Moreover, this formulation allows functional diversity among symbiont types to be explored by changing the parameters $k_{NPQ}$, $k_{ROS}$, and $k$.
+where $k_{NPQ}$ and $k_{ROS}$ are parameters of the symbiont that determine the onset and rate of ROS production. Importantly, $c_{ROS}$ as specified here is not a function of absolute light absorption, but rather the amount of excess light energy, $j_{eL}$, after accounting for carbon fixation and NPQ. A direct consequence of this formulation is that CO~2~-limitation of photosynthesis can lead to ROS production, an important mechanism [@Wooldridge:2009p7807] that was not captured by previous representations of photooxidative stress [@Eynaud:2011tv]. Moreover, this formulation allows functional diversity among symbiont types to be explored by changing the parameters $k_{NPQ}$, $k_{ROS}$, and $k$.
 
 Carbon fixed by photosynthesis ($j_{CP}$) is then combined with nitrogen shared by the host ($\rho_N$) and nitrogen recycled from symbiont biomass turnover
 
