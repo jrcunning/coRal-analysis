@@ -50,8 +50,8 @@ defpars <- def_pars()  # Get default parameters
 envs <- list(
   LLLN=init_env(time=time, L=c(2,2,0), N=c(1e-7,1e-7,0), X=c(0,0,0)),
   LLHN=init_env(time=time, L=c(2,2,0), N=c(4e-6,4e-6,0), X=c(0,0,0)),
-  HLLN=init_env(time=time, L=c(30,30,0), N=c(1e-7,1e-7,0), X=c(0,0,0)),
-  HLHN=init_env(time=time, L=c(30,30,0), N=c(4e-6,4e-6,0), X=c(0,0,0))
+  HLLN=init_env(time=time, L=c(25,25,0), N=c(1e-7,1e-7,0), X=c(0,0,0)),
+  HLHN=init_env(time=time, L=c(25,25,0), N=c(4e-6,4e-6,0), X=c(0,0,0))
 )
 
 # Set up cluster for parallel processing
@@ -61,7 +61,6 @@ registerDoParallel(cl)
 # Run sensitivity analysis in each environment for each parameter
 levs <- seq(0.5, 1.5, 0.1)  # Set levels of % change in parameter value to evaluate
 jCPm.sens <- foreach(i=1:4) %dopar% vsens(par="jCPm", levs=levs, env=envs[[i]])
-jCO2a.sens <- foreach(i=1:4) %dopar% vsens(par="jCO2a", levs=levs, env=envs[[i]])
 astar.sens <- foreach(i=1:4) %dopar% vsens(par="astar", levs=levs, env=envs[[i]])
 jNm.sens <- foreach(i=1:4) %dopar% vsens(par="jNm", levs=levs, env=envs[[i]])
 KN.sens <- foreach(i=1:4) %dopar% vsens(par="KN", levs=levs, env=envs[[i]])
@@ -71,6 +70,10 @@ jSGm.sens <- foreach(i=1:4) %dopar% vsens(par="jSGm", levs=levs, env=envs[[i]])
 jHGm.sens <- foreach(i=1:4) %dopar% vsens(par="jHGm", levs=levs, env=envs[[i]])
 kNPQ.sens <- foreach(i=1:4) %dopar% vsens(par="kNPQ", levs=levs, env=envs[[i]])
 kROS.sens <- foreach(i=1:4) %dopar% vsens(par="kROS", levs=levs, env=envs[[i]])
+kCO2.sens <- foreach(i=1:4) %dopar% vsens(par="kCO2", levs=levs, env=envs[[i]])
+b.sens <- foreach(i=1:4) %dopar% vsens(par="b", levs=levs, env=envs[[i]])
+#jXm
+#KX
 
 stopCluster(cl)  # Stop cluster
 

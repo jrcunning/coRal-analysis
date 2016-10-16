@@ -79,11 +79,11 @@ plot_steady_states <- function(ss, png=NULL) {
   }
   
   # Plot steady states (save to .png if filename given to png argument)
-  if (!is.null(png)) png(png, width=5, height=4.4, units="in", res=300)
-  par(mfrow=c(2,2))
+  if (!is.null(png)) png(png, width=5, height=2.2, units="in", res=300)
+  par(mfrow=c(1,2))
   imagef(gr, bin=0.01, main="A. Specific growth", col="grayscale")
-  imagef(hl, bin=0.25, main="B. Host growth limitation", col=list("#67001F","#053061"))
-  imagef(sh, bin=0.05, main="C. Symbiont:host biomass", col="grayscale")
-  imagef(pl, bin=0.5, main="D. Photosynthesis limitation", col=list("#67001F", "gray30"))
+  #imagef(hl, bin=0.25, main="B. Host growth limitation", col=list("#67001F","#053061"))
+  imagef(sh, bin=0.05, main="B. Symbiont:host biomass", col="grayscale")
+  #imagef(pl, bin=0.5, main="D. Photosynthesis limitation", col=list("#67001F", "gray30"))
   if (!is.null(png)) dev.off()
 }
