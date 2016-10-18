@@ -16,7 +16,7 @@ sapply(c("R/conversions.R", "R/def_pars.R", "R/init_env.R", "R/plot_results.R",
          "R/explore_NPQ.R"), source, .GlobalEnv)
 ```
 
-![](../img/model_new.png)
+![](../img/Fig1.png)
 
 
 ### Steady states values with default parameters - no feeding
