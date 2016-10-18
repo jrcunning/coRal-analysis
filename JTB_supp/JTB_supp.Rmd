@@ -1,10 +1,12 @@
 ---
-title: "JTB supplement"
+title: "A simplified dynamic bioenergetic model for coral-algal symbiosis and coral bleaching"
 author: "Ross Cunning, Erik B. Muller, Ruth D. Gates, Roger M. Nisbet"
-date: "October 14, 2016"
 output: html_document
 bibliography: library.bib
 ---
+
+# Supplementary Information
+This supplement provides justification and derivations from the literature for all parameter values used in the model, as well as additional figures that demonstrate the structure and behavior of the model and its specific components.
 
 ```{r setup, include=FALSE}
 knitr::opts_knit$set(root.dir = normalizePath(".."))
@@ -20,20 +22,17 @@ sapply(c("R/conversions.R", "R/def_pars.R", "R/init_env.R", "R/plot_results.R",
 defpars <- def_pars()
 ```
 
-This supplement provides justification and derivations from the literature for all parameter values used in the model, as well as additional figures that demonstrate the structure and behavior of the model and its specific components.
-
-## Parameter values
-
-All parameter values used in the model are listed here along with the relevant literature that provides a basis for the value. In most cases, the units of the values reported in the literature needed to be converted to units appropriate for the model, which was accomplished using a set of stoichiometric conversion factors also based on reported literature (see "R/conversions.R" in this paper's data repository). The specific calculations used to convert values from units reported in the literature to relevant units for the model can be found in the R Markdown code used to produce this document.
+## Parameter value derivations
+All parameters in the model are listed here along with the relevant literature that provides a basis for the value used. In most cases, the units of the values reported in the literature needed to be converted to units appropriate for the model, which was accomplished using a consistent set of stoichiometric conversion factors also based on reported literature (see "R/conversions.R" in this paper's data repository). The specific calculations used to convert values from the units reported in the literature to the relevant units for the model can be found in the RMarkdown code used to produce this document.
 
 * $n_{NH}$: N:C molar ratio in host biomass
     + @Horwitz:2015cf measured a C:N ratio of 5.53 in anemones under control conditions, which converts to:
     + Value used: `r defpars$nNH` (N:C ratio, dimensionless)
 * $n_{NS}$: N:C molar ratio in symbiont biomass
-    + The Redfield ratio (following @Muller:2009io)
+    + This value should approximate the Redfield ratio (following @Muller:2009io).
     + Value used: `r defpars$nNS` (dimensionless)
 * $n_{NX}$: N:C molar ratio in prey biomass
-    + Assuming the coral feeds primarily on zooplankton, a general heterotroph has a N:C ratio of 0.2 [@Muller:2009io]
+    + Assuming the coral feeds primarily on zooplankton, a general heterotroph has a N:C ratio of 0.2 [@Muller:2009io].
     + Value used: `r defpars$nNX` (N:C ratio, dimensionless)
 * $j_{HT}^0$: Specific turnover rate of host biomass
     + @Jacobson:2016bk parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate (analagous to the turnover rate in the current model) of 0.03 CmolH CmolH^-1^ d^-1^.
@@ -75,7 +74,7 @@ All parameter values used in the model are listed here along with the relevant l
     + @Hennige:2009p3439 measured spectra-weighted absoprtion coefficients from 400 to 700nm *ā\**~(400-700)~ for eight *Symbiodinium* types in culture at two different light levels, and reported a (grand mean) value of 0.01095 m^2^ mg chl *a*^-1^ [from Table 6]. This converts to:
     + Value used: `r round(0.01095 * mg.g * gchlA.gC * gC.molC, 2)` m^2^ CmolS^-1^
 * $k_{NPQ}$: Capacity of non-photochemical quenching
-    + @Gorbunov:2001p4181 report that the capacity of non-photochemical quenching is approximately 4 times the capacity of photochemistry on a sunny day. Therefore, we take the maximum relative capacity of NPQ to be 4 times the maximum rate of photochemical quenching (see below), giving a value of:
+    + @Gorbunov:2001p4181 report that the capacity of non-photochemical quenching is approximately 4 times the capacity of photochemistry on a sunny day. Therefore, we take the maximum relative capacity of NPQ to be 4 times the maximum rate of photochemical quenching ($j_{CPm}$; see below), giving a value of:
     + Value used: `r defpars$jCPm / defpars$yCL * 4` mol ph CmolS^-1^ d^-1^
 * $k_{ROS}$: Amount of excitation energy not quenched by photoehcemistry or NPQ that doubles relative production of ROS
     + @McGinty:2012ck report a ~4-fold increase in ROS production in *Symbiodinium* C1 under stressful conditions relative to control. We chose a value of $k_{ROS}$ that similarly produced a ~4-fold increase in ROS production at the highest light level (see Figure S2):
@@ -98,8 +97,9 @@ md <- read.csv("data/marcelino2013_fig2a.csv")
 md$S.H <- md$density * cm2.m2 / CmolR.m2 * CmolS.cellS  # Convert units of symbiont density to CmolS/CmolR
 md$A <- md$E + 1  # Convert "E"=excess light metric of Marcelino to "A"=amplification factor
 # Plot data
+par(mfrow=c(1,1), mar=c(3,3,3,3), mgp=c(1.2,0,0), cex=1, tck=0.025)
 plot(md$A ~ md$S.H, pch=c(21,23,22)[factor(md$spp)], bg=c("white", "black", "gray")[factor(md$spp)], 
-     ylab="A", ylim=c(1,3.2),
+     ylab="A (Amplification factor)", ylim=c(1,3.2),
      xlab="S:H biomass")
 legend("topright", legend=levels(md$spp), pch=c(21,23,22), pt.bg=c("white", "black", "gray"), inset=0.02)
 # Fit exponential decay model and plot fitted values
@@ -113,7 +113,7 @@ text(0.13,2.9, labels=paste0(c("x=",coefs[1],"; y=",coefs[2],"; z=",coefs[3]), c
 ```
 
 ## Figure S2. Photosynthesis-Irradiance curves of modeled symbiont.
-```{r run1_PI, cache=T, fig.height=3, fig.width=5, echo=F, fig.cap="The amount of light energy quenched through photochemistry (red line) and non-photochemical quenching (black line), and the relative production of reactive oxygen species (orange line) are plotted as a function of the scalar irradiance experienced by the symbiont (note different y-axes for each line). These simulations represent the behavior of the photosynthesis SU independent of the host and without CO~2~ limitation of photosynthesis (*j~CO2~* set to a very high value). The structure of the photosynthesis SU, with the negative feedback between excess light and photosynthesis rate, produces the classic shape of a P-I curve demonstrating photoinhibition, suggesting the mechanism is robust."}
+```{r run1_PI, cache=F, fig.height=4, fig.width=7, echo=F, fig.cap="The amount of light energy quenched through photochemistry (red line) and non-photochemical quenching (black line), and the relative production of reactive oxygen species (orange line) are plotted as a function of the scalar irradiance experienced by the symbiont (note different y-axes for each line). These simulations represent the behavior of the photosynthesis SU independent of the host and without CO~2~ limitation of photosynthesis (*j~CO2~* set to a very high value). The structure of the photosynthesis SU, with the negative feedback between excess light and photosynthesis rate, produces the classic shape of a P-I curve demonstrating photoinhibition, suggesting the mechanism is robust."}
 sym_PI(pars=def_pars())
 ```
 
