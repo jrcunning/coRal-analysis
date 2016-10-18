@@ -653,7 +653,7 @@ molN L\textsuperscript{-1}
 Efficacy of CO\textsubscript{2} delivery by host CCMs
 \strut\end{minipage} &
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-5
+10
 \strut\end{minipage} &
 \begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
 molCO\textsubscript{2} molC\textsuperscript{-1}
@@ -698,13 +698,13 @@ m\textsuperscript{2} CmolS\textsuperscript{-1}
 \(k_{NPQ}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
-NPQ capacity of symbiont, relative to C-fixation
+NPQ capacity of symbiont
 \strut\end{minipage} &
 \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-4
+112
 \strut\end{minipage} &
 \begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
---
+mol ph CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(k_{ROS}\)
@@ -718,18 +718,6 @@ levels
 \strut\end{minipage} &
 \begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
 mol ph CmolS\textsuperscript{-1} d\textsuperscript{-1}
-\strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-\(k\)
-\strut\end{minipage} &
-\begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
-Exponent on ROS production rate
-\strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-1
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
---
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{CPm}\)
@@ -875,41 +863,36 @@ absorption, which is modified substantially relative to external
 downwelling irradiance owing to multiple scattering by the coral
 skeleton and self-shading by surrounding symbionts (Enríquez, Méndez,
 and Iglesias-Prieto 2005; Marcelino et al. 2013). We used data from
-Marcelino et al. (2013) to empirically derive an ``amplification
-factor'' \(A\) (the ratio of internal scalar irradiance to external
-downwelling irradiance) as a function of symbiont density (expressed as
-symbiont to host biomass ratio), which is specified as:
+Marcelino et al. (2013) to empirically derive an amplification factor,
+\(A\), indicating the ratio of internal scalar irradiance to external
+downwelling irradiance as a function of symbiont density (S:H biomass),
+which is specified as:
 
 \begin{equation} A = 1.26 + 1.39 \cdot \exp(-6.48 \cdot {S \over H}) \end{equation}
 
 This amplification factor is then multiplied by the external downwelling
 irradiance \(L\) and the effective light-absorbing surface area of
-symbiont biomass \(\bar{a}^*\) to specify the total amount of light
-absorbed:
+symbiont biomass \(\bar{a}^*\) to specify the total light absorption:
 
 \begin{equation} j_L =  A \cdot L \cdot \bar{a}^* \end{equation}
 
 We then specify the input of CO\textsubscript{2} to photosynthesis as
-\(j_{CO_2}\), which is mediated by the host. This encompasses
-potentially diverse mechanisms by which the host may enhance
-CO\textsubscript{2} availability for photosynthesis (i.e.,
-carbon-concentrating mechanisms (CCMs)), including active transport of
-bicarbonate, carbonic anhydrase-catalyzed conversion of bicarbonate to
-CO\textsubscript{2} to promote diffusion toward the symbiont (Tansik,
-Fitt, and Hopkinson 2015), and acidification of the symbiosome to
-increase localized CO\textsubscript{2} concentrations around the
-symbiont (Barott et al. 2014). Since these mechanisms require energetic
-input by the host, the magnitude of CO\textsubscript{2} delivery is set
-proportional to \(j_{eC}\), the amount of excess carbon from the host
-biomass SU, assuming that some of this carbon is respired to energize
-these CCMs. This formulation means that the symbiont indirectly ensures
-its own CO\textsubscript{2} supply by providing the host with fixed
-carbon (Wooldridge 2013), which establishes a positive feedback in the
-model that proves to be essential in simulating the phenomenon of coral
-bleaching. The parameter \(k_{CO_2}\) is included to scale the efficacy
-of host CCMs, i.e., how many moles of CO\textsubscript{2} can be
-delivered from the environment to the symbiont per mole of fixed carbon.
-Adjusting this parameter offers the user the opportunity to compare
+\(j_{CO_2}\), a flux mediated by the host that encompasses potentially
+diverse carbon-concentrating mechanisms (CCMs), including active
+transport of bicarbonate, carbonic anhydrase-catalyzed conversion of
+bicarbonate to CO\textsubscript{2} to promote diffusion toward the
+symbiont (Tansik, Fitt, and Hopkinson 2015), and acidification of the
+symbiosome to increase localized CO\textsubscript{2} concentrations
+around the symbiont (Barott et al. 2014). Since these mechanisms require
+energetic input by the host, the magnitude of CO\textsubscript{2}
+delivery is proportional to the host's excess carbon, \(j_{eC}\),
+assuming that some of this carbon is respired to energize these CCMs.
+This formulation means that the symbiont indirectly ensures its own
+CO\textsubscript{2} supply by providing fixed carbon to the host
+(Wooldridge 2013), which establishes a positive feedback in the model
+that leads to the existence of multiple stable states, which we discuss
+below in the context of coral bleaching. The parameter \(k_{CO_2}\)
+scales the efficacy of host CCMs, which enables the comparison of
 different rates of CO\textsubscript{2} delivery that may characterize
 different coral species (Wooldridge 2014a). The input of
 CO\textsubscript{2} to the photosynthesis SU is therefore specified as:
@@ -929,7 +912,9 @@ Fixed carbon is then produced by the photosynthesis SU according to:
 where \(j_{CPm}\) is the maximum specific rate of photosynthesis, and
 \(c_{ROS}\) is the relative rate of reactive oxygen species production
 (see below). Dividing the photosynthetic rate by \(c_{ROS}\) causes a
-decline in response to photooxidative stress (i.e., photoinhibition).
+decline in response to photooxidative stress at high light levels, and
+the emergent outcome of this SU formulation demonstrates a classic
+photoinhibition response (see Fig. S1).
 
 Light energy absorbed in excess of what is used to fix carbon is
 specified by the SU ``rejection flux'', according to:
@@ -945,26 +930,24 @@ flux is specified as a single-substrate SU formula:
 
 \begin{equation} j_{NPQ} = \bigg({1 \over k_{NPQ}} + {1 \over j_{eL}}\bigg)^{-1} \end{equation}
 
-If light energy further exceeds the total capacity of both carbon
-fixation and NPQ, then reactive oxygen species (ROS) are produced. We
-represent this as a relative quantity \(c_{ROS}\), which takes a value
-of 1 when all light absorbed can be quenched by photochemistry and NPQ,
-and increases as the amount of excess excitation energy further
-increases:
+If light energy further exceeds the capacity of both photochemistry and
+NPQ, then reactive oxygen species (ROS) are produced. We represent this
+as a relative quantity \(c_{ROS}\), taking a value of 1 when all light
+energy is quenched by photochemistry and NPQ, and increasing as the
+amount of excess excitation energy increases:
 
-\begin{equation} c_{ROS} = 1 + \bigg({{(j_{eL} - j_{NPQ})_+} \over k_{ROS}}\bigg)^k \end{equation}
+\begin{equation} c_{ROS} = 1 + {{(j_{eL} - j_{NPQ})_+} \over k_{ROS}} \end{equation}
 
-where \(k_{NPQ}\), \(k_{ROS}\), and \(k\) are parameters of the symbiont
-that determine the onset and rate of ROS production. Importantly,
-\(c_{ROS}\) as specified here is not a function of absolute light
-absorption, but rather the amount of excess light energy, \(j_{eL}\),
-after accounting for carbon fixation and NPQ. A direct consequence of
-this formulation is that CO\textsubscript{2}-limitation of
-photosynthesis can lead to ROS production, an important mechanism
+where \(k_{ROS}\) is a parameter of the symbiont that determines the
+rate of ROS production (specifically, the amount of excess excitation
+energy that doubles ROS production relative to baseline levels).
+Importantly, \(c_{ROS}\) is specified here not as a function of absolute
+external light, but rather the amount of excess light, \(j_{eL}\), after
+accounting for quenching by carbon fixation and NPQ. A direct
+consequence of this formulation is that CO\textsubscript{2}-limitation
+of photosynthesis can lead to ROS production, an important mechanism
 (Wooldridge 2009) that was not captured by previous representations of
-photooxidative stress (Eynaud, Nisbet, and Muller 2011). Moreover, this
-formulation allows functional diversity among symbiont types to be
-explored by changing the parameters \(k_{NPQ}\), \(k_{ROS}\), and \(k\).
+photooxidative stress (Eynaud, Nisbet, and Muller 2011).
 
 Carbon fixed by photosynthesis (\(j_{CP}\)) is then combined with
 nitrogen shared by the host (\(\rho_N\)) and nitrogen recycled from
@@ -993,33 +976,34 @@ production.
 
 \begin{equation} j_{ST} = j_{ST}^0(1 + b(c_{ROS}-1)) \end{equation}
 
-This second component of symbiont biomass loss can represent both
+This second component of symbiont biomass loss represents both
 photodamage and/or symbiont expulsion (i.e., bleaching), both of which
-occur in response to high levels or ROS production. The parameter \(b\)
+occur in response to high levels of ROS production. The parameter \(b\)
 is included to scale biomass loss due to bleaching in response to ROS.
 (Note that recycling of symbiont biomass turnover (\(rNS\) and \(rCS\))
 only occurs based on the maintenance component of turnover (i.e.,
 \(j_{ST}^0\)), and not the bleaching-related component, as this loss
-represents biomass that is damaged or expelled from the host).
+represents biomass that is damaged or expelled from the host.)
 
 \subsection{Numerical analysis}\label{numerical-analysis}
 
 A time-stepping Euler method was used to solve the state equations since
-the production and rejection fluxes of the SUs are imiplicitly defined.
-Specifically, the rejection fluxes of carbon and nitrogen from the
-symbiont and host biomass SUs act as reciprocal input fluxes to the
-other SU. In addition, the rejection flux of excitation energy from the
-photosynthesis SU acts to reduce its own production flux (i.e.,
-photoinhibition), and hence a discretized time-stepping procedure was
-necessary. A vector of time values was created for each simulation run,
-along which dynamic environmental forcing functions (irradiance, DIN,
-and prey abundance) can be designed. These vectors, along with initial
-values of symbiont and host biomass, then serve as input to the
-time-stepping function, which solves for the current system state using
-values of the previous system state where necessary. A time step of 0.1
-days was used for all simulations, which were performed using R code
-that is available in the data repository accompanying this article:
-\url{github.com/jrcunning/Rcoral}.
+the production and rejection fluxes of the SUs are imiplicitly defined
+due to feedbacks present in the model. Specifically, the rejection
+fluxes of carbon and nitrogen from the symbiont and host biomass SUs act
+as reciprocal input fluxes to the other SU. In addition, the
+photosynthesis SU receives CO\textsubscript{2} proportional to the
+carbon rejection flux from the host biomass SU, and the rejection flux
+of excitation energy from the photosynthesis SU acts to reduce its own
+production (i.e., photoinhibition). A vector of time steps is used for
+each simulation, along which dynamic environmental forcing functions
+(irradiance, DIN, and prey abundance) can be designed. These vectors,
+along with initial values of symbiont and host biomass, then serve as
+input to the time-stepping function, which solves for the current system
+state using values of the previous system state where necessary. A time
+step of 0.1 days was used for all simulations, which were performed
+using R code that is available in the data repository accompanying this
+article: \url{github.com/jrcunning/Rcoral}.
 
 To aid in visualizing model results, we calculated values to indicate
 the degree to which product formation at an SU was limited by
@@ -1029,38 +1013,52 @@ availability of either of its two substrates:
 
 where \(j_{S1}\) and \(j_{S2}\) are the specific input fluxes of the two
 substrates and \(j_{Pm}\) is the maximum specific product formation
-rate, all with units of Cmol Cmol\textsuperscript{-1}
-d\textsuperscript{-1}.
+rate, in units of Cmol Cmol\textsuperscript{-1} d\textsuperscript{-1}.
 
 \section{Results}\label{results}
 
 \subsection{Qualitative dynamics}\label{qualitative-dynamics}
 
-simulations in constant environs show either positive or negative
-exponential growth. some environments show two steady states, one with
-positive and one with negative growth, depending on initial conditions.
-based on numerical analysis, we see ultimate exponential growth or
-decline. the mechanism that produces these alternate steady states is:
-\ldots{}. . for practical purposes, we are interested in the positive
-growth steady states and their properties and how they change across
-environmental gradients (see section X). but we are also interested in
-the possibility for flips to the alternate steady states (see section
-Y).
+In a constant environment, the system ultimately reaches a steady state
+of exponential growth or decline. Under some conditions, alternate
+steady states can be reached depending on initial values of symbiont and
+host biomass. The mechanism that produces these alternate steady states
+is the positive feedback between carbon-limitation of the host and
+CO\textsubscript{2}-limitation of photosynthesis. If the host becomes
+carbon-limited, the efficacy of its CCMs are reduced and photosynthesis
+becomes progressively more CO\textsubscript{2}-limited. In turn, less
+photosynthate is translocated to the host, causing further
+carbon-limitation and an ultimate decline in biomass; this steady state
+represents a dysfunctional symbiosis. However, if the host is not
+carbon-limited, it effectively delivers CO\textsubscript{2} to
+photosynthesis and ensures its continued receipt of fixed carbon from
+the symbiont; this system is nitrogen-limited and represents a
+functional symbiosis with positive exponential growth. Either of these
+stable states may be reached under (some sets of) constant environmental
+conditions, depending on the initial values of symbiont and host
+biomass: if symbiont biomass is initially very low (i.e., a ``bleached''
+coral), the system cannot escape the carbon-limited state and cannot
+grow. However, if symbiont biomass is initially high (i.e., a healthy
+coral), then the system maintains positive growth in a nitrogen-limited
+state. For practical purposes, we consider only positive growth steady
+states in the ``steady state behavior'' section below. In the subsequent
+``dynamic behavior'' section, we explore more thoroughly the conditions
+that cause the system to switch between alternate stable states, and
+interpret these dynamics in the context of coral bleaching.
 
 \subsection{Steady state behavior}\label{steady-state-behavior}
 
-\emph{emphasize that steady state is exponential growth, and fluxes are
-per unit biomass/specific rates} To analyze qualitative behavior, we ran
-the model to steady state across gradients of external irradiance and
-nutrients (Fig. 2), which revealed patterns consistent with observed
-phenomena in corals. Predicted growth rates are low at low light and
-DIN, and begin increasing as both of these factors increase (Fig. 2A).
-Low light is limiting to photosynthesis (Fig. 2D), which leads to
-carbon-limitation of host growth (Fig. 2B) and an associated increase in
-the symbiont to host biomass ratio (Fig. 2C). In agreement with this
-trend are many observations of negative correlation between irradiance
-and symbiont density (Stimson 1997; Brown et al. 1999; Fitt et al. 2000;
-Titlyanov et al. 2001). As higher light alleviates light-limitation of
+To analyze qualitative behavior, we ran the model to steady state across
+gradients of external irradiance and nutrients (Fig. 2), which revealed
+patterns consistent with observed phenomena in corals. Predicted growth
+rates are low at low light and DIN, and begin increasing as both of
+these factors increase (Fig. 2A). Low light is limiting to
+photosynthesis (Fig. 2D), which leads to carbon-limitation of host
+growth (Fig. 2B) and an associated increase in the symbiont to host
+biomass ratio (Fig. 2C). In agreement with this trend are many
+observations of negative correlation between irradiance and symbiont
+density (Stimson 1997; Brown et al. 1999; Fitt et al. 2000; Titlyanov et
+al. 2001). As higher light alleviates light-limitation of
 photosynthesis, growth becomes less carbon-limited. Similarly, elevating
 DIN up to \textasciitilde{}2 µM alleviates nitrogen-limitation (Fig.
 2B). Increased growth at higher DIN is predicted by the DEB model of
@@ -1227,37 +1225,24 @@ L\textsuperscript{-1}).}
 
 \subsection{Dynamic behavior}\label{dynamic-behavior}
 
-\subsection{varying light: consequences of excess light and
-light-limitation}\label{varying-light-consequences-of-excess-light-and-light-limitation}
-
-\subsection{varying DIN: role of N-limitation and consequences of
-elevated
-N}\label{varying-din-role-of-n-limitation-and-consequences-of-elevated-n}
-
-\subsection{elevated nutrients cause system to become C-limited (photo:
-CO2 limited; host: fixed-C
-limited)}\label{elevated-nutrients-cause-system-to-become-c-limited-photo-co2-limited-host-fixed-c-limited}
-
-\subsection{C-limitation increases susceptibility to
-bleaching}\label{c-limitation-increases-susceptibility-to-bleaching}
-
-\subsection{consequences of a less efficient but more tolerant
-symbiont}\label{consequences-of-a-less-efficient-but-more-tolerant-symbiont}
-
-\subsection{Rate of symbiont repopulation (Berner et al.
-1993)}\label{rate-of-symbiont-repopulation-berner-et-al.-1993}
-
-\subsection{Bicarbonate addition promotes coral growth (Marubini and
-Thake
-1999)}\label{bicarbonate-addition-promotes-coral-growth-marubini-and-thake-1999}
-
-\subsection{Seasonal change in sym. density is larger when nutrients are
-elevated (Stimson 1997). Such a phenomenon was predicted by Fitt et al.
-2000.}\label{seasonal-change-in-sym.-density-is-larger-when-nutrients-are-elevated-stimson-1997.-such-a-phenomenon-was-predicted-by-fitt-et-al.-2000.}
-
-\subsection{Death rule: negative growth for a certain amount of time
-should be
-defensible.}\label{death-rule-negative-growth-for-a-certain-amount-of-time-should-be-defensible.}
+Therefore, we are highly interested in the conditions under which the
+system switches from one state to another, representing the conditions
+under which corals ``bleach'' due to progressive, reinforcing
+carbon-limitation. Interestingly, this state can be reached in multiple
+ways, by the acceleration of photoinhibition and photodamage, or by high
+external DIN, which causes the symbiont to share less carbon,
+subsequently causing its own CO2-limitation, and progressive
+C-limitation of the system. \#\# varying light: consequences of excess
+light and light-limitation \#\# varying DIN: role of N-limitation and
+consequences of elevated N \#\# elevated nutrients cause system to
+become C-limited (photo: CO2 limited; host: fixed-C limited) \#\#
+C-limitation increases susceptibility to bleaching \#\# consequences of
+a less efficient but more tolerant symbiont \#\# Rate of symbiont
+repopulation (Berner et al. 1993) \#\# Bicarbonate addition promotes
+coral growth (Marubini and Thake 1999) \#\# Seasonal change in sym.
+density is larger when nutrients are elevated (Stimson 1997). Such a
+phenomenon was predicted by Fitt et al. 2000. \#\# Death rule: negative
+growth for a certain amount of time should be defensible.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
