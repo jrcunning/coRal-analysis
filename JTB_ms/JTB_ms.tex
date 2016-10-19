@@ -1049,39 +1049,6 @@ interpret these dynamics in the context of coral bleaching.
 
 \subsection{Steady state behavior}\label{steady-state-behavior}
 
-To analyze qualitative behavior, we ran the model to steady state across
-gradients of external irradiance and nutrients (Fig. 2), which revealed
-patterns consistent with observed phenomena in corals. Predicted growth
-rates are low at low light and DIN (\textasciitilde{}0.01
-d\textsuperscript{-1}), and begin increasing as both of these factors
-increase (Fig. 2A). Low light is limiting to photosynthesis (Fig. 2D),
-which leads to carbon-limitation of host growth (Fig. 2B) and an
-associated increase in the symbiont to host biomass ratio (Fig. 2C). In
-agreement with this trend are many observations of negative correlation
-between irradiance and symbiont density (Stimson 1997; Brown et al.
-1999; Fitt et al. 2000; Titlyanov et al. 2001). As higher light
-alleviates light-limitation of photosynthesis, growth becomes less
-carbon-limited. Similarly, elevating DIN up to \textasciitilde{}2 µM
-alleviates nitrogen-limitation (Fig. 2B). Increased growth at higher DIN
-is predicted by the DEB model of Muller et al. (2009), and has also been
-observed experimentally (Muller-Parker et al. 1994; Tanaka et al. 2007;
-Tanaka et al. 2013). However, DIN elevation beyond a certain point
-(e.g., \textasciitilde{}3-4 µM in these simulations) has little effect
-on growth as carbon becomes limiting (Fig. 2B). Very high nutrient
-levels may even reduce growth (Shantz, Lemoine, and Burkepile 2015),
-although these impacts are not likely to occur within the range of
-concentrations considered here (\textless{}4 µM) (Ferrier-Pagès et al.
-2000).
-
-In addition to increasing growth, DIN also increases the symbiont to
-host biomass ratio, a phenomenon also observed in reef corals (Marubini
-and Davies 1996). S:H ratios also increase under low light (Stimson
-1997; Fitt et al. 2000; Anthony and Hoegh-Guldberg 2003). At low DIN and
-intermediate light, more typical of coral reef environments, symbiont to
-host biomass ratios are around \textasciitilde{}0.1-0.3, which is
-consistent with values reported in the literature (Muscatine, R
-McCloskey, and E Marian 1981; Edmunds et al. 2011).
-
 \begin{figure}[htbp]
 \centering
 \includegraphics{../img/Fig2.png}
@@ -1099,57 +1066,76 @@ step of 1 day. Negative steady state growth rates, and corresponding S:H
 ratios, were set to zero.}
 \end{figure}
 
+To analyze qualitative behavior, we ran the model to steady state across
+gradients of external irradiance and nutrients (Fig. 2), which revealed
+patterns consistent with observed phenomena in corals. Predicted growth
+rates are low at low light and DIN (\textasciitilde{}0.01
+d\textsuperscript{-1}), and begin increasing as both of these factors
+increase (Fig. 2A). Low light limits photosynthetic rates, resulting in
+less fixed carbon shared with the host and an associated increase in the
+symbiont to host biomass ratio (Fig. 2B). In agreement with this trend
+are many observations of negative correlation between irradiance and
+symbiont density (Stimson 1997; Brown et al. 1999; Fitt et al. 2000;
+Titlyanov et al. 2001). As higher light alleviates light-limitation of
+photosynthesis, growth becomes less carbon-limited.
+
+Similarly, increasing DIN up to \textasciitilde{}2 µM alleviates
+nitrogen-limitation (Fig. 2A). Increased growth at higher DIN is
+predicted by the DEB model of Muller et al. (2009), and has also been
+observed experimentally (Muller-Parker et al. 1994; Tanaka et al. 2007;
+Tanaka et al. 2013). However, DIN elevation beyond a certain point
+(e.g., \textasciitilde{}3-4 µM in these simulations) has little effect
+on growth as carbon becomes limiting. Very high nutrient levels may even
+reduce growth (Shantz, Lemoine, and Burkepile 2015), although these
+impacts are not likely to occur within the range of concentrations
+considered here (\textless{}4 µM) (Ferrier-Pagès et al. 2000). In
+addition to increasing growth, DIN also increases the symbiont to host
+biomass ratio (Fig. 2B), a phenomenon also observed in reef corals
+(Marubini and Davies 1996). At low DIN and intermediate light, more
+typical of coral reef environments, symbiont to host biomass ratios are
+around \textasciitilde{}0.1-0.3, which is consistent with values
+reported in the literature (Muscatine, R McCloskey, and E Marian 1981;
+Edmunds et al. 2011; Hawkins et al. 2016).
+
 The maximum predicted growth rates of \textasciitilde{}0.1
 d\textsuperscript{-1}, occurring between \textasciitilde{}10-20 mol
 photons m\textsuperscript{-2} s\textsuperscript{-1} light and
 \textasciitilde{}4 µM DIN (Fig. 2A), are comparable to the rate of 0.07
 d\textsuperscript{-1} measured by Tanaka et al. (2007) under similar
-N-enriched conditions. Growth under conditions more typical of reef
-environments (\textless{}0.5 µM DIN) are within the range of
-\textasciitilde{}0.01-0.03 d\textsuperscript{-1}; these values are
-slightly higher than most specific growth rates reported in the
-literature, which are typically based on skeletal mass, and fall near or
+N-enriched conditions. Predicted growth rates under conditions more
+typical of reef environments (\textless{}0.5 µM DIN) are
+\textasciitilde{}0.01-0.03 d\textsuperscript{-1}. Observed specific
+growth rates, which are typically based on skeletal mass, fall near or
 below 0.01 d\textsuperscript{-1} (Osinga et al. 2011; Osinga et al.
 2012) (though values as high as 0.025 d\textsuperscript{-1} have been
-reported (Schutter et al. 2010)). These generally low skeletal growth
-rates relative to predicted biomass growth may be explained by
-differential substrate-limitation (i.e., CO\textsubscript{2} may limit
-calcification, which is not present in the model); indeed, tissue and
-skeletal growth may not always be well correlated (Anthony 2002).
-Furthermore, bioerosion may reduce net skeletal growth, especially in
-the field (Bak 1976). Nevertheless, when rates of increase in coral
-tissue biomass have been directly measured over short periods, values
-are consistent with model predictions (e.g., 0.07 d\textsuperscript{-1}
-in Tanaka et al. (2007)), and similar rates (0.04 d\textsuperscript{-1})
-have been measured in \emph{Aiptasia diaphana}, a non-calcifying
-symbiotic anemone (Armoza-Zvuloni et al. 2014).
+reported (Schutter et al. 2010)). That predicted growth rates are
+slightly higher than most observations is not surprising, as the model
+does not account for external ecological factors that may reduce growth,
+such as competition, predation, and bioerosion. Furthermore, the model
+does not explicitly account for skeletal formation, which may not always
+be well correlated with biomass growth, potentially due to differential
+substrate-limitation (Anthony 2002). Nevertheless, when rates of
+increase in coral tissue biomass have been directly measured over short
+periods, values are consistent with model predictions (e.g., 0.07
+d\textsuperscript{-1} in Tanaka et al. (2007)), and similar rates (0.04
+d\textsuperscript{-1}) have been measured in \emph{Aiptasia diaphana}, a
+non-calcifying symbiotic anemone (Armoza-Zvuloni et al. 2014).
 
 As irradiance continues to increase above \textasciitilde{}20 mol
 photons m\textsuperscript{-2} d\textsuperscript{-1}, growth rates
 decline until positive growth ceases above \textasciitilde{}35 µmol
-photons m\textsuperscript{-2} d\textsuperscript{-1}. The mechanism
-underlying this decline is the increase in light energy beyond the
-capacity of photosynthesis and non-photochemical quenching: excess
+photons m\textsuperscript{-2} d\textsuperscript{-1} (Fig. 2A). The
+mechanism underlying this decline is the increase in light energy beyond
+the capacity of photosynthesis and non-photochemical quenching: excess
 excitation energy generates reactive oxygen species (ROS) (Weis 2008;
 Roth 2014), which, in this model, have the phenomenological consequences
 of reducing the photosynthetic rate (representing photoinhibition) and
 increasing symbiont biomass loss (representing photodamage and/or
 symbiont expulsion) (see Eynaud, Nisbet, and Muller 2011). Together,
-these impacts reduce the symbiont to host biomass ratio (Fig. 2C), as
+these impacts reduce the symbiont to host biomass ratio (Fig. 2B), as
 occurs during coral bleaching. This reduction in symbionts consequently
 reduces the flux of fixed carbon to the host, resulting in increasing
 carbon-limitation (Fig. 2B) and eventual cessation of growth (Fig. 2A).
-Importantly, these consequences arise in the present model only when
-light energy exceeds the capacity of photochemistry and NPQ, which in
-turn depends on CO\textsubscript{2} availability. While previous models
-framed photophysiological stress as a fixed response to absolute
-irradiance levels (Eynaud, Nisbet, and Muller 2011), the current
-implementation considers the dynamic balance of multiple energy sinks in
-the causation of stress, which is more consistent with current
-understanding of symbiosis dysfunction (Wooldridge 2013), and
-establishes an important role of the host in providing
-CO\textsubscript{2} for symbiont photosynthesis (Tansik, Fitt, and
-Hopkinson 2015; Hopkinson, Tansik, and Fitt 2015).
 
 While bleaching in response to high light alone has been observed
 experimentally (Schutter et al. 2011; Downs et al. 2013), mass coral
@@ -1161,50 +1147,53 @@ in fact, any stressor that disrupts the quenching of light energy may
 lead to bleaching (Wooldridge 2010; Baker and Cunning 2015). This is
 because the proximate cause of coral bleaching is excess excitation
 energy, but the upstream events that lead to this situation may be
-diverse: indeed, elevated temperature inhibits Rubisco functioning
-(Jones et al. 1998) and repair of the D1 protein in photosystem II
+diverse: indeed, elevated temperature may inhibit Rubisco functioning
+(Jones et al. 1998) and the repair of the D1 protein in photosystem II
 (Warner, Fitt, and Schmidt 1999), which reduces the capacity of
 photochemical quenching and leads to an excess of light energy. In this
 way, elevated temperature serves to reduce the threshold above which
 light causes stress to the system (Hoegh-Guldberg 1999); importantly,
 light is still the proximate stressor. Therefore, we omitted temperature
-from the model, which serves to maintain a desired level of simplicity,
-while still allowing photophysiological stress and bleaching to be
-simulated with biological realism in response to light. Thus, the
-specific light levels that cause stress here should be interpreted in
-this context, and the effects of high light are analagous to the effects
-of high temperature.
+from the model to maintain a desired level of simplicity, while still
+allowing photophysiological stress and bleaching to be simulated with
+biological realism in response to light. Thus, while the model is
+currently accurate from a conceptual and mechanistic standpoint, its
+value as a predictive tool under scenarios of changing temperature will
+require further development.
 
 The incorporation of light stress in the model sets an upper limit to
 the amount of light at which a stable symbiotic interaction can be
 maintained, but even below this threshold of breakdown, negative effects
 of high light reduce steady state growth and symbiont:host biomass (Fig.
-2A,C). This gradual decline is consistent with experimental results
-showing that high light levels decrease growth (Schutter et al. 2011),
-and field studies documenting optimum growth rates at intermediate
-depths (Baker and Weber 1975; Huston 1985). Consequently, the model
-predicts greater variation in state variables across light gradients
-than was predicted by the model of Muller et al. (2009), which did not
-include photoinhibition and photodamage. It is important to recognize
-that these are steady state values predicted under a constant
-environment at the given light and nutrient levels; a dynamic system may
-temporarily cross this threshold and experience a period of symbiont
-loss (bleaching) and reduced growth, after which a return to benign
-conditions may restore symbiont biomass and positive growth. To explore
-this further and illustrate the behavior of the model in more detail, we
-evaluate a number of dynamic simulations below.
+2). This gradual decline is consistent with experimental results showing
+that high light levels decrease growth (Schutter et al. 2011), and field
+studies documenting optimum growth rates at intermediate depths (Baker
+and Weber 1975; Huston 1985). By incorporating these impacts of light
+stress, the model predicts greater, and more realistic, variation in
+state variables across light gradients than was predicted by the model
+of Muller et al. (2009), which did not include photoinhibition and
+photodamage.
 
-\subsection{Sensitivity analysis -- should come after the steady states
-bc describes changes in steady
-states}\label{sensitivity-analysis-should-come-after-the-steady-states-bc-describes-changes-in-steady-states}
+It is important to recognize that the boundary set by photo-oxidative
+stress on a stable symbiosis under steady state conditions (Fig. 2) may
+be temporarily crossed by a dynamic system, which may experience a
+period of symbiont loss (bleaching) and reduced growth, after which a
+return to benign conditions may restore symbiont biomass and positive
+growth. To explore this further and illustrate the behavior of the model
+in more detail, we evaluate a number of dynamic simulations below (see
+``Dynamic behavior'').
+
+\subsection{Sensitivity analysis}\label{sensitivity-analysis}
 
 Each default parameter value used in the model (Table 2) is based on
-carefully selected relevant literature. A supplementary document
-detailing the derivations of each of these default parameter values is
-provided. Nevertheless, it is important to evaluate the sensitivity of
-the model to changes in these parameter values. We measured fractional
-change in steady state values in response to fractional change in
-parameter values, relative to their default values (Table 2).
+carefully selected relevant literature. The derivations of each of these
+default parameter values are described in the Supplementary Information.
+Nevertheless, it is important to evaluate the sensitivity of the model
+to changes in these parameter values. Moreover, these sensitivity plots
+serve to demonstrate the behavior of the dynamical system. We measured
+fractional change in steady state values in response to fractional
+changes in parameter values, relative to their default values, under
+environmental conditions typical of coral reefs.
 
 \begin{figure}[htbp]
 \centering
@@ -1220,6 +1209,21 @@ Sensitivity analyses conducted other environmental conditions are
 presented in the Supplementary Information.}
 \end{figure}
 
+Overall, relative changes in the steady state of the system were less
+than the equivalent relative change in parameter value, indicating that
+the system maintains internal stability. However, changes in certain
+parameter values have greater impacts: increasing \(j_{Nm}\) or
+decreasing \(K_N\) both dramatically increase host growth, demonstrating
+the strong nitrogen-limitation that characterizes these symbioses (REF).
+The parameterr \(\bar{a}^*\) has a strong impact on S:H biomass ratios,
+because this parameter determines the amount of light absorbed by
+symbionts, thus low values of this parameter increase light-limitation
+of the system. Altering the maximum growth and turnover rates of
+symbiont and host biomass also have expected impacts on steady states.
+Parameters having to do with photooxidative stress and bleaching have
+little impact under these environmental conditions, but of course have
+larger impacts under higher light (e.g., Fig. S6).
+
 \subsection{Dynamic behavior}\label{dynamic-behavior}
 
 Therefore, we are highly interested in the conditions under which the
@@ -1233,13 +1237,24 @@ C-limitation of the system. \#\# varying light: consequences of excess
 light and light-limitation \#\# varying DIN: role of N-limitation and
 consequences of elevated N \#\# elevated nutrients cause system to
 become C-limited (photo: CO2 limited; host: fixed-C limited) \#\#
-C-limitation increases susceptibility to bleaching \#\# consequences of
-a less efficient but more tolerant symbiont \#\# Rate of symbiont
-repopulation (Berner et al. 1993) \#\# Bicarbonate addition promotes
-coral growth (Marubini and Thake 1999) \#\# Seasonal change in sym.
-density is larger when nutrients are elevated (Stimson 1997). Such a
-phenomenon was predicted by Fitt et al. 2000. \#\# Death rule: negative
-growth for a certain amount of time should be defensible.
+C-limitation increases susceptibility to bleaching Importantly, these
+negative impacts of high irradiance only arise when light energy exceeds
+the capacity of photochemistry and NPQ, which in turn depends on
+CO\textsubscript{2} availability. While previous models framed
+photophysiological stress as a fixed response to absolute irradiance
+levels (Eynaud, Nisbet, and Muller 2011), the current implementation
+considers the dynamic balance of multiple energy sinks in the causation
+of stress, which is more consistent with current understanding of
+symbiosis dysfunction (Wooldridge 2013), and establishes an important
+role of the host in providing CO\textsubscript{2} for symbiont
+photosynthesis (Tansik, Fitt, and Hopkinson 2015; Hopkinson, Tansik, and
+Fitt 2015). \#\# consequences of a less efficient but more tolerant
+symbiont \#\# Rate of symbiont repopulation (Berner et al. 1993) \#\#
+Bicarbonate addition promotes coral growth (Marubini and Thake 1999)
+\#\# Seasonal change in sym. density is larger when nutrients are
+elevated (Stimson 1997). Such a phenomenon was predicted by Fitt et al.
+2000. \#\# Death rule: negative growth for a certain amount of time
+should be defensible.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
@@ -1250,12 +1265,6 @@ Anthony, K. 2002. ``Comparative analysis of energy allocation to tissue
 and skeletal growth in corals.'' \emph{Limnology and Oceanography} 47
 (5): 1417--29.
 \url{https://www.scopus.com/inward/record.uri?partnerID=HzOxMe3b\&scp=0036733455\&origin=inward}.
-
-\hypertarget{ref-Anthony:2003p3632}{}
-Anthony, Kenneth R N, and Ove Hoegh-Guldberg. 2003. ``Variation in coral
-photosynthesis, respiration and growth characteristics in contrasting
-light microhabitats: an analogue to plants in forest gaps and
-understoreys?'' \emph{Functional Ecology} 17 (April): 246--59.
 
 \hypertarget{ref-ArmozaZvuloni:2014ju}{}
 Armoza-Zvuloni, Rachel, Esti Kramarsky-Winter, Yossi Loya, Ami
@@ -1355,6 +1364,14 @@ Glynn, Peter W, Juan L Maté, Andrew C Baker, and MO Calderón. 2001.
 1997-1998 El Niño-Southern Oscillation event: Spatial/temporal patterns
 and comparisons with the 1982-1983 event.'' \emph{Bulletin of Marine
 Science} 69 (1): 79--109.
+
+\hypertarget{ref-Hawkins:2016jj}{}
+Hawkins, Thomas D, Julia C G Hagemeyer, Kenneth D Hoadley, Adam G Marsh,
+and Mark E Warner. 2016. ``Partitioning of Respiration in an
+Animal-Algal Symbiosis: Implications for Different Aerobic Capacity
+between Symbiodinium spp.'' \emph{Frontiers in Physiology} 7 (April).
+Frontiers: 125.
+doi:\href{https://doi.org/10.3389/fphys.2016.00128}{10.3389/fphys.2016.00128}.
 
 \hypertarget{ref-HoeghGuldberg:1999p4222}{}
 Hoegh-Guldberg, Ove. 1999. ``Climate change, coral bleaching and the
