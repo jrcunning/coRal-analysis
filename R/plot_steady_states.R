@@ -19,7 +19,7 @@ plot_steady_states <- function(ss, png=NULL) {
   
   # Build plotting function
   imagef <- function(r, bin, main, col) {
-    par(tcl=-0.2, cex.main=1, cex.axis=0.75, mar=c(2.3,2.3,2,3.5), mgp=c(0,0.2,0))
+    par(tcl=-0.2, cex.main=1, cex.axis=0.75, mar=c(2,2,3,3), mgp=c(0,0.1,0))
     if (any(r<0, na.rm=T) & any(r>0, na.rm=T)) {
       nb <- rev(seq(0, -1*min(r[which(r!=0)], na.rm=T)+bin, bin))*-1  # negative portion of breaks
       pb <- seq(0, max(r[which(r!=0)], na.rm=T)+bin, bin)
@@ -50,15 +50,15 @@ plot_steady_states <- function(ss, png=NULL) {
     image(t(r), breaks=breaks, col=colors, xaxt="n", yaxt="n")
     #title(main=main, line=0.5, adj=-0.5, outer=F, xpd=T)
     conv <- diff(grconvertX(0:1, 'inches', 'user')) # length of one inch in user coordinates
-    text(x=par("usr")[1]-par("mai")[2]*conv, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
-         labels=main, xpd=NA, font=2)
-    mtext(side=1, text="[DIN] (mol/L)", line=1.2, cex=0.75)
+    text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+         labels=main, xpd=NA, font=2, cex=1)
+    mtext(side=1, text="[DIN] (mol/L)", line=1, cex=0.75)
     axis(side=1, at=seq(0,1,0.125), 
          labels=quantile(seq(as.numeric(first(colnames(r))),
                              as.numeric(last(colnames(r))),
                              length.out=100),
                          probs=seq(0,1,0.125)))
-    mtext(side=2, text="Light (mol ph/m2/d)", line=1.2, cex=0.75)
+    mtext(side=2, text="Light (mol ph/m2/d)", line=1, cex=0.75)
     axis(side=2, at=seq(0,1,0.1), 
          labels=quantile(seq(as.numeric(first(rownames(r))),
                              as.numeric(last(rownames(r))),
@@ -79,8 +79,8 @@ plot_steady_states <- function(ss, png=NULL) {
   }
   
   # Plot steady states (save to .png if filename given to png argument)
-  if (!is.null(png)) png(png, width=5, height=2.2, units="in", res=300)
-  par(mfrow=c(1,2))
+  if (!is.null(png)) png(png, width=7, height=3.5, units="in", res=300)
+  par(mfrow=c(1,2), mar=c(3,3,3,3))
   imagef(gr, bin=0.01, main="A. Specific growth", col="grayscale")
   #imagef(hl, bin=0.25, main="B. Host growth limitation", col=list("#67001F","#053061"))
   imagef(sh, bin=0.05, main="B. Symbiont:host biomass", col="grayscale")
