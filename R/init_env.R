@@ -21,8 +21,8 @@ init_env <- function(time, L, N, X) {
     0.5 * (L[2] - L[1]) * sin(0.0172*(time-182)) + L[1] + 0.5 * (L[2] - L[1])
   } else if (L[3]==4) {
     f <- 0.5 * (L[2] - L[1]) * sin(0.0172*time)
-    f <- rescale(f, to=c(L[1]/0.4167, L[2]))
-    ff <- rescale(1 + (0.01 / (1 + exp(0.05*(time-250)))), to=c(0.4167,1))
+    f <- rescale(f, to=c(50, L[2]))
+    ff <- rescale(1 + (0.01 / (1 + exp(0.05*(time-200)))), to=c(0.6,1))
     f * ff
   }
   
