@@ -36,7 +36,7 @@ run_coral <- function(time, env, pars) {
     jL=env$L[1] * pars$astar,
     jCP=max(0, synth(jL * pars$yCL, H$jCO2[1]*H$H/S, pars$jCPm), na.rm=T),
     jeL=max(jL - jCP/pars$yCL, 0),
-    jNPQ=pars$kNPQ/pars$yCL,
+    jNPQ=pars$kNPQ,
     jCO2w=H$jCO2*H$H/S - jCP,
     jSG=pars$jSGm/10,
     rhoC=jCP, 
@@ -58,7 +58,8 @@ run_coral <- function(time, env, pars) {
     S$jL[t] <- (1.256307 + 1.385969 * exp(-6.479055 * (S$S[t-1]/H$H[t-1]))) * env$L[t] * pars$astar
     # CO2 input flux
     S$rCS[t] <- pars$jST0 * pars$sigmaCS  # metabolic CO2 recycled from symbiont biomass turnover
-    H$rCH[t] <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
+    #H$rCH[t] <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
+    H$rCH[t] <- H$jHT[t-1] * S$S[t-1]/H$H[t-1]  #
     H$jCO2[t] <- pars$kCO2 * H$jeC[t-1]  # carbon not used in host biomass is used to activate CCM's that deliver CO2 to photosynthesis
     # Production flux (photosynthetic carbon fixation)
     S$jCP[t] <- synth(S$jL[t] * pars$yCL, (H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t], pars$jCPm) / S$cROS[t-1]
@@ -67,7 +68,8 @@ run_coral <- function(time, env, pars) {
     # Rejection flux: excess light energy not quenched by carbon fixation
     S$jeL[t] <- max(S$jL[t] - S$jCP[t]/pars$yCL, 0)
     # Amount of excess light energy quenched by NPQ
-    S$jNPQ[t] <- (pars$kNPQ^(-1)+S$jeL[t]^(-1))^(-1/1)
+    S$jNPQ[t] <- (pars$kNPQ^(-1)+S$jeL[t]^(-1))^(-1/1)  # single substrate SU
+    #S$jNPQ[t] <- min(S$jeL[t], pars$kNPQ)  # minimum rule
     # Scaled ROS production due to excess excitation energy (=not quenched by carbon fixation AND NPQ)
     S$cROS[t] <- 1 + ((S$jeL[t] - S$jNPQ[t]) / pars$kROS)^pars$k
     
