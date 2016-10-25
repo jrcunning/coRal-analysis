@@ -194,7 +194,7 @@ application in three primary ways:
   modeling tools for coral symbioses, we provide open access to the
   model in the form of detailed, commented code written in the R
   language (R Core Team 2014). With an accessible and modular framework,
-  we envision this as a resource for futher development by the
+  we envision this model as a resource for futher development by the
   scientific community to include additional complexity and
   problem-specific components. To widen the audience for this work, we
   chose the R language because it is freely available and in common use
@@ -233,21 +233,49 @@ biomass; because resources are acquired proportionally to surface area,
 and surface area is proportional to volume (i.e., corals are
 ``V1-morphs'' in DEB terminology (Kooijman 2010)), biomass increases
 exponentially during growth (indeed, corals grow exponentially (Bak
-1976)). The specific growth rate and the ratio of symbiont to host
-biomass are the responses of interest of the system. Below we describe
-the formulation of each flux involved in producing these responses.
+1976)).
+
+Environmental stress is implemented in the form of photo-oxidative
+stress, which is thought to be the primary trigger of coral bleaching
+(Lesser 1997; Weis 2008; Wooldridge 2009). To simulate these events, we
+model the absorption and quenching of light energy by photochemistry and
+non-photochemical quenching, and the phenomenological responses that
+occur when these capacities are overwhelmed (i.e., photoinhibition,
+photodamage, and symbiont loss). While bleaching in response to high
+light alone has been observed experimentally (Schutter et al. 2011;
+Downs et al. 2013), mass coral bleaching events occur in response to
+high temperature (Hoegh-Guldberg 1999); thus, it is important to justify
+our consideration of light as the primary stressor in the model. In
+reality, light and temperature interact synergistically (Coles and
+Jokiel 1978; Jones et al. 1998), and in fact, any stressor that disrupts
+the quenching of light energy may lead to bleaching (Wooldridge 2010;
+Baker and Cunning 2015). This is because the proximate cause of
+photo-oxidative stress is excess excitation energy, but the upstream
+events that lead to this situation may be diverse: indeed, elevated
+temperature may inhibit Rubisco functioning (Jones et al. 1998) and the
+repair of the D1 protein in photosystem II (Warner, Fitt, and Schmidt
+1999), which reduces the capacity of photochemical quenching and leads
+to an excess of light energy. In this way, elevated temperature serves
+to reduce the threshold above which light stresses the system
+(Hoegh-Guldberg 1999); importantly, light is still the proximate
+stressor. Therefore, we omitted temperature from the model to maintain a
+desired level of simplicity, while still allowing photophysiological
+stress and bleaching to be simulated with biological realism in response
+to light.
+
+Below we describe the formulation of each flux in the model.
 
 Table 1. Model fluxes
 
 \begin{longtable}[c]{@{}llll@{}}
 \toprule
-\begin{minipage}[b]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
 Symbol
 \strut\end{minipage} &
 \begin{minipage}[b]{0.48\columnwidth}\raggedright\strut
 Description
 \strut\end{minipage} &
-\begin{minipage}[b]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[b]{0.25\columnwidth}\raggedright\strut
 Units
 \strut\end{minipage} &
 \begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
@@ -255,216 +283,216 @@ Eq. no.
 \strut\end{minipage}\tabularnewline
 \midrule
 \endhead
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_X\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Prey uptake rate
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molX CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 3
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_N\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Nitrogen uptake rate
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molN CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 4
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{HG}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Host biomass formation rate
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 CmolH CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 5
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(r_{NH}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Recycled nitrogen from host turnover
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molN CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 6
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\rho_N\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Nitrogen shared with the symbiont
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molN CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 7
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{eC}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Excess carbon used to activate host CCMs
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molC CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_L\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Light absorption rate
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molph CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 9
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{CO_2}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 CO\textsubscript{2} input to photosynthesis
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molCO\textsubscript{2} CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 10
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(r_{CH}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Recycled CO\textsubscript{2} from host turnover
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molCO\textsubscript{2} CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 11
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(r_{CS}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Recycled CO\textsubscript{2} from symbiont turnover
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molCO\textsubscript{2} CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 12
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{CP}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Photosynthesis rate
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molC CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 13
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{eL}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Light energy in excess of photochemistry
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molph CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 14
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{NPQ}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Total capacity of NPQ
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molph CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 15
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(c_{ROS}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 ROS production proportional to baseline
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 16
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(r_{NS}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Recycled nitrogen from symbiont turnover
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molN CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 17
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{SG}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Symbiont biomass formation rate
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 CmolS CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 18
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\rho_C\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Fixed carbon shared with host
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molC CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 19
 \strut\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{ST}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Symbiont turnover rate
 \strut\end{minipage} &
-\begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 CmolS CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
@@ -483,11 +511,11 @@ Symbol
 \begin{minipage}[b]{0.48\columnwidth}\raggedright\strut
 Description
 \strut\end{minipage} &
-\begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
-Value
-\strut\end{minipage} &
-\begin{minipage}[b]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[b]{0.25\columnwidth}\raggedright\strut
 Units
+\strut\end{minipage} &
+\begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
+Value
 \strut\end{minipage}\tabularnewline
 \midrule
 \endhead
@@ -497,11 +525,11 @@ Units
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 N:C molar ratio in host biomass
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.19
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.19
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(n_{NS}\)
@@ -509,11 +537,11 @@ N:C molar ratio in host biomass
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 N:C molar ratio in symbiont biomass
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.2
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.2
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(n_{NX}\)
@@ -521,11 +549,11 @@ N:C molar ratio in symbiont biomass
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 N:C molar ratio in prey biomass
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.13
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.13
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{HT}^0\)
@@ -533,11 +561,11 @@ N:C molar ratio in prey biomass
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Specific turnover rate of host biomass
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.03
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 CmolH CmolH\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.03
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{ST}^0\)
@@ -545,11 +573,11 @@ CmolH CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Specific turnover rate of symbiont biomass
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.03
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 CmolS CmolS\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.03
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\sigma_{NH}\)
@@ -557,11 +585,11 @@ CmolS CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Proportion host nitrogen turnover recycled
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.9
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.9
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\sigma_{CH}\)
@@ -569,11 +597,11 @@ Proportion host nitrogen turnover recycled
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Proportion host carbon turnover recycled
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.9
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.9
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\sigma_{NS}\)
@@ -581,11 +609,11 @@ Proportion host carbon turnover recycled
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Proportion symbiont nitrogen turnover recycled
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.9
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.9
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\sigma_{CS}\)
@@ -593,11 +621,11 @@ Proportion symbiont nitrogen turnover recycled
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Proportion symbiont carbon turnover recycled
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.9
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.9
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{Xm}\)
@@ -605,11 +633,11 @@ Proportion symbiont carbon turnover recycled
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Maximum specific feeding rate of host
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.1292
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molX CmolH\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.1292
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(K_X\)
@@ -617,11 +645,11 @@ molX CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Half-saturation constant for prey uptake by host
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-20e-6
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molX L\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+20e-6
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{Nm}\)
@@ -629,11 +657,11 @@ molX L\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Maximum specific DIN uptake rate by host
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.048
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molN CmolH\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.048
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(K_N\)
@@ -641,11 +669,11 @@ molN CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Half-saturation constant for DIN uptake by host
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.46e-6
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molN L\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.46e-6
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(k_{CO_2}\)
@@ -653,11 +681,11 @@ molN L\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Efficacy of CO\textsubscript{2} delivery by host CCMs
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-10
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molCO\textsubscript{2} molC\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+10
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{HGm}\)
@@ -665,11 +693,11 @@ molCO\textsubscript{2} molC\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Maximum specific growth rate of host
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-1
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 CmolH CmolH\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+1
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(y_{CL}\)
@@ -677,11 +705,11 @@ CmolH CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Quantum yield of photosynthesis
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.1
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molC mol ph\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.1
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\bar{a}^*\)
@@ -689,11 +717,11 @@ molC mol ph\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Effective light-absorbing cross-section of symbiont
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-1.34
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 m\textsuperscript{2} CmolS\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+1.34
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(k_{NPQ}\)
@@ -701,11 +729,11 @@ m\textsuperscript{2} CmolS\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 NPQ capacity of symbiont
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-112
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 mol ph CmolS\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+112
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(k_{ROS}\)
@@ -714,11 +742,11 @@ mol ph CmolS\textsuperscript{-1} d\textsuperscript{-1}
 Excess photon energy that doubles ROS production, relative to baseline
 levels
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-40-80
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 mol ph CmolS\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+40-80
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{CPm}\)
@@ -726,11 +754,11 @@ mol ph CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Maximum specific photosynthesis rate of symbiont
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-2.8
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molC CmolS\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+2.8
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{SGm}\)
@@ -738,11 +766,11 @@ molC CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Maximum specific growth rate of symbiont
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-0.25
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 CmolS CmolS\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+0.25
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(b\)
@@ -750,11 +778,11 @@ CmolS CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
 Scaling parameter for strength of bleaching response
 \strut\end{minipage} &
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-5
-\strut\end{minipage} &
-\begin{minipage}[t]{0.23\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+5
 \strut\end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
@@ -884,18 +912,19 @@ transport of bicarbonate, carbonic anhydrase-catalyzed conversion of
 bicarbonate to CO\textsubscript{2} to promote diffusion toward the
 symbiont (Tansik, Fitt, and Hopkinson 2015), and acidification of the
 symbiosome to increase localized CO\textsubscript{2} concentrations
-around the symbiont (Barott et al. 2014). Since these mechanisms require
-energetic input by the host, the magnitude of CO\textsubscript{2}
-delivery is proportional to the host's excess carbon, \(j_{eC}\),
-assuming that some of this carbon is respired to energize these CCMs.
-This formulation means that the symbiont indirectly ensures its own
-CO\textsubscript{2} supply by providing fixed carbon to the host
-(Wooldridge 2013), which establishes a positive feedback in the model
-that leads to the existence of multiple stable states, which we discuss
-below in the context of coral bleaching. The parameter \(k_{CO_2}\)
-scales the efficacy of host CCMs, which enables the comparison of
-different rates of CO\textsubscript{2} delivery that may characterize
-different coral species (Wooldridge 2014a). The input of
+around the symbiont (Barott et al. 2014). Since these active CCMs
+require energetic input by the host, the magnitude of
+CO\textsubscript{2} delivery is proportional to the amount of fixed
+carbon available to the host after satisfying its growth demands,
+\(j_{eC}\), assuming that some of this carbon is respired to energize
+these CCMs. This formulation means that the symbiont indirectly ensures
+its own CO\textsubscript{2} supply by providing fixed carbon (=energy)
+to the host (Wooldridge 2013), which establishes a positive feedback in
+the model that leads to the existence of multiple stable states, which
+we discuss below in the context of coral bleaching. The parameter
+\(k_{CO_2}\) scales the efficacy of host CCMs, which enables the
+comparison of different rates of CO\textsubscript{2} delivery that may
+characterize different coral species (Wooldridge 2014a). The input of
 CO\textsubscript{2} to the photosynthesis SU is therefore specified as:
 
 \begin{equation} j_{CO_2} = k_{CO_2}j_{eC} \end{equation}
@@ -1016,38 +1045,38 @@ where \(j_{S1}\) and \(j_{S2}\) are the specific input fluxes of the two
 substrates and \(j_{Pm}\) is the maximum specific product formation
 rate, in units of Cmol Cmol\textsuperscript{-1} d\textsuperscript{-1}.
 
-\section{Results}\label{results}
-
-\subsection{Qualitative dynamics}\label{qualitative-dynamics}
+\section{Steady state behavior}\label{steady-state-behavior}
 
 In a constant environment, the system ultimately reaches a steady state
-of exponential growth or decline. Under some conditions, alternate
-steady states can be reached depending on initial values of symbiont and
-host biomass. The mechanism that produces these alternate steady states
-is the positive feedback between carbon-limitation of the host and
-CO\textsubscript{2}-limitation of photosynthesis. If the host becomes
-carbon-limited, the efficacy of its CCMs are reduced and photosynthesis
-becomes progressively more CO\textsubscript{2}-limited. In turn, less
-photosynthate is translocated to the host, causing further
-carbon-limitation and an ultimate decline in biomass; this steady state
-represents a dysfunctional symbiosis. However, if the host is not
-carbon-limited, it effectively delivers CO\textsubscript{2} to
-photosynthesis and ensures its continued receipt of fixed carbon from
-the symbiont; this system is nitrogen-limited and represents a
-functional symbiosis with positive exponential growth. Either of these
-stable states may be reached under (some sets of) constant environmental
-conditions, depending on the initial values of symbiont and host
-biomass: if symbiont biomass is initially very low (i.e., a ``bleached''
-coral), the system cannot escape the carbon-limited state and cannot
-grow. However, if symbiont biomass is initially high (i.e., a healthy
+of exponential growth or decline. However, under some conditions, either
+of these outcomes may occur depending on initial values of symbiont and
+host biomass, indicating the presence of alternate stable states. The
+mechanism that produces these alternate stable states is the positive
+feedback between carbon-limitation of the host and
+CO\textsubscript{2}-limitation of photosynthesis: if symbiont biomass is
+initially very low (i.e., a ``bleached'' coral), the system cannot
+escape positively reinforcing carbon-limitation and cannot grow.
+However, if symbiont biomass is initially high (i.e., a ``healthy''
 coral), then the system maintains positive growth in a nitrogen-limited
-state. For practical purposes, we consider only positive growth steady
-states in the ``steady state behavior'' section below. In the subsequent
-``dynamic behavior'' section, we explore more thoroughly the conditions
-that cause the system to switch between alternate stable states, and
-interpret these dynamics in the context of coral bleaching.
+state. For practical purposes, this section of the manuscript considers
+only positive growth steady states under constant environments; the
+subsequent ``dynamic behavior'' section explores how changing
+environments may cause the system to switch between alternate stable
+states, which we interpret in the context of coral bleaching.
 
-\subsection{Steady state behavior}\label{steady-state-behavior}
+To analyze qualitative patterns in steady state behavior, we ran the
+model to steady state across gradients of external irradiance and
+nutrients (Fig. 2), which revealed patterns consistent with observed
+phenomena in corals. Predicted growth rates are low at low light and DIN
+(\textasciitilde{}0.01 d\textsuperscript{-1}), and begin increasing as
+both of these factors increase (Fig. 2A). Low light limits
+photosynthetic rates, resulting in less fixed carbon shared with the
+host and an associated increase in the symbiont to host biomass ratio
+(Fig. 2B). In agreement with this trend are many observations of
+negative correlation between irradiance and symbiont density (Stimson
+1997; Brown et al. 1999; Fitt et al. 2000; Titlyanov et al. 2001). As
+higher light alleviates light-limitation of photosynthesis, growth
+becomes less carbon-limited.
 
 \begin{figure}[htbp]
 \centering
@@ -1065,19 +1094,6 @@ nutrients (41 points along each axis) were run for 100 days with a time
 step of 1 day. Negative steady state growth rates, and corresponding S:H
 ratios, were set to zero.}
 \end{figure}
-
-To analyze qualitative behavior, we ran the model to steady state across
-gradients of external irradiance and nutrients (Fig. 2), which revealed
-patterns consistent with observed phenomena in corals. Predicted growth
-rates are low at low light and DIN (\textasciitilde{}0.01
-d\textsuperscript{-1}), and begin increasing as both of these factors
-increase (Fig. 2A). Low light limits photosynthetic rates, resulting in
-less fixed carbon shared with the host and an associated increase in the
-symbiont to host biomass ratio (Fig. 2B). In agreement with this trend
-are many observations of negative correlation between irradiance and
-symbiont density (Stimson 1997; Brown et al. 1999; Fitt et al. 2000;
-Titlyanov et al. 2001). As higher light alleviates light-limitation of
-photosynthesis, growth becomes less carbon-limited.
 
 Similarly, increasing DIN up to \textasciitilde{}2 µM alleviates
 nitrogen-limitation (Fig. 2A). Increased growth at higher DIN is
@@ -1107,19 +1123,19 @@ typical of reef environments (\textless{}0.5 µM DIN) are
 \textasciitilde{}0.01-0.03 d\textsuperscript{-1}. Observed specific
 growth rates, which are typically based on skeletal mass, fall near or
 below 0.01 d\textsuperscript{-1} (Osinga et al. 2011; Osinga et al.
-2012) (though values as high as 0.025 d\textsuperscript{-1} have been
-reported (Schutter et al. 2010)). That predicted growth rates are
-slightly higher than most observations is not surprising, as the model
+2012), though values as high as 0.025 d\textsuperscript{-1} have been
+reported (Schutter et al. 2010). It is not surprising that predicted
+growth rates are slightly higher than most observations, as the model
 does not account for external ecological factors that may reduce growth,
 such as competition, predation, and bioerosion. Furthermore, the model
 does not explicitly account for skeletal formation, which may not always
-be well correlated with biomass growth, potentially due to differential
-substrate-limitation (Anthony 2002). Nevertheless, when rates of
-increase in coral tissue biomass have been directly measured over short
-periods, values are consistent with model predictions (e.g., 0.07
-d\textsuperscript{-1} in Tanaka et al. (2007)), and similar rates (0.04
-d\textsuperscript{-1}) have been measured in \emph{Aiptasia diaphana}, a
-non-calcifying symbiotic anemone (Armoza-Zvuloni et al. 2014).
+correlate with biomass growth, potentially due to differential
+substrate-limitation (Anthony 2002). Nevertheless, when growth of coral
+tissue biomass has been directly measured over short periods, values are
+consistent with model predictions (e.g., 0.07 d\textsuperscript{-1} in
+Tanaka et al. (2007)), and similar rates (0.04 d\textsuperscript{-1})
+have been measured in \emph{Aiptasia diaphana}, a non-calcifying
+symbiotic anemone (Armoza-Zvuloni et al. 2014).
 
 As irradiance continues to increase above \textasciitilde{}20 mol
 photons m\textsuperscript{-2} d\textsuperscript{-1}, growth rates
@@ -1136,30 +1152,6 @@ these impacts reduce the symbiont to host biomass ratio (Fig. 2B), as
 occurs during coral bleaching. This reduction in symbionts consequently
 reduces the flux of fixed carbon to the host, resulting in increasing
 carbon-limitation (Fig. 2B) and eventual cessation of growth (Fig. 2A).
-
-While bleaching in response to high light alone has been observed
-experimentally (Schutter et al. 2011; Downs et al. 2013), mass coral
-bleaching events occur in response to high temperature (Hoegh-Guldberg
-1999); thus, it is important to justify our consideration of light as
-the primary stressor in the model. In reality, light and temperature
-interact synergistically (Coles and Jokiel 1978; Jones et al. 1998), and
-in fact, any stressor that disrupts the quenching of light energy may
-lead to bleaching (Wooldridge 2010; Baker and Cunning 2015). This is
-because the proximate cause of coral bleaching is excess excitation
-energy, but the upstream events that lead to this situation may be
-diverse: indeed, elevated temperature may inhibit Rubisco functioning
-(Jones et al. 1998) and the repair of the D1 protein in photosystem II
-(Warner, Fitt, and Schmidt 1999), which reduces the capacity of
-photochemical quenching and leads to an excess of light energy. In this
-way, elevated temperature serves to reduce the threshold above which
-light causes stress to the system (Hoegh-Guldberg 1999); importantly,
-light is still the proximate stressor. Therefore, we omitted temperature
-from the model to maintain a desired level of simplicity, while still
-allowing photophysiological stress and bleaching to be simulated with
-biological realism in response to light. Thus, while the model is
-currently accurate from a conceptual and mechanistic standpoint, its
-value as a predictive tool under scenarios of changing temperature will
-require further development.
 
 The incorporation of light stress in the model sets an upper limit to
 the amount of light at which a stable symbiotic interaction can be
@@ -1183,17 +1175,16 @@ growth. To explore this further and illustrate the behavior of the model
 in more detail, we evaluate a number of dynamic simulations below (see
 ``Dynamic behavior'').
 
-\subsection{Sensitivity analysis}\label{sensitivity-analysis}
+\section{Sensitivity analysis}\label{sensitivity-analysis}
 
-Each default parameter value used in the model (Table 2) is based on
-carefully selected relevant literature. The derivations of each of these
-default parameter values are described in the Supplementary Information.
-Nevertheless, it is important to evaluate the sensitivity of the model
-to changes in these parameter values. Moreover, these sensitivity plots
-serve to demonstrate the behavior of the dynamical system. We measured
-fractional change in steady state values in response to fractional
-changes in parameter values, relative to their default values, under
-environmental conditions typical of coral reefs.
+The values used for each parameter in the model (Table 2) are derived
+from relevant literature; these derivations are described in the
+Supplementary Information. Here we evaluate the sensitivity of the model
+to changes in these parameter values, which also serves to demonstrate
+the behavior of the dynamical system. We measured fractional change in
+steady state values in response to fractional changes in parameter
+values, relative to their default values, under environmental conditions
+typical of coral reefs.
 
 \begin{figure}[htbp]
 \centering
@@ -1209,52 +1200,248 @@ Sensitivity analyses conducted other environmental conditions are
 presented in the Supplementary Information.}
 \end{figure}
 
-Overall, relative changes in the steady state of the system were less
+Overall, relative changes in the steady state of the system are less
 than the equivalent relative change in parameter value, indicating that
 the system maintains internal stability. However, changes in certain
-parameter values have greater impacts: increasing \(j_{Nm}\) or
-decreasing \(K_N\) both dramatically increase host growth, demonstrating
-the strong nitrogen-limitation that characterizes these symbioses (REF).
-The parameterr \(\bar{a}^*\) has a strong impact on S:H biomass ratios,
-because this parameter determines the amount of light absorbed by
-symbionts, thus low values of this parameter increase light-limitation
-of the system. Altering the maximum growth and turnover rates of
-symbiont and host biomass also have expected impacts on steady states.
-Parameters having to do with photooxidative stress and bleaching have
-little impact under these environmental conditions, but of course have
-larger impacts under higher light (e.g., Fig. S6).
+parameter values have more significant impacts: increasing \(j_{Nm}\) or
+decreasing \(K_N\) both dramatically increase host growth (Fig. 3),
+demonstrating the strong nitrogen-limitation that characterizes these
+symbioses (REF). The parameter \(\bar{a}^*\) has a strong impact on S:H
+biomass ratios (Fig. 3) since this parameter determines the amount of
+light absorbed by symbionts, with lower values increasing
+light-limitation. Altering maximum growth and turnover rates of symbiont
+and host also have expected impacts on steady states (Fig. 3).
+Parameters relating to photooxidative stress and bleaching have little
+impact under these environmental conditions (Fig. 3), but of course have
+larger impacts under higher light (e.g., Fig. S6). Sensitivity analyses
+conducted under different combinations of external light and nutrients
+are presented in the Supplementary Information (Figs. S3-S7)
 
-\subsection{Dynamic behavior}\label{dynamic-behavior}
+\section{Dynamic behavior}\label{dynamic-behavior}
 
-Therefore, we are highly interested in the conditions under which the
-system switches from one state to another, representing the conditions
-under which corals ``bleach'' due to progressive, reinforcing
-carbon-limitation. Interestingly, this state can be reached in multiple
-ways, by the acceleration of photoinhibition and photodamage, or by high
-external DIN, which causes the symbiont to share less carbon,
-subsequently causing its own CO2-limitation, and progressive
-C-limitation of the system. \#\# varying light: consequences of excess
-light and light-limitation \#\# varying DIN: role of N-limitation and
-consequences of elevated N \#\# elevated nutrients cause system to
-become C-limited (photo: CO2 limited; host: fixed-C limited) \#\#
-C-limitation increases susceptibility to bleaching Importantly, these
-negative impacts of high irradiance only arise when light energy exceeds
-the capacity of photochemistry and NPQ, which in turn depends on
-CO\textsubscript{2} availability. While previous models framed
-photophysiological stress as a fixed response to absolute irradiance
-levels (Eynaud, Nisbet, and Muller 2011), the current implementation
-considers the dynamic balance of multiple energy sinks in the causation
-of stress, which is more consistent with current understanding of
-symbiosis dysfunction (Wooldridge 2013), and establishes an important
-role of the host in providing CO\textsubscript{2} for symbiont
-photosynthesis (Tansik, Fitt, and Hopkinson 2015; Hopkinson, Tansik, and
-Fitt 2015). \#\# consequences of a less efficient but more tolerant
-symbiont \#\# Rate of symbiont repopulation (Berner et al. 1993) \#\#
-Bicarbonate addition promotes coral growth (Marubini and Thake 1999)
-\#\# Seasonal change in sym. density is larger when nutrients are
-elevated (Stimson 1997). Such a phenomenon was predicted by Fitt et al.
-2000. \#\# Death rule: negative growth for a certain amount of time
-should be defensible.
+The dynamic behavior of the model demonstrates its power to integrate
+multiple environmental forcings simultaneously to produced integrated
+responses of the system. The potential applications of this are
+wide-ranging, and so the model may be highly useful for generating
+hypotheses about the way the system will respond to complex sets of
+environmental dynamics. Here we present several scenarios to highlight
+the power of the model and demonstrate that it can also reproduce more
+complex phenomena that have been observed in corals.
+
+\subsection{Seasonal variability}\label{seasonal-variability}
+
+Symbiont densities and coral growth rates are known to vary seasonally,
+representing an integrated response to changes in a suite of
+environmental factors. Light in particular is a strong driver of these
+trends (Stimson:1997p3837; Brown et al. 1999; Fagoonee et al. 1999; Fitt
+et al. 2000), with high light associated with lower symbiont abundance
+and reduced tissue biomass. The role of light in driving seasonal
+changes in symbiont density was demonstrated nicely by Stimson (1997),
+who also found that experimental nutrient-enrichment amplified the
+light-driven seasonal oscillation. Using the levels of light and
+nutrients from this study as inputs, the model reproduces this observed
+interaction among environmental factors (Fig. 4), and also provides the
+mechanism: under high light in summer, photoinhibition reduces symbiont
+biomass and leads to carbon-limitation of host growth regardless of
+nutrient status; when light is reduced in winter, these responses become
+constrained instead by nitrogen, and therefore increase more when DIN is
+enriched (Fig. S8).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{../img/Fig4.png}
+\caption{Figure 4. Light-driven seasonal dynamics of symbiont abundance
+and coral growth. Light input (upper panel) was designed as a sinusoidal
+curve with a period of one year, with maximum and minimum values of 40
+and 22 mol photons m\textsuperscript{-2} d\textsuperscript{-1}, based on
+Stimson (1997). The dynamic behavior of symiont to host biomass ratio
+(middle panel) and the specific growth rate of host biomass (lower
+panel) show seasonal oscillations that are greater in magnitude under
+higher nutrients (1e-5 molN L\textsuperscript{-1}; dashed lines)
+relative to lower nutrients (1e-7 molN L\textsuperscript{-1}; solid
+lines), consistent with the findings of Stimson (1997). Prey density was
+set at 1e-5 CmolX L\textsuperscript{-1}.}
+\end{figure}
+
+The prediction of higher growth when light is reduced indicates that
+growth is not limited by low light in winter, but is actually reduced by
+excess light in summer, consistent with the experimental findings of
+Schutter et al. (2011). Seasonal summertime reductions in tissue biomass
+have also been well-documented in the field (Fitt et al. 2000), along
+with reductions in net photosynthetic capacity (\textbf{???}).
+Importantly, while light alone (at these levels) may drive seasonal
+dynamics in the ways discussed, temperature fluctuations may attenuate
+or even reverse the effect of light as cooler winters depress
+metabolism; thus, the relative magnitude of fluctuation in temperature,
+light, and other factors may produce wide variability in the direction
+and magnitude of seasonal changes in growth and symbiont abundance,
+depending on location and microhabitat. Nevertheless, the seasonal
+variability predicted here (Fig. 4) is consistent with experimental and
+field observations for corals, and demonstrates the power of this model
+to predict dynamic behavior that mechanistically integrate the impacts
+of multiple environmental drivers.
+
+\subsection{Coral bleaching}\label{coral-bleaching}
+
+Coral bleaching is the stress-induced loss of symbiotic algae from coral
+tissues, which can occur in response to a variety of environmental
+stressors. In most cases, coral bleaching is thought to begin with
+photo-oxidative stress in symbiont photosynthesis (Lesser 1997), which
+triggers a cascade of events leading to symbiont expulsion (Weis 2008).
+As symbionts are expelled, the host receives less fixed carbon, which
+may then compromise its ability to deliver CO\textsubscript{2} to
+photosynthesis (Wooldridge 2013). Increasing
+CO\textsubscript{2}-limitation for remaining symbionts, along with an
+amplified internal light environment due to reduced self-shading
+(Enríquez, Méndez, and Iglesias-Prieto 2005), may further exacerbate
+photo-oxidative stress and accelerate symbiont expulsion, driving the
+coral into a bleached state.
+
+While these positive feedbacks have been discussed previously in the
+literature, this is the first attempt to implement and explore their
+properties within a dynamical model. Interestingly, these feedbacks lead
+to alternate stable states. The `healthy' state is characterized by
+nitrogen-limitation of both symbiont and host: under these conditions,
+the symbiont translocates sufficient carbon to support host growth and
+CCMs, which ensures that photosynthesis does not become
+CO\textsubscript{2}-limited. However, if carbon translocation is
+disrupted (and light is sufficiently high), then the system is driven
+into the `bleached' state by photo-oxidative stress and positively
+reinforcing carbon- and CO\textsubscript{2}-limitation. In this context,
+coral bleaching can be understood as a transition from one stable state
+to another, and bleaching thresholds are sets of environmental
+conditions that push a healthy-state coral onto a trajectory leading to
+a bleached stable state.
+
+We are highly interested in the conditions under which the system
+switches from a healthy to a bleached state, and can use this model as a
+tool to explore this dynamic behavior. Most straightforwardly, this
+switch occurs when irradiance exceeds the capacity of photochemistry and
+NPQ, causing the production of ROS that leads to photoinhibition,
+photodamage, and symbiont expulsion, thereby engaging the positive
+feedbacks that lead to a bleached state (Fig. 5). However, the positive
+feedbacks involved in bleaching are not engaged only in response to high
+external irradiance; in fact, they depend on the relative balance of
+light energy absorption and quenching, which in turn depends on the
+availability of CO\textsubscript{2} for photosynthesis. While previous
+models framed photo-oxidative stress as a fixed response to absolute
+external irradiance (Eynaud, Nisbet, and Muller 2011), our
+implementation considers the dynamic balance of multiple energy sinks in
+the causation of stress, which is more consistent with current
+understanding of symbiosis dysfunction (Wooldridge 2013), and
+establishes a critical role of host CCMs in providing
+CO\textsubscript{2} for photosynthesis (Tansik, Fitt, and Hopkinson
+2015; Hopkinson, Tansik, and Fitt 2015).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{../img/Fig5.png}
+\caption{Figure 5. Bleaching.}
+\end{figure}
+
+The importance of host CCM activity establishes significant interactive
+roles for other factors in influencing coral bleaching responses. For
+example, simulations of high light stress (Fig. 6) demonstrate that
+bleaching can be attenuated by heterotrophic feeding, a phenomenon which
+has been observed experimentally (Borell et al. 2008). The mechanism
+underlying this prediction is that feeding by the host increases host
+CCM activity, which delays the onset of CO\textsubscript{2}-limitation
+of photosynthesis and reduces bleaching severity. On the other hand,
+elevated nutrients exacerbate bleaching (Fig. 6), since higher symbiont
+densities are more susceptible to CO\textsubscript{2}-limitation
+(Wooldridge 2009). Several experimental (Cunning and Baker 2013; Vega
+Thurber et al. 2014) and correlational studies (Wooldridge and Done
+2009) are consistent with this mechanistic link between high nutrients
+and bleaching.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{../img/Fig6.png}
+\caption{Figure 6. Bleaching and interactive factors.}
+\end{figure}
+
+Since bleaching represents an alternative stable state, it follows that
+a bleached coral cannot recover unless the external condition that
+induced bleaching is alleviated. In natural settings, this typically
+occurs by seasonal declines in temperature and light. However, due to
+hysteresis, a coral cannot recover along the same trajectory it followed
+during bleaching; indeed, the stressor must be alleviated well
+\emph{below} the threshold that initially caused bleaching in order for
+the system to recover (Fig. 7). This is because under the same external
+conditions, a bleached coral (relative to a healthy one) is
+characterized by greater light amplification and weaker CCM activity,
+which serve to maintain the bleached state. The magnitude of hysteresis
+will depend on external nutrients and prey availability, as well as
+model parameters, yet the fundamental concept demonstrates a core
+behavior of the system.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics{../img/Fig7.png}
+\caption{Figure 7. Hysteresis.}
+\end{figure}
+
+The hysteresis demonstrated in Fig. 7 reveals another interesting
+behavior of the system: during recovery from bleaching, the S:H biomass
+ratio reaches a higher value that `overshoots' the level maintained in
+the healthy stable state. In fact, such a phenomenon has been observed
+in both experimental (Cunning, Silverstein, and Baker 2015) and field
+studies (Kemp et al. 2014) documenting recovery from bleaching, and has
+been interpreted as a potential `disequilibrium in host-symbiont
+regulation' (Kemp et al. 2014). The model explains this `overshoot' as
+an approach to a bifurcation point in the dynamical system: during
+recovery from the `bleached' state, host growth is more strongly
+carbon-limited than symbiont growth (since the symbiont has priority
+access to carbon), so S:H biomass increases. S:H biomass will continue
+to increase beyond the alternative steady state levels as long as the
+symbiont remains carbon-limited; not until nitrogen becomes more
+strongly limiting to symbiont growth (hence forcing the symbiont to
+share fixed carbon with the host) will the system `flip' back to a state
+of high carbon fixation and overall nitrogen-limitation that
+characterize a `healthy' symbiosis. Of course, the magnitude of this
+`overshoot' will depend on external nutrient concentrations and the rate
+of change in the stressor during recovery, though simulations predict
+similar magnitudes to what was observed by Kemp et al. (supp fig?).
+
+\section{Conclusions}\label{conclusions}
+
+The dynamic behavior of the model demonstrates its ability to
+mechanistically integrate multiple forcing functions, and the degree to
+which the system state depends not only on external forcing, but also
+the past history of the system. The model represents a unifying
+mechanistic framework that reproduces many phenomena observed in corals,
+suggesting it has captured many of the important features of the system
+in a relatively simple formulation. Furthermore, it allows the model to
+be used to predict responses of the system to multiple dynamic
+environmental forcing functions in a way that incorporates all positive
+and negative feedbacks. This makes the model potentially highly useful
+as a tool for generating hypotheses. make N, L, and X go up and down.
+For example, the model demonstrates and provides a mechanistic
+explanation for: an increase in symbiont abundance with nutrients (REF),
+an increase in symbiont abundance with heterotrophic feeding (refs),
+decrease in symbiont abundance with light (ref), optimal growth at
+intermediate light, rapid `bleaching' above threshold of high light
+(ref) along with positive feedbacks (wooldridge, enriquez), mitigation
+of bleaching by heterotrophic feeding, exacerbation of bleaching by
+elevated nutrients, higher standing stocks of less productive symbionts,
+greater seasonal change in symbiont density with elevated nutrients,
+overshoot of symbiont density after recovery from bleaching.
+
+``host control''=\textgreater{}N-limitation. C-limitation=host has lost
+control of symbiosis: either bleaches or symbiont ``overgrows'' host
+with net negative growth. (when does this occur?)
+
+In this context, nitrogen-limitation represents a scenario in which the
+host is `in control' of the system: negative feedbacks stabilize the
+symbiont to host biomass ratio and the system maintains positive growth.
+Carbon-limitation represents a loss of `control', wherein positive
+feedbacks result in a loss of capacity for carbon fixation and positive
+growth. Importantly, these `control' mechanisms arise entirely passively
+through the feedbacks present in the system.
+
+(Very low light also causes the symbiont to not share any carbon,
+resulting in very high S:H ratios and negative growth of the coral,
+which we interpret as a dysfunctional (and impossible) condition.)
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
@@ -1301,6 +1488,12 @@ National Academy Of Sciences Of The United States Of America}, December.
 National Acad Sciences, 201413483.
 doi:\href{https://doi.org/10.1073/pnas.1413483112}{10.1073/pnas.1413483112}.
 
+\hypertarget{ref-Borell:2008p108}{}
+Borell, Esther M, Ade Yuliantri, Kai Bischof, and Claudio Richter. 2008.
+``The effect of heterotrophy on photosynthesis and tissue composition of
+two scleractinian corals under elevated temperature.'' \emph{Journal of
+Experimental Marine Biology and Ecology} 364: 116--23.
+
 \hypertarget{ref-Brown:1999p3534}{}
 Brown, Barbara E, R P Dunne, I Ambarsari, Martin Le Tissier, and U
 Satapoomin. 1999. ``Seasonal fluctuations in environmental factors and
@@ -1319,6 +1512,19 @@ Costanza, R, R de Groot, and P Sutton. 2014. ``Changes in the global
 value of ecosystem services.'' \emph{Global Environmental Change} 26:
 152--58.
 doi:\href{https://doi.org/10.1016/j.gloenvcha.2014.04.002}{10.1016/j.gloenvcha.2014.04.002}.
+
+\hypertarget{ref-Cunning:2013gp}{}
+Cunning, Ross, and Andrew C Baker. 2013. ``Excess algal symbionts
+increase the susceptibility of reef corals to bleaching.'' \emph{Nature
+Climate Change} 3 (March): 259--62.
+doi:\href{https://doi.org/10.1038/nclimate1711}{10.1038/nclimate1711}.
+
+\hypertarget{ref-Cunning:2015ja}{}
+Cunning, Ross, Rachel N Silverstein, and Andrew C Baker. 2015.
+``Investigating the causes and consequences of symbiont shuffling in a
+multi-partner reef coral symbiosis under environmental change.''
+\emph{Proceedings of the Royal Society B}, 1--9.
+doi:\href{https://doi.org/10.1098/rspb.2014.1725\%7B/\&\%7Ddomain=pdf\%7B/\&\%7Ddate_stamp}{10.1098/rspb.2014.1725\{\textbackslash{}\&\}domain=pdf\{\textbackslash{}\&\}date\_stamp}.
 
 \hypertarget{ref-Downs:2013kc}{}
 Downs, C A, Kathleen E McDougall, Cheryl M Woodley, John E Fauth, Robert
@@ -1344,6 +1550,12 @@ Eynaud, Yoan, Roger M Nisbet, and Erik B Muller. 2011. ``Impact of
 excess and harmful radiation on energy budgets in scleractinian
 corals.'' \emph{Ecological Modelling} 222 (7). Elsevier: 1315--22.
 \url{http://www.sciencedirect.com/science/article/pii/S0304380011000263}.
+
+\hypertarget{ref-Fagoonee:1999p4136}{}
+Fagoonee, I, H B Wilson, M P Hassell, and J R Turner. 1999. ``The
+Dynamics of Zooxanthellae Populations: A Long-Term Study in the Field.''
+\emph{Science} 283 (5403): 843--45.
+doi:\href{https://doi.org/10.1126/science.283.5403.843}{10.1126/science.283.5403.843}.
 
 \hypertarget{ref-FerrierPages:2000p1950}{}
 Ferrier-Pagès, Christine, Jean-Pierre Gattuso, S Dallot, and Jean
@@ -1408,9 +1620,21 @@ Schreiber. 1998. ``Temperature-induced bleaching of corals begins with
 impairment of the CO2 fixation mechanism in zooxanthellae.''
 \emph{Plant, Cell and Environment} 21 (12): 1219--30.
 
+\hypertarget{ref-Kemp:2014ug}{}
+Kemp, Dustin W, X Hernandez-Pech, Roberto Iglesias-Prieto, William K
+Fitt, and Gregory W Schmidt. 2014. ``Community dynamics and physiology
+of Symbiodinium spp. before, during, and after a coral bleaching
+event.'' \emph{Limnology and Oceanography}.
+\url{http://www.aslo.org/lo/pdf/vol_59/issue_3/0788.pdf}.
+
 \hypertarget{ref-Kooijman:2010vd}{}
 Kooijman, SALM. 2010. \emph{Dynamic Energy Budget Theory for Metabolic
 Organization}. 3rd ed. Cambridge University Press.
+
+\hypertarget{ref-Lesser:1997p3587}{}
+Lesser, Michael P. 1997. ``Oxidative stress causes coral bleaching
+during exposure to elevated temperatures.'' \emph{Coral Reefs} 16
+(July): 187--92.
 
 \hypertarget{ref-Marcelino:2013hz}{}
 Marcelino, Luisa A, Mark W Westneat, Valentina Stoyneva, Jillian Henss,
@@ -1533,6 +1757,13 @@ Titlyanov, E A, T V Titlyanova, K Yamazato, and Robert van Woesik. 2001.
 and extremely low light.'' \emph{Journal of Experimental Marine Biology
 and Ecology} 263 (2): 211--25.
 
+\hypertarget{ref-VegaThurber:2014hk}{}
+Vega Thurber, Rebecca L, Deron E Burkepile, Corinne Fuchs, Andrew A
+Shantz, Ryan McMinds, and Jesse R Zaneveld. 2014. ``Chronic nutrient
+enrichment increases prevalence and severity of coral disease and
+bleaching.'' \emph{Global Change Biology} 20 (2): 544--54.
+doi:\href{https://doi.org/10.1111/gcb.12450}{10.1111/gcb.12450}.
+
 \hypertarget{ref-Wang:1998p128}{}
 Wang, J, and Angela E Douglas. 1998. ``Nitrogen recycling or nitrogen
 conservation in an alga-invertebrate symbiosis?'' \emph{The Journal of
@@ -1577,6 +1808,12 @@ doi:\href{https://doi.org/10.1007/s00338-013-1111-4}{10.1007/s00338-013-1111-4}.
 heterotrophic feeding and thermal bleaching resistance.'' \emph{Coral
 Reefs}. Springer Berlin Heidelberg, 1--6.
 doi:\href{https://doi.org/10.1007/s00338-014-1193-7}{10.1007/s00338-014-1193-7}.
+
+\hypertarget{ref-Wooldridge:2009kb}{}
+Wooldridge, Scott A, and Terry J Done. 2009. ``Improved water quality
+can ameliorate effects of climate change on corals.'' \emph{Ecological
+Applications} 19 (6). Ecological Society of America: 1492--9.
+doi:\href{https://doi.org/10.1890/08-0963.1}{10.1890/08-0963.1}.
 
 \hypertarget{ref-Yellowlees:2008p331}{}
 Yellowlees, David, T A V Rees, and William Leggat. 2008. ``Metabolic
