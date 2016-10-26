@@ -1,3 +1,10 @@
+# Load functions
+sapply(c("R/def_pars.R",
+         "R/init_env.R",
+         "R/run_coral.R",
+         "R/run_coral_ss.R"), 
+       source, .GlobalEnv)
+
 time <- seq(1, 200, 0.1)  # Set time
 defpars <- def_pars()  # Get default parameters
 pars <- defpars

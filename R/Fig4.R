@@ -5,7 +5,8 @@
 # Load functions
 sapply(c("R/def_pars.R",
          "R/init_env.R",
-         "R/run_coral.R"), 
+         "R/run_coral.R",
+         "R/run_coral_ss.R"), 
        source, .GlobalEnv)
 
 # Set parameters

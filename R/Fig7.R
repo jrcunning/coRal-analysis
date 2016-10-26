@@ -1,4 +1,11 @@
-# Increase light for 1000 days then decrease for 1000 days
+# Load functions
+sapply(c("R/def_pars.R",
+         "R/init_env.R",
+         "R/run_coral.R",
+         "R/run_coral_ss.R"), 
+       source, .GlobalEnv)
+
+# Increase light for 8000 days then decrease for 8000 days
 # Set run time vector
 time <- seq(1, 8000, 0.1)  # if single model run, use time input
 # Initialize environment
