@@ -19,23 +19,11 @@ env <- init_env(time=time, L=c(27,40,0), N=c(1e-7,1e-7,0), X=c(0e-6,0e-6,0))
 # Set parameters
 defpars <- def_pars()  # Get default parameters
 
-# What if sigmaCH is just proportional to S:H biomass?
-
-
-
-
-# Run simulation - this one looks good with minrule NPQ
-#ss <- with(run_coral_ss(env=list(L=20, N=1e-7, X=0), pars=replace(defpars, c("b", "kNPQ", "kCO2"), c(5, 60, 10))), last(S$S/H$H))
-#run <- run_coral(time=time, env=env, pars=replace(defpars, c("initS", "b", "kNPQ", "kCO2"), c(0.2, 5, 60, 10)))#
-#plot_run(run)
-
 # Run simulation
 ss <- with(run_coral_ss(env=list(L=25, N=1e-7, X=0e-6), pars=defpars), last(S$S/H$H))
 run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", ss))
 
-
 # Plot results
-
 png("img/Fig5.png", width=3, height=3, units="in", res=300)
   with(run, {
     # Set up graphical parameters
