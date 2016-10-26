@@ -5,17 +5,17 @@ plot_steady_states <- function(ss, png=NULL) {
   require(dplyr)
   
   # For runs that did NOT reach a steady state of positive growth, set all results to zero
-  ss[which(ss$gr < 0), c("gr", "sh", "hl", "sl", "ee", "pl")] <- NA
+  ss[which(ss$gr < 0), c("gr", "sh")] <- NA#, "hl", "sl", "ee", "pl")] <- NA
   # For runs where steady state value of S:H > 0.5, set S:H to 0.5
   ss[which(ss$sh > 0.5), "sh"] <- 0.5
   
   # Reshape steady state results into matrices for plotting cont
   sh <- acast(ss, L~N, value.var="sh")
   gr <- acast(ss, L~N, value.var="gr")
-  hl <- acast(ss, L~N, value.var="hl")
-  sl <- acast(ss, L~N, value.var="sl")
-  ee <- acast(ss, L~N, value.var="ee")
-  pl <- acast(ss, L~N, value.var="pl")
+  #hl <- acast(ss, L~N, value.var="hl")
+  #sl <- acast(ss, L~N, value.var="sl")
+  #ee <- acast(ss, L~N, value.var="ee")
+  #pl <- acast(ss, L~N, value.var="pl")
   
   # Build plotting function
   imagef <- function(r, bin, main, col) {
