@@ -105,11 +105,28 @@ coral bleaching}
 93106, USA}
   
   \begin{abstract}
-  This is the abstract. Some type of positive feedback is necessary.
-  Compare scenarios of recycling CO2, have photodamage increase
-  maintenance that does recycle CO2. Compare recycled N to symbiont
-  instead of host How much do you have to reduce the light to get
-  recovery? i.e., magnitude of hysteresis?
+  Coral reef ecosystems owe their ecological success--and vulnerability to
+  climate change--to the symbiotic metabolism of corals and
+  \emph{Symbiodinium} spp. The urgency to understand and predict the
+  stability and breakdown of these symbioses (i.e., coral `bleaching')
+  calls for the development and application of theoretical tools. While
+  the biological complexity of the symbiosis is well-suited to dynamical
+  modeling, the theoretical complexity of certain approaches makes them
+  inaccessible to many biologists, thus limiting their potential
+  application and utility. Here, we develop a simplified dynamic
+  bioenergetic model of coral-algal symbiosis that demonstrates realistic
+  steady-state behavior across gradients of light, nutrients, and feeding.
+  Furthermore, through a mechanistic treatment of photo-oxidative stress,
+  the model displays dynamic responses of bleaching and recovery, and
+  suggests that these phenomena represent transitions between alternative
+  stable states. A suite of complex observed behaviors reproduced by this
+  model suggests it has captured many important attributes of the system;
+  meanwhile, its modular framework and open source R code are designed to
+  facilitate expansion and problem-specific applications. We see high
+  utility for this model in elucidating the mechanistic underpinnings of
+  complex responses, generating testable hypotheses, and predicting
+  integrated responses to simultaneous changes in multiple environmental
+  inputs.
   \end{abstract}
   
  \end{frontmatter}
@@ -787,24 +804,7 @@ Scaling parameter for strength of bleaching response
 \bottomrule
 \end{longtable}
 
-\begin{figure}[htbp]
-\centering
 \includegraphics{../img/Fig1.png}
-\caption{Graphical representation of coral-algal symbiosis model. Light,
-CO\textsubscript{2}, prey, and DIN are acquired from the external
-environment proportional to the biomass of the partner indicated by the
-black box for uptake. Mass fluxes (see Table 1 for definitions) are
-represented by \(j\)'s with subscripts indicating the type of mass, and
-in some cases the process (e.g., \(j_{CP}\) is the flux of carbon
-produced by photosynthesis), and \(\rho\)'s indicate fluxes that are
-shared by one partner with the other. Parallel complementary
-synthesizing units (SUs) are represented by large circles, and rejection
-fluxes from these SUs are indicated by dashed lines. \(c_{ROS}\) is a
-proportional rate that impacts other model fluxes by inhibition or
-acceleration; likewise, \(j_{eC}\) accelerates the rate of \(j_{CO_2}\).
-Recycled mass fluxes from biomass turnover are not shown for clarity
-(but see Table 1 for definitions).}
-\end{figure}
 
 \subsection{State equations}\label{state-equations}
 
@@ -933,7 +933,7 @@ Additional metabolic CO\textsubscript{2} recycled from both the host and
 symbiont biomass turnover is also made available to the photosynthesis
 SU, according to:
 
-\begin{equation} r_{CH}=\sigma_{CH}j_{HT}^0 \end{equation}\begin{equation} r_{CS}=\sigma_{CS}j_{ST}^0 \end{equation}
+\begin{equation} r_{CH}=j_{HT}^0 \cdot {S \over H} \end{equation}\begin{equation} r_{CS}=\sigma_{CS}j_{ST}^0 \end{equation}
 
 Fixed carbon is then produced by the photosynthesis SU according to:
 
@@ -1078,22 +1078,7 @@ negative correlation between irradiance and symbiont density (Stimson
 higher light alleviates light-limitation of photosynthesis, growth
 becomes less carbon-limited.
 
-\begin{figure}[htbp]
-\centering
 \includegraphics{../img/Fig2.png}
-\caption{Steady state values of \textbf{A)} specific growth (Cmol
-Cmol\textsuperscript{-1} d\textsuperscript{-1}), \textbf{B)} the
-symbiont to host biomass ratio (CmolS CmolH\textsuperscript{-1}),
-\textbf{C)} relative C- or N-limitation of host biomass formation, and
-\textbf{D)} relative CO\textsubscript{2}- or light-limitation of
-symbiont photosynthesis, across gradients of external irradiance and
-dissolved inorganic nitrogen. Note that typical conditions for reefs are
-\textasciitilde{}1e-7 M DIN and 10-20 mol photons m\textsuperscript{-2}
-d\textsuperscript{-1}. Simulations for each combination of light and
-nutrients (41 points along each axis) were run for 100 days with a time
-step of 1 day. Negative steady state growth rates, and corresponding S:H
-ratios, were set to zero.}
-\end{figure}
 
 Similarly, increasing DIN up to \textasciitilde{}2 µM alleviates
 nitrogen-limitation (Fig. 2A). Increased growth at higher DIN is
@@ -1186,19 +1171,7 @@ steady state values in response to fractional changes in parameter
 values, relative to their default values, under environmental conditions
 typical of coral reefs.
 
-\begin{figure}[htbp]
-\centering
 \includegraphics{../img/Fig3.png}
-\caption{Sensitivity analysis. Plots show the fractional change in
-steady state values of growth (solid lines) and S:H biomass (dashed
-lines) in response to fractional changes in default parameter values
-(see Table 2 for default values). Parameters are grouped by which
-processes they are involved in. This sensitivity analysis was conducted
-at conditions typical for coral reef environments: low DIN (1e-7 M) and
-intermediate light (15 mol m\textsuperscript{-2} d\textsuperscript{-2}).
-Sensitivity analyses conducted other environmental conditions are
-presented in the Supplementary Information.}
-\end{figure}
 
 Overall, relative changes in the steady state of the system are less
 than the equivalent relative change in parameter value, indicating that
@@ -1247,21 +1220,7 @@ nutrient status; when light is reduced in winter, these responses become
 constrained instead by nitrogen, and therefore increase more when DIN is
 enriched (Fig. S8).
 
-\begin{figure}[htbp]
-\centering
 \includegraphics{../img/Fig4.png}
-\caption{Figure 4. Light-driven seasonal dynamics of symbiont abundance
-and coral growth. Light input (upper panel) was designed as a sinusoidal
-curve with a period of one year, with maximum and minimum values of 40
-and 22 mol photons m\textsuperscript{-2} d\textsuperscript{-1}, based on
-Stimson (1997). The dynamic behavior of symiont to host biomass ratio
-(middle panel) and the specific growth rate of host biomass (lower
-panel) show seasonal oscillations that are greater in magnitude under
-higher nutrients (1e-5 molN L\textsuperscript{-1}; dashed lines)
-relative to lower nutrients (1e-7 molN L\textsuperscript{-1}; solid
-lines), consistent with the findings of Stimson (1997). Prey density was
-set at 1e-5 CmolX L\textsuperscript{-1}.}
-\end{figure}
 
 The prediction of higher growth when light is reduced indicates that
 growth is not limited by low light in winter, but is actually reduced by
@@ -1333,11 +1292,7 @@ establishes a critical role of host CCMs in providing
 CO\textsubscript{2} for photosynthesis (Tansik, Fitt, and Hopkinson
 2015; Hopkinson, Tansik, and Fitt 2015).
 
-\begin{figure}[htbp]
-\centering
 \includegraphics{../img/Fig5.png}
-\caption{Figure 5. Bleaching.}
-\end{figure}
 
 The importance of host CCM activity establishes significant interactive
 roles for other factors in influencing coral bleaching responses. For
@@ -1354,11 +1309,7 @@ Thurber et al. 2014) and correlational studies (Wooldridge and Done
 2009) are consistent with this mechanistic link between high nutrients
 and bleaching.
 
-\begin{figure}[htbp]
-\centering
 \includegraphics{../img/Fig6.png}
-\caption{Figure 6. Bleaching and interactive factors.}
-\end{figure}
 
 Since bleaching represents an alternative stable state, it follows that
 a bleached coral cannot recover unless the external condition that
@@ -1375,11 +1326,7 @@ will depend on external nutrients and prey availability, as well as
 model parameters, yet the fundamental concept demonstrates a core
 behavior of the system.
 
-\begin{figure}[htbp]
-\centering
 \includegraphics{../img/Fig7.png}
-\caption{Figure 7. Hysteresis.}
-\end{figure}
 
 The hysteresis demonstrated in Fig. 7 reveals another interesting
 behavior of the system: during recovery from bleaching, the S:H biomass
