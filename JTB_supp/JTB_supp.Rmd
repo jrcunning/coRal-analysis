@@ -10,7 +10,7 @@ This supplement provides justification and derivations from the literature for a
 
 ```{r setup, include=FALSE}
 knitr::opts_knit$set(root.dir = normalizePath(".."))
-knitr::opts_chunk$set(message = F, warning = F)
+knitr::opts_chunk$set(message = F, warning = F, echo=F)
 ```
 
 ```{r initialize, include=FALSE}
@@ -452,7 +452,7 @@ run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
 ss2 <- with(run_coral_ss(env=list(L=30,N=1e-6,X=1e-5), pars=defpars), last(S$S/H$H))
 run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
-par(mfcol=c(6,2), mar=c(2,2,1,4), mgp=c(1,0,0), tcl=0.2)
+par(mfcol=c(6,2), mar=c(2,2,1,4), mgp=c(1,0,0), tcl=0.2, xaxs="i")
 
 with(run1, {
       # External irradiance
