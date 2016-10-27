@@ -61,8 +61,7 @@ run_coral_ss <- function(env, pars) {
     S[t,]$jL <- (1.256307 + 1.385969 * exp(-6.479055 * (S$S[t-1]/H$H[t-1]))) * env$L * pars$astar
     # CO2 input flux
     S[t,]$rCS <- pars$jST0 * pars$sigmaCS  # metabolic CO2 recycled from symbiont biomass turnover
-    #H[t,]$rCH <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
-    H[t,]$rCH <- H$jHT[t-1] * pars$sigmaCH * S$S[t-1]/H$H[t-1]  #
+    H[t,]$rCH <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
     H[t,]$jCO2 <- pars$kCO2 * H$jeC[t-1]  # carbon not used in host biomass is used to activate CCM's that deliver CO2 to photosynthesis
     # Production flux (photosynthetic carbon fixation)
     S[t,]$jCP <- synth(S[t,]$jL * pars$yCL, (H[t,]$jCO2 + H[t,]$rCH)*H$H[t-1]/S$S[t-1] + S[t,]$rCS, pars$jCPm) / S$cROS[t-1]
