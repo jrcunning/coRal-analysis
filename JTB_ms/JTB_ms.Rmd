@@ -17,16 +17,12 @@ address:
   - code: University of California
     address: Department of Ecology, Evolution, and Marine Biology, Santa Barbara, CA 93106, USA
 abstract: |
-  This is the abstract.
-  Some type of positive feedback is necessary.
-  Compare scenarios of recycling CO2, have photodamage increase maintenance that does recycle CO2.
-  Compare recycled N to symbiont instead of host
-  How much do you have to reduce the light to get recovery? i.e., magnitude of hysteresis?
+  Coral reef ecosystems owe their ecological success--and vulnerability to climate change--to the symbiotic metabolism of corals and *Symbiodinium* spp. The urgency to understand and predict the stability and breakdown of these symbioses (i.e., coral 'bleaching') calls for the development and application of theoretical tools. While the biological complexity of the symbiosis is well-suited to dynamical modeling, the theoretical complexity of certain approaches makes them inaccessible to many biologists, thus limiting their potential application and utility. Here, we develop a simplified dynamic bioenergetic model of coral-algal symbiosis that demonstrates realistic steady-state behavior across gradients of light, nutrients, and feeding. Furthermore, through a mechanistic treatment of photo-oxidative stress, the model displays dynamic responses of bleaching and recovery, and suggests that these phenomena represent transitions between alternative stable states. A suite of complex observed behaviors reproduced by this model suggests it has captured many important attributes of the system; meanwhile, its modular framework and open source R code are designed to facilitate expansion and problem-specific applications. We see high utility for this model in elucidating the mechanistic underpinnings of complex responses, generating testable hypotheses, and predicting integrated responses to simultaneous changes in multiple environmental inputs.
 
 bibliography: library.bib
 output: 
   rticles::elsevier_article:
-    fig_caption: yes
+    fig_caption: no
 ---
 ```{r setup, include=FALSE}
 library(reshape2); library(dplyr)
@@ -164,13 +160,16 @@ This amplification factor is then multiplied by the external downwelling irradia
 
 \begin{equation} j_L =  A \cdot L \cdot \bar{a}^* \end{equation}
 
-We then specify the input of CO~2~ to photosynthesis as $j_{CO_2}$, a flux mediated by the host that encompasses potentially diverse carbon-concentrating mechanisms (CCMs), including active transport of bicarbonate, carbonic anhydrase-catalyzed conversion of bicarbonate to CO~2~ to promote diffusion toward the symbiont [@Tansik:2015cm], and acidification of the symbiosome to increase localized CO~2~ concentrations around the symbiont [@Barott:2014gx]. Since these active CCMs require energetic input by the host, the magnitude of CO~2~ delivery is proportional to the amount of fixed carbon available to the host after satisfying its growth demands, $j_{eC}$, assuming that some of this carbon is respired to energize these CCMs. This formulation means that the symbiont indirectly ensures its own CO~2~ supply by providing fixed carbon (=energy) to the host [@Wooldridge:2013tj], which establishes a positive feedback in the model that leads to the existence of multiple stable states, which we discuss below in the context of coral bleaching. The parameter $k_{CO_2}$ scales the efficacy of host CCMs, which enables the comparison of different rates of CO~2~ delivery that may characterize different coral species [@Wooldridge:2014di]. The input of CO~2~ to the photosynthesis SU is therefore specified as:
+We then specify the input of CO~2~ to photosynthesis as $j_{CO_2}$, a flux mediated by the host that encompasses potentially diverse carbon-concentrating mechanisms (CCMs), including active transport of bicarbonate, carbonic anhydrase-catalyzed conversion of bicarbonate to CO~2~ to promote diffusion toward the symbiont [@Tansik:2015cm], and acidification of the symbiosome to increase localized CO~2~ concentrations around the symbiont [@Barott:2014gx]. Since these active CCMs require energetic input by the host, the magnitude of CO~2~ delivery is proportional to the amount of fixed carbon available to the host after satisfying its growth demands, $j_{eC}$, assuming that some of this carbon is respired to energize these CCMs. This formulation means that the symbiont indirectly ensures its own CO~2~ supply by providing fixed carbon (=energy) to the host [@Wooldridge:2013tj], which establishes a positive feedback in the model that leads to the existence of multiple stable states, which we discuss below in the context of coral bleaching. The parameter $k_{CO_2}$ scales the efficacy of host CCMs, which enables the comparison of different rates of CO~2~ delivery that may characterize different coral species [@Wooldridge:2014di]. The active input of CO~2~ to the photosynthesis SU is therefore specified as:
 
 \begin{equation} j_{CO_2} = k_{CO_2}j_{eC} \end{equation}
 
-Additional metabolic CO~2~ recycled from both the host and symbiont biomass turnover is also made available to the photosynthesis SU, according to:
+An additional fixed proportion of metabolic CO~2~ generated by host biomass turnover is made available to the photosynthesis SU (scaled to the relative amount of symbiont biomass), according to:
 
-\begin{equation} r_{CH}=\sigma_{CH}j_{HT}^0 \end{equation}
+\begin{equation} r_{CH}=\sigma_{CH}j_{HT}^0 \cdot {S \over H} \end{equation}
+
+along with a fixed proportion of symbiont biomass turnover:
+
 \begin{equation} r_{CS}=\sigma_{CS}j_{ST}^0 \end{equation}
 
 Fixed carbon is then produced by the photosynthesis SU according to:
