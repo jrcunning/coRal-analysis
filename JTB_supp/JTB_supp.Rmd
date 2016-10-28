@@ -40,9 +40,12 @@ All parameters in the model are listed here along with the relevant literature t
 * $j_{ST}^0$: Specific turnover rate of symbiont biomass
     + Assuming an equivalent maintenance rate as the host:
     + Value used: `r defpars$jST0` CmolS CmolS^-1^ d^-1^
-* $\sigma_{NH}, \sigma_{CH}, \sigma_{NS}, \sigma_{CS}$: Proportions of nitrogen and carbon recycled from host and symbiont biomass turnover
+* $\sigma_{NH}, \sigma_{NS}$: Proportions of nitrogen recycled from host and symbiont biomass turnover
     + Assuming highly efficient recycling to avoid loss to the environment:
     + Values used: `r with(defpars, c(sigmaNH, sigmaCH, sigmaNS, sigmaCS))` (dimensionless)
+* $\sigma_{CH},  \sigma_{CS}$: Proportions of CO~2~ recycled to photosynthesis from host and symbiont biomass turnover
+    + Assuming that metabolic CO~2~ rapidly converts to HCO~3~^-^ at intracellular pH ~ 7.2 [@Venn:2009hy], only ~10% actually remains as CO~2~ [@Zeebe:2001wz] which would be available to diffusively supply photosynthesis. This passive supply is differentiated from all active mechanisms (CCMs) that facilitate CO~2~ supply to photosynthesis, which are separately treated collectively as the $jCO~2~$ flux.
+    + Values used: 0.10
 * $j_{Xm}$: Maximum specific feeding rate of host
     + @Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific feeding rate of 77.6 µgC cm^-2^ 6h^-1^. This converts to:
     + Value used: `r round(77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 4, 2)` molX CmolH^-1^ d^-1^
