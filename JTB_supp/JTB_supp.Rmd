@@ -41,11 +41,14 @@ All parameters in the model are listed here along with the relevant literature t
     + Assuming an equivalent maintenance rate as the host:
     + Value used: `r defpars$jST0` CmolS CmolS^-1^ d^-1^
 * $\sigma_{NH}, \sigma_{NS}$: Proportions of nitrogen recycled from host and symbiont biomass turnover
-    + Assuming highly efficient recycling to avoid loss to the environment:
-    + Values used: `r with(defpars, c(sigmaNH, sigmaCH, sigmaNS, sigmaCS))` (dimensionless)
-* $\sigma_{CH},  \sigma_{CS}$: Proportions of CO~2~ recycled to photosynthesis from host and symbiont biomass turnover
-    + Assuming that metabolic CO~2~ rapidly converts to HCO~3~^-^ at intracellular pH ~ 7.2 [@Venn:2009hy], only ~10% actually remains as CO~2~ [@Zeebe:2001wz] which would be available to diffusively supply photosynthesis. This passive supply is differentiated from all active mechanisms (CCMs) that facilitate CO~2~ supply to photosynthesis, which are separately treated collectively as the $jCO~2~$ flux.
-    + Values used: 0.10
+    + Assume highly efficient recycling by both symbiont and host to avoid loss to the environment:
+    + Values used: `r with(defpars, c(sigmaNH, sigmaNS))` (dimensionless)
+* $\sigma_{CS}$: Proportion of metabolic CO~2~ produced by symbiont recycled passively to photosynthesis
+    + Assume that CO~2~ produced within symbiont cells is recycled with high efficiency, potentially aided by symbiont carbon concentrating mechanisms
+    + Value used: 0.9 (dimensionless)
+* $\sigma_{CH}$: Proportions of metabolic CO~2~ produced by host recycled passively to photosynthesis 
+    + Assume that most metabolic CO~2~ produced within host cells rapidly converts to HCO~3~^-^ at intracellular pH ~ 7.2 [@Venn:2009hy], and that only ~10% actually remains as CO~2~ [@Zeebe:2001wz] that could diffusively supply photosynthesis. This passive supply is differentiated from all active host carbon concentrating mechanisms (CCMs) that facilitate CO~2~ supply to photosynthesis, which are separately treated collectively as the $jCO~2~$ flux.
+    + Values used: 0.1 (dimensionless)
 * $j_{Xm}$: Maximum specific feeding rate of host
     + @Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific feeding rate of 77.6 µgC cm^-2^ 6h^-1^. This converts to:
     + Value used: `r round(77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 4, 2)` molX CmolH^-1^ d^-1^
@@ -443,16 +446,16 @@ This figure accompanies Figure 4 in the main text, and show additional model flu
 defpars <- def_pars()  # Get default parameters
 
 # Set run time vector
-time <- seq(1, 365, 0.5)  # if single model run, use time input
+time <- seq(1, 365, 0.1)  # if single model run, use time input
 
 # Initialize environments
-env1 <- init_env(time=time, L=c(20,40,2), N=c(1e-7,1e-7,0), X=c(1e-5,1e-5,0))
-env2 <- init_env(time=time, L=c(20,40,2), N=c(1e-6,1e-6,0), X=c(1e-5,1e-5,0))
+env1 <- init_env(time=time, L=c(22,44,2), N=c(1e-7,1e-7,0), X=c(1e-5,1e-5,0))
+env2 <- init_env(time=time, L=c(22,44,2), N=c(1e-5,1e-5,0), X=c(1e-5,1e-5,0))
 
 # Run simulations
-ss1 <- with(run_coral_ss(env=list(L=30,N=1e-7,X=1e-5), pars=defpars), last(S$S/H$H))
+ss1 <- with(run_coral_ss(env=list(L=33,N=1e-7,X=1e-5), pars=defpars), last(S$S/H$H))
 run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
-ss2 <- with(run_coral_ss(env=list(L=30,N=1e-6,X=1e-5), pars=defpars), last(S$S/H$H))
+ss2 <- with(run_coral_ss(env=list(L=33,N=1e-5,X=1e-5), pars=defpars), last(S$S/H$H))
 run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
 par(mfcol=c(6,2), mar=c(2,2,1,4), mgp=c(1,0,0), tcl=0.2, xaxs="i")
@@ -583,7 +586,7 @@ env <- init_env(time=time, L=c(60,20,4), N=c(2e-7,2e-7,0), X=c(2e-6,2e-6,0))
 defpars <- def_pars()  # Get default parameters
 
 # Run simulation
-run <- run_coral(time=time, env=env, pars=replace(defpars, "kCO2", 6))#
+run <- run_coral(time=time, env=env, pars=defpars)
 plot_run(run)
 ```
 

@@ -115,18 +115,26 @@ coral bleaching}
   inaccessible to many biologists, thus limiting their potential
   application and utility. Here, we develop a simplified dynamic
   bioenergetic model of coral-algal symbiosis that demonstrates realistic
-  steady-state behavior across gradients of light, nutrients, and feeding.
-  Furthermore, through a mechanistic treatment of photo-oxidative stress,
-  the model displays dynamic responses of bleaching and recovery, and
-  suggests that these phenomena represent transitions between alternative
-  stable states. A suite of complex observed behaviors reproduced by this
-  model suggests it has captured many important attributes of the system;
-  meanwhile, its modular framework and open source R code are designed to
-  facilitate expansion and problem-specific applications. We see high
-  utility for this model in elucidating the mechanistic underpinnings of
-  complex responses, generating testable hypotheses, and predicting
-  integrated responses to simultaneous changes in multiple environmental
-  inputs.
+  steady-state patterns in coral growth and symbiont abundance across
+  gradients of light, nutrients, and feeding. Furthermore, through a
+  mechanistic treatment of photo-oxidative stress, the model displays
+  dynamic responses of bleaching and recovery, and suggests that these
+  phenomena represent transitions between alternative stable states. A
+  suite of complex observed behaviors reproduced by the model suggests it
+  captures many important attributes of the system; meanwhile, its modular
+  framework and open source R code are designed to facilitate expansion
+  and problem-specific applications. We see high utility for this modeling
+  framework in generating testable hypotheses and predicting integrated,
+  mechanistic responses of corals to environmental change.
+  
+  Latest development--sigmaCH and sigmaCS changed to 0.1 meaning 10\% of
+  metabolic CO2 produced is passively available to photosynthesis, to
+  reflect the fact that that \textasciitilde{}10\% of total internal DIC
+  at pH 7 is in the form of CO2. probably actually less than this since
+  internal pH may be closer to 7.5. This does not change any of the
+  figures substantively except the hysteresis figure--overshoot no longer
+  occurs with specific parameters run. may need to just change light range
+  or rate of change to reproduce overshoot.
   \end{abstract}
   
  \end{frontmatter}
@@ -546,7 +554,7 @@ N:C molar ratio in host biomass
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.19
+\(0.18\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(n_{NS}\)
@@ -558,7 +566,7 @@ N:C molar ratio in symbiont biomass
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.2
+\(0.13\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(n_{NX}\)
@@ -570,7 +578,7 @@ N:C molar ratio in prey biomass
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.13
+\(0.2\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{HT}^0\)
@@ -582,7 +590,7 @@ Specific turnover rate of host biomass
 CmolH CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.03
+\(0.03\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{ST}^0\)
@@ -594,55 +602,55 @@ Specific turnover rate of symbiont biomass
 CmolS CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.03
+\(0.03\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\sigma_{NH}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
-Proportion host nitrogen turnover recycled
+Proportion host N-turnover recycled to host
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.9
+\(0.9\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\sigma_{CH}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
-Proportion host carbon turnover recycled
+Proportion host C-turnover recycled to photosynthesis
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.9
+\(0.1\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\sigma_{NS}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
-Proportion symbiont nitrogen turnover recycled
+Proportion symbiont N-turnover recycled to symbiont
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.9
+\(0.9\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\sigma_{CS}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.48\columnwidth}\raggedright\strut
-Proportion symbiont carbon turnover recycled
+Proportion symbiont C-turnover recycled to photosynthesis
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.9
+\(0.9\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{Xm}\)
@@ -654,7 +662,7 @@ Maximum specific feeding rate of host
 molX CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.1292
+\(0.13\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(K_X\)
@@ -666,7 +674,7 @@ Half-saturation constant for prey uptake by host
 molX L\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-20e-6
+\(1.95\times 10^{-5}\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{Nm}\)
@@ -678,7 +686,7 @@ Maximum specific DIN uptake rate by host
 molN CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.048
+\(0.035\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(K_N\)
@@ -690,7 +698,7 @@ Half-saturation constant for DIN uptake by host
 molN L\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.46e-6
+\(1.5\times 10^{-6}\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(k_{CO_2}\)
@@ -702,7 +710,7 @@ Efficacy of CO\textsubscript{2} delivery by host CCMs
 molCO\textsubscript{2} molC\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-10
+\(10\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{HGm}\)
@@ -714,7 +722,7 @@ Maximum specific growth rate of host
 CmolH CmolH\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-1
+\(1\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(y_{CL}\)
@@ -726,7 +734,7 @@ Quantum yield of photosynthesis
 molC mol ph\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.1
+\(0.1\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(\bar{a}^*\)
@@ -738,7 +746,7 @@ Effective light-absorbing cross-section of symbiont
 m\textsuperscript{2} CmolS\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-1.34
+\(1.34\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(k_{NPQ}\)
@@ -750,7 +758,7 @@ NPQ capacity of symbiont
 mol ph CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-112
+\(112\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(k_{ROS}\)
@@ -763,7 +771,7 @@ levels
 mol ph CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-40-80
+\(80\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{CPm}\)
@@ -775,7 +783,7 @@ Maximum specific photosynthesis rate of symbiont
 molC CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-2.8
+\(2.8\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(j_{SGm}\)
@@ -787,7 +795,7 @@ Maximum specific growth rate of symbiont
 CmolS CmolS\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-0.25
+\(0.25\)
 \strut\end{minipage}\tabularnewline
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 \(b\)
@@ -799,7 +807,7 @@ Scaling parameter for strength of bleaching response
 --
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
-5
+\(5\)
 \strut\end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
@@ -931,11 +939,10 @@ specified as:
 \begin{equation} j_{CO_2} = k_{CO_2}j_{eC} \end{equation}
 
 An additional fixed proportion of metabolic CO\textsubscript{2}
-generated by host biomass turnover is made available to the
-photosynthesis SU (scaled to the relative amount of symbiont biomass),
-according to:
+generated by host biomass turnover is passively made available to the
+photosynthesis SU, according to:
 
-\begin{equation} r_{CH}=\sigma_{CH}j_{HT}^0 \cdot {S \over H} \end{equation}
+\begin{equation} r_{CH}=\sigma_{CH}j_{HT}^0 \end{equation}
 
 along with a fixed proportion of symbiont biomass turnover:
 

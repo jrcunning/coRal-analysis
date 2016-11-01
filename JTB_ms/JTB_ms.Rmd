@@ -18,6 +18,8 @@ address:
     address: Department of Ecology, Evolution, and Marine Biology, Santa Barbara, CA 93106, USA
 abstract: |
   Coral reef ecosystems owe their ecological success--and vulnerability to climate change--to the symbiotic metabolism of corals and *Symbiodinium* spp. The urgency to understand and predict the stability and breakdown of these symbioses (i.e., coral 'bleaching') calls for the development and application of theoretical tools. While the biological complexity of the symbiosis is well-suited to dynamical modeling, the theoretical complexity of certain approaches makes them inaccessible to many biologists, thus limiting their potential application and utility. Here, we develop a simplified dynamic bioenergetic model of coral-algal symbiosis that demonstrates realistic steady-state patterns in coral growth and symbiont abundance across gradients of light, nutrients, and feeding. Furthermore, through a mechanistic treatment of photo-oxidative stress, the model displays dynamic responses of bleaching and recovery, and suggests that these phenomena represent transitions between alternative stable states. A suite of complex observed behaviors reproduced by the model suggests it captures many important attributes of the system; meanwhile, its modular framework and open source R code are designed to facilitate expansion and problem-specific applications. We see high utility for this modeling framework in generating testable hypotheses and predicting integrated, mechanistic responses of corals to environmental change.
+  
+  Latest development--sigmaCH and sigmaCS changed to 0.1 meaning 10% of metabolic CO2 produced is passively available to photosynthesis, to reflect the fact that that ~10% of total internal DIC at pH 7 is in the form of CO2. probably actually less than this since internal pH may be closer to 7.5. This does not change any of the figures substantively except the hysteresis figure--overshoot no longer occurs with specific parameters run. may need to just change light range or rate of change to reproduce overshoot.
 
 bibliography: library.bib
 output: 
@@ -32,6 +34,9 @@ knitr::opts_knit$set(root.dir = normalizePath(".."))
 ```{r load, include=FALSE}
 # Source metrics reported in text
 source("R/reported_metrics.R")
+# Source default parameter values
+source("R/def_pars.R")
+defpars <- def_pars()
 ```
 
 # Introduction
@@ -84,28 +89,28 @@ Table 2. Model parameters
 
 | Symbol  | Description                            | Units               | Value   |
 | ------- | -------------------------------------- | ------------------- | ------- |
-| $n_{NH}$ | N:C molar ratio in host biomass | -- | 0.19 |
-| $n_{NS}$ | N:C molar ratio in symbiont biomass | -- | 0.2 |
-| $n_{NX}$ | N:C molar ratio in prey biomass | -- | 0.13 |
-| $j_{HT}^0$ | Specific turnover rate of host biomass | CmolH CmolH^-1^ d^-1^ | 0.03 |
-| $j_{ST}^0$ | Specific turnover rate of symbiont biomass | CmolS CmolS^-1^ d^-1^ | 0.03 |
-| $\sigma_{NH}$ | Proportion host nitrogen turnover recycled | -- | 0.9 |
-| $\sigma_{CH}$ | Proportion host carbon turnover recycled | -- | 0.9 |
-| $\sigma_{NS}$ | Proportion symbiont nitrogen turnover recycled | -- | 0.9 |
-| $\sigma_{CS}$ | Proportion symbiont carbon turnover recycled | -- | 0.9 |
-| $j_{Xm}$ | Maximum specific feeding rate of host | molX CmolH^-1^ d^-1^ | 0.1292 |
-| $K_X$ | Half-saturation constant for prey uptake by host | molX L^-1^ | 20e-6 |
-| $j_{Nm}$ | Maximum specific DIN uptake rate by host | molN CmolH^-1^ d^-1^ | 0.048 |
-| $K_N$ | Half-saturation constant for DIN uptake by host | molN L^-1^ | 0.46e-6 |
-| $k_{CO_2}$ | Efficacy of CO~2~ delivery by host CCMs | molCO~2~ molC^-1^ | 10 |
-| $j_{HGm}$ | Maximum specific growth rate of host | CmolH CmolH^-1^ d^-1^ | 1 |
-| $y_{CL}$ | Quantum yield of photosynthesis | molC mol ph^-1^ | 0.1 |
-| $\bar{a}^*$ | Effective light-absorbing cross-section of symbiont | m^2^ CmolS^-1^ | 1.34 |
-| $k_{NPQ}$ | NPQ capacity of symbiont | mol ph CmolS^-1^ d^-1^ | 112 |
-| $k_{ROS}$ | Excess photon energy that doubles ROS production, relative to baseline levels | mol ph CmolS^-1^ d^-1^ | 40-80 |
-| $j_{CPm}$ | Maximum specific photosynthesis rate of symbiont | molC CmolS^-1^ d^-1^ | 2.8 |
-| $j_{SGm}$ | Maximum specific growth rate of symbiont | CmolS CmolS^-1^ d^-1^ | 0.25 |
-| $b$ | Scaling parameter for strength of bleaching response | -- | 5 |
+| $n_{NH}$ | N:C molar ratio in host biomass | -- | $`r defpars$nNH`$ |
+| $n_{NS}$ | N:C molar ratio in symbiont biomass | -- | $`r defpars$nNS`$ |
+| $n_{NX}$ | N:C molar ratio in prey biomass | -- | $`r defpars$nNX`$ |
+| $j_{HT}^0$ | Specific turnover rate of host biomass | CmolH CmolH^-1^ d^-1^ | $`r defpars$jHT0`$ |
+| $j_{ST}^0$ | Specific turnover rate of symbiont biomass | CmolS CmolS^-1^ d^-1^ | $`r defpars$jST0`$ |
+| $\sigma_{NH}$ | Proportion host N-turnover recycled to host | -- | $`r defpars$sigmaNH`$ |
+| $\sigma_{CH}$ | Proportion host C-turnover recycled to photosynthesis | -- | $`r defpars$sigmaCH`$ |
+| $\sigma_{NS}$ | Proportion symbiont N-turnover recycled to symbiont | -- | $`r defpars$sigmaNS`$ |
+| $\sigma_{CS}$ | Proportion symbiont C-turnover recycled to photosynthesis | -- | $`r defpars$sigmaCS`$ |
+| $j_{Xm}$ | Maximum specific feeding rate of host | molX CmolH^-1^ d^-1^ | $`r defpars$jXm`$ |
+| $K_X$ | Half-saturation constant for prey uptake by host | molX L^-1^ | $`r defpars$KX`$ |
+| $j_{Nm}$ | Maximum specific DIN uptake rate by host | molN CmolH^-1^ d^-1^ | $`r defpars$jNm`$ |
+| $K_N$ | Half-saturation constant for DIN uptake by host | molN L^-1^ | $`r defpars$KN`$ |
+| $k_{CO_2}$ | Efficacy of CO~2~ delivery by host CCMs | molCO~2~ molC^-1^ | $`r defpars$kCO2`$ |
+| $j_{HGm}$ | Maximum specific growth rate of host | CmolH CmolH^-1^ d^-1^ | $`r defpars$jHGm`$ |
+| $y_{CL}$ | Quantum yield of photosynthesis | molC mol ph^-1^ | $`r defpars$yCL`$ |
+| $\bar{a}^*$ | Effective light-absorbing cross-section of symbiont | m^2^ CmolS^-1^ | $`r defpars$astar`$ |
+| $k_{NPQ}$ | NPQ capacity of symbiont | mol ph CmolS^-1^ d^-1^ | $`r defpars$kNPQ`$ |
+| $k_{ROS}$ | Excess photon energy that doubles ROS production, relative to baseline levels | mol ph CmolS^-1^ d^-1^ | $`r defpars$kROS`$ |
+| $j_{CPm}$ | Maximum specific photosynthesis rate of symbiont | molC CmolS^-1^ d^-1^ | $`r defpars$jCPm`$ |
+| $j_{SGm}$ | Maximum specific growth rate of symbiont | CmolS CmolS^-1^ d^-1^ | $`r defpars$jSGm`$ |
+| $b$ | Scaling parameter for strength of bleaching response | -- | $`r defpars$b`$ |
 
 ![Graphical representation of coral-algal symbiosis model. Light, CO~2~, prey, and DIN are acquired from the external environment proportional to the biomass of the partner indicated by the black box for uptake. Mass fluxes (see Table 1 for definitions) are represented by $j$'s with subscripts indicating the type of mass, and in some cases the process (e.g., $j_{CP}$ is the flux of carbon produced by photosynthesis), and $\rho$'s indicate fluxes that are shared by one partner with the other. Parallel complementary synthesizing units (SUs) are represented by large circles, and rejection fluxes from these SUs are indicated by dashed lines. $c_{ROS}$ is a proportional rate that impacts other model fluxes by inhibition or acceleration; likewise, $j_{eC}$ accelerates the rate of $j_{CO_2}$. Recycled mass fluxes from biomass turnover are not shown for clarity (but see Table 1 for definitions).](../img/Fig1.png)
 
@@ -164,9 +169,9 @@ We then specify the input of CO~2~ to photosynthesis as $j_{CO_2}$, a flux media
 
 \begin{equation} j_{CO_2} = k_{CO_2}j_{eC} \end{equation}
 
-An additional fixed proportion of metabolic CO~2~ generated by host biomass turnover is made available to the photosynthesis SU (scaled to the relative amount of symbiont biomass), according to:
+An additional fixed proportion of metabolic CO~2~ generated by host biomass turnover is passively made available to the photosynthesis SU, according to:
 
-\begin{equation} r_{CH}=\sigma_{CH}j_{HT}^0 \cdot {S \over H} \end{equation}
+\begin{equation} r_{CH}=\sigma_{CH}j_{HT}^0 \end{equation}
 
 along with a fixed proportion of symbiont biomass turnover:
 

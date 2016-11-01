@@ -12,7 +12,7 @@ sapply(c("R/def_pars.R",
 time <- seq(1, 80, 0.1)  # if single model run, use time input
 
 # Initialize environment
-env <- init_env(time=time, L=c(27,40,0), N=c(1e-7,1e-7,0), X=c(0e-6,0e-6,0))
+env <- init_env(time=time, L=c(30,50,0), N=c(1e-7,1e-7,0), X=c(0e-6,0e-6,0))
 #L <- list(c(rep(20,100), rep(50,300))[-(1:9)])
 #env <- replace(env, "L", L)
 
@@ -31,7 +31,7 @@ png("img/Fig5.png", width=3, height=3, units="in", res=300)
         cex.main=0.9, cex.axis=0.6, cex.lab=0.7)
     
     # External irradiance
-    plot(time, env$L, type="l", col="gold", ylim=c(25,45), lwd=2, xlab="", ylab="molph/m2/d")
+    plot(time, env$L, type="l", col="gold", ylim=c(30,50), lwd=2, xlab="", ylab="molph/m2/d")
     title("A. External irradiance", adj=0, line=0.25)
     
     # Plot ROS

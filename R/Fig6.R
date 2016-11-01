@@ -10,23 +10,23 @@ defpars <- def_pars()  # Get default parameters
 pars <- defpars
 
 # Run 1
-env1 <- init_env(time=time, L=c(20,39,2), N=c(1e-7,1e-7,0), X=c(3e-6,3e-6,0))
-ss1 <- with(run_coral_ss(env=list(L=29.6, N=1e-7, X=3e-6), pars=pars), last(S$S/H$H))
+env1 <- init_env(time=time, L=c(25,48,2), N=c(1e-7,1e-7,0), X=c(3e-6,3e-6,0))
+ss1 <- with(run_coral_ss(env=list(L=36, N=1e-7, X=3e-6), pars=pars), last(S$S/H$H))
 run1 <- run_coral(time=time, env=env1, pars=replace(pars, "initS", ss1))
 # Run 2 - increase food
-env2 <- init_env(time=time, L=c(20,39,2), N=c(1e-7,1e-7,0), X=c(6e-6,6e-6,0))
-ss2 <- with(run_coral_ss(env=list(L=29.6, N=1e-7, X=6e-6), pars=pars), last(S$S/H$H))
+env2 <- init_env(time=time, L=c(25,48,2), N=c(1e-7,1e-7,0), X=c(6e-6,6e-6,0))
+ss2 <- with(run_coral_ss(env=list(L=36, N=1e-7, X=6e-6), pars=pars), last(S$S/H$H))
 run2 <- run_coral(time=time, env=env2, pars=replace(pars, "initS", ss2))
 # Run 3 - increase DIN
-env3 <- init_env(time=time, L=c(20,39,2), N=c(1e-6,1e-6,0), X=c(3e-6,3e-6,0))
-ss3 <- with(run_coral_ss(env=list(L=29.6, N=1e-6, X=3e-6), pars=pars), last(S$S/H$H))
+env3 <- init_env(time=time, L=c(25,48,2), N=c(1e-6,1e-6,0), X=c(3e-6,3e-6,0))
+ss3 <- with(run_coral_ss(env=list(L=36, N=1e-6, X=3e-6), pars=pars), last(S$S/H$H))
 run3 <- run_coral(time=time, env=env3, pars=replace(pars, "initS", ss3))
 
 
 # Plot
 png("img/Fig6.png", width=3, height=3, units="in", res=300)
 par(mfrow=c(1,1), mar=c(2,2,1,2), mgp=c(1,0,0), tcl=0.25, xaxs="i", yaxs="i")
-plot(time, env1$L, col=alpha("gold", 0.5), type="l", lwd=2, axes=F, xlab="Days", ylab="S:H biomass ratio", ylim=c(25,40), cex.lab=0.9)
+plot(time, env1$L, col=alpha("gold", 0.5), type="l", lwd=2, axes=F, xlab="Days", ylab="S:H biomass ratio", ylim=c(30,50), cex.lab=0.9)
 axis(side=4, cex.axis=0.75); mtext(side=4, text="Light (mol ph/m2/d)", line=1, cex=0.9)
 par(new=T)
 plot(NA, xlim=range(time), ylim=c(0.0,0.16), yaxs="i", ylab="", xlab="", cex.axis=0.75, cex.lab=0.9)

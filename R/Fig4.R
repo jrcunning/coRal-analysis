@@ -16,20 +16,20 @@ defpars <- def_pars()  # Get default parameters
 time <- seq(1, 365, 0.1)  # if single model run, use time input
 
 # Initialize environments
-env1 <- init_env(time=time, L=c(20,40,2), N=c(1e-7,1e-7,0), X=c(1e-5,1e-5,0))
-env2 <- init_env(time=time, L=c(20,40,2), N=c(1e-6,1e-6,0), X=c(1e-5,1e-5,0))
+env1 <- init_env(time=time, L=c(22,44,2), N=c(1e-7,1e-7,0), X=c(1e-5,1e-5,0))
+env2 <- init_env(time=time, L=c(22,44,2), N=c(1e-5,1e-5,0), X=c(1e-5,1e-5,0))
 
 # Run simulations
-ss1 <- with(run_coral_ss(env=list(L=30,N=1e-7,X=1e-5), pars=defpars), last(S$S/H$H))
+ss1 <- with(run_coral_ss(env=list(L=33,N=1e-7,X=1e-5), pars=defpars), last(S$S/H$H))
 run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
-ss2 <- with(run_coral_ss(env=list(L=30,N=1e-6,X=1e-5), pars=defpars), last(S$S/H$H))
+ss2 <- with(run_coral_ss(env=list(L=33,N=1e-5,X=1e-5), pars=defpars), last(S$S/H$H))
 run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
 # Create figure
 png("img/Fig4.png", width=3, height=4, units="in", res=300)
 layout(mat=matrix(c(1,2,2,3,3)))
 par(mar=c(0,3,1,1), mgp=c(1.5,0.1,0), tcl=0.25, xaxs="i")
-plot(run1$env$L ~ time, type="l", lwd=3, col=alpha("gold", 0.5), ylim=c(20,40), yaxs="i", 
+plot(run1$env$L ~ time, type="l", lwd=3, col=alpha("gold", 0.5), ylim=c(22,44), yaxs="i", 
      xlab="", ylab="Light", xaxt="n", bty="n", xpd=NA)
 par(mar=c(1.5,3,1.5,1))
 plot(NA, xlim=range(time), ylim=range(0,0.25), xlab="", ylab="S:H biomass", bty="n", xaxt="n")
