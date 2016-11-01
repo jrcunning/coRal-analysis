@@ -55,10 +55,9 @@ sens.plot <- function(response, pars, cols, lines="response") {
   }
  
   # Add legends
-  lr <- ifelse(response=="grchange", "Growth", "S:H")
   legend("topright", legend=pars, lty=1, col=cols, bty="n", cex=0.7)
   if (lines=="response") {
-    legend("topleft", legend=response, lty=1:nlevels(factor(response)), bty="n", cex=0.7)
+    legend("topleft", legend=c("Growth", "S:H biomass"), lty=1:nlevels(factor(response)), bty="n", cex=0.7)
   } else {
     legend("topleft", legend=levels(dat[[1]]$env), lty=1:nlevels(dat[[1]]$env), bty="n", cex=0.7)
   }

@@ -61,10 +61,14 @@ for (i in 1:length(sens.all)) {
 }
 
 # Plot Figure 3
-png("img/Fig3.png", width=5, height=5, units="in", res=300)
-par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(2,0.5,0))
+png("img/Fig3.png", width=4, height=6, units="in", res=300)
+par(mfrow=c(2,2), mar=c(3,3,3,1), mgp=c(2,0.5,0), cex.axis=0.8, cex.lab=0.7)
 sens.plot(response=c("grchange", "shchange"), pars=c("jCPm", "kCO2", "astar"), cols=c("black", "red", "gold"))
+title("A. Photosynthesis parameters", adj=0, line=1, cex=1)
 sens.plot(response=c("grchange", "shchange"), pars=c("jNm", "KN"), cols=c("black", "blue"))
+title("C. Growth parameters parameters", adj=0, line=1, cex=1)
 sens.plot(response=c("grchange", "shchange"), pars=c("jST0", "jHT0", "jSGm", "jHGm"), cols=c("burlywood4", "burlywood3", "darkolivegreen4", "darkolivegreen3"))
+title("B. DIN uptake parameters", adj=0, line=1, cex=1)
 sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=c("black", "orange", "purple"))
+title("D. Photooxidative stress parameters", adj=0, line=1, cex=1)
 dev.off()
