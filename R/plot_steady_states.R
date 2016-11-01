@@ -5,7 +5,7 @@ plot_steady_states <- function(ss, png=NULL) {
   require(dplyr)
   
   # For runs that did NOT reach a steady state of positive growth, set all results to zero
-  ss[which(ss$gr < 0), c("gr", "sh")] <- NA#, "hl", "sl", "ee", "pl")] <- NA
+  ss[which(ss$gr <= 0), c("gr", "sh")] <- NA#, "hl", "sl", "ee", "pl")] <- NA
   # For runs where steady state value of S:H > 0.5, set S:H to 0.5
   ss[which(ss$sh > 0.5), "sh"] <- 0.5
   
