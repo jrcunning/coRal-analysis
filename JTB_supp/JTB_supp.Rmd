@@ -449,13 +449,13 @@ defpars <- def_pars()  # Get default parameters
 time <- seq(1, 365, 0.1)  # if single model run, use time input
 
 # Initialize environments
-env1 <- init_env(time=time, L=c(22,44,2), N=c(1e-7,1e-7,0), X=c(1e-5,1e-5,0))
-env2 <- init_env(time=time, L=c(22,44,2), N=c(1e-5,1e-5,0), X=c(1e-5,1e-5,0))
+env1 <- init_env(time=time, L=c(20,44,2), N=c(0.14e-6,0.14e-6,0), X=c(1e-5,1e-5,0))
+env2 <- init_env(time=time, L=c(20,44,2), N=c(10.14e-6,10.14e-6,0), X=c(1e-5,1e-5,0))
 
 # Run simulations
-ss1 <- with(run_coral_ss(env=list(L=33,N=1e-7,X=1e-5), pars=defpars), last(S$S/H$H))
+ss1 <- with(run_coral_ss(env=list(L=33,N=0.14e-6,X=1e-5), pars=defpars), last(S$S/H$H))
 run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
-ss2 <- with(run_coral_ss(env=list(L=33,N=1e-5,X=1e-5), pars=defpars), last(S$S/H$H))
+ss2 <- with(run_coral_ss(env=list(L=33,N=10.14e-6,X=1e-5), pars=defpars), last(S$S/H$H))
 run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
 par(mfcol=c(6,2), mar=c(2,2,1,4), mgp=c(1,0,0), tcl=0.2, xaxs="i")
@@ -465,7 +465,7 @@ with(run1, {
     plot(time, env$L, type="l", col="gold", ylim=c(0,60), lwd=2, xlab="", ylab="mol ph/m2/d")
     title("External irradiance and DIN", adj=0, line=0.25)
     par(new=T)
-    plot(time, env$N, type="l", col="blue", ylim=c(0,1e-5), lwd=2, axes=F, xlab="", ylab="")
+    plot(time, env$N, type="l", col="blue", ylim=c(0,10.14e-6), lwd=2, axes=F, xlab="", ylab="")
     axis(side=4); mtext(side=4, text="molN/L", line=1, cex=0.75)
     
     # Symbiont to host biomass ratio
@@ -496,7 +496,7 @@ with(run1, {
 
     # Photosynthesis: substrate-limitation
     pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    )
-    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-0.8, 0.8))
+    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-2, 2))
     title("Photosynthesis: substrate-limitation", adj=0, line=0.25)
     lines(time, pl, col="black", lty=1, lwd=2)
     abline(h=0, lty=3)
@@ -521,7 +521,7 @@ with(run2, {
     plot(time, env$L, type="l", col="gold", ylim=c(0,60), lwd=2, xlab="", ylab="mol/m2/d")
     title("External irradiance and DIN", adj=0, line=0.25)
     par(new=T)
-    plot(time, env$N, type="l", col="blue", ylim=c(0,1e-5), lwd=2, axes=F, xlab="", ylab="")
+    plot(time, env$N, type="l", col="blue", ylim=c(0,10.14e-6), lwd=2, axes=F, xlab="", ylab="")
     axis(side=4); mtext(side=4, text="molN/L", line=1, cex=0.75)
     
     # Symbiont to host biomass ratio
@@ -553,7 +553,7 @@ with(run2, {
     # Photosynthesis: substrate-limitation
     pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    )
     maxabs <- max(abs(pl))
-    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-0.8, 0.8))
+    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-2, 2))
     title("Photosynthesis: substrate-limitation", adj=0, line=0.25)
     lines(time, pl, col="black", lty=1, lwd=2)
     abline(h=0, lty=3)

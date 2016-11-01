@@ -7,7 +7,6 @@ sapply(c("R/def_pars.R",
 
 # Load default parameters
 defpars <- def_pars()
-defpars <- replace(defpars, "kROS", 80)
 
 # Set run time vector
 time <- seq(1, 5000, 0.1)  # if single model run, use time input
@@ -15,7 +14,7 @@ time <- seq(1, 5000, 0.1)  # if single model run, use time input
 # Initialize environment (with null light profile - to be replaced)
 env1 <- init_env(time=time, L=c(0,0,0), N=c(1e-7,1e-7,0), X=c(2e-6,2e-6,0))
 
-# Create light profile: increase from 20-40 for 2500 days (=.008 mol/d) then decrease for 2500 days
+# Create light profile: increase from 25-50 for 2500 days (=.01 mol/d) then decrease for 2500 days
 L.incr <- seq(25, 50, len=length(time) %/% 2)
 L.decr <- seq(50, 25, len=length(time) - length(L.incr))
 L <- list(c(L.incr, L.decr))

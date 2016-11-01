@@ -1,6 +1,5 @@
 # This script initializes and runs a simulation using specified environmental inputs and model parameters.
 # The arguments to this function are:
-#   - time: a vector of time steps at which the model should be evaluated (units=days) (e.g., seq(0,365,0.1))
 #   - env: an object with structure matching the output of "init_env.R"
 #   - pars: an object with structure matching the output of "def_pars.R"
 
