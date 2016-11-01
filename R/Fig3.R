@@ -61,14 +61,19 @@ for (i in 1:length(sens.all)) {
 }
 
 # Plot Figure 3
-png("img/Fig3.png", width=4, height=6, units="in", res=300)
-par(mfrow=c(2,2), mar=c(3,3,3,1), mgp=c(2,0.5,0), cex.axis=0.8, cex.lab=0.7)
+png("img/Fig3.png", width=5, height=5, units="in", res=300)
+par(mfrow=c(2,2), tcl=-0.2, cex.main=1, cex.axis=0.75, mar=c(3,3,2,2), mgp=c(0,0.1,0))
 sens.plot(response=c("grchange", "shchange"), pars=c("jCPm", "kCO2", "astar"), cols=c("black", "red", "gold"))
-title("A. Photosynthesis parameters", adj=0, line=1, cex=1)
+conv <- diff(grconvertX(0:1, 'inches', 'user')) # length of one inch in user coordinates
+text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+     labels="A. Photosynthesis parameters", xpd=NA, font=2, cex=1)
 sens.plot(response=c("grchange", "shchange"), pars=c("jNm", "KN"), cols=c("black", "blue"))
-title("C. Growth parameters parameters", adj=0, line=1, cex=1)
+text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+     labels="C. Growth parameters", xpd=NA, font=2, cex=1)
 sens.plot(response=c("grchange", "shchange"), pars=c("jST0", "jHT0", "jSGm", "jHGm"), cols=c("burlywood4", "burlywood3", "darkolivegreen4", "darkolivegreen3"))
-title("B. DIN uptake parameters", adj=0, line=1, cex=1)
+text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+     labels="B. DIN uptake parameters", xpd=NA, font=2, cex=1)
 sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=c("black", "orange", "purple"))
-title("D. Photooxidative stress parameters", adj=0, line=1, cex=1)
+text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+     labels="D. Stress parameters", xpd=NA, font=2, cex=1)
 dev.off()
