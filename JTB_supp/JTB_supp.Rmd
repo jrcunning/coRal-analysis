@@ -1,5 +1,5 @@
 ---
-title: "A simplified dynamic bioenergetic model for coral-algal symbiosis and coral bleaching"
+title: A simplified dynamic bioenergetic model for coral-*Symbiodinium* symbioses and coral bleaching as an alternate stable state
 author: "Ross Cunning, Erik B. Muller, Ruth D. Gates, Roger M. Nisbet"
 output: html_document
 bibliography: library.bib
