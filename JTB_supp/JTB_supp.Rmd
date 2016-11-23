@@ -577,7 +577,7 @@ with(run2, {
 # Figure S9. Overshoot of symbiont density following bleaching.
 ```{r FigS9, cache=T}
 # Set run time vector
-time <- seq(-100, 1095, 0.5)  # if single model run, use time input
+time <- seq(-100, 1095, 0.1)  # if single model run, use time input
 
 # Initialize environment
 env <- init_env(time=time, L=c(60,20,4), N=c(2e-7,2e-7,0), X=c(2e-6,2e-6,0))
