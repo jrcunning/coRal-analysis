@@ -144,6 +144,7 @@ plot_run <- function(run) {
       env$L <- rep(env$L, last(time))
       env$N <- rep(env$N, last(time))
       env$X <- rep(env$X, last(time))
+      time <- time*dt
     })
   }
   # Plotting
