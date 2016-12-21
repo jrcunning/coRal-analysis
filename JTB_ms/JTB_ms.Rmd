@@ -196,7 +196,7 @@ Carbon fixed by photosynthesis ($j_{CP}$; Eq. 14) is then combined with nitrogen
 
 to build new symbiont biomass, following the SU equation:
 
-\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS}) / n_{NH}}} - {1 \over {j_{CP} + (\rho_N{H \over S} + r_{NS}) / n_{NH}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS}) / n_{NS}}} - {1 \over {j_{CP} + (\rho_N{H \over S} + r_{NS}) / n_{NS}}}\bigg)^{-1} \end{equation}
 
 The rejection flux of carbon from this SU represents the amount of fixed carbon produced by photosynthesis in excess of what can be used to produce symbiont biomass; this surplus, $\rho_C$, is translocated to the coral host:
 
