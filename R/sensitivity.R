@@ -2,7 +2,7 @@ library(parallel)
 library(doParallel)
 library(foreach)
 source("R/def_pars.R")
-source("R/run_coral.R")
+source("R/run_coral_ss.R")
 source("R/init_env.R")
 
 # Sensitivity analysis
@@ -10,12 +10,12 @@ source("R/init_env.R")
 # Create function to measure sensitivity of responses to specified change in single parameter
 sens <- function(env, pars, par, change) {
   # Run 1 
-  run1 <- run_coral_ss(env=env, pars=pars)
+  run1 <- run_coral_ss(env=env, pars=pars, dt=0.1)
   run1ss <- lapply(run1[c("H", "S")], function(x) x[nrow(run1$H), ])
   run1gr <- run1ss$H$dH.Hdt
   run1sh <- run1ss$S$S/run1ss$H$H
   # Run 2 - with changed parameter
-  run2 <- run_coral_ss(env=env, pars=replace(pars, par, with(pars, get(par))*change))
+  run2 <- run_coral_ss(env=env, pars=replace(pars, par, with(pars, get(par))*change), dt=0.1)
   run2ss <- lapply(run2[c("H", "S")], function(x) x[nrow(run2$H), ])
   run2gr <- run2ss$H$dH.Hdt
   run2sh <- run2ss$S$S/run2ss$H$H

@@ -11,15 +11,15 @@ pars <- defpars
 
 # Run 1
 env1 <- init_env(time=time, L=c(25,48,2), N=c(1e-7,1e-7,0), X=c(3e-6,3e-6,0))
-ss1 <- with(run_coral_ss(env=list(L=36, N=1e-7, X=3e-6), pars=pars), last(S$S/H$H))
+ss1 <- with(run_coral_ss(env=list(L=36, N=1e-7, X=3e-6), pars=pars, dt=0.1), last(S$S/H$H))
 run1 <- run_coral(time=time, env=env1, pars=replace(pars, "initS", ss1))
 # Run 2 - increase food
 env2 <- init_env(time=time, L=c(25,48,2), N=c(1e-7,1e-7,0), X=c(6e-6,6e-6,0))
-ss2 <- with(run_coral_ss(env=list(L=36, N=1e-7, X=6e-6), pars=pars), last(S$S/H$H))
+ss2 <- with(run_coral_ss(env=list(L=36, N=1e-7, X=6e-6), pars=pars, dt=0.1), last(S$S/H$H))
 run2 <- run_coral(time=time, env=env2, pars=replace(pars, "initS", ss2))
 # Run 3 - increase DIN
 env3 <- init_env(time=time, L=c(25,48,2), N=c(1e-6,1e-6,0), X=c(3e-6,3e-6,0))
-ss3 <- with(run_coral_ss(env=list(L=36, N=1e-6, X=3e-6), pars=pars), last(S$S/H$H))
+ss3 <- with(run_coral_ss(env=list(L=36, N=1e-6, X=3e-6), pars=pars, dt=0.1), last(S$S/H$H))
 run3 <- run_coral(time=time, env=env3, pars=replace(pars, "initS", ss3))
 
 

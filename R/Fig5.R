@@ -20,7 +20,7 @@ env <- init_env(time=time, L=c(30,50,0), N=c(1e-7,1e-7,0), X=c(0e-6,0e-6,0))
 defpars <- def_pars()  # Get default parameters
 
 # Run simulation
-ss <- with(run_coral_ss(env=list(L=25, N=1e-7, X=0e-6), pars=defpars), last(S$S/H$H))
+ss <- with(run_coral_ss(env=list(L=25, N=1e-7, X=0e-6), pars=defpars, dt=0.1), last(S$S/H$H))
 run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", ss))
 
 # Plot results

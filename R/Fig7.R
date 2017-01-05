@@ -9,7 +9,7 @@ sapply(c("R/def_pars.R",
 defpars <- def_pars()
 
 # Set run time vector
-time <- seq(1, 5000, 0.1)  # if single model run, use time input
+time <- seq(1, 5000, 1)  # THIS NEEDS TO BE CHANGED
 
 # Initialize environment (with null light profile - to be replaced)
 env1 <- init_env(time=time, L=c(0,0,0), N=c(1e-7,1e-7,0), X=c(2e-6,2e-6,0))
@@ -20,7 +20,7 @@ L.decr <- seq(50, 25, len=length(time) - length(L.incr))
 L <- list(c(L.incr, L.decr))
 env1 <- replace(env1, "L", L)
 
-ss <- with(run_coral_ss(env=list(L=25, N=1e-7, X=2e-6), pars=defpars), last(S$S/H$H))
+ss <- with(run_coral_ss(env=list(L=25, N=1e-7, X=2e-6), pars=defpars, dt=0.1), last(S$S/H$H))
 
 run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss))#
 
