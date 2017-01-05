@@ -33,11 +33,11 @@ res <- cbind(input, output)
 png("img/newFig2.png", width=5, height=5, units="in", res=300)
 
 plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
-points(c(48,48,53,53), c(0.15,0.17,0.15,0.17), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
-text(38, 0.16, labels="init. S:H", xpd=T, cex=0.7, srt=90)
-text(46, c(0.15,0.17), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
-text(50, 0.20, labels=c("Steady state growth"), xpd=T, cex=0.7)
-text(c(48,53), 0.185, labels=c("pos.", "neg."), xpd=T, cex=0.7)
+points(c(48,48,53,53), c(0.10,0.12,0.10,0.12), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
+text(38, 0.11, labels="init. S:H", xpd=T, cex=0.7, srt=90)
+text(46, c(0.10,0.12), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
+text(50, 0.15, labels=c("Steady state growth"), xpd=T, cex=0.7)
+text(c(48,53), 0.135, labels=c("pos.", "neg."), xpd=T, cex=0.7)
 
 apply(res, 1, FUN=function(x) {
   with(x, points(L, sh,
