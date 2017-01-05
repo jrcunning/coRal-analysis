@@ -20,7 +20,7 @@ input <- expand.grid(L=seq(20,55,1), initS=c(0.0001,0.1))
 
 # Run steady states in parallel
 output <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=res$L[i],X=2e-6,N=1e-7), pars=replace(defpars, "initS", res$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=2e-6, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
