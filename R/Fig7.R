@@ -5,33 +5,35 @@ sapply(c("R/def_pars.R",
          "R/run_coral_ss.R"), 
        source, .GlobalEnv)
 
-# Load default parameters
-defpars <- def_pars()
+time <- seq(1, 200, 0.1)  # Set time
+defpars <- def_pars()  # Get default parameters
+pars <- defpars
 
-# Set run time vector
-time <- seq(1, 5000, 1)  # THIS NEEDS TO BE CHANGED
+# Run 1
+env1 <- init_env(time=time, L=c(25,48,2), N=c(1e-7,1e-7,0), X=c(3e-6,3e-6,0))
+ss1 <- with(run_coral_ss(env=list(L=36, N=1e-7, X=3e-6), pars=pars, dt=0.1), last(S$S/H$H))
+run1 <- run_coral(time=time, env=env1, pars=replace(pars, "initS", ss1))
+# Run 2 - increase food
+env2 <- init_env(time=time, L=c(25,48,2), N=c(1e-7,1e-7,0), X=c(6e-6,6e-6,0))
+ss2 <- with(run_coral_ss(env=list(L=36, N=1e-7, X=6e-6), pars=pars, dt=0.1), last(S$S/H$H))
+run2 <- run_coral(time=time, env=env2, pars=replace(pars, "initS", ss2))
+# Run 3 - increase DIN
+env3 <- init_env(time=time, L=c(25,48,2), N=c(1e-6,1e-6,0), X=c(3e-6,3e-6,0))
+ss3 <- with(run_coral_ss(env=list(L=36, N=1e-6, X=3e-6), pars=pars, dt=0.1), last(S$S/H$H))
+run3 <- run_coral(time=time, env=env3, pars=replace(pars, "initS", ss3))
 
-# Initialize environment (with null light profile - to be replaced)
-env1 <- init_env(time=time, L=c(0,0,0), N=c(1e-7,1e-7,0), X=c(2e-6,2e-6,0))
 
-# Create light profile: increase from 25-50 for 2500 days (=.01 mol/d) then decrease for 2500 days
-L.incr <- seq(25, 50, len=length(time) %/% 2)
-L.decr <- seq(50, 25, len=length(time) - length(L.incr))
-L <- list(c(L.incr, L.decr))
-env1 <- replace(env1, "L", L)
-
-ss <- with(run_coral_ss(env=list(L=25, N=1e-7, X=2e-6), pars=defpars, dt=0.1), last(S$S/H$H))
-
-run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss))#
-
-png("img/Fig7.png", width=4, height=4, units="in", res=300)
-par(mar=c(2,2,1,1), mgp=c(1,0,0), tcl=0.25, cex.axis=0.5, cex.lab=0.75, xaxs="i", yaxs="i", mfrow=c(1,1))
-with(run1, {
-  plot(env$L, S$S/H$H, type="l", xlab="External light (molph/m2/d)", ylab="S:H biomass", ylim=c(0,0.2))
-  for (i in seq(1950, length(time), last(time)/2)) {
-    arrows(env$L[i-10], S$S[i-10]/H$H[i-10], 
-           env$L[i], S$S[i]/H$H[i], 
-           code=2, length=0.075)
-  }
-})
+# Plot
+png("img/Fig7.png", width=3, height=3, units="in", res=300)
+par(mfrow=c(1,1), mar=c(2,2,1,2), mgp=c(1,0,0), tcl=0.25, xaxs="i", yaxs="i")
+plot(time, env1$L, col=alpha("gold", 0.5), type="l", lwd=2, axes=F, xlab="Days", ylab="S:H biomass ratio", ylim=c(30,50), cex.lab=0.9)
+axis(side=4, cex.axis=0.75); mtext(side=4, text="Light (mol ph/m2/d)", line=1, cex=0.9)
+par(new=T)
+plot(NA, xlim=range(time), ylim=c(0.0,0.16), yaxs="i", ylab="", xlab="", cex.axis=0.75, cex.lab=0.9)
+with(run1, lines(time, S$S/H$H, lty=1))
+with(run2, lines(time, S$S/H$H, lty=2))
+with(run3, lines(time, S$S/H$H, lty=3))
+legend("bottomleft", legend=c("+DIN", "+feeding", "default"), lty=c(3,2,1), bty="n", cex=0.5)
+legend("topright", legend="Light", col="gold", lty=1, bty="n", cex=0.5)
 dev.off()
+
