@@ -8,12 +8,9 @@ sapply(c("R/def_pars.R",
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
 
-# Define environments for conducting sensitivity analysis
+# Define environment(s) for conducting sensitivity analysis
 envs <- list(
-  #LLLN=list(L=2, N=1e-7, X=0),
-  #LLHN=list(L=2, N=4e-6, X=0),
-  HLLN=list(L=15, N=1e-7, X=0)#,
-  #HLHN=list(L=20, N=4e-6, X=0)
+  HLLN=list(L=15, N=1e-7, X=0)
 )
 
 # Define relative changes in each parameter to evaluate
