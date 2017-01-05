@@ -75,7 +75,7 @@ run_coral_ss <- function(env, pars, dt) {
     # Amount of excess light energy quenched by NPQ
     S$jNPQ[t] <- (pars$kNPQ^(-1)+S$jeL[t]^(-1))^(-1/1)
     # Scaled ROS production due to excess excitation energy (=not quenched by carbon fixation AND NPQ)
-    S$cROS[t] <- 1 + ((S$jeL[t] - S$jNPQ[t]) / pars$kROS)^pars$k
+    S$cROS[t] <- 1 + (max(S$jeL[t] - S$jNPQ[t], 0) / pars$kROS)^pars$k
     
     # Symbiont biomass
     # ================
