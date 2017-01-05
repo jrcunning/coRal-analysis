@@ -32,7 +32,7 @@ res <- cbind(input, output)
 # Create plot
 png("img/newFig2.png", width=5, height=5, units="in", res=300)
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.2), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
 points(c(48,48,53,53), c(0.15,0.17,0.15,0.17), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
 text(38, 0.16, labels="init. S:H", xpd=T, cex=0.7, srt=90)
 text(46, c(0.15,0.17), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
