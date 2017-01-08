@@ -21,12 +21,12 @@ plotrecov <- function(run, lty) with(run, {
 
 # Plot
 png("img/Fig8.png", width=3, height=3, units="in", res=300)
-par(mfrow=c(1,1))
-plot(NA, xlim=c(0,3000), ylim=c(0,1), xlab="Days", ylab="S:H ratio", xaxt="n")
-axis(side=1, at=seq(0,3000,1000), labels=seq(0,3000,1000)*0.1)
+par(mfrow=c(1,1), mar=c(2,2,1,2), mgp=c(1,0,0), tcl=0.25, xaxs="i", yaxs="i")
+plot(NA, xlim=c(0,3000), ylim=c(0,1), xlab="Days", ylab="S:H ratio", xaxt="n", cex.lab=0.9, cex.axis=0.75)
+axis(side=1, at=seq(0,3000,1000), labels=seq(0,3000,1000)*0.1, cex.axis=0.75)
 plotrecov(run0.4, lty=4)
 plotrecov(run0.2, lty=3)
 plotrecov(run0.1, lty=2)
 plotrecov(run0.05, lty=1)
-legend("topleft", lty=c(4,3,2,1), legend=c("N:C=0.4", "N:C=0.2", "N:C=0.1", "N:C=0.05"), bty="n")
+legend("topleft", lty=c(4,3,2,1), legend=c("N:C=0.4", "N:C=0.2", "N:C=0.1", "N:C=0.05"), bty="n", cex=0.5)
 dev.off()
