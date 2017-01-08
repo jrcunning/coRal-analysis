@@ -20,7 +20,7 @@ plotrecov <- function(run, lty) with(run, {
 })
 
 # Plot
-png("img/Fig8.png", width=5, height=5, units="in", res=300)
+png("img/Fig8.png", width=3, height=3, units="in", res=300)
 par(mfrow=c(1,1))
 plot(NA, xlim=c(0,3000), ylim=c(0,1), xlab="Days", ylab="S:H ratio", xaxt="n")
 axis(side=1, at=seq(0,3000,1000), labels=seq(0,3000,1000)*0.1)
