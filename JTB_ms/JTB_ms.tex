@@ -1089,7 +1089,8 @@ rate, in units of Cmol Cmol\textsuperscript{-1} d\textsuperscript{-1}.
 In a constant environment, the system ultimately reaches a steady state
 of exponential growth or decline. However, under some conditions, either
 of these outcomes may occur depending on initial values of symbiont and
-host biomass, indicating the presence of alternate stable states. The
+host biomass, indicating the presence of alternate stable states,
+corresponding to either positive or negative growth (Fig. 2). The
 mechanism that produces these alternate stable states is the positive
 feedback between carbon-limitation of the host and
 CO\textsubscript{2}-limitation of photosynthesis: if symbiont biomass is
@@ -1103,15 +1104,21 @@ behavior'' section explores how changing environments may cause the
 system to switch between alternate stable states, which we interpret in
 the context of coral bleaching.
 
-To analyze steady state behavior, we ran the model to steady state
-across gradients of external irradiance and nutrients (Fig. 2), which
-revealed patterns consistent with observed phenomena in corals.
-Predicted growth rates are low at low light and DIN
+\begin{figure}[htbp]
+\centering
+\includegraphics{../img/Fig2.png}
+\caption{Alternate stable states}
+\end{figure}
+
+To analyze positive-growth steady state behavior, we ran the model to
+steady state across gradients of external irradiance and nutrients (Fig.
+3), which revealed patterns consistent with observed phenomena in
+corals. Predicted growth rates are low at low light and DIN
 (\textasciitilde{}0.01 d\textsuperscript{-1}), and begin increasing as
-both of these factors increase (Fig. 2A). Low light limits
+both of these factors increase (Fig. 3A). Low light limits
 photosynthetic rates, resulting in less fixed carbon shared with the
 host and an associated increase in the symbiont to host biomass ratio
-(Fig. 2B). In agreement with this trend are many observations of
+(Fig. 3B). In agreement with this trend are many observations of
 negative correlation between irradiance and symbiont density (Stimson
 1997; Brown et al. 1999; Fitt et al. 2000; Titlyanov et al. 2001). As
 higher light alleviates light-limitation of photosynthesis, host growth
@@ -1119,7 +1126,7 @@ becomes less carbon-limited.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{../img/Fig2.png}
+\includegraphics{../img/Fig3.png}
 \caption{Steady state values of \textbf{A)} specific growth (Cmol
 Cmol\textsuperscript{-1} d\textsuperscript{-1}), \textbf{B)} the
 symbiont to host biomass ratio (CmolS CmolH\textsuperscript{-1}),
@@ -1134,7 +1141,7 @@ step of 1 day. Negative steady state growth rates, and corresponding S:H
 ratios, were set to zero.}
 \end{figure}
 
-Similarly, increasing DIN alleviates nitrogen-limitation (Fig. 2A).
+Similarly, increasing DIN alleviates nitrogen-limitation (Fig. 3A).
 Increased growth at higher DIN is predicted by the DEB model of Muller
 et al. (2009), and has also been observed experimentally (Muller-Parker
 et al. 1994; Tanaka et al. 2007; Tanaka et al. 2013). However, DIN
@@ -1144,7 +1151,7 @@ Very high nutrient levels may even reduce growth (Shantz, Lemoine, and
 Burkepile 2015), although these impacts are not likely to occur within
 the range of concentrations considered here (\textless{}4 µM)
 (Ferrier-Pagès et al. 2000). In addition to increasing growth, DIN also
-increases the symbiont to host biomass ratio (Fig. 2B), a phenomenon
+increases the symbiont to host biomass ratio (Fig. 3B), a phenomenon
 also observed in reef corals (Marubini and Davies 1996). At low DIN and
 intermediate light, more typical of coral reef environments, symbiont to
 host biomass ratios are around \textasciitilde{}0.06-0.21, which is
@@ -1154,7 +1161,7 @@ McCloskey, and E Marian 1981; Edmunds et al. 2011; Hawkins et al. 2016).
 The maximum predicted growth rates of \textasciitilde{}0.1
 d\textsuperscript{-1}, occurring between \textasciitilde{}10-25 mol
 photons m\textsuperscript{-2} s\textsuperscript{-1} light and
-\textasciitilde{}4 µM DIN (Fig. 2A), are comparable to the rate of 0.07
+\textasciitilde{}4 µM DIN (Fig. 3A), are comparable to the rate of 0.07
 d\textsuperscript{-1} measured by Tanaka et al. (2007) under similar
 N-enriched conditions. Predicted growth rates under conditions more
 typical of reef environments (\textless{}0.5 µM DIN) are
@@ -1178,7 +1185,7 @@ symbiotic anemone (Armoza-Zvuloni et al. 2014).
 As irradiance continues to increase above \textasciitilde{}25 mol
 photons m\textsuperscript{-2} d\textsuperscript{-1}, growth rates
 decline until positive growth ceases above \textasciitilde{}40 µmol
-photons m\textsuperscript{-2} d\textsuperscript{-1} (Fig. 2A). The
+photons m\textsuperscript{-2} d\textsuperscript{-1} (Fig. 3A). The
 mechanism underlying this decline is the increase in light energy beyond
 the capacities of photosynthesis and non-photochemical quenching: excess
 excitation energy generates reactive oxygen species (ROS) (Weis 2008;
@@ -1186,16 +1193,16 @@ Roth 2014), which, in this model, have the phenomenological consequences
 of reducing the photosynthetic rate (representing photoinhibition) and
 increasing symbiont biomass loss (representing photodamage and/or
 symbiont expulsion) (see Eynaud, Nisbet, and Muller 2011). Together,
-these impacts reduce the symbiont to host biomass ratio (Fig. 2B), as
+these impacts reduce the symbiont to host biomass ratio (Fig. 3B), as
 occurs during coral bleaching. This reduction in symbionts consequently
 reduces the flux of fixed carbon to the host, resulting in increasing
-carbon-limitation (Fig. 2B) and eventual cessation of growth (Fig. 2A).
+carbon-limitation (Fig. 3B) and eventual cessation of growth (Fig. 3A).
 
 The incorporation of photooxidative stress in the model sets an upper
 limit to the amount of light at which a stable symbiotic interaction can
 be maintained, but even below this threshold of breakdown, negative
 effects of high light reduce steady state growth and symbiont:host
-biomass (Fig. 2). This gradual decline is consistent with experimental
+biomass (Fig. 3). This gradual decline is consistent with experimental
 results showing that high light levels decrease growth (Schutter et al.
 2011), and field studies documenting optimum growth rates at
 intermediate depths (Baker and Weber 1975; Huston 1985). By
@@ -1204,7 +1211,7 @@ and more realistic, variation in state variables across light gradients
 than was predicted by the model of Muller et al. (2009), which did not
 include photoinhibition and photodamage. It is important to recognize
 that the boundary set by photooxidative stress on a stable symbiosis
-under steady state conditions (Fig. 2) may be temporarily crossed by a
+under steady state conditions (Fig. 3) may be temporarily crossed by a
 dynamic system, which may experience a period of symbiont loss
 (bleaching) and reduced growth, after which a return to benign
 conditions may restore symbiont biomass and positive growth. To explore
@@ -1225,7 +1232,7 @@ typical of coral reefs.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{../img/Fig3.png}
+\includegraphics{../img/Fig4.png}
 \caption{Sensitivity analysis. Plots show the fractional change in
 steady state values of growth (solid lines) and S:H biomass (dashed
 lines) in response to fractional changes in default parameter values
@@ -1241,15 +1248,15 @@ Overall, relative changes in the steady state of the system are less
 than the equivalent relative change in parameter value, indicating that
 the system maintains internal stability. However, changes in certain
 parameter values have more significant impacts: increasing \(j_{Nm}\) or
-decreasing \(K_N\) both dramatically increase host growth (Fig. 3),
+decreasing \(K_N\) both dramatically increase host growth (Fig. 4),
 demonstrating the strong nitrogen-limitation that characterizes these
 symbioses. The parameter \(\bar{a}^*\) has a strong impact on S:H
-biomass ratios (Fig. 3) since this parameter determines the amount of
+biomass ratios (Fig. 4) since this parameter determines the amount of
 light absorbed by symbionts, with lower values increasing
 light-limitation. Increasing the maximum growth and turnover rates have
 the expected effects of increasing and decreasing growth, respectively.
 Parameters relating to photooxidative stress and bleaching have little
-impact under these environmental conditions (Fig. 3), but have larger
+impact under these environmental conditions (Fig. 4), but have larger
 impacts under higher light (e.g., Fig. S6). Sensitivity analyses
 conducted under different combinations of external light and nutrients
 are presented in Figs. S3-S7.
@@ -1273,7 +1280,7 @@ symbiont density was demonstrated nicely by Stimson (1997), who also
 found that experimental nutrient-enrichment amplified the light-driven
 seasonal oscillation. Using the levels of light and nutrients from this
 study as inputs, the model reproduces this observed interaction among
-environmental factors (Fig. 4), and also provides the mechanism: under
+environmental factors (Fig. 5), and also provides the mechanism: under
 high light in summer, photooxidative stress decreases symbiont biomass
 and increases carbon-limitation of host growth regardless of nutrient
 status; when light is reduced in winter, growth and symbiont biomass
@@ -1282,11 +1289,11 @@ DIN is enriched (Fig. S8).
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{../img/Fig4.png}
-\caption{Figure 4. Light-driven seasonal dynamics of symbiont abundance
-and coral growth. Light input (upper panel) was designed as a sinusoidal
-curve with a period of one year, with maximum and minimum values of 44
-and 22 mol photons m\textsuperscript{-2} d\textsuperscript{-1}, based on
+\includegraphics{../img/Fig5.png}
+\caption{Light-driven seasonal dynamics of symbiont abundance and coral
+growth. Light input (upper panel) was designed as a sinusoidal curve
+with a period of one year, with maximum and minimum values of 44 and 22
+mol photons m\textsuperscript{-2} d\textsuperscript{-1}, based on
 Stimson (1997). The dynamic behavior of symiont to host biomass ratio
 (middle panel) and the specific growth rate of host biomass (lower
 panel) show seasonal oscillations that are greater in magnitude under
@@ -1309,12 +1316,13 @@ metabolism; thus, the relative magnitude of fluctuation in temperature,
 light, and other factors may produce wide variability in the direction
 and magnitude of seasonal changes in growth and symbiont abundance,
 depending on location and microhabitat. Nevertheless, the seasonal
-variability predicted here (Fig. 4) is consistent with experimental and
+variability predicted here (Fig. 5) is consistent with experimental and
 field observations for corals, and demonstrates the power of this model
 to predict dynamic behavior that mechanistically integrates multiple
 environmental drivers.
 
-\subsection{Coral bleaching}\label{coral-bleaching}
+\subsection{Coral bleaching and
+recovery}\label{coral-bleaching-and-recovery}
 
 Coral bleaching is the stress-induced loss of symbiotic algae from coral
 tissues, which can occur in response to a variety of environmental
@@ -1333,10 +1341,10 @@ coral into a bleached state.
 While these positive feedbacks have been discussed previously in the
 literature, this is the first attempt to implement and explore their
 properties within a dynamical model. Interestingly, these feedbacks lead
-to alternate stable states. The `healthy' state is characterized by
-nitrogen-limitation of both symbiont and host: under these conditions,
-the symbiont translocates sufficient carbon to support host growth and
-CCMs, which ensures that photosynthesis does not become
+to alternate stable states in the symbiotic system. The `healthy' state
+is characterized by nitrogen-limitation of both symbiont and host: under
+these conditions, the symbiont translocates sufficient carbon to support
+host growth and CCMs, which ensures that photosynthesis does not become
 CO\textsubscript{2}-limited. However, if carbon translocation is
 disrupted (and light is sufficiently high), then the system is driven
 into the `bleached' state by photooxidative stress and positively
@@ -1349,12 +1357,12 @@ a bleached state.
 We are highly interested in the conditions under which the system
 switches from a healthy to a bleached state, and can use this model as a
 tool to explore this dynamic behavior. Most straightforwardly, this
-switch occurs when increasing external irradiance (Fig. 5A) causes
-sufficient ROS production (Fig. 5B) and photoinhibition (Fig. 5C) such
-that the positive feedbacks between host carbon-limitation (Fig. 5D) and
-CO\textsubscript{2}-limitation of photosynthesis (Fig. 5E) are rapidly
+switch occurs when increasing external irradiance (Fig. 6A) causes
+sufficient ROS production (Fig. 6B) and photoinhibition (Fig. 6C) such
+that the positive feedbacks between host carbon-limitation (Fig. 6D) and
+CO\textsubscript{2}-limitation of photosynthesis (Fig. 6E) are rapidly
 engaged, leading to even greater photooxidative stress and a rapid
-decline in S:H biomass (Fig. 5F), characteristic of coral bleaching.
+decline in S:H biomass (Fig. 6F), characteristic of coral bleaching.
 However, the positive feedbacks involved in bleaching are not engaged
 only in response to high external irradiance alone; in fact, they depend
 on the relative balance of light energy absorption and quenching, which
@@ -1370,13 +1378,13 @@ Hopkinson 2015; Hopkinson, Tansik, and Fitt 2015).
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{../img/Fig5.png}
-\caption{Figure 5. Coral bleaching as a switch from a nitrogen- to
-carbon-limited alternative stable state. This transition is demonstrated
-in response to gradually increasing external light (A), which causes an
-increase in production of ROS (B) that reduces the photosynthetic rate
-through photoinhibition (C). Decreasing photosynthesis moves the system
-from overall nitrogen-limitation toward carbon-limitation (D); when this
+\includegraphics{../img/Fig6.png}
+\caption{Coral bleaching as a switch from a nitrogen- to carbon-limited
+alternative stable state. This transition is demonstrated in response to
+gradually increasing external light (A), which causes an increase in
+production of ROS (B) that reduces the photosynthetic rate through
+photoinhibition (C). Decreasing photosynthesis moves the system from
+overall nitrogen-limitation toward carbon-limitation (D); when this
 threshold is crossed, the system rapidly becomes highly carbon-limited
 as photosynthesis becomes CO\textsubscript{2}-limited (E) and symbiont
 densities rapidly decline (F) into a bleached state. (All parameters at
@@ -1385,13 +1393,13 @@ default values; external DIN=1e-7 molN/L, prey density=0).}
 
 The importance of host CCM activity establishes significant interactive
 roles for other factors in influencing coral bleaching responses. For
-example, simulations of high light stress (Fig. 6) demonstrate that
+example, simulations of high light stress (Fig. 7) demonstrate that
 bleaching can be attenuated by heterotrophic feeding, a phenomenon which
 has been observed experimentally (Borell et al. 2008). The mechanism
 underlying this prediction is that feeding by the host increases host
 CCM activity, which delays the onset of CO\textsubscript{2}-limitation
 of photosynthesis and reduces bleaching severity. On the other hand,
-elevated nutrients exacerbate bleaching (Fig. 6), since higher symbiont
+elevated nutrients exacerbate bleaching (Fig. 7), since higher symbiont
 densities are more susceptible to CO\textsubscript{2}-limitation
 (Wooldridge 2009). Several experimental (Cunning and Baker 2013; Vega
 Thurber et al. 2014) and correlational studies (Wooldridge and Done
@@ -1400,9 +1408,9 @@ and bleaching.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{../img/Fig6.png}
-\caption{Figure 6. Bleaching with interactive factors. Simulations of
-high light stress (sinusoid with maximum=48 mol ph m\textsuperscript{-2}
+\includegraphics{../img/Fig7.png}
+\caption{Bleaching with interactive factors. Simulations of high light
+stress (sinusoid with maximum=48 mol ph m\textsuperscript{-2}
 d\textsuperscript{-1}) under default environmental conditions (solid
 line; DIN=1e-7 molN/L; prey=3e-6 CmolX/L), or with elevated feeding
 (dashed line; prey=6e-6 CmolX/L), or elevated nutrients (dotted line;
@@ -1411,56 +1419,96 @@ for each set of starting conditions, respectively. (All parameters set
 to default values).}
 \end{figure}
 
-Since bleaching represents an alternative stable state, it follows that
-a bleached coral cannot recover unless the external condition that
-induced bleaching is alleviated. In natural settings, this typically
-occurs by seasonal declines in temperature and light. However, due to
-hysteresis, a coral cannot recover along the same trajectory it followed
-during bleaching; indeed, the stressor must be alleviated well
+Since bleaching is induced by an external stressor, recovery from
+bleaching cannot occur unless the stressor is alleviated. In natural
+settings, this typically occurs by seasonal declines in temperature and
+light. However, alternate stable states lead to significant hysteresis,
+indicating that a coral cannot recover along the same trajectory it
+followed during bleaching; indeed, the stressor must be alleviated well
 \emph{below} the threshold that initially caused bleaching in order for
-the system to recover (Fig. 7). This is because under the same external
-conditions, a bleached coral (relative to a healthy one) is
+the system to recover (Fig. 2; Fig. X). This is because under the same
+external conditions, a bleached coral (relative to a healthy one) is
 characterized by greater light amplification and weaker CCM activity,
 which serve to maintain the bleached state. The magnitude of hysteresis
 will depend on external nutrients and prey availability, as well as
-model parameters, yet the fundamental concept demonstrates a core
-behavior of the system.
+model parameters, yet the core behavior of hysteresis illustrates the
+alternate stable states that exist in the symbiotic system.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics{../img/Fig7.png}
-\caption{Figure 7. Hysteresis in coral bleaching and recovery. The
-symbiont:host biomass ratio is plotted as a function of light from a
-simulation of linearly increasing, then decreasing, external light. The
-direction of the trajectory is indicated with arrowheads evenly spaced
-with respect to time. The rate of change in light was slow (0.01 mol ph
-d\textsuperscript{-1}) such that dynamics track closely to steady state
-values. (All parameters at default values; DIN=1e-7 molN/L; Prey=2e-6
-CmolX/L).}
+\includegraphics{../img/Fig8.png}
+\caption{Recovery from bleaching under varying N:C availability. Higher
+N:C ratios in a heterotrophic food source (effectively representing
+higher external DIN and/or lower feeding rates) cause a larger overshoot
+in the S:H biomass ratio, and prolong the duration of time until the
+system `recovers' by re-establishing nitrogen-limitation (represented by
+black dots on each trajectory). All simulations run with default
+parameters (except varying nNX), and DIN=1e-7 molN/L, prey=1e-6 CmolX/L,
+and initial symbiont biomass=0.0001.}
 \end{figure}
 
-The hysteresis demonstrated in Fig. 7 reveals another interesting
-behavior of the system: during recovery from bleaching, the S:H biomass
-ratio reaches a higher value that `overshoots' the ratio maintained in
-the healthy stable state. In fact, such a phenomenon has been observed
-in both experimental (Cunning, Silverstein, and Baker 2015) and field
-studies (Kemp et al. 2014) documenting recovery from bleaching, and has
-been interpreted as a potential `disequilibrium in host-symbiont
-regulation' (Kemp et al. 2014). The model explains this `overshoot' as
-an approach to a bifurcation point in the dynamical system: during
-recovery from the `bleached' state, host growth is more strongly
-carbon-limited than symbiont growth (since the symbiont has priority
-access to carbon), so S:H biomass increases. S:H biomass will continue
-to increase beyond the alternative steady state levels as long as the
-symbiont remains carbon-limited; not until nitrogen becomes more
-strongly limiting to symbiont growth than carbon (hence forcing the
-symbiont to share carbon with the host) will the system flip back to the
-`healthy' state, characterized by high carbon fixation rates and overall
-nitrogen-limitation. Of course, the magnitude of this `overshoot'
-depends on external nutrient concentrations and the rate of change in
-the stressor during recovery, though simulations predict similar
-magnitudes to what was observed by Kemp et al. (2014) and Cunning,
-Silverstein, and Baker (2015) (Fig. S9).
+The dynamics of recovery from bleaching reveal another interesting
+behavior of the system: under some conditions, the S:H biomass ratio may
+increase to a higher value that `overshoots' the ratio maintained in the
+`healthy' state under the same conditions (Fig. 8; Fig. S9). In fact,
+unusually high symbiont densities have been observed after recovery from
+bleaching in both experimental (Cunning, Silverstein, and Baker 2015)
+and field studies (Kemp et al. 2014), and have been interpreted as a
+potential `disequilibrium in host-symbiont regulation' (Kemp et al.
+2014). The model explains this `overshoot' as an approach to a
+bifurcation point in the dynamical system \textless{}\textgreater{}. As
+the symbiont begins repopulating the host, CO\textsubscript{2} is
+limiting and nitrogen is replete, allowing nearly all fixed carbon to be
+used for symbiont growth. As a result, host growth remains strongly
+carbon-limited, CCM activity remains weak, and photosynthesis remains
+CO\textsubscript{2}-limited. As long as this carbon-limitation persists,
+S:H biomass will continue to increase beyond the `healthy' steady state
+level, until the symbiont population eventually reaches a high enough
+density such that nitrogen limits its growth more strongly than carbon.
+At this point, which represents the peak of the `overshoot', the
+symbiont begins to share carbon with the host, which then supplies more
+CO\textsubscript{2} for photosynthesis, etc., causing the system to
+rapidly escape the positive feedbacks that were maintaining
+carbon-limitation (see Fig. S9 for illustration of all fluxes during
+overshoot). The re-establishment of nitrogen-limitation resumes high
+rates of carbon fixation and coral growth, bringing the S:H biomass
+ratio back down to a stable equilibrium.
+
+The occurrence and the magnitude of this overshoot depend on the
+relative inputs of carbon and nitrogen to the system -- any factor that
+enhances carbon-limitation (e.g.~high DIN and/or low feeding) therefore
+magnifies the overshoot and prolongs the dysfunctional, carbon-limited
+state of the symbiosis (Fig. 8). On the other hand, factors that favor
+nitrogen-limitation, such as low external DIN, high feeding rates, will
+prevent an overshoot from occurring at all, since nitrogen-limitation is
+re-established in the system before S:H biomass ratios reach high
+levels. While many scenarios are possible under different environmental
+conditions, we illustrate the general effects of varying N and C
+availability on recovery from bleaching with a series of simulations
+that vary the N:C ratio of host's heterotrophic food source (Fig. 8):
+lower N:C ratios (effectively representing lower DIN and/or higher
+heterotrophy) favor nitrogen-limitation and more rapid recovery, while
+higher N:C ratios (effectively representing higher DIN and/or lower
+heterotrophy) favor carbon-limitation and prolonged recovery with a
+larger overshoot in S:H biomass.
+
+Importantly, the re-establishment of nitrogen-limitation that
+characterizes the `healthy' symbiosis is the most important diagnostic
+for recovery, as this is when high carbon fixation and growth rates are
+resumed. A high S:H biomass ratio alone does not indicate a `healthy'
+state has been reached, because overall C-limitation could still persist
+and thus the host isn't really growing. This could explain why corals
+that have apparently recovered their symbiont populations after
+bleaching still do not grow or suffer reduced reproduction until much
+later (xxx). Together, these dynamics indicate that acquisition of
+carbon from a source other than the symbiont is extremely important for
+the host in order to recover from bleaching. The system can `recover'
+(in terms of resuming positive growth and N-limitation) more rapidly
+when the coral obtains more carbon. Indeed, feeding has been shown to
+promote more rapid recovery from bleaching (xxx). Moreover, if the host
+could obtain an independent source of carbon, such as direct uptake of
+DOC (xxx), this could be even more important in ensuring rapid recovery
+from a bleached state.
 
 \section{Conclusions}\label{conclusions}
 
