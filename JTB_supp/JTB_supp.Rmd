@@ -574,20 +574,85 @@ with(run2, {
 })
 ```
 
-# Figure S9. Overshoot of symbiont density following bleaching.
+# Figure S9. Hysteresis under different nutrient and feeding regimes.
 ```{r FigS9, cache=T}
-# Set run time vector
-time <- seq(-100, 1095, 0.1)  # if single model run, use time input
+# Set up cluster for parallel processing
+cl <- makeCluster(detectCores())  # Initiate cluster
+registerDoParallel(cl)
 
-# Initialize environment
-env <- init_env(time=time, L=c(60,20,4), N=c(2e-7,2e-7,0), X=c(2e-6,2e-6,0))
+# Set input values for steady state runs
+input <- expand.grid(L=seq(20,55,1), initS=c(0.0001,0.1))
 
-# Set parameters
-defpars <- def_pars()  # Get default parameters
+# Run steady states in parallel
+output1 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
+  run <- run_coral_ss(env=list(L=input$L[i], X=2e-6, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+}
 
-# Run simulation
-run <- run_coral(time=time, env=env, pars=defpars)
-plot_run(run)
+output2 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
+  run <- run_coral_ss(env=list(L=input$L[i], X=1e-6, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+}
+
+output3 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
+  run <- run_coral_ss(env=list(L=input$L[i], X=2e-6, N=1e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+}
+
+output4 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
+  run <- run_coral_ss(env=list(L=input$L[i], X=4e-6, N=1e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+}
+
+stopCluster(cl)  # Stop cluster
+
+# Collect results
+res1 <- cbind(input, output1)
+res2 <- cbind(input, output2)
+res3 <- cbind(input, output3)
+res4 <- cbind(input, output4)
+
+# Create plot
+par(mfrow=c(2,2))
+
+plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
+points(c(48,48,53,53), c(0.12,0.13,0.12,0.13), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
+text(38, 0.125, labels="init. S:H", xpd=T, cex=0.7, srt=90)
+text(46, c(0.12,0.13), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
+text(50, 0.15, labels=c("Steady state growth"), xpd=T, cex=0.7)
+text(c(48,53), 0.14, labels=c("pos.", "neg."), xpd=T, cex=0.7)
+apply(res1, 1, FUN=function(x) {
+  with(x, points(L, sh,
+                 col=ifelse(gr>0, "black", "red"), 
+                 pch=ifelse(initS==1e-01, 19, 1), 
+                 cex=ifelse(initS==1e-01, 0.4, 1)))
+})
+
+plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
+apply(res2, 1, FUN=function(x) {
+  with(x, points(L, sh,
+                 col=ifelse(gr>0, "black", "red"), 
+                 pch=ifelse(initS==1e-01, 19, 1), 
+                 cex=ifelse(initS==1e-01, 0.4, 1)))
+})
+
+plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
+apply(res3, 1, FUN=function(x) {
+  with(x, points(L, sh,
+                 col=ifelse(gr>0, "black", "red"), 
+                 pch=ifelse(initS==1e-01, 19, 1), 
+                 cex=ifelse(initS==1e-01, 0.4, 1)))
+})
+
+plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
+apply(res4, 1, FUN=function(x) {
+  with(x, points(L, sh,
+                 col=ifelse(gr>0, "black", "red"), 
+                 pch=ifelse(initS==1e-01, 19, 1), 
+                 cex=ifelse(initS==1e-01, 0.4, 1)))
+})
+
+dev.off()
 ```
 
 ## References
