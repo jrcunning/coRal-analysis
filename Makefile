@@ -24,5 +24,5 @@ img/Fig7.png: R/Fig7.R R/run_coral.R R/run_coral_ss.R R/init_env.R R/def_pars.R
 img/Fig8.png: R/Fig8.R R/run_coral.R R/run_coral_ss.R R/init_env.R R/def_pars.R
 	R --vanilla < R/Fig8.R
 	
-JTB_supp/JTB_supp.pdf: JTB_supp/JTB_supp.Rmd JTB_supp/library.bib
+JTB_supp/JTB_supp.html: JTB_supp/JTB_supp.Rmd JTB_supp/library.bib
 	R -e 'if(Sys.info()[["sysname"]]=="Darwin") { Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc") } else { Sys.setenv(RSTUDIO_PANDOC="/usr/lib/rstudio/bin/pandoc") }; rmarkdown::render("JTB_supp/JTB_supp.Rmd")'
