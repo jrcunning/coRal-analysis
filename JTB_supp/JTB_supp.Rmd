@@ -575,7 +575,7 @@ with(run2, {
 ```
 
 # Figure S9. Hysteresis under different nutrient and feeding regimes.
-```{r FigS9, cache=T}
+```{r FigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F}
 # Set up cluster for parallel processing
 cl <- makeCluster(detectCores())  # Initiate cluster
 registerDoParallel(cl)
@@ -613,14 +613,14 @@ res3 <- cbind(input, output3)
 res4 <- cbind(input, output4)
 
 # Create plot
-par(mfrow=c(2,2))
+par(mfrow=c(2,2), mar=c(3,3,1,1))
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
-points(c(48,48,53,53), c(0.12,0.13,0.12,0.13), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
-text(38, 0.125, labels="init. S:H", xpd=T, cex=0.7, srt=90)
-text(46, c(0.12,0.13), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
-text(50, 0.15, labels=c("Steady state growth"), xpd=T, cex=0.7)
-text(c(48,53), 0.14, labels=c("pos.", "neg."), xpd=T, cex=0.7)
+plot(NA, xlim=c(20,55), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
+points(c(48,48,53,53), c(0.22,0.23,0.22,0.23), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
+text(38, 0.225, labels="init. S:H", xpd=T, cex=0.7, srt=90)
+text(46, c(0.22,0.23), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
+text(50, 0.25, labels=c("Steady state growth"), xpd=T, cex=0.7)
+text(c(48,53), 0.24, labels=c("pos.", "neg."), xpd=T, cex=0.7)
 apply(res1, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -628,7 +628,7 @@ apply(res1, 1, FUN=function(x) {
                  cex=ifelse(initS==1e-01, 0.4, 1)))
 })
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=c(20,55), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
 apply(res2, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -636,7 +636,7 @@ apply(res2, 1, FUN=function(x) {
                  cex=ifelse(initS==1e-01, 0.4, 1)))
 })
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=c(20,55), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
 apply(res3, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -644,7 +644,7 @@ apply(res3, 1, FUN=function(x) {
                  cex=ifelse(initS==1e-01, 0.4, 1)))
 })
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=c(20,55), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
 apply(res4, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -652,7 +652,6 @@ apply(res4, 1, FUN=function(x) {
                  cex=ifelse(initS==1e-01, 0.4, 1)))
 })
 
-dev.off()
 ```
 
 ## References
