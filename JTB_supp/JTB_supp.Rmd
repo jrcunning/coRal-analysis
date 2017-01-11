@@ -581,7 +581,7 @@ cl <- makeCluster(detectCores())  # Initiate cluster
 registerDoParallel(cl)
 
 # Set input values for steady state runs
-input <- expand.grid(L=seq(20,55,1), initS=c(0.0001,0.1))
+input <- expand.grid(L=seq(10,55,1), initS=c(0.0001,0.1))
 
 # Run steady states in parallel
 output1 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
