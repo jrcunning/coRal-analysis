@@ -882,9 +882,9 @@ Due to the inherent inefficiency of the parallel complementary SU
 formulation, there is always some nitrogen shared with the symbiont even
 when coral biomass formation is strongly nitrogen-limited. Likewise,
 there is always a non-zero rejection flux of excess carbon from the
-coral biomass SU. Likewise, the carbon rejected from this SU reflects
-the amount of excess fixed carbon available to the host that is not used
-in biomass formation:
+coral biomass SU. The carbon rejected from this SU reflects the amount
+of excess fixed carbon available to the host that is not used in biomass
+formation:
 
 \begin{equation} j_{eC} = (jX + \rho_C{S \over H} - j_{HG})_+ \end{equation}
 
@@ -1065,11 +1065,11 @@ Simulations using the discretized scheme were performed using R code
 that is available in the data repository accompanying this article:
 github.com/jrcunning/Rcoral. By experimentation, we found that a time
 step of 0.1 days gave adequate precision for most simulations (including
-used to generate Figs. XXX in this paper). For steady state estimations,
+used to generate Figs. 2-8 in this paper). For steady state estimations,
 simulations were run until the change in specific growth rate of host
-and symbiont and the \(S:H\) biomass ratio was less than 1e-5 per time
-step. In regions of state space where very slow transient dynamics could
-be expected (i.e.~near bifurcation points), sample steady state
+and symbiont and the S:H biomass ratio was less than 1e-5 per time step.
+In regions of state space where very slow transient dynamics could be
+expected (i.e.~near bifurcation points), sample steady state
 calculations were verified using MATHEMATICA code for numerical root
 finding (function FindRoot) with the code written independently by a
 coauthor without reference to the R code.
@@ -1385,8 +1385,10 @@ photoinhibition (C). Decreasing photosynthesis moves the system from
 overall nitrogen-limitation toward carbon-limitation (D); when this
 threshold is crossed, the system rapidly becomes highly carbon-limited
 as photosynthesis becomes CO\textsubscript{2}-limited (E) and symbiont
-densities rapidly decline (F) into a bleached state. (All parameters at
-default values; external DIN=1e-7 molN/L, prey density=0).}
+densities rapidly decline (F) into a bleached state. Substrate
+limitation coefficients were calculated using Eq. 22. All parameters
+were set at default values with external DIN=1e-7 molN/L and prey
+density=0).}
 \end{figure}
 
 The importance of host CCM activity establishes significant interactive
@@ -1439,27 +1441,28 @@ to host is resumed. Once this occurs, the host can energize its CCMs,
 which further enhances carbon fixation and accelerates the system back
 toward a nitrogen-limited state, indicative of recovery. The conditions
 under which recovery can occur -- which determine the magnitude of
-hysteresis (Fig. SX) -- depend on the relative abundance of nitrogen and
+hysteresis (Fig. S9) -- depend on the relative abundance of nitrogen and
 carbon in the environment. Higher food levels, representing a
 non-autotrophic carbon source for the host, make it easier for the host
 to overcome carbon-limitation, thus providing a potential mechanism
 underlying observations that feeding aids recovery from bleaching
-{[}xxx{]}. Conversely, high external DIN impedes the re-establishment of
-nitrogen-limitation, making recovery from bleaching more difficult
-(i.e., narrowing the sets of conditions under which recovery is
-possible).
+(Grottoli, Rodrigues, and Palardy 2006; Connolly, Lopez-Yglesias, and
+Anthony 2012). Conversely, high external DIN impedes the
+re-establishment of nitrogen-limitation, making recovery from bleaching
+more difficult (i.e., narrowing the sets of conditions under which
+recovery is possible).
 
 Dynamic simulations of recovery reveal another interesting behavior of
 the system: under some conditions, an `overshoot' occurs in which S:H
 biomass temporarily increases beyond the ratio maintained in the
-`healthy' state, before returning to stabilize at this value (Fig. 8;
-Fig. S9). In fact, unusually high symbiont densities have been observed
-following bleaching in both experimental (Cunning, Silverstein, and
-Baker 2015) and field studies (Kemp et al. 2014), and have been
-interpreted as a potential `disequilibrium in host-symbiont regulation'
-(Kemp et al. 2014). The model reveals the dynamics of this `overshoot'
-as follows: as symbionts repopulate the host, photosynthesis becomes
-increasingly CO\textsubscript{2}-limited due to weak CCM activity of the
+`healthy' state, before returning to stabilize at this value (Fig. 8).
+In fact, unusually high symbiont densities have been observed following
+bleaching in both experimental (Cunning, Silverstein, and Baker 2015)
+and field studies (Kemp et al. 2014), and have been interpreted as a
+potential `disequilibrium in host-symbiont regulation' (Kemp et al.
+2014). The model reveals the dynamics of this `overshoot' as follows: as
+symbionts repopulate the host, photosynthesis becomes increasingly
+CO\textsubscript{2}-limited due to weak CCM activity of the
 carbon-limited host. Thus, although symbiont growth is not yet
 carbon-limited, a growing symbiont population has less and less excess
 carbon (per symbiont) to share, and is thus moving toward
@@ -1473,10 +1476,11 @@ becomes carbon-limited first (Fig. 8B, 8C), then carbon translocation
 per symbiont declines further and photosynthesis becomes more
 CO\textsubscript{2}-limited, which maintains carbon-limitation of the
 host. In this situation, continued growth of less and less productive
-symbionts causes S:H biomass to reach a much higher level before the
-host finally overcomes carbon-limitation. At this point, representing
-the peak of the overshoot, the transition to nitrogen-limitation finally
-takes place and the S:H biomass ratio declines and stabilizes.
+symbionts drives S:H biomass to a much higher level before the host
+finally overcomes carbon-limitation. At this point, representing the
+peak of the overshoot, the transition to nitrogen-limitation finally
+takes place and the S:H biomass ratio declines and stabilizes as
+positive growth is resumed.
 
 Whether this `overshoot' occurs or not represents a bifurcation point in
 the dynamical system that is defined by the relative availability of
@@ -1505,8 +1509,9 @@ N:C=0.09; B: N:C=0.10; C: N:C=0.30). Higher N:C ratios in a
 heterotrophic food source (effectively representing higher external DIN
 and/or lower feeding rates) cause a larger overshoot in the S:H biomass
 ratio, and prolong the duration of time until the system `recovers' by
-re-establishing nitrogen-limitation. All simulations run with default
-parameters (except varying nNX), with L=10 mol photons
+re-establishing nitrogen-limitation. Substrate limitation coefficients
+were calculated using Eq. 22. All simulations were run with default
+parameters (except varying \(n_{NX}\)), with L=10 mol photons
 m\textsuperscript{2} d\textsuperscript{-1}, DIN=1e-7 molN
 L\textsuperscript{-1}, prey=1e-6 CmolX L\textsuperscript{-1}, and
 initial S:H biomass=0.001.}
@@ -1550,11 +1555,10 @@ new conceptual framework for considering coral bleaching as a transition
 to an alternate stable state, which has important implications for
 understanding the performance and maintenance of symbiotic interactions.
 In this context, the `healthy' stable state represents a scenario in
-which the host is `in control' of the system, with nitrogen-limitation
-stabilizing the symbiont to host biomass ratio and maintaining positive
-growth. Conversely, carbon-limitation represents a loss of host
-`control', wherein positive feedbacks result in a loss of capacity for
-photosynthetic carbon fixation and positive growth. Importantly, these
+which nitrogen-limitation stabilizes the symbiont to host biomass ratio
+and maintains positive growth. Conversely, carbon-limitation represents
+a dysfunctional state wherein positive feedbacks result in a loss of
+photosynthetic capacity and negative growth. Importantly, these
 `control' mechanisms arise entirely passively through feedbacks present
 in the system.
 
@@ -1569,13 +1573,13 @@ responses. Thus, the diversity of potential applications for this model
 is high, and we envision this work as a foundation for continued
 development, which may include more detailed treatments of specific
 modules (e.g., DIC processing), and the incorporation of more external
-forcing capabilities (e.g., external DIC). Importantly, this effort is
-best undertaken by the scientific community at large, including those
-with theoretical and empirical backgrounds, which is why the code for
-this model has been developed openly using the R language. Ultimately,
-the continued refinement of these tools is fundamental in elucidating
-the mechanisms of symbiosis function and dysfunction, and in predicting
-coral responses to environmental change.
+forcing capabilities (e.g., external DIC, temperature). Importantly,
+this effort may be undertaken by the scientific community at large,
+including those with theoretical and empirical backgrounds, which is why
+the code for this model has been developed openly using the R language.
+Ultimately, the continued refinement of these tools is fundamental in
+elucidating the mechanisms of symbiosis function and dysfunction, and in
+predicting coral responses to environmental change.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
@@ -1710,6 +1714,12 @@ Fitt, William K, F K McFarland, Mark E Warner, and Geoff C Chilcoat.
 2000. ``Seasonal patterns of tissue biomass and densities of symbiotic
 dinoflagellates in reef corals and relation to coral bleaching.''
 \emph{Limnology and Oceanography} 45 (3): 677--85.
+
+\hypertarget{ref-Grottoli:2006p3692}{}
+Grottoli, Andréa G, Lisa J Rodrigues, and James E Palardy. 2006.
+``Heterotrophic plasticity and resilience in bleached corals.''
+\emph{Nature} 440 (7088): 1186--9.
+doi:\href{https://doi.org/10.1038/nature04565}{10.1038/nature04565}.
 
 \hypertarget{ref-Hawkins:2016jj}{}
 Hawkins, Thomas D, Julia C G Hagemeyer, Kenneth D Hoadley, Adam G Marsh,
