@@ -642,9 +642,9 @@ apply(res2, 1, FUN=function(x) {
                  col=ifelse(gr>0, "black", "red"), 
                  pch=ifelse(initS==1e-01, 19, 1), 
                  cex=ifelse(initS==1e-01, 0.4, 1)))
-  with(x[x$sh>0.3, ], {
-    points(L, rep(0.3, length(L)), pch="^", col="red")
-    points(L, rep(0.29, length(L)), pch=1, col="red", cex=1)
+  with(x, if (sh > 0.3) {
+    points(L, 0.3, pch="^", col="red")
+    points(L, 0.29, pch=1, col="red", cex=1)
   })
 })
 
@@ -655,9 +655,9 @@ apply(res3, 1, FUN=function(x) {
                  col=ifelse(gr>0, "black", "red"), 
                  pch=ifelse(initS==1e-01, 19, 1), 
                  cex=ifelse(initS==1e-01, 0.4, 1)))
-  with(x[x$sh>0.3, ], {
-    points(L, rep(0.3, length(L)), pch="^", col="red")
-    points(L, rep(0.29, length(L)), pch=1, col="red", cex=1)
+  with(x, if (sh > 0.3) {
+    points(L, 0.3, pch="^", col="red")
+    points(L, 0.29, pch=1, col="red", cex=1)
   })
 })
 
@@ -668,9 +668,9 @@ apply(res4, 1, FUN=function(x) {
                  col=ifelse(gr>0, "black", "red"), 
                  pch=ifelse(initS==1e-01, 19, 1), 
                  cex=ifelse(initS==1e-01, 0.4, 1)))
-  with(x[x$sh>0.3, ], {
-    points(L, rep(0.3, length(L)), pch="^", col="red")
-    points(L, rep(0.29, length(L)), pch=1, col="red", cex=1)
+  with(x, if (sh > 0.3) {
+    points(L, 0.3, pch="^", col="red")
+    points(L, 0.29, pch=1, col="red", cex=1)
   })
 })
 
