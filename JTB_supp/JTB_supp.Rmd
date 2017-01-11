@@ -615,7 +615,7 @@ res4 <- cbind(input, output4)
 # Create plot
 par(mfrow=c(2,2), mar=c(3,3,1,1))
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=range(input$L), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
 points(c(48,48,53,53), c(0.22,0.23,0.22,0.23), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
 text(38, 0.225, labels="init. S:H", xpd=T, cex=0.7, srt=90)
 text(46, c(0.22,0.23), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
@@ -628,7 +628,7 @@ apply(res1, 1, FUN=function(x) {
                  cex=ifelse(initS==1e-01, 0.4, 1)))
 })
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=range(input$L), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
 apply(res2, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -636,7 +636,7 @@ apply(res2, 1, FUN=function(x) {
                  cex=ifelse(initS==1e-01, 0.4, 1)))
 })
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=range(input$L), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
 apply(res3, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -644,7 +644,7 @@ apply(res3, 1, FUN=function(x) {
                  cex=ifelse(initS==1e-01, 0.4, 1)))
 })
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=range(input$L), ylim=c(0,0.3), xlab="Light", ylab="Steady state S:H ratio")
 apply(res4, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
