@@ -40,7 +40,10 @@ layout(mat=matrix(c(1,2,3,4,5,6), ncol=3))
 par(mgp=c(1.2,0.2,0), cex=0.66, tcl=0.25, xaxs="i", yaxs="i")
 with(run1, {
   par(mar=c(1.25,2.5,2,0.5))
-  plot(S$S/H$H ~ time, type="l", ylim=c(0,0.85), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
+  plot(S$S/H$H ~ time, type="l", lty=3, ylim=c(0,0.85), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
+  legend("topright", bty="n", lty=c(0,3,1), lwd=1.5, col=c(NA, "black","black"), cex=c(0.8,0.6,0.6),
+         legend=c("Host growth", "negative", "positive"), y.intersp=c(0,1,1), seg.len=1)
+  lines(time[H$dH.Hdt>0], (S$S/H$H)[H$dH.Hdt>0])
   par(mar=c(0,0.5,2.5,0)); title("A.", adj=0)
   par(mar=c(2.5,2.5,0.75,0.5))
   plot(time, pl, type="l", ylim=c(-4,4), xlim=range(time), col="gray", bty="n", xlab="Days", ylab="Limitation coefficient")
@@ -56,7 +59,8 @@ legend("topleft", bty="n", xpd=NA, inset=c(0.5,-0.125), seg.len=1,
        lty=c(0,1,0), lwd=1.5, col=c("black", "gray", "black"), pch=c(NA,NA,NA), y.intersp=c(0,0.5,1))
 with(run2, {
   par(mar=c(1.25,2.5,2,0.5))
-  plot(S$S/H$H ~ time, type="l", ylim=c(0,0.85), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
+  plot(S$S/H$H ~ time, type="l", lty=3, ylim=c(0,0.85), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
+  lines(time[H$dH.Hdt>0], (S$S/H$H)[H$dH.Hdt>0])
   par(mar=c(0,0.5,2.5,0)); title("B.", adj=0)
   par(mar=c(2.5,2.5,0.75,0.5))
   plot(time, pl, type="l", ylim=c(-4,4), xlim=range(time), col="gray", bty="n", xlab="Days", ylab="Limitation coefficient")
@@ -66,7 +70,8 @@ with(run2, {
 })
 with(run3, {
   par(mar=c(1.25,2.5,2,0.5))
-  plot(S$S/H$H ~ time, type="l", ylim=c(0,0.85), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
+  plot(S$S/H$H ~ time, type="l", lty=3, ylim=c(0,0.85), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
+  lines(time[H$dH.Hdt>0], (S$S/H$H)[H$dH.Hdt>0])
   par(mar=c(0,0.5,2.5,0)); title("C.", adj=0)
   par(mar=c(2.5,2.5,0.75,0.5))
   plot(time, pl, type="l", ylim=c(-4,4), xlim=range(time), col="gray", bty="n", xlab="Days", ylab="Limitation coefficient")

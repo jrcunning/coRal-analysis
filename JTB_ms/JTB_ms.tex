@@ -1099,10 +1099,10 @@ escape this positive feedback and cannot grow. However, if symbiont
 biomass is initially high (i.e., a ``healthy'' coral), then the system
 remains in a nitrogen-limited state with positive growth. For practical
 purposes, this section of the manuscript considers only positive growth
-steady states under constant environments; the subsequent ``dynamic
-behavior'' section explores how changing environments may cause the
-system to switch between alternate stable states, which we interpret in
-the context of coral bleaching.
+steady states under constant environments; subsequently, we explore how
+environmental forcing may cause the system to switch between alternate
+stable states, which we interpret in the context of coral bleaching (see
+``Coral Bleaching and Recovery'', below).
 
 \begin{figure}[htbp]
 \centering
@@ -1127,18 +1127,16 @@ becomes less carbon-limited.
 \begin{figure}[htbp]
 \centering
 \includegraphics{../img/Fig3.png}
-\caption{Steady state values of \textbf{A)} specific growth (Cmol
-Cmol\textsuperscript{-1} d\textsuperscript{-1}), \textbf{B)} the
-symbiont to host biomass ratio (CmolS CmolH\textsuperscript{-1}),
-\textbf{C)} relative C- or N-limitation of host biomass formation, and
-\textbf{D)} relative CO\textsubscript{2}- or light-limitation of
-symbiont photosynthesis, across gradients of external irradiance and
-dissolved inorganic nitrogen. Note that typical conditions for reefs are
-\textasciitilde{}1e-7 M DIN and 10-20 mol photons m\textsuperscript{-2}
-d\textsuperscript{-1}. Simulations for each combination of light and
-nutrients (41 points along each axis) were run for 100 days with a time
-step of 1 day. Negative steady state growth rates, and corresponding S:H
-ratios, were set to zero.}
+\caption{Steady state values of (A) specific growth (Cmol
+Cmol\textsuperscript{-1} d\textsuperscript{-1}) and (B) the symbiont to
+host biomass ratio (CmolS CmolH\textsuperscript{-1}) across gradients of
+external irradiance and dissolved inorganic nitrogen. Note that typical
+conditions for reefs are \textasciitilde{}1e-7 M DIN and 10-20 mol
+photons m\textsuperscript{-2} d\textsuperscript{-1}. Simulations for
+each combination of light and nutrients (41 points along each axis) were
+run for 100 days with a time step of 1 day. All parameters were set to
+default values and prey density set to zero. Negative steady state
+growth rates, and corresponding S:H ratios, were set to zero.}
 \end{figure}
 
 Similarly, increasing DIN alleviates nitrogen-limitation (Fig. 3A).
@@ -1294,7 +1292,7 @@ DIN is enriched (Fig. S8).
 growth. Light input (upper panel) was designed as a sinusoidal curve
 with a period of one year, with maximum and minimum values of 44 and 22
 mol photons m\textsuperscript{-2} d\textsuperscript{-1}, based on
-Stimson (1997). The dynamic behavior of symiont to host biomass ratio
+Stimson (1997). The dynamic behavior of symbiont to host biomass ratio
 (middle panel) and the specific growth rate of host biomass (lower
 panel) show seasonal oscillations that are greater in magnitude under
 higher nutrients (1e-5 molN L\textsuperscript{-1}; dashed lines)
@@ -1401,10 +1399,10 @@ CCM activity, which delays the onset of CO\textsubscript{2}-limitation
 of photosynthesis and reduces bleaching severity. On the other hand,
 elevated nutrients exacerbate bleaching (Fig. 7), since higher symbiont
 densities are more susceptible to CO\textsubscript{2}-limitation
-(Wooldridge 2009). Several experimental (Cunning and Baker 2013; Vega
-Thurber et al. 2014) and correlational studies (Wooldridge and Done
-2009) are consistent with this mechanistic link between high nutrients
-and bleaching.
+(Wooldridge 2009). Several experimental (Wiedenmann et al. 2013; Cunning
+and Baker 2013; Vega Thurber et al. 2014) and correlational studies
+(Wooldridge and Done 2009) are consistent with this mechanistic link
+between high nutrients and bleaching.
 
 \begin{figure}[htbp]
 \centering
@@ -1420,93 +1418,116 @@ to the steady state for each set of starting conditions, respectively.
 (All parameters set to default values).}
 \end{figure}
 
-Since bleaching is induced by an external stressor, recovery from
-bleaching cannot occur unless the stressor is alleviated. In natural
-settings, this typically occurs by seasonal declines in temperature and
-light. However, alternate stable states lead to significant hysteresis,
-indicating that a coral cannot recover along the same trajectory it
-followed during bleaching; indeed, the stressor must be alleviated well
+Since bleaching can be understood as a transition from a
+nitrogen-limited state with high S:H biomass to a carbon-limited state
+with low S:H biomass, induced by an external stressor, recovery can be
+understood as a switch back to the nitrogen-limited state once the
+external stressor is alleviated. In natural settings, this typically
+occurs through seasonal declines in temperature and light. However,
+hysteresis associated with the system's alternate stable states
+indicates that the symbiosis cannot recover along the same trajectory it
+followed during bleaching; indeed, the stressor must be alleviated
 \emph{below} the threshold that initially caused bleaching in order for
-the system to recover (Fig. 2; Fig. X). This is because under the same
-external conditions, a bleached coral (relative to a healthy one) is
-characterized by greater light amplification and weaker CCM activity,
-which serve to maintain the bleached state. The magnitude of hysteresis
-will depend on external nutrients and prey availability, as well as
-model parameters, yet the core behavior of hysteresis illustrates the
-alternate stable states that exist in the symbiotic system.
+the system to recover (Fig. 2). This is because under the same external
+conditions, a bleached coral with low S:H biomass (relative to a healthy
+coral with high S:H biomass) is characterized by greater light
+amplification and weaker CCM activity, which enhance photooxidative
+stress and serve to maintain the carbon-limited state. In order for the
+system to recover, the stressor must be reduced enough such that
+photooxidative stress ceases and translocation of carbon from symbiont
+to host is resumed. Once this occurs, the host can energize its CCMs,
+which further enhances carbon fixation and accelerates the system back
+toward a nitrogen-limited state, indicative of recovery. The conditions
+under which recovery can occur -- which determine the magnitude of
+hysteresis (Fig. SX) -- depend on the relative abundance of nitrogen and
+carbon in the environment. Higher food levels, representing a
+non-autotrophic carbon source for the host, make it easier for the host
+to overcome carbon-limitation, thus providing a potential mechanism
+underlying observations that feeding aids recovery from bleaching
+{[}xxx{]}. Conversely, high external DIN impedes the re-establishment of
+nitrogen-limitation, making recovery from bleaching more difficult
+(i.e., narrowing the sets of conditions under which recovery is
+possible).
+
+Dynamic simulations of recovery reveal another interesting behavior of
+the system: under some conditions, an `overshoot' occurs in which S:H
+biomass temporarily increases beyond the ratio maintained in the
+`healthy' state, before returning to stabilize at this value (Fig. 8;
+Fig. S9). In fact, unusually high symbiont densities have been observed
+following bleaching in both experimental (Cunning, Silverstein, and
+Baker 2015) and field studies (Kemp et al. 2014), and have been
+interpreted as a potential `disequilibrium in host-symbiont regulation'
+(Kemp et al. 2014). The model reveals the dynamics of this `overshoot'
+as follows: as symbionts repopulate the host, photosynthesis becomes
+increasingly CO\textsubscript{2}-limited due to weak CCM activity of the
+carbon-limited host. Thus, although symbiont growth is not yet
+carbon-limited, a growing symbiont population has less and less excess
+carbon (per symbiont) to share, and is thus moving toward
+carbon-limitation. Meanwhile, because S:H biomass is increasing, the
+host receives more and more carbon per unit host biomass, and is thus
+moving away from carbon-limitation. If the host overcomes
+carbon-limitation \emph{before} the symbiont reaches it, then the system
+rapidly transitions to the nitrogen-limited state and the S:H ratio
+stabilizes without an overshoot (Fig. 8A). However, if the symbiont
+becomes carbon-limited first (Fig. 8B, 8C), then carbon translocation
+per symbiont declines further and photosynthesis becomes more
+CO\textsubscript{2}-limited, which maintains carbon-limitation of the
+host. In this situation, continued growth of less and less productive
+symbionts causes S:H biomass to reach a much higher level before the
+host finally overcomes carbon-limitation. At this point, representing
+the peak of the overshoot, the transition to nitrogen-limitation finally
+takes place and the S:H biomass ratio declines and stabilizes.
+
+Whether this `overshoot' occurs or not represents a bifurcation point in
+the dynamical system that is defined by the relative availability of
+carbon and nitrogen to the host -- any factor that enhances
+carbon-limitation of host growth (e.g.~high DIN and/or low feeding)
+therefore magnifies the overshoot and prolongs the dysfunctional,
+carbon-limited state of the symbiosis (Fig. 8). On the other hand,
+factors that favor nitrogen-limitation, such as low external DIN and/or
+high feeding rates, will accelerate the re-establishment of
+nitrogen-limitation and prevent an overshoot from occurring at all.
+While many scenarios are possible under different environmental
+conditions, we illustrate the general effects of varying N and C
+availability on recovery from bleaching with a series of simulations
+that vary the N:C ratio of host's heterotrophic food source (Fig. 8A-C):
+lower N:C ratios (effectively representing lower DIN and/or higher
+heterotrophy) favor nitrogen-limitation and more rapid recovery, while
+higher N:C ratios (effectively representing higher DIN and/or lower
+heterotrophy) favor carbon-limitation and prolonged recovery with a
+larger overshoot in S:H biomass.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics{../img/Fig8.png}
-\caption{Recovery from bleaching under varying N:C availability. Higher
-N:C ratios in a heterotrophic food source (effectively representing
-higher external DIN and/or lower feeding rates) cause a larger overshoot
-in the S:H biomass ratio, and prolong the duration of time until the
-system `recovers' by re-establishing nitrogen-limitation (represented by
-black dots on each trajectory). All simulations run with default
-parameters (except varying nNX), L=10 mol photons m\textsuperscript{2}
-d\textsuperscript{-1}, DIN=1e-7 molN L\textsuperscript{-1}, prey=1e-6
-CmolX L\textsuperscript{-1}, and initial S:H biomass=0.0001.}
+\caption{Recovery from bleaching with varying N:C availability (A:
+N:C=0.09; B: N:C=0.10; C: N:C=0.30). Higher N:C ratios in a
+heterotrophic food source (effectively representing higher external DIN
+and/or lower feeding rates) cause a larger overshoot in the S:H biomass
+ratio, and prolong the duration of time until the system `recovers' by
+re-establishing nitrogen-limitation. All simulations run with default
+parameters (except varying nNX), with L=10 mol photons
+m\textsuperscript{2} d\textsuperscript{-1}, DIN=1e-7 molN
+L\textsuperscript{-1}, prey=1e-6 CmolX L\textsuperscript{-1}, and
+initial S:H biomass=0.001.}
 \end{figure}
 
-The dynamics of recovery from bleaching reveal another interesting
-behavior of the system: under some conditions, the S:H biomass ratio may
-increase to a higher value that `overshoots' the ratio maintained in the
-`healthy' state under the same conditions (Fig. 8; Fig. S9). In fact,
-unusually high symbiont densities have been observed after recovery from
-bleaching in both experimental (Cunning, Silverstein, and Baker 2015)
-and field studies (Kemp et al. 2014), and have been interpreted as a
-potential `disequilibrium in host-symbiont regulation' (Kemp et al.
-2014). The model explains this `overshoot' as an approach to a
-bifurcation point in the dynamical system \textless{}\textgreater{}. As
-the symbiont begins repopulating the host, CO\textsubscript{2} is
-limiting and nitrogen is replete, allowing nearly all fixed carbon to be
-used for symbiont growth. As a result, host growth remains strongly
-carbon-limited, CCM activity remains weak, and photosynthesis remains
-CO\textsubscript{2}-limited. As long as this carbon-limitation persists,
-S:H biomass will continue to increase beyond the `healthy' steady state
-level, until the symbiont population eventually reaches a high enough
-density such that nitrogen limits its growth more strongly than carbon.
-At this point, which represents the peak of the `overshoot', the
-symbiont begins to share carbon with the host, which then supplies more
-CO\textsubscript{2} for photosynthesis, etc., causing the system to
-rapidly escape the positive feedbacks that were maintaining
-carbon-limitation (see Fig. S9 for illustration of all fluxes during
-overshoot). The re-establishment of nitrogen-limitation resumes high
-rates of carbon fixation and coral growth, bringing the S:H biomass
-ratio back down to a stable equilibrium.
-
-The occurrence and the magnitude of this overshoot depend on the
-relative inputs of carbon and nitrogen to the system -- any factor that
-enhances carbon-limitation (e.g.~high DIN and/or low feeding) therefore
-magnifies the overshoot and prolongs the dysfunctional, carbon-limited
-state of the symbiosis (Fig. 8). On the other hand, factors that favor
-nitrogen-limitation, such as low external DIN and/or high feeding rates,
-will accelerate the re-establishment of nitrogen-limitation and prevent
-an overshoot from occurring at all. While many scenarios are possible
-under different environmental conditions, we illustrate the general
-effects of varying N and C availability on recovery from bleaching with
-a series of simulations that vary the N:C ratio of host's heterotrophic
-food source (Fig. 8): lower N:C ratios (effectively representing lower
-DIN and/or higher heterotrophy) favor nitrogen-limitation and more rapid
-recovery, while higher N:C ratios (effectively representing higher DIN
-and/or lower heterotrophy) favor carbon-limitation and prolonged
-recovery with a larger overshoot in S:H biomass.
-
-Importantly, the re-establishment of nitrogen-limitation is the most
-important diagnostic of recovery to a `healthy' state, as this is when
-high carbon fixation and growth rates are resumed. A high S:H biomass
-ratio alone does not indicate that a `healthy' state has been reached,
-since overall C-limitation may still persist (e.g., high N:C ratios in
-Fig. 8). This could explain why corals that have apparently recovered
-their symbiont populations after bleaching still have reduced growth and
-reproduction rates until much later (xxx, Hughes). Therefore,
-acquisition of carbon from a source other than the symbiont may be
-extremely important for the host in order to recover from bleaching.
-Indeed, feeding has been shown to promote more rapid recovery from
-bleaching (xxx). Moreover, if the host obtains carbon from another
-independent source, such as direct uptake of DOC (xxx), this could be
-even more important in ensuring rapid recovery from a bleached state.
+These dynamics reveal that the re-establishment of nitrogen-limitation
+is the most important diagnostic of recovery to a `healthy' state, as
+this is when positive growth rates are resumed. A high S:H biomass ratio
+alone does not necessarily indicate that a `healthy' state has been
+reached, since the C-limited state may still persist (e.g., Fig. 8B,
+8C). This could explain why corals that have recovered their symbiont
+populations after bleaching may still exhibit energetic deficits and
+physiological impacts for much longer periods of time (Levitan et al.
+2014, Hughes and Grottoli (2013)). Therefore, host acquisition of carbon
+from a source other than the symbiont may be extremely important for the
+system to recover from bleaching. Indeed, host feeding has been shown to
+promote a more rapid return to pre-bleaching levels of key physiological
+parameters in recovering corals (Connolly, Lopez-Yglesias, and Anthony
+2012). The model predicts that acquisition of carbon from other sources,
+such as direct uptake of DOC (Levas et al. 2015), may also promote more
+rapid recovery from a bleached state.
 
 \section{Conclusions}\label{conclusions}
 
@@ -1620,6 +1641,13 @@ temperature, salinity and light on the hermatypic coral Montipora
 verrucosa.'' \emph{Marine Biology} 49: 187--95.
 \url{http://www.springerlink.com/index/LU582837924G7674.pdf}.
 
+\hypertarget{ref-Connolly:2012ep}{}
+Connolly, Sean R, M A Lopez-Yglesias, and Kenneth R N Anthony. 2012.
+``Food availability promotes rapid recovery from thermal stress in a
+scleractinian coral.'' \emph{Coral Reefs} 31 (4). Springer-Verlag:
+951--60.
+doi:\href{https://doi.org/10.1007/s00338-012-0925-9}{10.1007/s00338-012-0925-9}.
+
 \hypertarget{ref-Costanza:2014ex}{}
 Costanza, R, R de Groot, and P Sutton. 2014. ``Changes in the global
 value of ecosystem services.'' \emph{Global Environmental Change} 26:
@@ -1704,6 +1732,13 @@ calcification.'' \emph{The Journal of Experimental Biology}, April. The
 Company of Biologists Ltd, jeb.118182.
 doi:\href{https://doi.org/10.1242/jeb.118182}{10.1242/jeb.118182}.
 
+\hypertarget{ref-Hughes:2013hd}{}
+Hughes, Adam D, and Andréa G Grottoli. 2013. ``Heterotrophic
+Compensation: A Possible Mechanism for Resilience of Coral Reefs to
+Global Warming or a Sign of Prolonged Stress?'' \emph{PLoS ONE} 8 (11).
+Public Library of Science: e81172.
+doi:\href{https://doi.org/10.1371/journal.pone.0081172}{10.1371/journal.pone.0081172}.
+
 \hypertarget{ref-Huston:1985ec}{}
 Huston, M. 1985. ``Variation in coral growth rates with depth at
 Discovery Bay, Jamaica.'' \emph{Coral Reefs} 4 (1): 19--25.
@@ -1741,6 +1776,20 @@ Organization}. 3rd ed. Cambridge University Press.
 Lesser, Michael P. 1997. ``Oxidative stress causes coral bleaching
 during exposure to elevated temperatures.'' \emph{Coral Reefs} 16
 (July): 187--92.
+
+\hypertarget{ref-Levas:2015ic}{}
+Levas, Stephen, Andréa G Grottoli, Verena Schoepf, Matthew D
+Aschaffenburg, Justin Baumann, James E Bauer, and Mark E Warner. 2015.
+``Can heterotrophic uptake of dissolved organic carbon and zooplankton
+mitigate carbon budget deficits in annually bleached corals?''
+\emph{Coral Reefs} 35 (2). Springer Berlin Heidelberg: 495--506.
+doi:\href{https://doi.org/10.1007/s00338-015-1390-z}{10.1007/s00338-015-1390-z}.
+
+\hypertarget{ref-Levitan:2014et}{}
+Levitan, D R, W Boudreau, J Jara, and Nancy Knowlton. 2014. ``Long-term
+reduced spawning in Orbicella coral species due to temperature stress.''
+\emph{Marine Ecology Progress Series} 515: 1--10.
+doi:\href{https://doi.org/10.3354/meps11063}{10.3354/meps11063}.
 
 \hypertarget{ref-Marcelino:2013hz}{}
 Marcelino, Luisa A, Mark W Westneat, Valentina Stoyneva, Jillian Henss,
@@ -1893,6 +1942,14 @@ Weis, Virginia M. 2008. ``Cellular mechanisms of Cnidarian bleaching:
 stress causes the collapse of symbiosis.'' \emph{The Journal of
 Experimental Biology} 211 (Pt 19): 3059--66.
 doi:\href{https://doi.org/10.1242/jeb.009597}{10.1242/jeb.009597}.
+
+\hypertarget{ref-Wiedenmann:2013bn}{}
+Wiedenmann, Jörg, C D'Angelo, Edward G Smith, Alan N Hunt, François-Eric
+Legiret, Anthony D Postle, and Eric P Achterberg. 2013. ``Nutrient
+enrichment can increase the susceptibility of reef corals to
+bleaching.'' \emph{Nature Climate Change} 3. Nature Publishing Group:
+160--64.
+doi:\href{https://doi.org/10.1038/nclimate1661}{10.1038/nclimate1661}.
 
 \hypertarget{ref-Wooldridge:2009p7807}{}
 Wooldridge, Scott A. 2009. ``A new conceptual model for the warm-water
