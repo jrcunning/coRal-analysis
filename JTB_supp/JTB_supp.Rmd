@@ -575,7 +575,7 @@ with(run2, {
 ```
 
 # Figure S9. Hysteresis under different nutrient and feeding regimes.
-```{r FigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F}
+```{r runFigS9, cache=T, include=F}
 # Set up cluster for parallel processing
 cl <- makeCluster(detectCores())  # Initiate cluster
 registerDoParallel(cl)
@@ -611,7 +611,9 @@ res1 <- cbind(input, output1)
 res2 <- cbind(input, output2)
 res3 <- cbind(input, output3)
 res4 <- cbind(input, output4)
+```
 
+```{r plotFigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F}
 # Create plot
 par(mfrow=c(2,2), mar=c(3,3,1,1))
 
