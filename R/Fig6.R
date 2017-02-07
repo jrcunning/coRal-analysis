@@ -1,4 +1,4 @@
-# Figure 5
+# Figure 6
 # Bleaching in response to increasing light
 
 # Load functions
@@ -9,7 +9,7 @@ sapply(c("R/def_pars.R",
        source, .GlobalEnv)
 
 # Set run time vector
-time <- seq(1, 80, 0.1)  # if single model run, use time input
+time <- seq(-2, 80, 0.1)  # if single model run, use time input
 
 # Initialize environment
 env <- init_env(time=time, L=c(30,50,0), N=c(1e-7,1e-7,0), X=c(0e-6,0e-6,0))
@@ -20,7 +20,7 @@ env <- init_env(time=time, L=c(30,50,0), N=c(1e-7,1e-7,0), X=c(0e-6,0e-6,0))
 defpars <- def_pars()  # Get default parameters
 
 # Run simulation
-ss <- with(run_coral_ss(env=list(L=25, N=1e-7, X=0e-6), pars=defpars, dt=0.1), last(S$S/H$H))
+ss <- with(run_coral_ss(env=list(L=30, N=1e-7, X=0e-6), pars=defpars, dt=0.1), last(S$S/H$H))
 run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", ss))
 
 # Plot results
@@ -31,16 +31,16 @@ png("img/Fig6.png", width=3, height=3, units="in", res=300)
         cex.main=0.9, cex.axis=0.6, cex.lab=0.7)
     
     # External irradiance
-    plot(time, env$L, type="l", col="gold", ylim=c(30,50), lwd=2, xlab="", ylab="molph/m2/d")
+    plot(time, env$L, type="l", col="gold", ylim=c(30,50), xlim=c(0,80), lwd=2, xlab="", ylab="molph/m2/d")
     title("A. External irradiance", adj=0, line=0.25)
     
     # Plot ROS
-    plot(NA, xlim=range(time), xlab="", ylim=c(1, max(2, max(S$cROS))), ylab="Relative")
+    plot(NA, xlab="", ylim=c(1, max(2, max(S$cROS))), xlim=c(0,80), ylab="Relative")
     title("B. ROS production", adj=0.05, line=0)
     lines(time, S$cROS, col="orange", lwd=2)
     
     # Photosynthesis rate
-    plot(NA, xlim=range(time), xlab="Days", ylim=c(0, max(S$jCP)), ylab="molC/CmolS/d")
+    plot(NA, xlab="Days", ylim=c(0, max(S$jCP)), xlim=c(0,80), ylab="molC/CmolS/d")
     title("C. Photosynthesis rate", adj=0.05, line=0)
     lines(time, S$jCP, col="red", lwd=2)
     
@@ -49,7 +49,7 @@ png("img/Fig6.png", width=3, height=3, units="in", res=300)
     hl <- log(  pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm) / pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) )
     maxabs <- max(c(abs(hl), abs(sl)))
     range <- range(c(hl, sl))
-    plot(NA, xlim=range(time), xlab="", ylab="Relative", ylim=range)
+    plot(NA, xlim=c(0,80), xlab="", ylab="Relative", ylim=range)
     title("D. Biomass C-/N-limitation", adj=0, line=0.25)
     lines(time, hl, col="black", lty=1, lwd=1)
     lines(time, sl, col="black", lty=2, lwd=1)
@@ -60,7 +60,7 @@ png("img/Fig6.png", width=3, height=3, units="in", res=300)
     # Photosynthesis: substrate-limitation
     co2l <- log(  pmin(S$jL * pars$yCL, pars$jCPm)  / pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)    )
     maxabs <- max(abs(co2l))
-    plot(NA, xlim=range(time), xlab="", ylab="Relative", ylim=c(0, maxabs))
+    plot(NA, xlim=c(0,80), xlab="", ylab="Relative", ylim=c(0, maxabs))
     title("E. CO2-limitation", adj=0, line=0.25)
     lines(time, co2l, col="black", lty=1, lwd=2)
     #abline(h=0, lty=3)
@@ -68,7 +68,7 @@ png("img/Fig6.png", width=3, height=3, units="in", res=300)
     # Symbiont to host biomass ratio
     totSH <- S$S / H$H
     totSHf <- totSH[length(totSH)]
-    plot(time, totSH, type="l", col="black", ylim=c(0, max(totSH, na.rm=T)), ylab="CmolS/CmolH", xlab="Days", lwd=2)
+    plot(time, totSH, type="l", col="black", ylim=c(0, max(totSH, na.rm=T)), xlim=c(0,80), ylab="CmolS/CmolH", xlab="Days", lwd=2)
     title("F. S:H biomass", adj=0, line=0.25)
   })
 dev.off()
