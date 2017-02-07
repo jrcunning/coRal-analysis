@@ -272,7 +272,7 @@ sym_PI(pars=def_pars())
 -----
 
 # Figure S3 
-```{r sens_ILHN, cache=T, echo=F, eval=F, fig.cap="**Fig. S3. Sensitivity analysis under high DIN (4e-6 M) and intermediate light (15 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_ILHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S3. Sensitivity analysis under high DIN (4e-6 M) and intermediate light (15 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -337,7 +337,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S4 
-```{r sens_LLLN, cache=T, echo=F, eval=F, fig.cap="**Sensitivity analysis under low DIN (1e-7 M) and low light (2 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_LLLN, cache=T, echo=F, eval=T, fig.cap="**Sensitivity analysis under low DIN (1e-7 M) and low light (2 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -402,7 +402,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S5
-```{r sens_LLHN, cache=T, echo=F, eval=F, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (2 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_LLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (2 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -467,7 +467,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S6
-```{r sens_HLLN, cache=T, echo=F, eval=F, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (25 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_HLLN, cache=T, echo=F, eval=T, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (25 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -532,7 +532,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S7
-```{r sens_HLHN, cache=T, echo=F, eval=F, fig.cap="Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (25 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_HLHN, cache=T, echo=F, eval=T, fig.cap="Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (25 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -597,7 +597,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S8
-```{r FigS8, cache=T, fig.width=7, fig.height=7, echo=F, eval=F, fig.cap="**Fig. S8. Full system dynamics of seasonal light variation at two nutrient levels.** This figure accompanies Figure 5 in the main text, and shows additional model fluxes that demonstrate the mechanisms underlying the changes in the system state in these simulations."}
+```{r FigS8, cache=T, fig.width=7, fig.height=7, echo=F, eval=T, fig.cap="**Fig. S8. Full system dynamics of seasonal light variation at two nutrient levels.** This figure accompanies Figure 5 in the main text, and shows additional model fluxes that demonstrate the mechanisms underlying the changes in the system state in these simulations."}
 # Set parameters
 defpars <- def_pars()  # Get default parameters
 
@@ -733,7 +733,7 @@ with(run2, {
 -----
 
 # Figure S9
-```{r runFigS9, cache=T, include=F, eval=F}
+```{r runFigS9, cache=T, include=F, eval=T}
 # Set up cluster for parallel processing
 cl <- makeCluster(detectCores())  # Initiate cluster
 registerDoParallel(cl)
@@ -771,7 +771,7 @@ res3 <- cbind(input, output3)
 res4 <- cbind(input, output4)
 ```
 
-```{r plotFigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F, eval=F, fig.cap="**Fig. S9. Hysteresis under different nutrient and feeding regimes.** This figure accompanies Fig. 2 in the main text. These figures show steady state S:H biomass ratios in constant environments with varying DIN and food (X) levels, with initial S:H biomass values of either 0.1 or 0.0001. Points are colored according to whether the host exhibits positive (black) or negative (red) growth at steady state."}
+```{r plotFigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F, eval=T, fig.cap="**Fig. S9. Hysteresis under different nutrient and feeding regimes.** This figure accompanies Fig. 2 in the main text. These figures show steady state S:H biomass ratios in constant environments with varying DIN and food (X) levels, with initial S:H biomass values of either 0.1 or 0.0001. Points are colored according to whether the host exhibits positive (black) or negative (red) growth at steady state."}
 # Create plot
 par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), tcl=-0.025)
 
