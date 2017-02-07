@@ -256,6 +256,7 @@ mod <- nls(A ~ x + y * exp(z * S.H), data=md, start=list(x=1, y=2, z=-3))
 fit <- predict(mod, list(S.H=seq(0, 0.5, 0.01)))
 lines(fit ~ seq(0, 0.5, 0.01))
 # Get parameters of fit and add to plot
+coefs <- round(coef(mod), 2)
 fiteq <- str_replace_all(format(formula(mod)), c("~"="= ", " x"=coefs[[1]], "y"=coefs[[2]], "z"=coefs[[3]]))
 text(0.05,2.8, fiteq, adj=0)
 
