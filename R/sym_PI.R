@@ -30,11 +30,14 @@ sym_PI <- function(pars) {
     }
     # Return ROS and photosynthesis rate for plotting
     par(mfrow=c(1,1), mar=c(3,3,3,7), mgp=c(1.2,0,0), cex=1, tck=0.025, xaxs="i")
-    plot(jL, jCP/pars$yCL, xlab="Light (mol photons/C-molS/d)", ylab="Photochemical quenching",
+    plot(jL, jCP/pars$yCL, xlab="Light (mol photons/C-molS/d)", ylab="",
          type="l", lwd=3, col="red")
+    mtext(side=2, text="Photochemical quenching", cex=1, line=1.8)
+    mtext(side=2, text="(mol photons/CmolS/d)", cex=0.8, line=1)
     par(new=T)
     plot(jL, jNPQ, type="l", lwd=3, axes=F, xlab="", ylab="")
     axis(side=4); mtext(side=4, text="Non-photochemical quenching", line=1, cex=1)
+                  mtext(side=4, text="(mol photons/CmolS/d)", line=1.8, cex=0.8)
     par(new=T)
     plot(jL, cROS, type="l", lwd=3, axes=F, col="orange", xlab="", ylab="", ylim=c(1, max(cROS)*1.5))
     axis(side=4, line=4); mtext(side=4, line=5, text = "ROS production (relative)", cex=1)
