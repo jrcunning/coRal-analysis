@@ -13,7 +13,7 @@ author:
     affiliation: UCSB
 address:
   - code: HIMB
-    address: Hawaii Institute of Marine Biology, School of Ocean and Earth Science and Technology, University of Hawaii at Mānoa, USA
+    address: Hawaii Institute of Marine Biology, School of Ocean and Earth Science and Technology, University of Hawaii at Manoa, USA
   - code: UCSB
     address: Department of Ecology, Evolution, and Marine Biology, University of California, Santa Barbara, USA
   - code: MSI
