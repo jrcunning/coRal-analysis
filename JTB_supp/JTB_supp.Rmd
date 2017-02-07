@@ -1,16 +1,25 @@
 ---
-title: A simplified dynamic bioenergetic model for coral-*Symbiodinium* symbioses and coral bleaching as an alternate stable state
+title: "Supplementary Information for:"
+subtitle: A simplified dynamic bioenergetic model for coral-*Symbiodinium* symbioses and coral bleaching as an alternate stable state
 author: "Ross Cunning, Erik B. Muller, Ruth D. Gates, Roger M. Nisbet"
-output: html_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 1
 bibliography: library.bib
 ---
 
-# Supplementary Information
+-----
+
 This supplement provides justification and derivations from the literature for all parameter values used in the model, as well as additional figures that demonstrate the structure and behavior of the model and its specific components.
 
 ```{r setup, include=FALSE}
+require(pander)
+require(stringr)
 knitr::opts_knit$set(root.dir = normalizePath(".."))
-knitr::opts_chunk$set(message = F, warning = F, echo=F)
+knitr::opts_chunk$set(message = F, warning = F, echo=T, results='asis')
+knitr::opts_chunk$set(results = "asis", render=pander)
 ```
 
 ```{r initialize, include=FALSE}
@@ -22,81 +31,215 @@ sapply(c("R/conversions.R", "R/def_pars.R", "R/init_env.R", "R/plot_results.R",
 defpars <- def_pars()
 ```
 
+-----
+
+# Model parameters
+All parameters in the model are listed here along with the relevant literature that provides a basis for the value used. In most cases, the units of the values reported in the literature were converted to units appropriate for the model, which was accomplished using a consistent set of stoichiometric conversion factors also based on reported literature (see [Conversion factors used in parameter derivation]). Calculations executed in R are shown for each parameter (when relevant) as well as the final value used.
+
 ## Parameter value derivations
-All parameters in the model are listed here along with the relevant literature that provides a basis for the value used. In most cases, the units of the values reported in the literature needed to be converted to units appropriate for the model, which was accomplished using a consistent set of stoichiometric conversion factors also based on reported literature (see "R/conversions.R" in this paper's data repository). The specific calculations used to convert values from the units reported in the literature to the relevant units for the model can be found in the RMarkdown code used to produce this document.
 
-* $n_{NH}$: N:C molar ratio in host biomass
-    + @Horwitz:2015cf measured a C:N ratio of 5.53 in anemones under control conditions, which converts to:
-    + Value used: `r defpars$nNH` (N:C ratio, dimensionless)
-* $n_{NS}$: N:C molar ratio in symbiont biomass
-    + This value should approximate the Redfield ratio (following @Muller:2009io).
-    + Value used: `r defpars$nNS` (dimensionless)
-* $n_{NX}$: N:C molar ratio in prey biomass
-    + Assuming the coral feeds primarily on zooplankton, a general heterotroph has a N:C ratio of 0.2 [@Muller:2009io].
-    + Value used: `r defpars$nNX` (N:C ratio, dimensionless)
-* $j_{HT}^0$: Specific turnover rate of host biomass
-    + @Jacobson:2016bk parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate (analagous to the turnover rate in the current model) of 0.03 CmolH CmolH^-1^ d^-1^.
-    + Value used: `r defpars$jHT0` CmolH CmolH^-1^ d^-1^
-* $j_{ST}^0$: Specific turnover rate of symbiont biomass
-    + Assuming an equivalent maintenance rate as the host:
-    + Value used: `r defpars$jST0` CmolS CmolS^-1^ d^-1^
-* $\sigma_{NH}, \sigma_{NS}$: Proportions of nitrogen recycled from host and symbiont biomass turnover
-    + Assume highly efficient recycling by both symbiont and host to avoid loss to the environment:
-    + Values used: `r with(defpars, c(sigmaNH, sigmaNS))` (dimensionless)
-* $\sigma_{CS}$: Proportion of metabolic CO~2~ produced by symbiont recycled passively to photosynthesis
-    + Assume that CO~2~ produced within symbiont cells is recycled with high efficiency, potentially aided by symbiont carbon concentrating mechanisms
-    + Value used: 0.9 (dimensionless)
-* $\sigma_{CH}$: Proportions of metabolic CO~2~ produced by host recycled passively to photosynthesis 
-    + Assume that most metabolic CO~2~ produced within host cells rapidly converts to HCO~3~^-^ at intracellular pH ~ 7.2 [@Venn:2009hy], and that only ~10% actually remains as CO~2~ [@Zeebe:2001wz] that could diffusively supply photosynthesis. This passive supply is differentiated from all active host carbon concentrating mechanisms (CCMs) that facilitate CO~2~ supply to photosynthesis, which are separately treated collectively as the $jCO~2~$ flux.
-    + Values used: 0.1 (dimensionless)
-* $j_{Xm}$: Maximum specific feeding rate of host
-    + @Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific feeding rate of 77.6 µgC cm^-2^ 6h^-1^. This converts to:
-    + Value used: `r round(77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 4, 2)` molX CmolH^-1^ d^-1^
-* $K_X$: Half-saturation constant for prey uptake by host
-    + @Purser:2010hp measured feeding rates of the coral *Lophelia pertusa* at different concentrations of *Artemia* nauplii, reporting a half-saturation for feeding of ~345 *Artemia* L^-1^. This converts to:
-    + Value used: $`r round(345 * gC.artemia / gC.molC, 7)`$ CmolX L^-1^
-* $j_{Nm}$: Maximum specific DIN uptake rate by host
-    + @Muscatine:1978fa measured ammonium uptake in 3 coral species and reported an average value of 7.22 µmol NH~4~^+^-N mg chl *a*^-1^ h^-1^ (Table 1, uncorrected), which converts to `r 7.22 * h.d * nmolchlA.cm2 * gchlA.molchlA * mg.g / nmol.mol / CmolR.m2_Spis * cm2.m2 / µmol.mol` mol NH~4~^+^-N  CmolH^-1^ d^-1^.
-    + @HoeghGuldberg:1999p3974 measured ammonium and dissolved free amino acid uptake in *Pocillopora damicornis* and reported a maximum rate of 91.8 nmol N cm^-2^ h^-1^, which converts to `r 91.8 * h.d * cm2.m2 / CmolR.m2_Spis / nmol.mol` molN CmolH^-1^ d^-1^.
-    + @Godinot:2011jg measured nitrate and ammonium uptake rates in *Stylophora pistillata* under high nutrient concentrations and reported a maximum value of 3.5 µmolN mg chl^-1^ d^-1^ [addition of bars in Fig. 4D,E @ 29°C], which converts to `r 3.5 * h.d * 22 / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000` molN CmolH^-1^ d^-1^.
-    + @Godinot:2011bm measured ammonium uptake kinetics in *Stylophora pistillata* and reported a maximum rate of 5.42 molN mg chl^-1^ h^-1^, which converts to `r 5.42 * h.d * µgchl.cm2_Spis / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000` molN CmolH^-1^ d^-1^.
-    + Averaging these reported values, we arrive at:
-    + Value used: `r round(mean(c(7.22 * h.d * nmolchlA.cm2 * gchlA.molchlA * mg.g / nmol.mol / CmolR.m2_Spis * cm2.m2 / µmol.mol, 91.8 * h.d * cm2.m2 / CmolR.m2_Spis / nmol.mol, 3.5 * h.d * 22 / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000, 5.42 * h.d * µgchl.cm2_Spis / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000)), 3)` molN CmolH^-1^ d^-1^.
-* $K_N$: Half-saturation constant for DIN uptake by host
-    + @Muscatine:1978fa measured ammonium uptake in 3 coral species and reported an average half-saturation constant of 1.84 µmolN L^-1^ (Table 1, uncorrected).
-    + @Godinot:2011bm measured ammoinum uptake kinetics in *Stylophora pistillata* and reported a half-saturation constant of 0.46 µmol N L^-1^.
-    + Averaging these reported values (weighted by number of species measured), we arrive at:
-    + Value used: `r round((1.84*3 + 0.46*1)/4, 2)` molN L^-1^
-* $k_{CO_2}$: Efficacy of CO~2~ delivery by host CCMs
-    + This parameter represents the relative amount of CO~2~ that can be delivered by the host to photosynthesis given the reducing power generated from 1 mol of fixed carbon. We assume that the host uses a portion of its fixed carbon to generate ATP which is then used to activate a variety of carbon concentrating mechanisms (see @Wooldridge:2013tj). We assume these CCMs are efficient and can deliver an order of magnitude more CO~2~ relative to the fixed carbon available.
-    + Value used: 10 molCO~2~ molC^-1^
-* $j_{HGm}$: Maximum specific growth rate of host 
-    + Value used: 1 CmolH CmolH^-1^ d^-1^
-    + Reference:
-* $y_{CL}$: Quantum yield of photosynthesis
-    + The maximum theoretical quantum yield is 0.125 mol C fixed per mol photons. @Brodersen:2014gw presented a balanced light budget based on microenvironmental photobiology of *Montastrea curta*, and reported a quantum yield of 0.102 O~2~ photon^-1^.
-    + Value used: 0.1 molC molph^-1^
-* $\bar{a}^*$: Effective light-absorbing cross-section of symbiont
-    + @Hennige:2009p3439 measured spectra-weighted absoprtion coefficients from 400 to 700nm *ā\**~(400-700)~ for eight *Symbiodinium* types in culture at two different light levels, and reported a (grand mean) value of 0.01095 m^2^ mg chl *a*^-1^ [from Table 6]. This converts to:
-    + Value used: `r round(0.01095 * mg.g * gchlA.gC * gC.molC, 2)` m^2^ CmolS^-1^
-* $k_{NPQ}$: Capacity of non-photochemical quenching
-    + @Gorbunov:2001p4181 report that the capacity of non-photochemical quenching is approximately 4 times the capacity of photochemistry on a sunny day. Therefore, we take the maximum relative capacity of NPQ to be 4 times the maximum rate of photochemical quenching ($j_{CPm}$; see below), giving a value of:
-    + Value used: `r defpars$jCPm / defpars$yCL * 4` mol ph CmolS^-1^ d^-1^
-* $k_{ROS}$: Amount of excitation energy not quenched by photoehcemistry or NPQ that doubles relative production of ROS
-    + @McGinty:2012ck report a ~4-fold increase in ROS production in *Symbiodinium* C1 under stressful conditions relative to control. We chose a value of $k_{ROS}$ that similarly produced a ~4-fold increase in ROS production at the highest light level (see Figure S2):
-    + Value used: 60 mol ph CmolS^-1^ d^-1^
-* $j_{CPm}$: Maximum specific photosynthesis rate of symbiont (molC CmolS^-1^ d^-1^)
-    + In theory, this value should be the maximum carboxylation rate of *Symbiodinium* Rubisco (RuBP). @Leggat:2004vx report a maximum carboxylation rate at 29°C of 140 CO~2~ RuBP^-1^ s^-1^ [Max. value, p. 143], which converts to:
-    + Value used: `r round(140 * s.h * h.d * RuBP.CmolS, 1)`
-* $j_{SGm}$: Maximum specific growth rate of symbiont (CmolS CmolS^-1^ d^-1^)
-    + Sugget et al. measured specific growth rates of 5 clades of *Symbiodinium* in culture, and reported values ranging from 0.19 to 0.26 d^-1^ (Table 2). 
-    + Value used: 0.25 d^-1^
-* $b$: Scaling parameter for strength of bleaching response (dimensionless)
-    + This value determines the magnitude of symbiont biomass loss (considered as expulsion of symbionts during bleaching) in response to ROS. In this context, relative ROS concentrations are assumed to trigger symbiont expulsion via unknown signaling mechanisms. Larger values of this parameter cause greater biomass loss in response to ROS signaling (i.e., a more severe bleaching response). Since this represents symbiont cells being expelled from the system, we use a value about an order of magnitude higher than the turnover rate due to maintenance.
-    + Value used: 5
+#### $n_{NH}$: N:C molar ratio in host biomass {-}
+@Horwitz:2015cf measured a molar C:N ratio of 5.53 in anemones under control conditions, which converts to:
+```{r nNH}
+1 / 5.53
+```
+N:C ratio (dimensionless)
+<br><br>
 
-## Figure S1. Light amplification and self-shading
-```{r lightamp, fig.width=5, fig.height=5, eval=T, include=T, echo=F, fig.cap="The amplification factor (A) is the ratio of internal scalar irradiance experienced by *Symbiodinium* to the external downwelling irradiance, and is greater than 1 due to multiple scattering of incident light by the coral skeleton. The amplification factor decreases as a function of symbiont abundance (converted to symbiont to host biomass ratio) due to self-shading. Data are from Marcelino et al. (2013) using skeletons from three different coral species: pdam=*Pocillopora damicornis*; plob=*Porites lobata*; shys=*Seriatopora hystrix*."}
+#### $n_{NS}$: N:C molar ratio in symbiont biomass {-}
+This value should approximate the Redfield ratio (following @Muller:2009io).  
+```{r nNS, echo=F}
+0.13
+```
+N:C ratio (dimensionless)
+<br><br> 
+    
+#### $n_{NX}$: N:C molar ratio in prey biomass {-}
+Assuming the coral feeds primarily on zooplankton, a general heterotroph has a molar N:C ratio of 0.2 [@Muller:2009io].  
+```{r nNX, echo=F}
+0.20
+```
+N:C ratio (dimensionless)
+<br><br>
+
+#### $j_{HT}^0$: Specific turnover rate of host biomass {-}
+@Jacobson:2016bk parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate of 0.03 CmolH CmolH^-1^ d^-1^. Although this value is per unit structural biomass (in the DEB sense) rather than per unit total biomass (as needed here), use of this value generates plausible values of specific growth (see main text).
+```{r jHT, echo=F}
+0.03
+```
+CmolH CmolH^-1^ d^-1^
+<br><br>
+
+#### $j_{ST}^0$: Specific turnover rate of symbiont biomass {-}
+Assuming an equivalent maintenance rate as the host:
+```{r jST, echo=F}
+0.03
+```
+CmolS CmolS^-1^ d^-1^
+<br><br>
+
+#### $\sigma_{NH}, \sigma_{NS}$: Proportions of nitrogen recycled from host and symbiont biomass turnover {-}
+Assume highly efficient recycling by both symbiont and host to avoid loss to the environment:  
+```{r sigmaNHsigmaNS, echo=F}
+c(0.03, 0.03)
+```
+(dimensionless)
+<br><br>
+
+#### $\sigma_{CS}$: Proportion of metabolic CO~2~ produced by symbiont recycled passively to photosynthesis {-}
+Assume that CO~2~ produced within symbiont cells is recycled with high efficiency, potentially aided by symbiont carbon concentrating mechanisms.  
+```{r sigmaCS, echo=F}
+0.9
+```
+(dimensionless)
+<br><br>
+
+#### $\sigma_{CH}$: Proportion of metabolic CO~2~ produced by host recycled passively to photosynthesis {-}
+Assume that most metabolic CO~2~ produced within host cells rapidly converts to HCO~3~^-^ at intracellular pH ~ 7.2 [@Venn:2009hy], and that only ~10% actually remains as CO~2~ [@Zeebe:2001wz] that could diffusively supply photosynthesis. This passive supply is differentiated from all active host carbon concentrating mechanisms (CCMs) that facilitate CO~2~ supply to photosynthesis, which are separately treated collectively as the $jCO~2~$ flux.  
+```{r sigmaCH, echo=F}
+0.10
+```
+(dimensionless)
+<br><br>    
+
+#### $j_{Xm}$: Maximum specific feeding rate of host {-}
+@Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific feeding rate of 77.6 µgC cm^-2^ 6h^-1^.
+```{r jXm}
+77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 24/6
+```
+molX CmolH^-1^ d^-1^
+<br><br>
+
+#### $K_X$: Half-saturation constant for prey uptake by host {-}
+@Purser:2010hp measured feeding rates of the coral *Lophelia pertusa* at different concentrations of *Artemia* nauplii, reporting a half-saturation for feeding of ~345 *Artemia* L^-1^.
+```{r KX}
+345 * gC.artemia / gC.molC
+```
+CmolX L^-1^
+<br><br>
+
+#### $j_{Nm}$: Maximum specific DIN uptake rate by host {-}
+@Muscatine:1978fa measured ammonium uptake in 3 coral species and reported an average value of 7.22 µmol NH~4~^+^-N mg chl *a*^-1^ h^-1^ (Table 1, uncorrected), which converts to:
+```{r jNm1}
+7.22 * h.d * nmolchlA.cm2 * gchlA.molchlA * mg.g / nmol.mol / CmolR.m2_Spis * cm2.m2 / µmol.mol
+```
+mol NH~4~^+^-N  CmolH^-1^ d^-1^  
+<br>
+@HoeghGuldberg:1999p3974 measured ammonium and dissolved free amino acid uptake in *Pocillopora damicornis* and reported a maximum rate of 91.8 nmol N cm^-2^ h^-1^, which converts to:
+```{r jNm2}
+91.8 * h.d * cm2.m2 / CmolR.m2_Spis / nmol.mol
+``` 
+molN CmolH^-1^ d^-1^  
+<br>
+@Godinot:2011jg measured nitrate and ammonium uptake rates in *Stylophora pistillata* under high nutrient concentrations and reported a maximum value of 3.5 µmolN mg chl^-1^ d^-1^ [addition of bars in Fig. 4D,E @ 29°C], which converts to:
+```{r jNm3}
+3.5 * h.d * 22 / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000
+```
+molN CmolH^-1^ d^-1^   
+<br>
+@Godinot:2011bm measured ammonium uptake kinetics in *Stylophora pistillata* and reported a maximum rate of 5.42 molN mg chl^-1^ h^-1^, which converts to:
+```{r jNm4}
+5.42 * h.d * µgchl.cm2_Spis / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000
+```
+molN CmolH^-1^ d^-1^   
+<br>
+Averaging these reported values, we arrive at:  
+```{r jNm_avg, echo=F}
+round(mean(c(7.22 * h.d * nmolchlA.cm2 * gchlA.molchlA * mg.g / nmol.mol / CmolR.m2_Spis * cm2.m2 / µmol.mol, 91.8 * h.d * cm2.m2 / CmolR.m2_Spis / nmol.mol, 3.5 * h.d * 22 / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000, 5.42 * h.d * µgchl.cm2_Spis / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000)), 3)
+```
+molN CmolH^-1^ d^-1^
+<br><br>
+
+#### $K_N$: Half-saturation constant for DIN uptake by host {-}
+@Muscatine:1978fa measured ammonium uptake in 3 coral species and reported an average half-saturation constant of 1.84 µmolN L^-1^ (Table 1, uncorrected).  
+@Godinot:2011bm measured ammoinum uptake kinetics in *Stylophora pistillata* and reported a half-saturation constant of 0.46 µmol N L^-1^.  
+Averaging these reported values (weighted by number of species measured), we arrive at:  
+```{r KN}
+(1.84*3 + 0.46*1)/4
+``` 
+molN L^-1^
+<br><br>
+
+#### $k_{CO_2}$: Efficacy of CO~2~ delivery by host CCMs {-}
+This parameter represents the relative amount of CO~2~ that can be delivered by the host to photosynthesis given the reducing power generated from 1 mol of fixed carbon. We assume that the host uses a portion of its fixed carbon to generate ATP which is then used to activate a variety of carbon concentrating mechanisms (see @Wooldridge:2013tj). We assume these CCMs are efficient and can deliver an order of magnitude more CO~2~ relative to the fixed carbon available.  
+```{r kCO2, echo=F}
+10
+```
+molCO~2~ molC^-1^
+<br><br>
+
+#### $j_{HGm}$: Maximum specific growth rate of host {-}
+We set this to a high value such that constraints on growth are primarily determined by substrate availabilities rather than the maximum value.  
+```{r jHGm, echo=F}
+1
+```
+CmolH CmolH^-1^ d^-1^
+<br><br>
+
+#### $y_{CL}$: Quantum yield of photosynthesis {-}
+The maximum theoretical quantum yield is 0.125 mol C fixed per mol photons. @Brodersen:2014gw presented a balanced light budget based on microenvironmental photobiology of *Montastrea curta*, and reported a quantum yield of 0.102 O~2~ photon^-1^.  
+```{r yCL, echo=F}
+0.1
+```
+molC molph^-1^
+<br><br>
+
+#### $\bar{a}^*$: Effective light-absorbing cross-section of symbiont {-}
+@Hennige:2009p3439 measured spectra-weighted absoprtion coefficients from 400 to 700nm *ā\**~(400-700)~ for eight *Symbiodinium* types in culture at two different light levels, and reported a (grand mean) value of 0.01095 m^2^ mg chl *a*^-1^ [from Table 6]. This converts to:
+```{r astar}
+0.01095 * mg.g * gchlA.gC * gC.molC
+```
+m^2^ CmolS^-1^
+<br><br>
+
+#### $k_{NPQ}$: Capacity of non-photochemical quenching {-}
+@Gorbunov:2001p4181 report that the capacity of non-photochemical quenching is approximately 4 times the capacity of photochemistry on a sunny day. Therefore, we take the maximum relative capacity of NPQ to be 4 times the maximum rate of photochemical quenching ($j_{CPm}$; see below), giving a value of:
+```{r kNPQ}
+defpars$jCPm / defpars$yCL * 4
+```
+mol ph CmolS^-1^ d^-1^
+<br><br>
+
+#### $k_{ROS}$: Amount of excitation energy not quenched by photoehcemistry or NPQ that doubles relative production of ROS {-}
+@McGinty:2012ck report a ~4-fold increase in ROS production in *Symbiodinium* C1 under stressful conditions relative to control. We chose a value of $k_{ROS}$ that similarly produced a ~4-fold increase in ROS production at the highest light level (see Figure S2):  
+```{r kROS, echo=F}
+80
+```
+mol ph CmolS^-1^ d^-1^
+<br><br>    
+
+#### $j_{CPm}$: Maximum specific photosynthesis rate of symbiont {-}
+In theory, this value should be the maximum carboxylation rate of *Symbiodinium* Rubisco (RuBP). @Leggat:2004vx report a maximum carboxylation rate at 29°C of 140 CO~2~ RuBP^-1^ s^-1^ [Max. value, p. 143], which converts to:
+```{r jCPm}
+140 * s.h * h.d * RuBP.CmolS
+```
+molC CmolS^-1^ d^-1^
+<br><br>
+
+#### $j_{SGm}$: Maximum specific growth rate of symbiont {-}
+@Suggett:2015dv measured specific growth rates of 5 clades of *Symbiodinium* in culture, and reported values ranging from 0.19 to 0.26 d^-1^ (Table 2).  
+```{r jSGm, echo=F}
+0.25
+```
+CmolS CmolS^-1^ d^-1^
+<br><br>
+
+#### $b$: Scaling parameter for strength of bleaching response {-}
+This value determines the magnitude of symbiont biomass loss (considered as expulsion of symbionts during bleaching) in response to ROS. In this context, relative ROS concentrations are assumed to trigger symbiont expulsion via unknown signaling mechanisms. Larger values of this parameter cause greater biomass loss in response to ROS signaling (i.e., a more severe bleaching response). Since this represents symbiont cells being expelled from the system, we use a value about an order of magnitude higher than the turnover rate due to maintenance.  
+```{r b, echo=F}
+5
+```
+(dimensionless)
+<br><br>
+
+## Conversion factors used in parameter derivation
+```{r, code = readLines('../R/conversions.R')}
+```
+
+------
+
+# Figure S1 
+```{r lightamp, fig.width=5, fig.height=5, eval=T, include=T, echo=F, fig.cap="**Fig. S1. Light amplification and self-shading.** The amplification factor (A) is the ratio of internal scalar irradiance experienced by *Symbiodinium* to the external downwelling irradiance, and is greater than 1 due to multiple scattering of incident light by the coral skeleton. The amplification factor decreases as a function of symbiont abundance (converted to symbiont to host biomass ratio) due to self-shading. Data are from Marcelino et al. (2013) using skeletons from three different coral species: pdam=*Pocillopora damicornis*; plob=*Porites lobata*; shys=*Seriatopora hystrix*."}
 
 # Import data from Marcelino et al. 2013
 md <- read.csv("data/marcelino2013_fig2a.csv")
@@ -113,18 +256,23 @@ mod <- nls(A ~ x + y * exp(z * S.H), data=md, start=list(x=1, y=2, z=-3))
 fit <- predict(mod, list(S.H=seq(0, 0.5, 0.01)))
 lines(fit ~ seq(0, 0.5, 0.01))
 # Get parameters of fit and add to plot
-text(0.13,3.1, labels=paste0(c("A = ", as.character(formula(mod))[3]), collapse=""), adj=0)
-coefs <- round(coef(mod), 2)
-text(0.13,2.9, labels=paste0(c("x=",coefs[1],"; y=",coefs[2],"; z=",coefs[3]), collapse=""), adj=0)
+fiteq <- str_replace_all(format(formula(mod)), c("~"="= ", " x"=coefs[[1]], "y"=coefs[[2]], "z"=coefs[[3]]))
+text(0.05,2.8, fiteq, adj=0)
+
+
 ```
 
-## Figure S2. Photosynthesis-Irradiance curves of modeled symbiont.
-```{r run1_PI, cache=F, fig.height=4, fig.width=7, echo=F, fig.cap="The amount of light energy quenched through photochemistry (red line) and non-photochemical quenching (black line), and the relative production of reactive oxygen species (orange line) are plotted as a function of the scalar irradiance experienced by the symbiont (note different y-axes for each line). These simulations represent the behavior of the photosynthesis SU independent of the host and without CO~2~ limitation of photosynthesis (*j~CO2~* set to a very high value). The structure of the photosynthesis SU, with the negative feedback between excess light and photosynthesis rate, produces the classic shape of a P-I curve demonstrating photoinhibition, suggesting the mechanism is robust."}
+-----
+
+# Figure S2 
+```{r run1_PI, cache=F, fig.height=4, fig.width=7, echo=F, fig.cap="**Fig. S2. Photosynthesis-Irradiance curves of modeled symbiont.** The rates of light energy quenching through photochemistry (red line) and non-photochemical quenching (black line), and the relative production of reactive oxygen species (orange line) are plotted as a function of the scalar irradiance experienced by the symbiont (note different y-axes for each line). These curves represent the behavior of the photosynthesis SU independent of the host and without CO~2~ limitation of photosynthesis (*j~CO2~* set to a very high value). The structure of the photosynthesis SU, with the negative feedback between excess light and photosynthesis rate, produces the classic shape of a P-I curve demonstrating photoinhibition, suggesting the mechanism is robust."}
 sym_PI(pars=def_pars())
 ```
 
-## Figure S3. Sensitivity analysis under high DIN (4e-6 M) and intermediate light (15 mol m^-2^ d^-1^).
-```{r sens_ILHN, cache=T, echo=F}
+-----
+
+# Figure S3 
+```{r sens_ILHN, cache=T, echo=F, eval=F, fig.cap="**Fig. S3. Sensitivity analysis under high DIN (4e-6 M) and intermediate light (15 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -186,8 +334,10 @@ sens.plot(response=c("grchange", "shchange"), pars=c("jST0", "jHT0", "jSGm", "jH
 sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=c("black", "orange", "purple"))
 ```
 
-## Figure S4. Sensitivity analysis under low DIN (1e-7 M) and low light (2 mol m^-2^ d^-1^).
-```{r sens_LLLN, cache=T, echo=F}
+-----
+
+# Figure S4 
+```{r sens_LLLN, cache=T, echo=F, eval=F, fig.cap="**Sensitivity analysis under low DIN (1e-7 M) and low light (2 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -249,8 +399,10 @@ sens.plot(response=c("grchange", "shchange"), pars=c("jST0", "jHT0", "jSGm", "jH
 sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=c("black", "orange", "purple"))
 ```
 
-## Figure S5. Sensitivity analysis under high DIN (4e-6 M) and low light (2 mol m^-2^ d^-1^).
-```{r sens_LLHN, cache=T, echo=F}
+-----
+
+# Figure S5
+```{r sens_LLHN, cache=T, echo=F, eval=F, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (2 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -312,8 +464,10 @@ sens.plot(response=c("grchange", "shchange"), pars=c("jST0", "jHT0", "jSGm", "jH
 sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=c("black", "orange", "purple"))
 ```
 
-## Figure S6. Sensitivity analysis under low DIN (1e-7 M) and high light (25 mol m^-2^ d^-1^).
-```{r sens_HLLN, cache=T, echo=F}
+-----
+
+# Figure S6
+```{r sens_HLLN, cache=T, echo=F, eval=F, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (25 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -375,8 +529,10 @@ sens.plot(response=c("grchange", "shchange"), pars=c("jST0", "jHT0", "jSGm", "jH
 sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=c("black", "orange", "purple"))
 ```
 
-## Figure S7. Sensitivity analysis under high DIN (4e-6 M) and high light (25 mol m^-2^ d^-1^).
-```{r sens_HLHN, cache=T, echo=F}
+-----
+
+# Figure S7
+```{r sens_HLHN, cache=T, echo=F, eval=F, fig.cap="Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (25 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -438,10 +594,10 @@ sens.plot(response=c("grchange", "shchange"), pars=c("jST0", "jHT0", "jSGm", "jH
 sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=c("black", "orange", "purple"))
 ```
 
-## Figure S8. Full system dynamics of seasonal light variation at two nutrient levels.
-This figure accompanies Figure 4 in the main text, and show additional model fluxes that demonstrate the mechanisms underlying the changes in the system state in these simulations.
+-----
 
-```{r FigS8, cache=T, fig.width=7, fig.height=7}
+# Figure S8
+```{r FigS8, cache=T, fig.width=7, fig.height=7, echo=F, eval=F, fig.cap="**Fig. S8. Full system dynamics of seasonal light variation at two nutrient levels.** This figure accompanies Figure 5 in the main text, and shows additional model fluxes that demonstrate the mechanisms underlying the changes in the system state in these simulations."}
 # Set parameters
 defpars <- def_pars()  # Get default parameters
 
@@ -453,9 +609,9 @@ env1 <- init_env(time=time, L=c(20,44,2), N=c(0.14e-6,0.14e-6,0), X=c(1e-5,1e-5,
 env2 <- init_env(time=time, L=c(20,44,2), N=c(10.14e-6,10.14e-6,0), X=c(1e-5,1e-5,0))
 
 # Run simulations
-ss1 <- with(run_coral_ss(env=list(L=33,N=0.14e-6,X=1e-5), pars=defpars), last(S$S/H$H))
+ss1 <- with(run_coral_ss(env=list(L=33,N=0.14e-6,X=1e-5), pars=defpars, dt=0.1), last(S$S/H$H))
 run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
-ss2 <- with(run_coral_ss(env=list(L=33,N=10.14e-6,X=1e-5), pars=defpars), last(S$S/H$H))
+ss2 <- with(run_coral_ss(env=list(L=33,N=10.14e-6,X=1e-5), pars=defpars, dt=0.1), last(S$S/H$H))
 run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
 par(mfcol=c(6,2), mar=c(2,2,1,4), mgp=c(1,0,0), tcl=0.2, xaxs="i")
@@ -574,8 +730,10 @@ with(run2, {
 })
 ```
 
-# Figure S9. Hysteresis under different nutrient and feeding regimes.
-```{r runFigS9, cache=T, include=F}
+-----
+
+# Figure S9
+```{r runFigS9, cache=T, include=F, eval=F}
 # Set up cluster for parallel processing
 cl <- makeCluster(detectCores())  # Initiate cluster
 registerDoParallel(cl)
@@ -613,7 +771,7 @@ res3 <- cbind(input, output3)
 res4 <- cbind(input, output4)
 ```
 
-```{r plotFigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F}
+```{r plotFigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F, eval=F, fig.cap="**Fig. S9. Hysteresis under different nutrient and feeding regimes.** This figure accompanies Fig. 2 in the main text. These figures show steady state S:H biomass ratios in constant environments with varying DIN and food (X) levels, with initial S:H biomass values of either 0.1 or 0.0001. Points are colored according to whether the host exhibits positive (black) or negative (red) growth at steady state."}
 # Create plot
 par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), tcl=-0.025)
 
@@ -692,7 +850,6 @@ apply(res4, 1, FUN=function(x) {
 
 ```
 
-These figures show steady state S:H biomass ratios in constant environments with varying DIN and food (X) levels, with initial S:H biomass values of either 0.1 or 0.0001. Points are colored according to whether the host exhibits positive (black) or negative (red) growth at steady state.
+-----
 
-
-## References
+# References
