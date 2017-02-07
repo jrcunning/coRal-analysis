@@ -25,5 +25,4 @@ nmolchlA.cm2 <- 9.66  # Edmunds et al. 2011
 CmolR.m2_Gfas <- 2  # Schutter et al. 2010 [based on reported 6 mg afdw cm-2 (Fig. 9) and 41.4% Carbon by weight (Results section)]
 gC.artemia <- 0.678e-6  # Wijgerde et al. 2011 JEB
 pgC.cellS <- 234.5 # Average of two clade A phylotypes in Brading et al. 2013
-#pgC.cellS <- 100 # Average of two types from Cassiopeia in Verde & McCloskey 1998
 CmolS.cellS <- pgC.cellS / pg.g / gC.molC
