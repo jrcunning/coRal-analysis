@@ -29,7 +29,7 @@ defpars <- def_pars()
 
 
 # Figure S9
-```{r FigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F, eval=T, fig.cap="**Fig. S9. Hysteresis under different nutrient and feeding regimes.** This figure accompanies Fig. 2 in the main text. These figures show steady state S:H biomass ratios in constant environments with varying DIN and food (X) levels, with initial S:H biomass values of either 0.1 or 0.0001. Points are colored according to whether the host exhibits positive (black) or negative (red) growth at steady state."}
+```{r FigS9}
 
 # Set up cluster for parallel processing
 cl <- makeCluster(detectCores())  # Initiate cluster
