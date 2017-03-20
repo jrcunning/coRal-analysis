@@ -12,11 +12,12 @@ def_pars <- function() {
     jHGm=1,  # Maximum specific host growth rate (CmolH/CmolH/d)
     kCO2=10,  # Rate of host CCM's (molCO2/molC/d)
     KN=1.5e-6,  # Half-saturation constant for host DIN uptake (molN/L)
-    KX=1.95e-5,  # Half-saturation constant for host feeding (molX/L)
+    KX=1e-6,  # Half-saturation constant for host feeding (CmolX/L)
     initH=1,  # Initial host biomass (CmolH)
     jST0=0.03,  # Symbiont specific biomass turnover rate (d^-1)
     nNS=0.13,  # N:C ratio in symbiont biomass (-)
     yCL=0.1,  # L:C ratio in fixed carbon (=quantum yield) (molC/mol ph)
+    yC=0.8,
     kNPQ=112,  # capacity of non-photochemical quenching (mol ph/CmolS/d)
     # calculated as 4x max. photochemical quenching (Gorbunov et al. 2001)
     kROS=80,  # amount of excess light beyond NPQ capacity (e.g., jeL-jNPQ) that doubles ROS production relative to baseline (mol ph/CmolS/d)
@@ -26,7 +27,7 @@ def_pars <- function() {
     sigmaCS=0.9,  # Proportion of symbiont carbon turnover recycled (-)
     jCPm=2.8,  # Maximum specific photosynthate production rate (Cmol/CmolS/d)
     jSGm=0.25,  # Maximum specific symbiont growth rate (CmolS/CmolS/d)
-    initS=0.1,  # Initial symbiont biomass (CmolS)
+    initS=1,  # Initial symbiont biomass (CmolS)
     b=5  # Scaling parameter for bleaching response
   ))
 }
