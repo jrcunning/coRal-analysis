@@ -25,7 +25,7 @@ run_coral <- function(time, env, pars) {
     jHT=pars$jHT0,
     rNH=jHT * pars$nNH * pars$sigmaNH,
     rCH=jHT * pars$sigmaCH,
-    dH.Hdt=0
+    dH.Hdt=pars$jHGm
   )
   H[2:nrow(H), 2:ncol(H)] <- NA
   
@@ -45,7 +45,7 @@ run_coral <- function(time, env, pars) {
     rNS=jST * pars$nNS * pars$sigmaNS,
     rCS=jST * pars$sigmaCS,
     cROS=1,
-    dS.Sdt=0)
+    dS.Sdt=pars$jSGm)
   S[2:nrow(S), 2:ncol(S)] <- NA
   
   # Run simulation by updating
@@ -57,8 +57,8 @@ run_coral <- function(time, env, pars) {
     # Light input flux
     S$jL[t] <- (1.256307 + 1.385969 * exp(-6.479055 * (S$S[t-1]/H$H[t-1]))) * env$L[t] * pars$astar
     # CO2 input flux
-    S$rCS[t] <- pars$jST0 * pars$sigmaCS  # metabolic CO2 recycled from symbiont biomass turnover
-    H$rCH[t] <- H$jHT[t-1] * pars$sigmaCH  # metabolic CO2 recycled from host biomass turnover
+    S$rCS[t] <- pars$sigmaCS * (pars$jST0 + (1-pars$yC)*S$jSG[t-1]/pars$yC)  # metabolic CO2 recycled from symbiont biomass turnover
+    H$rCH[t] <- pars$sigmaCH * (H$jHT[t-1] + (1-pars$yC)*H$jHG[t-1]/pars$yC)  # metabolic CO2 recycled from host biomass turnover
     H$jCO2[t] <- pars$kCO2 * H$jeC[t-1]  # carbon not used in host biomass is used to activate CCM's that deliver CO2 to photosynthesis
     # Production flux (photosynthetic carbon fixation)
     S$jCP[t] <- synth(S$jL[t] * pars$yCL, (H$jCO2[t] + H$rCH[t])*H$H[t-1]/S$S[t-1] + S$rCS[t], pars$jCPm) / S$cROS[t-1]
@@ -80,9 +80,9 @@ run_coral <- function(time, env, pars) {
     # Carbon input flux
     S$jCP[t] <- S$jCP[t]  # Production of fixed carbon from photosynthesis SU
     # Production flux (symbiont biomass formation)
-    S$jSG[t] <- synth(S$jCP[t], (H$rhoN[t-1]*H$H[t-1]/S$S[t-1] + S$rNS[t])/pars$nNS, pars$jSGm)
+    S$jSG[t] <- synth(pars$yC*S$jCP[t], (H$rhoN[t-1]*H$H[t-1]/S$S[t-1] + S$rNS[t])/pars$nNS, pars$jSGm)
     # Rejection flux: carbon (surplus carbon shared with the host)
-    S$rhoC[t] <- max(S$jCP[t] - S$jSG[t], 0)
+    S$rhoC[t] <- max(S$jCP[t] - S$jSG[t]/pars$yC, 0)
     # Rejection flux: nitrogen (surplus nitrogen wasted to the environment)
     S$jNw[t] <- max(H$rhoN[t-1]*H$H[t-1]/S$S[t-1] + S$rNS[t] - pars$nNS * S$jSG[t], 0)
     # Symbiont biomass loss (turnover)
@@ -98,11 +98,11 @@ run_coral <- function(time, env, pars) {
     # Carbon input flux
     S$rhoC[t] <- S$rhoC[t]  # Carbon shared by the symbiont (defined above)
     # Production flux (host biomass formation)
-    H$jHG[t] <- synth(S$rhoC[t]*S$S[t-1]/H$H[t-1] + H$jX[t], (H$jN[t] + pars$nNX*H$jX[t] + H$rNH[t]) / pars$nNH, pars$jHGm)
+    H$jHG[t] <- synth(pars$yC*(S$rhoC[t]*S$S[t-1]/H$H[t-1] + H$jX[t]), (H$jN[t] + pars$nNX*H$jX[t] + H$rNH[t]) / pars$nNH, pars$jHGm)
     # Rejection flux: nitrogen (surplus nitrogen shared with the symbiont)
     H$rhoN[t] <- max(H$jN[t] + pars$nNX * H$jX[t] + H$rNH[t] - pars$nNH * H$jHG[t], 0)
     # Rejection flux: carbon -- given back to symbiont as CO2 input to photosynthesis
-    H$jeC[t] <- max(H$jX[t] + S$rhoC[t]*S$S[t-1]/H$H[t-1] - H$jHG[t], 0)
+    H$jeC[t] <- max(H$jX[t] + S$rhoC[t]*S$S[t-1]/H$H[t-1] - H$jHG[t]/pars$yC, 0)
     # Host biomass loss
     H$jHT[t] <- pars$jHT0
     
