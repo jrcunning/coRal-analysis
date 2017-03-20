@@ -20,7 +20,7 @@ input <- expand.grid(L=seq(20,55,1), initS=c(0.0001,0.1))
 
 # Run steady states in parallel
 output <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=2e-6, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=1e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
@@ -32,7 +32,7 @@ res <- cbind(input, output)
 # Create plot
 png("img/Fig2.png", width=5, height=5, units="in", res=300)
 
-plot(NA, xlim=c(20,55), ylim=c(0,0.15), xlab="Light", ylab="Steady state S:H ratio")
+plot(NA, xlim=c(20,55), ylim=c(0,0.20), xlab="Light", ylab="Steady state S:H ratio")
 points(c(48,48,53,53), c(0.12,0.13,0.12,0.13), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
 text(38, 0.125, labels="init. S:H", xpd=T, cex=0.7, srt=90)
 text(46, c(0.12,0.13), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
