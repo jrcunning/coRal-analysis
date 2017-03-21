@@ -89,7 +89,7 @@ plot_symSU <- function(run) with(run, {
 })
 
 plot_sl <- function(run) with(run, {
-  sl <- log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
+  sl <- log(  pmin(pars$yC*S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
   maxabs <- max(abs(sl))
   plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-maxabs, maxabs))
   title("Symbiont C- vs. N-limitation", adj=0.05, line=0)
@@ -103,13 +103,13 @@ plot_sl <- function(run) with(run, {
 plot_corSU <- function(run) with(run, {
   plot(NA, xlim=range(time), xlab="", ylim=c(0, 1), ylab="Proportion of uptake")
   title("Coral: substrate excess", adj=0.05, line=0)
-  lines(time, H$jeC/(S$rhoC*S$S/H$H + H$jX), col="red", lwd=2)
+  lines(time, H$jeC/(pars$yC*S$rhoC*S$S/H$H + H$jX), col="red", lwd=2)
   lines(time, H$rhoN/(H$jN + H$jX*pars$nNX + H$rNH), col="blue", lwd=2)
   legend("topright", legend=c("C", "N"), lwd=2, bty="n", col=c("red", "blue"))
 })
 
 plot_hl <- function(run) with(run, {
-  hl <- log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
+  hl <- log(  pmin(pars$yC*S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
   maxabs <- max(abs(hl))
   plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-maxabs, maxabs))
   title("Host C- vs. N-limitation", adj=0.05, line=0)
@@ -119,8 +119,8 @@ plot_hl <- function(run) with(run, {
 })
 
 plot_bl <- function(run) with(run, {
-  sl <- log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
-  hl <- log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
+  sl <- log(  pmin(pars$yC*S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
+  hl <- log(  pmin(pars$yC*S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
   maxabs <- max(c(abs(hl), abs(sl)))
   range <- range(c(hl, sl))
   plot(NA, xlim=range(time), xlab="", ylab="", ylim=range)
@@ -216,7 +216,7 @@ plot_run <- function(run) {
     # Host biomass SU dynamics (proportions of C and N rejected from SU)
     plot(NA, xlim=range(time), xlab="", ylim=c(0, 1), ylab="Proportion of uptake")
     title("Coral: substrate excess", adj=0.05, line=0)
-    lines(time, H$jeC/(S$rhoC*S$S/H$H + H$jX), col="red", lwd=2)
+    lines(time, H$jeC/(pars$yC*S$rhoC*S$S/H$H + H$jX), col="red", lwd=2)
     lines(time, H$rhoN/(H$jN + H$jX*pars$nNX + H$rNH), col="blue", lwd=2)
     legend("topright", legend=c("C", "N"), lwd=2, bty="n", col=c("red", "blue"))
   })
@@ -271,8 +271,8 @@ plot_run_v2 <- function(run) {
     text(par("usr")[2], 0, labels="L-lim.\nCO2-lim.", cex=0.75, adj=1)
     
     # Biomass formation - substrate-limitation
-    sl <- log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
-    hl <- log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
+    sl <- log(  pmin(pars$yC*S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
+    hl <- log(  pmin(pars$yC*S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
     maxabs <- max(c(abs(hl), abs(sl)))
     range <- range(c(hl, sl))
     plot(NA, xlim=range(time), xlab="", ylab="", ylim=range)
