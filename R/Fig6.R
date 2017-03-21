@@ -41,7 +41,7 @@ png("img/Fig6.png", width=3, height=3, units="in", res=300)
     
     # Photosynthesis rate
     plot(NA, xlab="Days", ylim=c(0, max(S$jCP)), xlim=c(0,80), ylab=expression(mol~C~C-mol~S~d^{-1}))
-    title(expression(bold("C. Photosynthesis rate"~italic((j[CP])))), adj=0, line=0.5)
+    title(expression(bold("C. Photosynthesis"~italic((j[CP])))), adj=0, line=0.5)
     lines(time, S$jCP, col="red", lwd=2)
     
     # Biomass formation - substrate-limitation
