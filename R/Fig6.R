@@ -31,17 +31,17 @@ png("img/Fig6.png", width=3, height=3, units="in", res=300)
         cex.main=0.9, cex.axis=0.6, cex.lab=0.7)
     
     # External irradiance
-    plot(time, env$L, type="l", col="gold", ylim=c(30,50), xlim=c(0,80), lwd=2, xlab="", ylab="molph/m2/d")
-    title("A. External irradiance", adj=0, line=0.25)
+    plot(time, env$L, type="l", col="gold", ylim=c(30,50), xlim=c(0,80), lwd=2, xlab="", ylab=expression(mol~photons~m^{-2}~d^{-1}))
+    title("A. Light", adj=0, line=0.25)
     
     # Plot ROS
     plot(NA, xlab="", ylim=c(1, max(2, max(S$cROS))), xlim=c(0,80), ylab="Relative")
-    title("B. ROS production", adj=0.05, line=0)
+    title(expression(bold("B. ROS production"~italic((c[ROS])))), adj=0, line=0.5)
     lines(time, S$cROS, col="orange", lwd=2)
     
     # Photosynthesis rate
-    plot(NA, xlab="Days", ylim=c(0, max(S$jCP)), xlim=c(0,80), ylab="molC/CmolS/d")
-    title("C. Photosynthesis rate", adj=0.05, line=0)
+    plot(NA, xlab="Days", ylim=c(0, max(S$jCP)), xlim=c(0,80), ylab=expression(mol~C~C-mol~S~d^{-1}))
+    title(expression(bold("C. Photosynthesis rate"~italic((j[CP])))), adj=0, line=0.5)
     lines(time, S$jCP, col="red", lwd=2)
     
     # Biomass formation - substrate-limitation
@@ -61,14 +61,15 @@ png("img/Fig6.png", width=3, height=3, units="in", res=300)
     co2l <- log(  pmin(S$jL * pars$yCL, pars$jCPm)  / pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)    )
     maxabs <- max(abs(co2l))
     plot(NA, xlim=c(0,80), xlab="", ylab="Relative", ylim=c(0, maxabs))
-    title("E. CO2-limitation", adj=0, line=0.25)
+    title(expression(bold("E."~CO[2]-limitation)), adj=0, line=0.5)
     lines(time, co2l, col="black", lty=1, lwd=2)
     #abline(h=0, lty=3)
     
     # Symbiont to host biomass ratio
     totSH <- S$S / H$H
     totSHf <- totSH[length(totSH)]
-    plot(time, totSH, type="l", col="black", ylim=c(0, max(totSH, na.rm=T)), xlim=c(0,80), ylab="CmolS/CmolH", xlab="Days", lwd=2)
+    plot(time, totSH, type="l", col="black", ylim=c(0, max(totSH, na.rm=T)), xlim=c(0,80), 
+         ylab=expression(C-mol~S~C-mol~H^{-1}), xlab="Days", lwd=2)
     title("F. S:H biomass", adj=0, line=0.25)
   })
 dev.off()
