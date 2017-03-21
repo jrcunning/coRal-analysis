@@ -63,25 +63,25 @@ N:C ratio (dimensionless)
 <br><br>
 
 #### $j_{HT}^0$: Specific turnover rate of host biomass {-}
-@Jacobson:2016bk parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate of 0.03 CmolH CmolH^-1^ d^-1^. Although this value is per unit structural biomass (in the DEB sense) rather than per unit total biomass (as needed here), use of this value generates plausible values of specific growth (see main text).
-```{r jHT, echo=F}
+@Jacobson:2016bk parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate of 0.03 mol C~E~ mol C~V~^-1^ d^-1^, where subscripts E and V refer to reserve and structural biomass. We assume (simplistically) the same rate per unit of total biomass:
+```{r jHT, echo=T}
 0.03
 ```
 CmolH CmolH^-1^ d^-1^
 <br><br>
 
 #### $j_{ST}^0$: Specific turnover rate of symbiont biomass {-}
-Assuming an equivalent maintenance rate as the host:
-```{r jST, echo=F}
+Values of *Symbiodinium* and other dinoflagellate respiration rates may provide a reasonable approximation of the specific turnover rate of symbiont biomass, yet values calculated from various studies range widely from 0.01 to nearly 0.2. Without data for a more confident estimation of this parameter, we choose a value at the low end of this range, since 0.2 seems unrealistic and many rates may be depressed in symbiotic dinoflagellates relative to their free-living counterparts.
+```{r jST, echo=T}
 0.03
 ```
-CmolS CmolS^-1^ d^-1^
+CmolS CmolS^-1^ d^-1^  
 <br><br>
 
 #### $\sigma_{NH}, \sigma_{NS}$: Proportions of nitrogen recycled from host and symbiont biomass turnover {-}
 Assume highly efficient recycling by both symbiont and host to avoid loss to the environment:  
 ```{r sigmaNHsigmaNS, echo=F}
-c(0.03, 0.03)
+c(0.9, 0.9)
 ```
 (dimensionless)
 <br><br>
@@ -97,23 +97,28 @@ Assume that CO~2~ produced within symbiont cells is recycled with high efficienc
 #### $\sigma_{CH}$: Proportion of metabolic CO~2~ produced by host recycled passively to photosynthesis {-}
 Assume that most metabolic CO~2~ produced within host cells rapidly converts to HCO~3~^-^ at intracellular pH ~ 7.2 [@Venn:2009hy], and that only ~10% actually remains as CO~2~ [@Zeebe:2001wz] that could diffusively supply photosynthesis. This passive supply is differentiated from all active host carbon concentrating mechanisms (CCMs) that facilitate CO~2~ supply to photosynthesis, which are separately treated collectively as the $jCO~2~$ flux.  
 ```{r sigmaCH, echo=F}
-0.10
+0.1
 ```
 (dimensionless)
 <br><br>    
 
 #### $j_{Xm}$: Maximum specific feeding rate of host {-}
-@Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific feeding rate of 77.6 µgC cm^-2^ 6h^-1^.
+@Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific carbon assimilation rate of 77.6 µgC cm^-2^ 6h^-1^.
 ```{r jXm}
 77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 24/6
 ```
 molX CmolH^-1^ d^-1^
 <br><br>
 
+@Osinga:2011di measured a maximum feeding rate of 
+half sat = 294119 nauplii L^-1^
+294119 artemia/L * 6.78e-7 gC/artemia = 0.19941268 gC/L / 12.011g/mol = 0.01656815
+
+
 #### $K_X$: Half-saturation constant for prey uptake by host {-}
-@Purser:2010hp measured feeding rates of the coral *Lophelia pertusa* at different concentrations of *Artemia* nauplii, reporting a half-saturation for feeding of ~345 *Artemia* L^-1^.
+For consistency, and due to a lack of available data, we use the same value as @Muller:2009io.
 ```{r KX}
-345 * gC.artemia / gC.molC
+1e-6
 ```
 CmolX L^-1^
 <br><br>
@@ -217,7 +222,7 @@ molC CmolS^-1^ d^-1^
 <br><br>
 
 #### $j_{SGm}$: Maximum specific growth rate of symbiont {-}
-@Suggett:2015dv measured specific growth rates of 5 clades of *Symbiodinium* in culture, and reported values ranging from 0.19 to 0.26 d^-1^ (Table 2).  
+We use the maximum specific growth rate of *Symbiodinium* that is reported by @Chang:1983p8066:
 ```{r jSGm, echo=F}
 0.25
 ```
@@ -225,7 +230,7 @@ CmolS CmolS^-1^ d^-1^
 <br><br>
 
 #### $b$: Scaling parameter for strength of bleaching response {-}
-This value determines the magnitude of symbiont biomass loss (considered as expulsion of symbionts during bleaching) in response to ROS. In this context, relative ROS concentrations are assumed to trigger symbiont expulsion via unknown signaling mechanisms. Larger values of this parameter cause greater biomass loss in response to ROS signaling (i.e., a more severe bleaching response). Since this represents symbiont cells being expelled from the system, we use a value about an order of magnitude higher than the turnover rate due to maintenance.  
+This value determines the magnitude of symbiont biomass loss (considered as expulsion of symbionts during bleaching) in response to ROS. In this context, relative ROS concentrations are assumed to trigger symbiont expulsion via unknown signaling mechanisms. Larger values of this parameter cause greater biomass loss in response to ROS signaling (i.e., a more severe bleaching response). Since this represents symbionts being expelled from the system, we use a value about two orders of magnitude higher than the turnover rate due to maintenance.
 ```{r b, echo=F}
 5
 ```
@@ -606,161 +611,51 @@ defpars <- def_pars()  # Get default parameters
 time <- seq(1, 365, 0.1)  # if single model run, use time input
 
 # Initialize environments
-env1 <- init_env(time=time, L=c(20,44,2), N=c(0.14e-6,0.14e-6,0), X=c(1e-5,1e-5,0))
-env2 <- init_env(time=time, L=c(20,44,2), N=c(10.14e-6,10.14e-6,0), X=c(1e-5,1e-5,0))
+env1 <- init_env(time=time, L=c(20,44,2), N=c(0.14e-6,0.14e-6,0), X=c(1e-6,1e-6,0))
+env2 <- init_env(time=time, L=c(20,44,2), N=c(15.14e-6,15.14e-6,0), X=c(1e-6,1e-6,0))
 
 # Run simulations
-ss1 <- with(run_coral_ss(env=list(L=33,N=0.14e-6,X=1e-5), pars=defpars, dt=0.1), last(S$S/H$H))
+ss1 <- with(run_coral_ss(env=list(L=32,N=0.14e-6,X=1e-6), pars=defpars, dt=0.1), last(S$S/H$H))
 run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
-ss2 <- with(run_coral_ss(env=list(L=33,N=10.14e-6,X=1e-5), pars=defpars, dt=0.1), last(S$S/H$H))
+ss2 <- with(run_coral_ss(env=list(L=32,N=15.14e-6,X=1e-6), pars=defpars, dt=0.1), last(S$S/H$H))
 run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
 par(mfcol=c(6,2), mar=c(2,2,1,4), mgp=c(1,0,0), tcl=0.2, xaxs="i")
 
-with(run1, {
-      # External irradiance
-    plot(time, env$L, type="l", col="gold", ylim=c(0,60), lwd=2, xlab="", ylab="mol ph/m2/d")
-    title("External irradiance and DIN", adj=0, line=0.25)
-    par(new=T)
-    plot(time, env$N, type="l", col="blue", ylim=c(0,10.14e-6), lwd=2, axes=F, xlab="", ylab="")
-    axis(side=4); mtext(side=4, text="molN/L", line=1, cex=0.75)
-    
-    # Symbiont to host biomass ratio
-    totSH <- S$S / H$H
-    totSHf <- totSH[length(totSH)]
-    plot(time, totSH, type="l", col="black", ylim=c(0, 0.25), ylab="CmolS/CmolH", xlab="", lwd=2)
-    text(time[0.95*length(time)], totSHf, labels=as.character(round(totSHf, 3)), pos=3, xpd=T, cex=0.75)
-    title("Symbiont:host biomass", adj=0, line=0.25)
-    
-    # Specific growth rates of host and symbiont
-    Hgrf <- H$dH.Hdt[length(H$dH.Hdt)]
-    plot(time, H$dH.Hdt, type="l", ylim=c(-0.01, 0.13), 
-         xlab="", ylab="d-1", lwd=2, cex=1, cex.lab=1)
-    if(any(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)])<0)) abline(h=0, lwd=0.5, lty=3)
-    text(time[0.95*length(time)], Hgrf, labels=as.character(round(Hgrf, 3)), pos=3, xpd=T, cex=0.75)
-    #title("State variable dynamics", adj=0, cex.main=2, outer = T)
-    title("Specific growth rates", adj=0, line=0.25)
-    lines(time, S$dS.Sdt, col="black", lwd=1)
-    legend("topright", legend=c("Host", "Sym"), lwd=c(2,1), col="black", bty="n", y.intersp=1, cex=0.75)
-    
-    # Light quenching (carbon fixation, NPQ, and excess (=ROS producing))
-    plot(NA, xlim=range(time), xlab="", ylim=c(0,130), ylab="mol ph/CmolS/d")
-    title("Light quenching", adj=0, line=0.25)
-    lines(time, S$jCP/pars$yCL, col="gold", lwd=1) # amt. quenched by photosynthesis
-    lines(time, S$jCP/pars$yCL + S$jNPQ, col="gold", lty=1, lwd=2) # amt. quenched by photo + NPQ
-    lines(time, S$jL, col="gold", lty=3, lwd=2) # total amt. absorbed
-    legend("topright", legend=c("ROS", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(2,2,1), col="gold", bty="n", cex=0.75)
-
-    # Photosynthesis: substrate-limitation
-    pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    )
-    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-2, 2))
-    title("Photosynthesis: substrate-limitation", adj=0, line=0.25)
-    lines(time, pl, col="black", lty=1, lwd=2)
-    abline(h=0, lty=3)
-    text(par("usr")[2], 0, labels="L-lim.\nCO2-lim.", cex=0.75, adj=1)
-    
-    # Biomass formation - substrate-limitation
-    sl <- log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
-    hl <- log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
-    maxabs <- max(c(abs(hl), abs(sl)))
-    range <- range(c(hl, sl))
-    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-1.5,1.5))
-    title("Biomass: substrate-limitation", adj=0, line=0.25)
-    lines(time, hl, col="black", lty=1, lwd=2)
-    lines(time, sl, col="black", lty=1, lwd=1)
-    abline(h=0, lty=3)
-    text(par("usr")[2], 0, labels="N-lim.\nC-lim.", cex=0.75, adj=1)
-    legend("topright", legend=c("Host", "Sym"), lty=1, lwd=c(2,1), col="black", bty="n", cex=0.75)
-})
-
-with(run2, {
-      # External irradiance
-    plot(time, env$L, type="l", col="gold", ylim=c(0,60), lwd=2, xlab="", ylab="mol/m2/d")
-    title("External irradiance and DIN", adj=0, line=0.25)
-    par(new=T)
-    plot(time, env$N, type="l", col="blue", ylim=c(0,10.14e-6), lwd=2, axes=F, xlab="", ylab="")
-    axis(side=4); mtext(side=4, text="molN/L", line=1, cex=0.75)
-    
-    # Symbiont to host biomass ratio
-    totSH <- S$S / H$H
-    totSHf <- totSH[length(totSH)]
-    plot(time, totSH, type="l", col="black", ylim=c(0, 0.25), ylab="CmolS/CmolH", xlab="", lwd=2)
-    text(time[0.95*length(time)], totSHf, labels=as.character(round(totSHf, 3)), pos=3, xpd=T, cex=0.75)
-    title("Symbiont:host biomass", adj=0, line=0.25)
-    
-    # Specific growth rates of host and symbiont
-    Hgrf <- H$dH.Hdt[length(H$dH.Hdt)]
-    plot(time, H$dH.Hdt, type="l", ylim=c(-0.01,0.13), 
-         xlab="", ylab="d-1", lwd=2, cex=1, cex.lab=1)
-    if(any(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)])<0)) abline(h=0, lwd=0.5, lty=3)
-    text(time[0.95*length(time)], Hgrf, labels=as.character(round(Hgrf, 3)), pos=3, xpd=T, cex=0.75)
-    #title("State variable dynamics", adj=0, cex.main=2, outer = T)
-    title("Specific growth rates", adj=0, line=0.25)
-    lines(time, S$dS.Sdt, col="black", lwd=1)
-    legend("topright", legend=c("Host", "Sym"), lwd=c(2,1), col="black", bty="n", y.intersp=1, cex=0.75)
-    
-    # Light quenching (carbon fixation, NPQ, and excess (=ROS producing))
-    plot(NA, xlim=range(time), xlab="", ylim=c(0,130), ylab="mol ph/CmolS/d")
-    title("Light quenching", adj=0, line=0.25)
-    lines(time, S$jCP/pars$yCL, col="gold", lwd=1) # amt. quenched by photosynthesis
-    lines(time, S$jCP/pars$yCL + S$jNPQ, col="gold", lty=1, lwd=2) # amt. quenched by photo + NPQ
-    lines(time, S$jL, col="gold", lty=3, lwd=2) # total amt. absorbed
-    legend("topright", legend=c("ROS", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(2,2,1), col="gold", bty="n", cex=0.75)
-
-    # Photosynthesis: substrate-limitation
-    pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    )
-    maxabs <- max(abs(pl))
-    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-2, 2))
-    title("Photosynthesis: substrate-limitation", adj=0, line=0.25)
-    lines(time, pl, col="black", lty=1, lwd=2)
-    abline(h=0, lty=3)
-    text(par("usr")[2], 0, labels="L-lim.\nCO2-lim.", cex=0.75, adj=1)
-    
-    # Biomass formation - substrate-limitation
-    sl <- log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
-    hl <- log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
-    maxabs <- max(c(abs(hl), abs(sl)))
-    range <- range(c(hl, sl))
-    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-1.5,1.5))
-    title("Biomass: substrate-limitation", adj=0, line=0.25)
-    lines(time, hl, col="black", lty=1, lwd=2)
-    lines(time, sl, col="black", lty=1, lwd=1)
-    abline(h=0, lty=3)
-    text(par("usr")[2], 0, labels="N-lim.\nC-lim.", cex=0.75, adj=1)
-    legend("topright", legend=c("Host", "Sym"), lty=1, lwd=c(2,1), col="black", bty="n", cex=0.75)
-})
+plot_run_v2(run1)
+plot_run_v2(run2)
 ```
 
 -----
 
 # Figure S9
-```{r FigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F, eval=T, render=NULL, fig.cap="**Fig. S9. Hysteresis under different nutrient and feeding regimes.** This figure accompanies Fig. 2 in the main text. These figures show steady state S:H biomass ratios in constant environments with varying DIN and food (X) levels, with initial S:H biomass values of either 0.1 or 0.0001. Points are colored according to whether the host exhibits positive (black) or negative (red) growth at steady state."}
+```{r FigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F, eval=T, render=NULL, fig.cap="**Fig. S9. Hysteresis under different nutrient and feeding regimes.** This figure accompanies Fig. 2 in the main text. These figures show steady state S:H biomass ratios in constant environments with varying DIN and food (X) levels, with initial S:H biomass values of either 1 or 0.0001. Points are colored according to whether the host exhibits positive (black) or negative (red) growth at steady state."}
 
 # Set up cluster for parallel processing
 cl <- makeCluster(detectCores())  # Initiate cluster
 registerDoParallel(cl)
 
 # Set input values for steady state runs
-input <- expand.grid(L=seq(1,60,1), initS=c(0.0001,0.1))
+input <- expand.grid(L=seq(1,60,1), initS=c(0.0001,1))
 
 # Run steady states in parallel
 output1 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=2e-6, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=5e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
 output2 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=1e-6, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=1e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
 output3 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=2e-6, N=1e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=5e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
 output4 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=4e-6, N=1e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=1e-6, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
@@ -786,15 +681,15 @@ text(c(48,53), 0.47, labels=c("pos.", "neg."), xpd=T, cex=0.7)
 p1 <- apply(res1, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
-                 pch=ifelse(initS==1e-01, 19, 1), 
-                 cex=ifelse(initS==1e-01, 0.4, 1)))
+                 pch=ifelse(initS==1, 19, 1), 
+                 cex=ifelse(initS==1, 0.4, 1)))
   with(x, if (sh > 0.5) {
     points(L, 0.5, pch="^", 
            col=ifelse(gr>0, "black", "red"))
     points(L, 0.49, 
            col=ifelse(gr>0, "black", "red"),
-           pch=ifelse(initS==1e-01, 19, 1), 
-           cex=ifelse(initS==1e-01, 0.4, 1))
+           pch=ifelse(initS==1, 19, 1), 
+           cex=ifelse(initS==1, 0.4, 1))
   })
 })
 
@@ -803,15 +698,15 @@ title("DIN=1e-7 mol/L; X=1e-6 mol/L")
 p2 <- apply(res2, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
-                 pch=ifelse(initS==1e-01, 19, 1), 
-                 cex=ifelse(initS==1e-01, 0.4, 1)))
+                 pch=ifelse(initS==1, 19, 1), 
+                 cex=ifelse(initS==1, 0.4, 1)))
   with(x, if (sh > 0.5) {
     points(L, 0.5, pch="^", 
            col=ifelse(gr>0, "black", "red"))
     points(L, 0.49, 
            col=ifelse(gr>0, "black", "red"),
-           pch=ifelse(initS==1e-01, 19, 1), 
-           cex=ifelse(initS==1e-01, 0.4, 1))
+           pch=ifelse(initS==1, 19, 1), 
+           cex=ifelse(initS==1, 0.4, 1))
   })
 })
 
@@ -820,15 +715,15 @@ title("DIN=1e-6 mol/L; X=2e-6 mol/L")
 p3 <- apply(res3, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
-                 pch=ifelse(initS==1e-01, 19, 1), 
-                 cex=ifelse(initS==1e-01, 0.4, 1)))
+                 pch=ifelse(initS==1, 19, 1), 
+                 cex=ifelse(initS==1, 0.4, 1)))
   with(x, if (sh > 0.5) {
     points(L, 0.5, pch="^", 
            col=ifelse(gr>0, "black", "red"))
     points(L, 0.49, 
            col=ifelse(gr>0, "black", "red"),
-           pch=ifelse(initS==1e-01, 19, 1), 
-           cex=ifelse(initS==1e-01, 0.4, 1))
+           pch=ifelse(initS==1, 19, 1), 
+           cex=ifelse(initS==1, 0.4, 1))
   })
 })
 
@@ -837,15 +732,15 @@ title("DIN=1e-6 mol/L; X=4e-6 mol/L")
 p4 <- apply(res4, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
-                 pch=ifelse(initS==1e-01, 19, 1), 
-                 cex=ifelse(initS==1e-01, 0.4, 1)))
+                 pch=ifelse(initS==1, 19, 1), 
+                 cex=ifelse(initS==1, 0.4, 1)))
   with(x, if (sh > 0.5) {
     points(L, 0.5, pch="^", 
            col=ifelse(gr>0, "black", "red"))
     points(L, 0.49, 
            col=ifelse(gr>0, "black", "red"),
-           pch=ifelse(initS==1e-01, 19, 1), 
-           cex=ifelse(initS==1e-01, 0.4, 1))
+           pch=ifelse(initS==1, 19, 1), 
+           cex=ifelse(initS==1, 0.4, 1))
   })
 })
 
