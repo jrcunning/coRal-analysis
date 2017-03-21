@@ -278,14 +278,14 @@ sym_PI(pars=def_pars())
 -----
 
 # Figure S3 
-```{r sens_ILHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S3. Sensitivity analysis under high DIN (4e-6 M) and intermediate light (15 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_ILHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S3. Sensitivity analysis under high DIN (4e-6 M) and intermediate light (20 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
 
 # Define environments for conducting sensitivity analysis
 envs <- list(
-  ILHN=list(L=15, N=4e-6, X=0)
+  ILHN=list(L=20, N=4e-6, X=0)
 )
 
 # Define relative changes in each parameter to evaluate
@@ -343,14 +343,14 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S4 
-```{r sens_LLLN, cache=T, echo=F, eval=T, fig.cap="**Sensitivity analysis under low DIN (1e-7 M) and low light (2 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_LLLN, cache=T, echo=F, eval=T, fig.cap="**Sensitivity analysis under low DIN (1e-7 M) and low light (5 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
 
 # Define environments for conducting sensitivity analysis
 envs <- list(
-  LLLN=list(L=2, N=1e-7, X=0)
+  LLLN=list(L=5, N=1e-7, X=0)
 )
 
 # Define relative changes in each parameter to evaluate
@@ -408,14 +408,14 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S5
-```{r sens_LLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (2 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_LLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (5 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
 
 # Define environments for conducting sensitivity analysis
 envs <- list(
-  LLHN=list(L=2, N=4e-6, X=0)
+  LLHN=list(L=5, N=4e-6, X=0)
 )
 
 # Define relative changes in each parameter to evaluate
@@ -473,14 +473,14 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S6
-```{r sens_HLLN, cache=T, echo=F, eval=T, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (25 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_HLLN, cache=T, echo=F, eval=T, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
 
 # Define environments for conducting sensitivity analysis
 envs <- list(
-  HLLN=list(L=25, N=1e-7, X=0)
+  HLLN=list(L=30, N=1e-7, X=0)
 )
 
 # Define relative changes in each parameter to evaluate
@@ -538,14 +538,14 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S7
-```{r sens_HLHN, cache=T, echo=F, eval=T, fig.cap="Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (25 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_HLHN, cache=T, echo=F, eval=T, fig.cap="Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
 
 # Define environments for conducting sensitivity analysis
 envs <- list(
-  HLHN=list(L=25, N=4e-6, X=0)
+  HLHN=list(L=30, N=4e-6, X=0)
 )
 
 # Define relative changes in each parameter to evaluate
