@@ -13,4 +13,4 @@ at <- expand.grid(L=seq(from=0, to=50, length.out=41),
 
 # Run to steady state and plot results
 ssdat <- run_steady_states(pars=replace(defpars, "initS", 1), at=at, food=0, runtime=T)
-plot_steady_states(ssdat, png=NULL)#"img/Fig3.png")
+plot_steady_states(ssdat, png="img/Fig3.png")
