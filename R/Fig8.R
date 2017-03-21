@@ -8,9 +8,8 @@ sapply(c("R/def_pars.R",
 defpars <- def_pars()  # Get default parameters
 time <- seq(0, 250, 0.1)
 
-# set up limitation calculation
+# Set up limitation calculation
 limcoef <- function(x,y,m) log(pmin(x, m)/pmin(y, m))
-#limcoef <- function(x,y,m) log(x/y)
 
 # Run no overshoot
 env1 <- init_env(time=time, L=c(20,20,0), N=c(1e-7,1e-7,0), X=c(1e-7,1e-7,0))
