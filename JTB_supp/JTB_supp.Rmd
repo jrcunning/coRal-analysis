@@ -102,7 +102,7 @@ Assume that most metabolic CO~2~ produced within host cells rapidly converts to 
 (dimensionless)
 <br><br>    
 
-#### $j_{Xm}$: Maximum specific feeding rate of host {-}
+#### $j_{Xm}$: Maximum specific rate of assimilation from host feeding {-}
 @Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific carbon assimilation rate of 77.6 µgC cm^-2^ 6h^-1^.
 ```{r jXm}
 77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 24/6
@@ -115,7 +115,7 @@ half sat = 294119 nauplii L^-1^
 294119 artemia/L * 6.78e-7 gC/artemia = 0.19941268 gC/L / 12.011g/mol = 0.01656815
 
 
-#### $K_X$: Half-saturation constant for prey uptake by host {-}
+#### $K_X$: Half-saturation constant of assimilation from host feeding {-}
 For consistency, and due to a lack of available data, we use the same value as @Muller:2009io.
 ```{r KX}
 1e-6
