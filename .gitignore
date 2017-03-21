@@ -2,10 +2,8 @@ Rmd/tmp*
 .Rproj.user
 .Rhistory
 .Rdata
-R/jCO2_analysis_cache
-R/jCO2_analysis_files
-Rmd/analyze_cache
-Rmd/analyze_files
-JTB_supp/JTB_supp_cache
-JTB_supp/JTB_supp_files
-JTB_ms/JTB_ms_files
+JTB_supp/*
+!JTB_supp/JTB_supp.Rmd
+!JTB_supp/JTB_supp.html
+JTB_ms/coauthor_comments
+sandbox/*
