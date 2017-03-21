@@ -27,7 +27,7 @@ plot_steady_states <- function(ss, png=NULL) {
     } else {
       breaks <- seq(min(r[which(r!=0)], na.rm=T), max(r, na.rm=T)+bin, bin)
     }
-    ncolors <- length(breaks) - 1
+    ncolors <<- length(breaks) - 1
     if (col[[1]]=="grayscale") {
       colors <- gray.colors(n=ncolors, start=0.9, end=0.1)
     } else if (length(table(breaks>0))>1) {
@@ -67,10 +67,10 @@ plot_steady_states <- function(ss, png=NULL) {
     par(new=T, mar=c(3,2,1,0))
     
     # Plot color key
-    w <- 0.05
-    xl <- par("usr")[2] * (1 + w)
-    yb <- par("usr")[3]
-    h <- (par("usr")[4] - par("usr")[3])/ncolors
+    w <<- 0.05
+    xl <<- par("usr")[2] * (1 + w)
+    yb <<- par("usr")[3]
+    h <<- (par("usr")[4] - par("usr")[3])/ncolors
     for(i in 1:ncolors) {
       rect(xl, yb+h*(i-1), xl+w, yb+h*i, col=colors[i], xpd=NA)
     }
@@ -82,8 +82,11 @@ plot_steady_states <- function(ss, png=NULL) {
   if (!is.null(png)) png(png, width=7, height=3.5, units="in", res=300)
   par(mfrow=c(1,2), mar=c(3,3,3,3))
   imagef(gr, bin=0.01, main="A. Specific growth", col="grayscale")
+  text(x=xl+w, y=(yb+h*ncolors)*1.05, labels=expression(d^{-1}), xpd=T)
+  print(c(xl+w, yb+h*ncolors))
   #imagef(hl, bin=0.25, main="B. Host growth limitation", col=list("#67001F","#053061"))
   imagef(sh, bin=0.05, main="B. Symbiont:host biomass", col="grayscale")
+  text(x=xl+w, y=(yb+h*ncolors)*1.05, labels="S:H", xpd=T)
   #imagef(pl, bin=0.5, main="D. Photosynthesis limitation", col=list("#67001F", "gray30"))
   if (!is.null(png)) dev.off()
 }
