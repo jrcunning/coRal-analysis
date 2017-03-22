@@ -63,7 +63,7 @@ Table 1. Model fluxes (mass-specific). Units are explained in the text.
 
 | Symbol  | Description                          | Units                 | Eq. no. |
 | ------- | ------------------------------------ | --------------------- | ------- |
-| $j_X$     | Prey uptake rate                       | mol X C-mol H^-1^ d^-1^ | 3 |
+| $j_X$     | Prey assimilation (feeding) rate                       | C-mol X C-mol H^-1^ d^-1^ | 3 |
 | $j_N$     | Nitrogen uptake rate                   | mol N Cmol H^-1^ d^-1^ | 4 |
 | $j_{HG}$  | Host biomass formation rate            | C-mol H C-mol H^-1^ d^-1^| 5 |
 | $j_{HT}$  | Host biomass turnover rate             | C-mol H C-mol H^-1^ d^-1^| 6 |
@@ -90,17 +90,17 @@ Table 2. Model parameters (units explained in the text). Justification and/or de
 | $n_{NH}$ | N:C molar ratio in host biomass | -- | $`r defpars$nNH`$ |
 | $n_{NS}$ | N:C molar ratio in symbiont biomass | -- | $`r defpars$nNS`$ |
 | $n_{NX}$ | N:C molar ratio in prey biomass | -- | $`r defpars$nNX`$ |
-| $j_{HT}^0$ | Specific maintenance rate of host biomass | C-mol H C-mol H^-1^ d^-1^ | $`r defpars$jHT0`$ |
-| $j_{ST}^0$ | Specific maintenance rate of symbiont biomass | C-mol S C-mol S^-1^ d^-1^ | $`r defpars$jST0`$ |
-| $\sigma_{NH}$ | Proportion host N-turnover recycled to host | -- | $`r defpars$sigmaNH`$ |
-| $\sigma_{CH}$ | Proportion host C-turnover recycled to photosynthesis | -- | $`r defpars$sigmaCH`$ |
-| $\sigma_{NS}$ | Proportion symbiont N-turnover recycled to symbiont | -- | $`r defpars$sigmaNS`$ |
-| $\sigma_{CS}$ | Proportion symbiont C-turnover recycled to photosynthesis | -- | $`r defpars$sigmaCS`$ |
-| $j_{Xm}$ | Maximum specific assimilation rate from host feeding | molX C-mol H^-1^ d^-1^ | $`r defpars$jXm`$ |
-| $K_X$ | Half-saturation constant for prey uptake by host | molX L^-1^ | $`r defpars$KX`$ |
-| $j_{Nm}$ | Maximum specific DIN uptake rate by host | mol N C-mol H^-1^ d^-1^ | $`r defpars$jNm`$ |
-| $K_N$ | Half-saturation constant for DIN uptake by host | mol N L^-1^ | $`r defpars$KN`$ |
-| $k_{CO_2}$ | Efficacy of CO~2~ delivery by host CCMs | mol CO~2~ mol C^-1^ | $`r defpars$kCO2`$ |
+| $j_{HT}^0$ | Maintenance rate of host biomass | C-mol H C-mol H^-1^ d^-1^ | $`r defpars$jHT0`$ |
+| $j_{ST}^0$ | Maintenance rate of symbiont biomass | C-mol S C-mol S^-1^ d^-1^ | $`r defpars$jST0`$ |
+| $\sigma_{NH}$ | Proportion N turnover recycled in host | -- | $`r defpars$sigmaNH`$ |
+| $\sigma_{CH}$ | Proportion host metabolic CO~2~ recycled to photosynthesis | -- | $`r defpars$sigmaCH`$ |
+| $\sigma_{NS}$ | Proportion N turnover recycled in symbiont | -- | $`r defpars$sigmaNS`$ |
+| $\sigma_{CS}$ | Proportion symbiont metabolic CO~2~ recycled to photosynthesis | -- | $`r defpars$sigmaCS`$ |
+| $j_{Xm}$ | Maximum prey assimilation rate from host feeding | molX C-mol H^-1^ d^-1^ | $`r defpars$jXm`$ |
+| $K_X$ | Half-saturation constant for prey assimilation | molX L^-1^ | $`r defpars$KX`$ |
+| $j_{Nm}$ | Maximum host DIN uptake rate | mol N C-mol H^-1^ d^-1^ | $`r defpars$jNm`$ |
+| $K_N$ | Half-saturation constant for host DIN uptake | mol N L^-1^ | $`r defpars$KN`$ |
+| $k_{CO_2}$ | Efficacy of CO~2~ delivery to photosynthesis by host CCMs | mol CO~2~ mol C^-1^ | $`r defpars$kCO2`$ |
 | $j_{HGm}$ | Maximum specific growth rate of host | C-mol H C-mol H^-1^ d^-1^ | $`r defpars$jHGm`$ |
 | $y_{CL}$ | Quantum yield of photosynthesis | mol C mol photons^-1^ | $`r defpars$yCL`$ |
 | $y_{C}$ | Yield of biomass formation from carbon | C-mol mol C^-1^ | $`r defpars$yC`$ |
@@ -134,7 +134,7 @@ Additionally, the coral animal acquires dissolved inorganic nitrogen (DIN) from 
 
 Coral biomass formation is then specified by a parallel complementary SU (formula in Fig. 3.7 of @Kooijman:2010vd]) that combines carbon and nitrogen, according to:
 
-\begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {y_{C}\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH}) / n_{NH}}} - {1 \over {y_{C}{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH}) / n_{NH}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {y_{C}\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH})n_{NH}^{-1}}} - {1 \over {y_{C}{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH})n_{NH}^{-1}}}\bigg)^{-1} \end{equation}
 
 where $\rho_C$ is fixed carbon shared by the symbiont (see Eq. 21), and $r_{NH}$ is recycled nitrogen liberated by host biomass turnover (see Eq. 7). The parameter $y_C$ specifies the yield of biomass from organic carbon, which we take to be 0.8 to satisfy redox balance (see @Muller:2009io). 
 
@@ -156,7 +156,7 @@ Due to the inherent inefficiency of the parallel complementary SU formulation, t
 
 \begin{equation} j_{eC} = (j_X + \rho_C{S \over H} - j_{HG}y_{C}^{-1})_+ \end{equation}
 
-This flux, $j_{eC}$, is assumed to be available to the host as a respiratory substrate to support energetically-demanding processes; of particular importance is the host's active carbon concentrating mechanisms (CCMs) that supply CO~2~ for symbiont photosynthesis [@Wooldridge:2013tj; @Hopkinson:2015ev]. We therefore specify $j_{CO_2}$ as the host-mediated delivery of CO~2~ to photosynthesis that encompasses potentially diverse carbon-concentrating mechanisms (CCMs), including active transport of bicarbonate, carbonic anhydrase-catalyzed conversion of bicarbonate to CO~2~ to promote diffusion toward the symbiont [@Tansik:2015cm], and acidification of the symbiosome to increase localized CO~2~ concentrations around the symbiont [@Barott:2014gx]. Since these active CCMs require energetic input by the host, we define $j_{CO_2}$ as proportional to $j_{eC}$, assuming that some of this carbon is respired to energize the CCMs. This formulation means that the symbiont indirectly ensures its own CO~2~ supply by providing fixed carbon (=energy) to the host [@Wooldridge:2013tj]. The parameter $k_{CO_2}$ scales the efficacy of host CCMs, which enables the comparison of different rates of CO~2~ delivery that may characterize different coral species [@Wooldridge:2014di]. The active input of CO~2~ to the photosynthesis SU is therefore specified as:
+This flux, $j_{eC}$, is assumed to be available to the host as a respiratory substrate to support energetically-demanding processes; of particular importance is the host's active carbon concentrating mechanisms (CCMs) that supply CO~2~ for symbiont photosynthesis [@Wooldridge:2013tj; @Hopkinson:2015ev]. We therefore specify $j_{CO_2}$ as the host-mediated delivery of CO~2~ to photosynthesis that encompasses potentially diverse CCMs, including active transport of bicarbonate, carbonic anhydrase-catalyzed conversion of bicarbonate to CO~2~ to promote diffusion toward the symbiont [@Tansik:2015cm], and acidification of the symbiosome to increase localized CO~2~ concentrations around the symbiont [@Barott:2014gx]. Since these active CCMs require energetic input by the host, we define $j_{CO_2}$ as proportional to $j_{eC}$, assuming that some of this carbon is respired to energize the CCMs. This formulation means that the symbiont indirectly ensures its own CO~2~ supply by providing fixed carbon (=energy) to the host [@Wooldridge:2013tj]. The parameter $k_{CO_2}$ scales the efficacy of host CCMs, which enables the comparison of different rates of CO~2~ delivery that may characterize different coral species [@Wooldridge:2014di]. The active input of CO~2~ to the photosynthesis SU is therefore specified as:
 
 \begin{equation} j_{CO_2} = k_{CO_2}j_{eC} \end{equation}
 
@@ -172,11 +172,11 @@ This amplification factor is then multiplied by the external downwelling irradia
 
 CO~2~ arrives at the photosynthesis SU from multiple sources: in addition to the CO~2~ actively supplied by the host through its CCMs ($j_{CO_2}$; Eq. 10), we assume a fixed proportion $\sigma_{CH}$ of metabolic CO~2~ generated by the host from both biomass turnover and formation is passively available to the photosynthesis SU, according to:
 
-\begin{equation} r_{CH}=\sigma_{CH}(j_{HT} + (1-y_C)j_{HG}/y_C) \end{equation}
+\begin{equation} r_{CH}=\sigma_{CH}(j_{HT} + (1-y_C)j_{HG}y_C^{-1}) \end{equation}
 
 along with a fixed proportion of CO~2~ generated by symbiont biomass turnover[^2] and formation:
 
-\begin{equation} r_{CS}=\sigma_{CS}(j_{ST}^0 + (1-y_C)j_{SG}/y_C) \end{equation}
+\begin{equation} r_{CS}=\sigma_{CS}(j_{ST}^0 + (1-y_C)j_{SG}y_C^{-1}) \end{equation}
 
 Fixed carbon is then produced by the photosynthesis SU according to:
 
@@ -186,11 +186,11 @@ where $j_{CPm}$ is the maximum specific rate of photosynthesis, and $c_{ROS}$ is
 
 Light energy absorbed in excess of what is used to fix carbon is specified by the SU rejection flux, according to:
 
-\begin{equation} j_{eL} = (j_L - j_{CP} / y_{CL})_+ \end{equation}
+\begin{equation} j_{eL} = (j_L - j_{CP}y_{CL}^{-1})_+ \end{equation}
 
 This excess light energy must be quenched by alternative pathways in order to prevent photooxidative damage [@Powles:1984tm]. *Symbiodinium* utilize a variety of pathways for non-photochemical quenching [NPQ; @Roth:2014wf], which we collect in a total NPQ capacity specified as a parameter of the symbiont ($k_{NPQ}$). The NPQ flux $j_{NPQ}$ is then specified as a single-substrate SU formula with a maximum of $k_{NPQ}$:
 
-\begin{equation} j_{NPQ} = \bigg({1 \over k_{NPQ}} + {1 \over j_{eL}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{NPQ} = (k_{NPQ}^{-1} + j_{eL}^{-1})^{-1} \end{equation}
 
 If light energy further exceeds the capacity of both photochemistry and NPQ, then reactive oxygen species (ROS) are produced. We represent this as a relative quantity $c_{ROS}$, which takes a value of 1 when all light energy is quenched by photochemistry and NPQ, and increases as the amount of excess excitation energy increases, specified as:
 
@@ -204,7 +204,7 @@ Carbon fixed by photosynthesis ($j_{CP}$; Eq. 15) is then combined with nitrogen
 
 to build new symbiont biomass, following the SU equation:
 
-\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over y_{C}j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS}) / n_{NS}}} - {1 \over {y_{C}j_{CP} + (\rho_N{H \over S} + r_{NS}) / n_{NS}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over y_{C}j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS})n_{NS}^{-1}}} - {1 \over {y_{C}j_{CP} + (\rho_N{H \over S} + r_{NS})n_{NS}^{-1}}}\bigg)^{-1} \end{equation}
 
 The rejection flux of carbon from this SU represents the amount of fixed carbon produced by photosynthesis in excess of what can be used to produce symbiont biomass; this surplus, $\rho_C$, is translocated to the coral host:
 
