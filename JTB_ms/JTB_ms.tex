@@ -314,10 +314,10 @@ Eq. no.
 \(j_X\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Prey uptake rate
+Prey assimilation (feeding) rate
 \strut\end{minipage} &
 \begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
-mol X C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+C-mol X C-mol H\textsuperscript{-1} d\textsuperscript{-1}
 \strut\end{minipage} &
 \begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
 3
@@ -604,7 +604,7 @@ N:C molar ratio in prey biomass
 \(j_{HT}^0\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Specific maintenance rate of host biomass
+Maintenance rate of host biomass
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}
@@ -616,7 +616,7 @@ C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}
 \(j_{ST}^0\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Specific maintenance rate of symbiont biomass
+Maintenance rate of symbiont biomass
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}
@@ -628,7 +628,7 @@ C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}
 \(\sigma_{NH}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Proportion host N-turnover recycled to host
+Proportion N turnover recycled in host
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
@@ -640,7 +640,7 @@ Proportion host N-turnover recycled to host
 \(\sigma_{CH}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Proportion host C-turnover recycled to photosynthesis
+Proportion host metabolic CO\textsubscript{2} recycled to photosynthesis
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
@@ -652,7 +652,7 @@ Proportion host C-turnover recycled to photosynthesis
 \(\sigma_{NS}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Proportion symbiont N-turnover recycled to symbiont
+Proportion N turnover recycled in symbiont
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
@@ -664,7 +664,8 @@ Proportion symbiont N-turnover recycled to symbiont
 \(\sigma_{CS}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Proportion symbiont C-turnover recycled to photosynthesis
+Proportion symbiont metabolic CO\textsubscript{2} recycled to
+photosynthesis
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 --
@@ -676,7 +677,7 @@ Proportion symbiont C-turnover recycled to photosynthesis
 \(j_{Xm}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Maximum specific assimilation rate from host feeding
+Maximum prey assimilation rate from host feeding
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molX C-mol H\textsuperscript{-1} d\textsuperscript{-1}
@@ -688,7 +689,7 @@ molX C-mol H\textsuperscript{-1} d\textsuperscript{-1}
 \(K_X\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Half-saturation constant for prey uptake by host
+Half-saturation constant for prey assimilation
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 molX L\textsuperscript{-1}
@@ -700,7 +701,7 @@ molX L\textsuperscript{-1}
 \(j_{Nm}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Maximum specific DIN uptake rate by host
+Maximum host DIN uptake rate
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 mol N C-mol H\textsuperscript{-1} d\textsuperscript{-1}
@@ -712,7 +713,7 @@ mol N C-mol H\textsuperscript{-1} d\textsuperscript{-1}
 \(K_N\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Half-saturation constant for DIN uptake by host
+Half-saturation constant for host DIN uptake
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 mol N L\textsuperscript{-1}
@@ -724,7 +725,7 @@ mol N L\textsuperscript{-1}
 \(k_{CO_2}\)
 \strut\end{minipage} &
 \begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
-Efficacy of CO\textsubscript{2} delivery by host CCMs
+Efficacy of CO\textsubscript{2} delivery to photosynthesis by host CCMs
 \strut\end{minipage} &
 \begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
 mol CO\textsubscript{2} mol C\textsuperscript{-1}
@@ -907,7 +908,7 @@ Coral biomass formation is then specified by a parallel complementary SU
 (formula in Fig. 3.7 of Kooijman (2010){]}) that combines carbon and
 nitrogen, according to:
 
-\begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {y_{C}\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH}) / n_{NH}}} - {1 \over {y_{C}{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH}) / n_{NH}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {y_{C}\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH})n_{NH}^{-1}}} - {1 \over {y_{C}{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH})n_{NH}^{-1}}}\bigg)^{-1} \end{equation}
 
 where \(\rho_C\) is fixed carbon shared by the symbiont (see Eq. 21),
 and \(r_{NH}\) is recycled nitrogen liberated by host biomass turnover
@@ -950,20 +951,19 @@ mechanisms (CCMs) that supply CO\textsubscript{2} for symbiont
 photosynthesis (Wooldridge 2013; Hopkinson, Tansik, and Fitt 2015). We
 therefore specify \(j_{CO_2}\) as the host-mediated delivery of
 CO\textsubscript{2} to photosynthesis that encompasses potentially
-diverse carbon-concentrating mechanisms (CCMs), including active
-transport of bicarbonate, carbonic anhydrase-catalyzed conversion of
-bicarbonate to CO\textsubscript{2} to promote diffusion toward the
-symbiont (Tansik, Fitt, and Hopkinson 2015), and acidification of the
-symbiosome to increase localized CO\textsubscript{2} concentrations
-around the symbiont (Barott et al. 2014). Since these active CCMs
-require energetic input by the host, we define \(j_{CO_2}\) as
-proportional to \(j_{eC}\), assuming that some of this carbon is
-respired to energize the CCMs. This formulation means that the symbiont
-indirectly ensures its own CO\textsubscript{2} supply by providing fixed
-carbon (=energy) to the host (Wooldridge 2013). The parameter
-\(k_{CO_2}\) scales the efficacy of host CCMs, which enables the
-comparison of different rates of CO\textsubscript{2} delivery that may
-characterize different coral species (Wooldridge 2014a). The active
+diverse CCMs, including active transport of bicarbonate, carbonic
+anhydrase-catalyzed conversion of bicarbonate to CO\textsubscript{2} to
+promote diffusion toward the symbiont (Tansik, Fitt, and Hopkinson
+2015), and acidification of the symbiosome to increase localized
+CO\textsubscript{2} concentrations around the symbiont (Barott et al.
+2014). Since these active CCMs require energetic input by the host, we
+define \(j_{CO_2}\) as proportional to \(j_{eC}\), assuming that some of
+this carbon is respired to energize the CCMs. This formulation means
+that the symbiont indirectly ensures its own CO\textsubscript{2} supply
+by providing fixed carbon (=energy) to the host (Wooldridge 2013). The
+parameter \(k_{CO_2}\) scales the efficacy of host CCMs, which enables
+the comparison of different rates of CO\textsubscript{2} delivery that
+may characterize different coral species (Wooldridge 2014a). The active
 input of CO\textsubscript{2} to the photosynthesis SU is therefore
 specified as:
 
@@ -1001,7 +1001,7 @@ proportion \(\sigma_{CH}\) of metabolic CO\textsubscript{2} generated by
 the host from both biomass turnover and formation is passively available
 to the photosynthesis SU, according to:
 
-\begin{equation} r_{CH}=\sigma_{CH}(j_{HT} + (1-y_C)j_{HG}/y_C) \end{equation}
+\begin{equation} r_{CH}=\sigma_{CH}(j_{HT} + (1-y_C)j_{HG}y_C^{-1}) \end{equation}
 
 along with a fixed proportion of CO\textsubscript{2} generated by
 symbiont biomass turnover\footnote{Note that recycling of symbiont
@@ -1010,7 +1010,7 @@ symbiont biomass turnover\footnote{Note that recycling of symbiont
   photodamage/bleaching component, as this loss represents biomass that
   is expelled from the host.} and formation:
 
-\begin{equation} r_{CS}=\sigma_{CS}(j_{ST}^0 + (1-y_C)j_{SG}/y_C) \end{equation}
+\begin{equation} r_{CS}=\sigma_{CS}(j_{ST}^0 + (1-y_C)j_{SG}y_C^{-1}) \end{equation}
 
 Fixed carbon is then produced by the photosynthesis SU according to:
 
@@ -1026,7 +1026,7 @@ photoinhibition response (Fig. S2).
 Light energy absorbed in excess of what is used to fix carbon is
 specified by the SU rejection flux, according to:
 
-\begin{equation} j_{eL} = (j_L - j_{CP} / y_{CL})_+ \end{equation}
+\begin{equation} j_{eL} = (j_L - j_{CP}y_{CL}^{-1})_+ \end{equation}
 
 This excess light energy must be quenched by alternative pathways in
 order to prevent photooxidative damage (Powles 1984).
@@ -1036,7 +1036,7 @@ specified as a parameter of the symbiont (\(k_{NPQ}\)). The NPQ flux
 \(j_{NPQ}\) is then specified as a single-substrate SU formula with a
 maximum of \(k_{NPQ}\):
 
-\begin{equation} j_{NPQ} = \bigg({1 \over k_{NPQ}} + {1 \over j_{eL}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{NPQ} = (k_{NPQ}^{-1} + j_{eL}^{-1})^{-1} \end{equation}
 
 If light energy further exceeds the capacity of both photochemistry and
 NPQ, then reactive oxygen species (ROS) are produced. We represent this
@@ -1069,7 +1069,7 @@ recycled from symbiont biomass turnover\footnote{See footnote 2.}
 
 to build new symbiont biomass, following the SU equation:
 
-\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over y_{C}j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS}) / n_{NS}}} - {1 \over {y_{C}j_{CP} + (\rho_N{H \over S} + r_{NS}) / n_{NS}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over y_{C}j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS})n_{NS}^{-1}}} - {1 \over {y_{C}j_{CP} + (\rho_N{H \over S} + r_{NS})n_{NS}^{-1}}}\bigg)^{-1} \end{equation}
 
 The rejection flux of carbon from this SU represents the amount of fixed
 carbon produced by photosynthesis in excess of what can be used to
