@@ -32,7 +32,8 @@ res <- cbind(input, output)
 # Create plot
 png("img/Fig2.png", width=5, height=5, units="in", res=300)
 
-plot(NA, xlim=c(20,50), ylim=c(0,0.20), xlab=expression("Light"~(mol~photons~m^{-2}~d^{-1})), ylab="Steady state S:H ratio")
+plot(NA, xlim=c(20,50), ylim=c(0,0.20), xlab=expression("Light"~(mol~photons~m^{-2}~d^{-1})), 
+     ylab=expression("Steady state S:H"~(C-mol~S~C-mol~H^{-1})))
 points(c(43,43,48,48), c(0.17,0.18,0.17,0.18), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
 text(41, 0.20, labels="init. S:H", xpd=T, cex=0.7, pos=2)
 text(41, c(0.17,0.18), labels=c("1", "0.0001"), xpd=T, pos=2, cex=0.7)
