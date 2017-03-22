@@ -125,9 +125,10 @@ run_coral_ss <- function(env, pars, dt) {
       grss <- ifelse(abs(H$dH.Hdt[t] - H$dH.Hdt[t-10/dt]) < 0.00001, T, F)
       shss <- ifelse(abs(S$S[t]/H$H[t] - S$S[t-10/dt]/H$H[t-10/dt]) < 0.00001, T, F)
     }
-    #Test if system is oscillating but with negative growth (e.g., L=1.2, N=2.6e-6, X=0)
-    if (t > 10000) {
-     if (any(H$dH.Hdt[(t-1000):t] < 0)) {
+    
+    # If system is oscillating after 1000 days, classify as steady state with no growth
+    if (t > 1000/dt) {
+     if (sum(diff(sign(diff(S$S/H$H)))!=0)>=3) {  # if slope of S/H has changed three times or more...then oscillating
        grss <- T; shss <- T
        H$dH.Hdt[t] <- 0
      }
