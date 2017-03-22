@@ -189,6 +189,16 @@ The maximum theoretical quantum yield is 0.125 mol C fixed per mol photons. @Bro
 molC molph^-1^
 <br><br>
 
+#### $y_{C}$: Yield of biomass formation from photosynthate {-}
+This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH~2~O), ammonia (NH~3~) and O~2~ to form biomass, water, and CO~2~. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using $y_{C}$ < 1. We take a value of 0.8 following @Muller:2009io.
+```{r yC, echo=F}
+0.8
+```
+C-mol mol C^-1^
+
+Following this macrochemical equation, the amount of CO~2~ produced during biomass formation can be specified as $(1-y_C)j_P/y_C$, where j_P is the production flux of the SU (see equations 13 and 14 in the main text).
+<br><br>
+
 #### $\bar{a}^*$: Effective light-absorbing cross-section of symbiont {-}
 @Hennige:2009p3439 measured spectra-weighted absoprtion coefficients from 400 to 700nm *ā\**~(400-700)~ for eight *Symbiodinium* types in culture at two different light levels, and reported a (grand mean) value of 0.01095 m^2^ mg chl *a*^-1^ [from Table 6]. This converts to:
 ```{r astar}
