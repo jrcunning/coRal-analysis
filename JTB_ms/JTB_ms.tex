@@ -119,18 +119,17 @@ California, Santa Barbara, USA}
   photo-oxidative stress, the model displays dynamics of bleaching and
   recovery that can be explained as transitions between alternate stable
   states. These dynamics reveal that `healthy' and `bleached' states
-  correspond broadly to nitrogen- and carbon-limitation of the system,
+  correspond broadly to nitrogen- and carbon-limitation in the system,
   with transitions between them occurring as integrated responses to
   multiple environmental factors. Indeed, a suite of complex emergent
   behaviors reproduced by the model (e.g., bleaching is exacerbated by
-  nutrients and attenuated by feeding) suggests it unifyingly captures
-  many important attributes of the system; meanwhile, its modular
-  framework and open source R code are designed to facilitate further
-  problem-specific development. We see significant potential for this
-  modeling framework to generate testable hypotheses and predict
-  integrated, mechanistic responses of corals to environmental change,
-  with important implications for understanding the performance and
-  maintenance of symbiotic systems.
+  nutrients and attenuated by feeding) suggests it captures many important
+  attributes of the system; meanwhile, its modular framework and open
+  source R code are designed to facilitate further problem-specific
+  development. We see significant potential for this modeling framework to
+  generate testable hypotheses and predict integrated, mechanistic
+  responses of corals to environmental change, with important implications
+  for understanding the performance and maintenance of symbiotic systems.
   \end{abstract}
   
  \end{frontmatter}
@@ -213,17 +212,17 @@ application in three primary ways:
   including bleaching and recovery) and coral biomass growth are
   efficiently captured with this simpler formulation, which also
   increases accessibility for biologists and ecologists without
-  requiring significant expertise in DEB theory.
+  requiring expertise in DEB theory.
 \item
-  \emph{Provide well-documented, open-access code.} In order to
+  \emph{Provide well-documented, open source code.} In order to
   facilitate the continued development and application of theoretical
   modeling tools for coral symbioses, we provide open access to the
   model in the form of detailed, commented code written in the R
   language (R Core Team 2014). With an accessible and modular framework,
   we envision this model as a resource for further development by the
   scientific community to include additional complexity and
-  problem-specific components. We chose the R language, which is freely
-  available and in common use by biologists and ecologists, to reach the
+  problem-specific components. We chose R, an open source programming
+  language in common use by biologists and ecologists, to reach the
   widest possible audience with this work.
 \end{enumerate}
 
@@ -282,7 +281,7 @@ al. 1998), and in fact, any stressor that disrupts the quenching of
 light energy may lead to bleaching (Wooldridge 2010; Baker and Cunning
 2015). This is because the proximate cause of photo-oxidative stress is
 excess excitation energy, but the upstream events that lead to this
-situation may be diverse: indeed, elevated temperature may inhibit
+situation may be diverse. Indeed, elevated temperature may inhibit
 Rubisco functioning (Jones et al. 1998) and the repair of the D1 protein
 in photosystem II (Warner, Fitt, and Schmidt 1999), which reduces the
 capacity of photochemical quenching and leads to an excess of light
@@ -295,193 +294,253 @@ be simulated with biological realism in response to light.
 
 Table 1. Model fluxes (mass-specific). Units are explained in the text.
 
-\begin{longtable}[]{@{}llll@{}}
+\begin{longtable}[c]{@{}llll@{}}
 \toprule
-\begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
-Symbol\strut
-\end{minipage} & \begin{minipage}[b]{0.44\columnwidth}\raggedright\strut
-Description\strut
-\end{minipage} & \begin{minipage}[b]{0.26\columnwidth}\raggedright\strut
-Units\strut
-\end{minipage} & \begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
-Eq. no.\strut
-\end{minipage}\tabularnewline
+\begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
+Symbol
+\strut\end{minipage} &
+\begin{minipage}[b]{0.45\columnwidth}\raggedright\strut
+Description
+\strut\end{minipage} &
+\begin{minipage}[b]{0.27\columnwidth}\raggedright\strut
+Units
+\strut\end{minipage} &
+\begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
+Eq. no.
+\strut\end{minipage}\tabularnewline
 \midrule
 \endhead
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_X\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Prey uptake rate\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol X C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-3\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_N\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Nitrogen uptake rate\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol N Cmol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-4\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{HG}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Host biomass formation rate\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-5\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{HT}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Host biomass turnover rate\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-6\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(r_{NH}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Recycled nitrogen from host turnover\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol N C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-7\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(\rho_N\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Nitrogen shared with the symbiont\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol N C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-8\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{eC}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Excess carbon used to activate host CCMs\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol C C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-9\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{CO_2}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-CO\textsubscript{2} input to photosynthesis\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_X\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Prey uptake rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol X C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+3
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_N\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Nitrogen uptake rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol N Cmol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+4
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{HG}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Host biomass formation rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+5
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{HT}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Host biomass turnover rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+6
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(r_{NH}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Recycled nitrogen from host turnover
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol N C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+7
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\rho_N\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Nitrogen shared with the symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol N C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+8
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{eC}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Excess carbon used to activate host CCMs
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol C C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+9
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{CO_2}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+CO\textsubscript{2} input to photosynthesis
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
 mol CO\textsubscript{2} C-mol H\textsuperscript{-1}
-d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-10\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_L\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Light absorption rate\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-12\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(r_{CH}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Recycled CO\textsubscript{2} from host turnover\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+10
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_L\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Light absorption rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+12
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(r_{CH}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Recycled CO\textsubscript{2} from host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
 mol CO\textsubscript{2} C-mol H\textsuperscript{-1}
-d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-13\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(r_{CS}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Recycled CO\textsubscript{2} from symbiont turnover\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
+d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+13
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(r_{CS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Recycled CO\textsubscript{2} from symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
 mol CO\textsubscript{2} C-mol S\textsuperscript{-1}
-d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-14\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{CP}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Photosynthesis rate\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol C C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-15\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{eL}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Light energy in excess of photochemistry\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-16\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{NPQ}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Total capacity of NPQ\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-17\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(c_{ROS}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-ROS production proportional to baseline\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-18\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(r_{NS}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Recycled nitrogen from symbiont turnover\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol N C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-19\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{SG}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Symbiont biomass formation rate\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-20\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(\rho_C\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Fixed carbon shared with host\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-mol C C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-21\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{ST}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Symbiont biomass turnover rate\strut
-\end{minipage} & \begin{minipage}[t]{0.26\columnwidth}\raggedright\strut
-C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-22\strut
-\end{minipage}\tabularnewline
+d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+14
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{CP}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Photosynthesis rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol C C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+15
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{eL}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Light energy in excess of photochemistry
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+16
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{NPQ}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Total capacity of NPQ
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+17
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(c_{ROS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+ROS production proportional to baseline
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+18
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(r_{NS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Recycled nitrogen from symbiont turnover
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol N C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+19
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{SG}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Symbiont biomass formation rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+20
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\rho_C\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Fixed carbon shared with host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+mol C C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+21
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{ST}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Symbiont biomass turnover rate
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+22
+\strut\end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -489,218 +548,299 @@ Table 2. Model parameters (units explained in the text). Justification
 and/or derivation of each parameter value along with supporting
 references are provided in the Supplementary Information.
 
-\begin{longtable}[]{@{}llll@{}}
+\begin{longtable}[c]{@{}llll@{}}
 \toprule
-\begin{minipage}[b]{0.09\columnwidth}\raggedright\strut
-Symbol\strut
-\end{minipage} & \begin{minipage}[b]{0.44\columnwidth}\raggedright\strut
-Description\strut
-\end{minipage} & \begin{minipage}[b]{0.24\columnwidth}\raggedright\strut
-Units\strut
-\end{minipage} & \begin{minipage}[b]{0.12\columnwidth}\raggedright\strut
-Value\strut
-\end{minipage}\tabularnewline
+\begin{minipage}[b]{0.10\columnwidth}\raggedright\strut
+Symbol
+\strut\end{minipage} &
+\begin{minipage}[b]{0.45\columnwidth}\raggedright\strut
+Description
+\strut\end{minipage} &
+\begin{minipage}[b]{0.25\columnwidth}\raggedright\strut
+Units
+\strut\end{minipage} &
+\begin{minipage}[b]{0.12\columnwidth}\raggedright\strut
+Value
+\strut\end{minipage}\tabularnewline
 \midrule
 \endhead
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(n_{NH}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-N:C molar ratio in host biomass\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.18\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(n_{NS}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-N:C molar ratio in symbiont biomass\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.13\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(n_{NX}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-N:C molar ratio in prey biomass\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.2\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{HT}^0\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Specific maintenance rate of host biomass\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.03\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{ST}^0\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Specific maintenance rate of symbiont biomass\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.03\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(\sigma_{NH}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Proportion host N-turnover recycled to host\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.9\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(\sigma_{CH}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Proportion host C-turnover recycled to photosynthesis\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.1\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(\sigma_{NS}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Proportion symbiont N-turnover recycled to symbiont\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.9\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(\sigma_{CS}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Proportion symbiont C-turnover recycled to photosynthesis\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.9\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{Xm}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Maximum specific feeding rate of host\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-molX C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.13\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(K_X\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Half-saturation constant for prey uptake by host\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-molX L\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(1.95\times 10^{-5}\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{Nm}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Maximum specific DIN uptake rate by host\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-mol N C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.035\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(K_N\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Half-saturation constant for DIN uptake by host\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-mol N L\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(1.5\times 10^{-6}\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(k_{CO_2}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Efficacy of CO\textsubscript{2} delivery by host CCMs\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-mol CO\textsubscript{2} mol C\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(10\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{HGm}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Maximum specific growth rate of host\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(1\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(y_{CL}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Quantum yield of photosynthesis\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-mol C mol photons\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.1\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(\bar{a}^*\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Effective light-absorbing cross-section of symbiont\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-m\textsuperscript{2} C-mol S\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(1.34\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(k_{NPQ}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-NPQ capacity of symbiont\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(112\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(k_{ROS}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(n_{NH}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+N:C molar ratio in host biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.18\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(n_{NS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+N:C molar ratio in symbiont biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.13\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(n_{NX}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+N:C molar ratio in prey biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.2\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{HT}^0\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Specific maintenance rate of host biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.03\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{ST}^0\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Specific maintenance rate of symbiont biomass
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.03\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\sigma_{NH}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Proportion host N-turnover recycled to host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.9\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\sigma_{CH}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Proportion host C-turnover recycled to photosynthesis
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.1\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\sigma_{NS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Proportion symbiont N-turnover recycled to symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.9\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\sigma_{CS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Proportion symbiont C-turnover recycled to photosynthesis
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.9\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{Xm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Maximum specific assimilation rate from host feeding
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+molX C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.13\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(K_X\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Half-saturation constant for prey uptake by host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+molX L\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(10^{-6}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{Nm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Maximum specific DIN uptake rate by host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+mol N C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.035\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(K_N\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Half-saturation constant for DIN uptake by host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+mol N L\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(1.5\times 10^{-6}\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(k_{CO_2}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Efficacy of CO\textsubscript{2} delivery by host CCMs
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+mol CO\textsubscript{2} mol C\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(10\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{HGm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Maximum specific growth rate of host
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+C-mol H C-mol H\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(1\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(y_{CL}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Quantum yield of photosynthesis
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+mol C mol photons\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.1\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(y_{C}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Yield of biomass formation from carbon
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+C-mol mol C\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.8\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(\bar{a}^*\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Effective light-absorbing cross-section of symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+m\textsuperscript{2} C-mol S\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(1.34\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(k_{NPQ}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+NPQ capacity of symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(112\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(k_{ROS}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
 Excess photon energy that doubles ROS production, relative to baseline
-levels\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(80\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{CPm}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Maximum specific photosynthesis rate of symbiont\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-mol C C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(2.8\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(j_{SGm}\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Maximum specific growth rate of symbiont\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
-C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(0.25\)\strut
-\end{minipage}\tabularnewline
-\begin{minipage}[t]{0.09\columnwidth}\raggedright\strut
-\(b\)\strut
-\end{minipage} & \begin{minipage}[t]{0.44\columnwidth}\raggedright\strut
-Scaling parameter for bleaching response\strut
-\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright\strut
---\strut
-\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
-\(5\)\strut
-\end{minipage}\tabularnewline
+levels
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+mol photons C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(80\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{CPm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Maximum specific photosynthesis rate of symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+mol C C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(2.8\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(j_{SGm}\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Maximum specific growth rate of symbiont
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+C-mol S C-mol S\textsuperscript{-1} d\textsuperscript{-1}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(0.25\)
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.10\columnwidth}\raggedright\strut
+\(b\)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.45\columnwidth}\raggedright\strut
+Scaling parameter for bleaching response
+\strut\end{minipage} &
+\begin{minipage}[t]{0.25\columnwidth}\raggedright\strut
+--
+\strut\end{minipage} &
+\begin{minipage}[t]{0.12\columnwidth}\raggedright\strut
+\(5\)
+\strut\end{minipage}\tabularnewline
 \bottomrule
 \end{longtable}
 
@@ -719,8 +859,8 @@ synthesizing units (SUs) are represented by large circles, and rejection
 fluxes from these SUs are indicated by dashed lines. \(c_{ROS}\) is a
 proportional rate that impacts other model fluxes by inhibition or
 acceleration; likewise, \(j_{eC}\) accelerates the rate of \(j_{CO_2}\).
-Recycled mass fluxes from biomass turnover are not shown for clarity
-(but see Table 1 for definitions).}
+Recycling fluxes are not shown for clarity (but see Table 1 for
+definitions).}
 \end{figure}
 
 \subsection{State equations}\label{state-equations}
@@ -744,9 +884,9 @@ the symbiont:host biomass ratio.
 \subsection{Coral animal fluxes}\label{coral-animal-fluxes}
 
 The coral animal acquires both carbon and nitrogen from feeding on prey
-from the environment. Prey acquisition is specified by Michaelis-Menten
-kinetics (i.e., a Holling type II function) with a maximum feeding rate
-\(j_{Xm}\) and half-saturation constant \(K_X\):
+from the environment. Assimilation from feeding is specified by
+Michaelis-Menten kinetics (i.e., a Holling type II function) with a
+maximum rate of \(j_{Xm}\) and half-saturation constant \(K_X\):
 
 \begin{equation} j_X = {{j_{Xm} \cdot X} \over {X + K_X}} \end{equation}
 
@@ -767,12 +907,16 @@ Coral biomass formation is then specified by a parallel complementary SU
 (formula in Fig. 3.7 of Kooijman (2010){]}) that combines carbon and
 nitrogen, according to:
 
-\begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH}) / n_{NH}}} - {1 \over {{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH}) / n_{NH}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {y_{C}\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH}) / n_{NH}}} - {1 \over {y_{C}{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH}) / n_{NH}}}\bigg)^{-1} \end{equation}
 
 where \(\rho_C\) is fixed carbon shared by the symbiont (see Eq. 21),
 and \(r_{NH}\) is recycled nitrogen liberated by host biomass turnover
-(see Eq. 7). Host biomass turnover is equal to the specific maintenance
-rate of host biomass,
+(see Eq. 7). The parameter \(y_C\) specifies the yield of biomass from
+organic carbon, which we take to be 0.8 to satisfy redox balance (see
+Muller et al. (2009)).
+
+Host biomass turnover is equal to the specific maintenance rate of host
+biomass,
 
 \begin{equation} j_{HT}=j_{HT}^0 \end{equation}
 
@@ -787,7 +931,7 @@ the rejection flux\footnote{Rejection fluxes must always be positive,
   and hence are specified with the notation \((x)_+\), which means
   \(max(x, 0)\).} of the SU) is then made available to the symbiont:
 
-\begin{equation} \rho_N = (j_N + n_{NX}j_X + r_{NH} - n_{NH}j_{HG})_+ \end{equation}
+\begin{equation} \rho_N = (j_N + n_{NX}j_X + r_{NH} - n_{NH}j_{HG}y_{C}^{-1})_+ \end{equation}
 
 Due to the inherent inefficiency of the parallel complementary SU
 formulation, there is always some nitrogen shared with the symbiont even
@@ -797,15 +941,15 @@ coral biomass SU. The carbon rejected from this SU reflects the amount
 of excess fixed carbon available to the host that is not used in biomass
 formation:
 
-\begin{equation} j_{eC} = (jX + \rho_C{S \over H} - j_{HG})_+ \end{equation}
+\begin{equation} j_{eC} = (j_X + \rho_C{S \over H} - j_{HG}y_{C}^{-1})_+ \end{equation}
 
 This flux, \(j_{eC}\), is assumed to be available to the host as a
-respiratory substrate to support various energetically-demanding
-processes; of particular importance is the host's active carbon
-concentrating mechanisms (CCMs) that supply CO\textsubscript{2} for
-symbiont photosynthesis (Wooldridge 2013; Hopkinson, Tansik, and Fitt
-2015). We therefore specify \(j_{CO_2}\) as the host-mediated delivery
-of CO\textsubscript{2} to photosynthesis that encompasses potentially
+respiratory substrate to support energetically-demanding processes; of
+particular importance is the host's active carbon concentrating
+mechanisms (CCMs) that supply CO\textsubscript{2} for symbiont
+photosynthesis (Wooldridge 2013; Hopkinson, Tansik, and Fitt 2015). We
+therefore specify \(j_{CO_2}\) as the host-mediated delivery of
+CO\textsubscript{2} to photosynthesis that encompasses potentially
 diverse carbon-concentrating mechanisms (CCMs), including active
 transport of bicarbonate, carbonic anhydrase-catalyzed conversion of
 bicarbonate to CO\textsubscript{2} to promote diffusion toward the
@@ -854,19 +998,19 @@ CO\textsubscript{2} arrives at the photosynthesis SU from multiple
 sources: in addition to the CO\textsubscript{2} actively supplied by the
 host through its CCMs (\(j_{CO_2}\); Eq. 10), we assume a fixed
 proportion \(\sigma_{CH}\) of metabolic CO\textsubscript{2} generated by
-host biomass turnover is passively available to the photosynthesis SU,
-according to:
+the host from both biomass turnover and formation is passively available
+to the photosynthesis SU, according to:
 
-\begin{equation} r_{CH}=\sigma_{CH}j_{HT} \end{equation}
+\begin{equation} r_{CH}=\sigma_{CH}(j_{HT} + (1-y_C)j_{HG}/y_C) \end{equation}
 
 along with a fixed proportion of CO\textsubscript{2} generated by
 symbiont biomass turnover\footnote{Note that recycling of symbiont
   biomass turnover (\(rNS\) and \(rCS\)) only occurs based on the
   maintenance component of turnover (i.e., \(j_{ST}^0\)), and not the
   photodamage/bleaching component, as this loss represents biomass that
-  is expelled from the host.}:
+  is expelled from the host.} and formation:
 
-\begin{equation} r_{CS}=\sigma_{CS}j_{ST}^0 \end{equation}
+\begin{equation} r_{CS}=\sigma_{CS}(j_{ST}^0 + (1-y_C)j_{SG}/y_C) \end{equation}
 
 Fixed carbon is then produced by the photosynthesis SU according to:
 
@@ -910,10 +1054,10 @@ external light, but rather the amount of excess light energy after
 accounting for quenching by carbon fixation and NPQ. A direct
 consequence of this formulation is that CO\textsubscript{2}-limitation
 of photosynthesis can lead to ROS production, an important mechanism
-(Wooldridge 2009) that was not captured by previous representations of
-photooxidative stress (Eynaud, Nisbet, and Muller 2011). With this
-single SU, both the light and dark reactions of photosynthesis are
-represented, allowing for sink-limitation (i.e.,
+(Butow et al. 1998; Wooldridge 2009) that was not captured by previous
+representations of photooxidative stress (Eynaud, Nisbet, and Muller
+2011). With this single SU, both the light and dark reactions of
+photosynthesis are represented, allowing for sink-limitation (i.e.,
 CO\textsubscript{2}-limitation) to cause overreduction of the electron
 transport chain and ROS production.
 
@@ -925,14 +1069,14 @@ recycled from symbiont biomass turnover\footnote{See footnote 2.}
 
 to build new symbiont biomass, following the SU equation:
 
-\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS}) / n_{NS}}} - {1 \over {j_{CP} + (\rho_N{H \over S} + r_{NS}) / n_{NS}}}\bigg)^{-1} \end{equation}
+\begin{equation} j_{SG} = \bigg({1 \over j_{SGm}} + {1 \over y_{C}j_{CP}} + {1 \over {(\rho_N{H \over S} + r_{NS}) / n_{NS}}} - {1 \over {y_{C}j_{CP} + (\rho_N{H \over S} + r_{NS}) / n_{NS}}}\bigg)^{-1} \end{equation}
 
 The rejection flux of carbon from this SU represents the amount of fixed
 carbon produced by photosynthesis in excess of what can be used to
 produce symbiont biomass; this surplus, \(\rho_C\), is translocated to
 the coral host:
 
-\begin{equation} \rho_C = (j_{CP} - j_{SG})_+ \end{equation}
+\begin{equation} \rho_C = (j_{CP} - j_{SG}y_{C}^{-1})_+ \end{equation}
 
 Nitrogen rejected by the symbiont biomass SU, which has already been
 rejected by the host biomass SU, cannot be used by either partner and is
@@ -999,6 +1143,9 @@ availability of either of its two substrates using the formula
 where \(j_{S1}\) and \(j_{S2}\) are the specific input fluxes of the two
 substrates and \(j_{Pm}\) is the maximum specific product formation
 rate, in units of Cmol Cmol\textsuperscript{-1} d\textsuperscript{-1}.
+When both substrate input fluxes are higher than what can be used at the
+maximum production rate, this limitation coefficient is zero, implying
+that neither substrate is limiting production.
 
 \section{Steady state behavior}\label{steady-state-behavior}
 
@@ -1025,12 +1172,15 @@ stable states, which we interpret in the context of coral bleaching (see
 \includegraphics{../img/Fig2.png}
 \caption{Alternate stable states in S:H biomass and growth across a
 light gradient. Alternate stable states occur between
-\textasciitilde{}33-44 mol photons m\textsuperscript{-2}
+\textasciitilde{}25-42 mol photons m\textsuperscript{-2}
 d\textsuperscript{-1} under these conditions (DIN=1e-7 molN
-L\textsuperscript{-1}; X=2e-6 molX L\textsuperscript{-1}), depending on
-whether initial S:H is high (0.1, closed circles), representing a
-healthy coral, or low (0.0001, open circles), representing a bleached
-coral.}
+L\textsuperscript{-1}; X=1e-7 CmolX L\textsuperscript{-1}), depending on
+whether initial S:H is high (1, closed circles), representing a healthy
+coral, or low (0.0001, open circles), representing a bleached coral.
+Arrow above point at L=25 indicates a S:H ratio beyond the axis range;
+this `overshoot' phenomenon, in which initially bleached corals may
+achieve high S:H ratios while remaining in a carbon-limited state is
+discussed in the \emph{Coral Bleaching and Recovery} section.}
 \end{figure}
 
 To analyze positive-growth steady state behavior, we ran the model to
@@ -1050,17 +1200,17 @@ becomes less carbon-limited.
 \begin{figure}[htbp]
 \centering
 \includegraphics{../img/Fig3.png}
-\caption{Steady state values of (A) specific growth (Cmol
-Cmol\textsuperscript{-1} d\textsuperscript{-1}) and (B) the symbiont to
+\caption{Steady state values of (A) specific growth (C-mol H C-mol
+H\textsuperscript{-1} d\textsuperscript{-1}) and (B) the symbiont to
 host biomass ratio (C-mol S C-mol H\textsuperscript{-1}) across
 gradients of external irradiance and dissolved inorganic nitrogen. Note
 that typical conditions for reefs are \textasciitilde{}1e-7 M DIN and
 10-20 mol photons m\textsuperscript{-2} d\textsuperscript{-1}.
 Simulations for each combination of light and nutrients (41 points along
-each axis) were run for 100 days with a time step of 1 day. All
-parameters were set to default values and prey density set to zero.
-Negative steady state growth rates, and corresponding S:H ratios, were
-set to zero.}
+each axis) were run to steady state with all parameters at default
+values and prey density set to zero. Negative steady state growth rates
+and corresponding S:H ratios were set to zero, and a ceiling of 0.5 was
+imposed on S:H ratios to aid in visualization.}
 \end{figure}
 
 Similarly, increasing DIN alleviates nitrogen-limitation (Fig. 3A).
@@ -1142,13 +1292,12 @@ simulations below (see ``Dynamic behavior'').
 \section{Sensitivity analysis}\label{sensitivity-analysis}
 
 The values used for each parameter in the model (Table 2) are derived
-from relevant literature; these derivations are described in the
-Supplementary Information. Here we evaluate the sensitivity of the model
-to changes in these parameter values, which also serves to demonstrate
-the behavior of the dynamical system. We calculated fractional change in
-steady state values in response to fractional changes in parameter
-values, relative to their default values, under environmental conditions
-typical of coral reefs.
+from relevant literature (see Supplementary Information). Here we
+evaluate the sensitivity of the model to changes in these parameter
+values, which also serves to demonstrate the behavior of the dynamical
+system. We calculated fractional change in steady state values in
+response to fractional changes in parameter values, relative to their
+default values, under environmental conditions typical of coral reefs.
 
 \begin{figure}[htbp]
 \centering
@@ -1156,12 +1305,13 @@ typical of coral reefs.
 \caption{Sensitivity analysis. Plots show the fractional change in
 steady state values of growth (solid lines) and S:H biomass (dashed
 lines) in response to fractional changes in default parameter values
-(see Table 2 for default values). Parameters are grouped by which
-processes they are involved in. This sensitivity analysis was conducted
-at conditions typical for coral reef environments: low DIN (1e-7 M) and
-intermediate light (15 mol m\textsuperscript{-2} d\textsuperscript{-2}).
-Sensitivity analyses conducted other environmental conditions are
-presented in Figs S3-S7.}
+(see Table 2 for default values). Parameters are grouped by the
+processes in which they are involved. This sensitivity analysis was
+conducted at conditions typical for coral reef environments: low DIN
+(1e-7 M) and intermediate light (15 mol photons m\textsuperscript{-2}
+d\textsuperscript{-2}), with prey density set to zero. Sensitivity
+analyses conducted other environmental conditions are presented in Figs
+S3-S7.}
 \end{figure}
 
 Overall, relative changes in the steady state of the system are less
@@ -1175,8 +1325,8 @@ the amount of light absorbed by symbionts, with lower values increasing
 light-limitation. Increasing the maximum growth and turnover rates have
 the expected effects of increasing and decreasing growth, respectively.
 Parameters relating to photooxidative stress and bleaching have little
-impact under these environmental conditions (Fig. 4), but have larger
-impacts under higher light (e.g., Fig. S6). Sensitivity analyses
+impact under low nutrients and intermediate light (Fig. 4), but have
+larger impacts under higher light (e.g., Fig. S6). Sensitivity analyses
 conducted under different combinations of external light and nutrients
 are presented in Figs. S3-S7.
 
@@ -1199,32 +1349,32 @@ symbiont density was demonstrated nicely by Stimson (1997), who also
 found that experimental nutrient-enrichment amplified the light-driven
 seasonal oscillation. Using the levels of light and nutrients from this
 study as inputs, the model reproduces this observed interaction among
-environmental factors (Fig. 5), and also provides the mechanism: as
-increasing light in summer decreases carbon fixation due to
-photooxidative stress, symbionts grow slower than the host, leading to
-decreasing S:H ratios. Under nutrient enrichment, this effect is more
-pronounced, as CO\textsubscript{2}-limitation (due to higher symbiont
+environmental factors (Fig. 5), and also provides the mechanism:
+increasing light in summer decreases symbiont growth rates due to
+photooxidative stress, leading to decreasing S:H ratios. Under nutrient
+enrichment, this effect is more pronounced, as
+CO\textsubscript{2}-limitation of photosynthesis (due to higher symbiont
 standing stocks) causes mild bleaching that results in a similar
 summertime minimum S:H as the ambient nutrient case (`physiological
 bleaching' \emph{sensu} Fitt et al. (2001)). Decreasing light into
 winter then alleviates the photooxidative stress constraints on carbon
-fixation, such that nitrogen constrains the S:H ratio, explaining why
-S:H increases more when DIN is enriched (Fig. S8).
+fixation such that nitrogen-limitation constrains the S:H ratio,
+explaining why S:H increases more when DIN is enriched (Fig. S8).
 
 \begin{figure}[htbp]
 \centering
 \includegraphics{../img/Fig5.png}
 \caption{Light-driven seasonal dynamics of symbiont abundance and coral
 growth. Light input (upper panel) was designed as a sinusoidal curve
-with a period of one year, with maximum and minimum values of 44 and 22
-mol photons m\textsuperscript{-2} d\textsuperscript{-1}, based on
-Stimson (1997). The dynamic behavior of symbiont to host biomass ratio
-(middle panel) and the specific growth rate of host biomass (lower
-panel) show seasonal oscillations that are greater in magnitude under
-higher nutrients (1e-5 mol N L\textsuperscript{-1}; dashed lines)
-relative to lower nutrients (1e-7 mol N L\textsuperscript{-1}; solid
-lines), consistent with the findings of Stimson (1997). Prey density was
-set at 1e-5 CmolX L\textsuperscript{-1}.}
+with a period of one year, with maximum and minimum values of 44 and 20
+mol photons m\textsuperscript{-2} d\textsuperscript{-1}, corresponding
+to those measured by Stimson (1997). The dynamic behavior of symbiont to
+host biomass ratio (middle panel) and the specific growth rate of host
+biomass (lower panel) show seasonal oscillations that are greater in
+magnitude under high nutrients (15.14 \(\mu\)M N; dashed lines) relative
+to low nutrients (0.14 \(\mu\)M N; solid lines), consistent with the
+findings of Stimson (1997). Prey density was set at 1e-6 CmolX
+L\textsuperscript{-1}.}
 \end{figure}
 
 The prediction of higher growth when light is reduced indicates that
@@ -1249,7 +1399,7 @@ the direction and magnitude of seasonal changes in growth and symbiont
 abundance, depending on location and microhabitat. Nevertheless, the
 seasonal variability predicted here (Fig. 5) is consistent with
 experimental and field observations for corals, and demonstrates the
-power of this model to predict dynamic behavior that mechanistically
+model's ability to predict dynamic behavior that mechanistically
 integrates multiple environmental drivers.
 
 \subsection{Coral bleaching and
@@ -1321,7 +1471,7 @@ as photosynthesis becomes CO\textsubscript{2}-limited (E) and symbiont
 densities rapidly decline (F) into a bleached state. Substrate
 limitation coefficients were calculated using Eq. 23. All parameters
 were set at default values with external DIN=1e-7 mol N/L and prey
-density=0).}
+density set to zero).}
 \end{figure}
 
 The importance of host CCM activity establishes significant interactive
@@ -1345,12 +1495,12 @@ between high nutrients and bleaching.
 \caption{Bleaching with interactive factors. Simulations of high light
 stress (sinusoid with maximum=48 mol ph m\textsuperscript{-2}
 d\textsuperscript{-1}) under default environmental conditions (solid
-line; DIN=1e-7 mol N L\textsuperscript{-1}; prey=3e-6 CmolX
-L\textsuperscript{-1}), or with elevated feeding (dashed line; prey=6e-6
-CmolX L\textsuperscript{-1}), or elevated nutrients (dotted line;
-DIN=1e-6 mol N L\textsuperscript{-1}). Initial symbiont biomass was set
-to the steady state for each set of starting conditions, respectively.
-(All parameters set to default values).}
+line; DIN=1e-7 mol N L\textsuperscript{-1}; prey=2e-7 C-molX
+L\textsuperscript{-1}), or with elevated feeding (dashed line; prey=1e-6
+C-molX L\textsuperscript{-1}), or elevated nutrients (dotted line;
+DIN=4e-6 mol N L\textsuperscript{-1}). Initial symbiont biomass was set
+to the steady state for each set of starting conditions, with all other
+parameters at default values.}
 \end{figure}
 
 Since bleaching can be understood as a transition from a
@@ -1437,15 +1587,15 @@ larger overshoot in S:H biomass.
 \centering
 \includegraphics{../img/Fig8.png}
 \caption{Recovery from bleaching with varying N:C availability (A:
-N:C=0.09; B: N:C=0.10; C: N:C=0.30). Higher N:C ratios in a
+N:C=0.100; B: N:C=0.175; C: N:C=0.220). Higher N:C ratios in a
 heterotrophic food source (effectively representing higher external DIN
 and/or lower feeding rates) cause a larger overshoot in the S:H biomass
 ratio, and prolong the duration of time until the system `recovers' by
 re-establishing nitrogen-limitation. Substrate limitation coefficients
 were calculated using Eq. 23. All simulations were run with default
-parameters (except varying \(n_{NX}\)), with L=10 mol photons
+parameters (except varying \(n_{NX}\)), with L=20 mol photons
 m\textsuperscript{2} d\textsuperscript{-1}, DIN=1e-7 mol N
-L\textsuperscript{-1}, prey=1e-6 CmolX L\textsuperscript{-1}, and
+L\textsuperscript{-1}, prey=1e-7 CmolX L\textsuperscript{-1}, and
 initial S:H biomass=0.001.}
 \end{figure}
 
@@ -1453,18 +1603,19 @@ These dynamics reveal that the re-establishment of nitrogen-limitation
 is the most important diagnostic of recovery to a `healthy' state, as
 this is when positive growth rates are resumed. A high S:H biomass ratio
 alone does not necessarily indicate that a `healthy' state has been
-reached, since the C-limited state may still persist (e.g.~Fig. 8B, 8C).
-This could explain why corals that have recovered their symbiont
+reached, since the carbon-limited state may still persist (e.g.~Fig. 8B,
+8C). This could explain why corals that have recovered their symbiont
 populations after bleaching may still exhibit energetic deficits and
 physiological impacts, possibly for months to years (Levitan et al.
-2014, Hughes and Grottoli (2013))). Therefore, host acquisition of
-carbon from a source other than the symbiont may be extremely important
-for the system to recover from bleaching. Indeed, host feeding has been
-shown to promote a more rapid return to pre-bleaching levels of key
-physiological parameters in recovering corals (Connolly, Lopez-Yglesias,
-and Anthony 2012). The model predicts that acquisition of carbon from
-other sources, such as direct uptake of DOC (Levas et al. 2015), may
-also promote more rapid recovery from a bleached state.
+2014, Hughes and Grottoli (2013))). These findings suggest that host
+acquisition of carbon from a source other than the symbiont may be
+extremely important for the system to recover from bleaching. Indeed,
+host feeding has been shown to promote a more rapid return to
+pre-bleaching levels of key physiological parameters in recovering
+corals (Connolly, Lopez-Yglesias, and Anthony 2012). Additional carbon
+sources for the host, such as direct uptake of dissolved organic carbon
+(Levas et al. 2015), may also promote more rapid recovery from a
+bleached state.
 
 \section{Conclusions}\label{conclusions}
 
@@ -1506,12 +1657,12 @@ is high, and we envision this work as a foundation for continued
 development, which may include more detailed treatments of specific
 modules (e.g., DIC processing), and the incorporation of more external
 forcing capabilities (e.g., external DIC, temperature). Importantly,
-this effort may be undertaken by the scientific community at large,
-including those with theoretical and empirical backgrounds, which is why
-the code for this model has been developed openly using the R language.
-Ultimately, the continued refinement of these tools is fundamental in
-elucidating the mechanisms of symbiosis function and dysfunction, and in
-predicting coral responses to environmental change.
+open source R code allows this effort to benefit from contributions from
+the wider scientific community, including those with empirical and
+theoretical backgrounds. Ultimately, the continued refinement of these
+tools is fundamental in elucidating the mechanisms of symbiosis function
+and dysfunction, and in predicting coral responses to environmental
+change.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
@@ -1570,6 +1721,13 @@ Satapoomin. 1999. ``Seasonal fluctuations in environmental factors and
 variations in symbiotic algae and chlorophyll pigments in four
 Indo-Pacific coral species.'' \emph{Marine Ecology Progress Series} 191:
 53--69.
+
+\hypertarget{ref-Butow:1998gz}{}
+Butow, B, D Wynne, A Sukenik, O Hadas, and E Tel-Or. 1998. ``The
+synergistic effect of carbon concentration and high temperature on lipid
+peroxidation in Peridinium gatunense.'' \emph{Journal of Plankton
+Research} 20 (2). Oxford University Press: 355--69.
+doi:\href{https://doi.org/10.1093/plankt/20.2.355}{10.1093/plankt/20.2.355}.
 
 \hypertarget{ref-Coles:1978p1124}{}
 Coles, SL, and Paul L Jokiel. 1978. ``Synergistic effects of
