@@ -7,6 +7,7 @@ output:
     toc: true
     toc_float: true
     toc_depth: 1
+    code_folding: hide
 bibliography: library.bib
 ---
 
@@ -628,8 +629,118 @@ run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
 par(mfcol=c(6,2), mar=c(2,2,1,4), mgp=c(1,0,0), tcl=0.2, xaxs="i")
 
-plot_run_v2(run1)
-plot_run_v2(run2)
+with(run1, {
+      # External irradiance
+    plot(time, env$L, type="l", col="gold", ylim=c(0,60), lwd=2, xlab="", ylab="mol ph/m2/d")
+    title("External irradiance and DIN", adj=0, line=0.25)
+    par(new=T)
+    plot(time, env$N, type="l", col="blue", ylim=c(0,10.14e-6), lwd=2, axes=F, xlab="", ylab="")
+    axis(side=4); mtext(side=4, text="molN/L", line=1, cex=0.75)
+    
+    # Symbiont to host biomass ratio
+    totSH <- S$S / H$H
+    totSHf <- totSH[length(totSH)]
+    plot(time, totSH, type="l", col="black", ylim=c(0, 0.25), ylab="CmolS/CmolH", xlab="", lwd=2)
+    text(time[0.95*length(time)], totSHf, labels=as.character(round(totSHf, 3)), pos=3, xpd=T, cex=0.75)
+    title("Symbiont:host biomass", adj=0, line=0.25)
+    
+    # Specific growth rates of host and symbiont
+    Hgrf <- H$dH.Hdt[length(H$dH.Hdt)]
+    plot(time, H$dH.Hdt, type="l", ylim=c(-0.01, 0.13), 
+         xlab="", ylab="d-1", lwd=2, cex=1, cex.lab=1)
+    if(any(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)])<0)) abline(h=0, lwd=0.5, lty=3)
+    text(time[0.95*length(time)], Hgrf, labels=as.character(round(Hgrf, 3)), pos=3, xpd=T, cex=0.75)
+    #title("State variable dynamics", adj=0, cex.main=2, outer = T)
+    title("Specific growth rates", adj=0, line=0.25)
+    lines(time, S$dS.Sdt, col="black", lwd=1)
+    legend("topright", legend=c("Host", "Sym"), lwd=c(2,1), col="black", bty="n", y.intersp=1, cex=0.75)
+    
+    # Light quenching (carbon fixation, NPQ, and excess (=ROS producing))
+    plot(NA, xlim=range(time), xlab="", ylim=c(0,130), ylab="mol ph/CmolS/d")
+    title("Light quenching", adj=0, line=0.25)
+    lines(time, S$jCP/pars$yCL, col="gold", lwd=1) # amt. quenched by photosynthesis
+    lines(time, S$jCP/pars$yCL + S$jNPQ, col="gold", lty=1, lwd=2) # amt. quenched by photo + NPQ
+    lines(time, S$jL, col="gold", lty=3, lwd=2) # total amt. absorbed
+    legend("topright", legend=c("ROS", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(2,2,1), col="gold", bty="n", cex=0.75)
+
+    # Photosynthesis: substrate-limitation
+    pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    )
+    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-2, 2))
+    title("Photosynthesis: substrate-limitation", adj=0, line=0.25)
+    lines(time, pl, col="black", lty=1, lwd=2)
+    abline(h=0, lty=3)
+    text(par("usr")[2], 0, labels="L-lim.\nCO2-lim.", cex=0.75, adj=1)
+    
+    # Biomass formation - substrate-limitation
+    sl <- log(  pmin(pars$yC*S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
+    hl <- log(  pmin(pars$yC*S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
+    maxabs <- max(c(abs(hl), abs(sl)))
+    range <- range(c(hl, sl))
+    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-1.5,1.5))
+    title("Biomass: substrate-limitation", adj=0, line=0.25)
+    lines(time, hl, col="black", lty=1, lwd=2)
+    lines(time, sl, col="black", lty=1, lwd=1)
+    abline(h=0, lty=3)
+    text(par("usr")[2], 0, labels="N-lim.\nC-lim.", cex=0.75, adj=1)
+    legend("topright", legend=c("Host", "Sym"), lty=1, lwd=c(2,1), col="black", bty="n", cex=0.75)
+})
+
+with(run2, {
+      # External irradiance
+    plot(time, env$L, type="l", col="gold", ylim=c(0,60), lwd=2, xlab="", ylab="mol/m2/d")
+    title("External irradiance and DIN", adj=0, line=0.25)
+    par(new=T)
+    plot(time, env$N, type="l", col="blue", ylim=c(0,10.14e-6), lwd=2, axes=F, xlab="", ylab="")
+    axis(side=4); mtext(side=4, text="molN/L", line=1, cex=0.75)
+    
+    # Symbiont to host biomass ratio
+    totSH <- S$S / H$H
+    totSHf <- totSH[length(totSH)]
+    plot(time, totSH, type="l", col="black", ylim=c(0, 0.25), ylab="CmolS/CmolH", xlab="", lwd=2)
+    text(time[0.95*length(time)], totSHf, labels=as.character(round(totSHf, 3)), pos=3, xpd=T, cex=0.75)
+    title("Symbiont:host biomass", adj=0, line=0.25)
+    
+    # Specific growth rates of host and symbiont
+    Hgrf <- H$dH.Hdt[length(H$dH.Hdt)]
+    plot(time, H$dH.Hdt, type="l", ylim=c(-0.01,0.13), 
+         xlab="", ylab="d-1", lwd=2, cex=1, cex.lab=1)
+    if(any(c(H$dH.Hdt[-(1:10)], S$dS.Sdt[-(1:10)])<0)) abline(h=0, lwd=0.5, lty=3)
+    text(time[0.95*length(time)], Hgrf, labels=as.character(round(Hgrf, 3)), pos=3, xpd=T, cex=0.75)
+    #title("State variable dynamics", adj=0, cex.main=2, outer = T)
+    title("Specific growth rates", adj=0, line=0.25)
+    lines(time, S$dS.Sdt, col="black", lwd=1)
+    legend("topright", legend=c("Host", "Sym"), lwd=c(2,1), col="black", bty="n", y.intersp=1, cex=0.75)
+    
+    # Light quenching (carbon fixation, NPQ, and excess (=ROS producing))
+    plot(NA, xlim=range(time), xlab="", ylim=c(0,130), ylab="mol ph/CmolS/d")
+    title("Light quenching", adj=0, line=0.25)
+    lines(time, S$jCP/pars$yCL, col="gold", lwd=1) # amt. quenched by photosynthesis
+    lines(time, S$jCP/pars$yCL + S$jNPQ, col="gold", lty=1, lwd=2) # amt. quenched by photo + NPQ
+    lines(time, S$jL, col="gold", lty=3, lwd=2) # total amt. absorbed
+    legend("topright", legend=c("ROS", "NPQ", "Photo."), lty=c(3,1,1), lwd=c(2,2,1), col="gold", bty="n", cex=0.75)
+
+    # Photosynthesis: substrate-limitation
+    pl <- log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    )
+    maxabs <- max(abs(pl))
+    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-2, 2))
+    title("Photosynthesis: substrate-limitation", adj=0, line=0.25)
+    lines(time, pl, col="black", lty=1, lwd=2)
+    abline(h=0, lty=3)
+    text(par("usr")[2], 0, labels="L-lim.\nCO2-lim.", cex=0.75, adj=1)
+    
+    # Biomass formation - substrate-limitation
+    sl <- log(  pmin(pars$yC*S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  )
+    hl <- log(  pmin(pars$yC*S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  )
+    maxabs <- max(c(abs(hl), abs(sl)))
+    range <- range(c(hl, sl))
+    plot(NA, xlim=range(time), xlab="", ylab="", ylim=c(-1.5,1.5))
+    title("Biomass: substrate-limitation", adj=0, line=0.25)
+    lines(time, hl, col="black", lty=1, lwd=2)
+    lines(time, sl, col="black", lty=1, lwd=1)
+    abline(h=0, lty=3)
+    text(par("usr")[2], 0, labels="N-lim.\nC-lim.", cex=0.75, adj=1)
+    legend("topright", legend=c("Host", "Sym"), lty=1, lwd=c(2,1), col="black", bty="n", cex=0.75)
+})
 ```
 
 -----
