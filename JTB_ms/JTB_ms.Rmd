@@ -96,8 +96,8 @@ Table 2. Model parameters (units explained in the text). Justification and/or de
 | $\sigma_{CH}$ | Proportion host metabolic CO~2~ recycled to photosynthesis | -- | $`r defpars$sigmaCH`$ |
 | $\sigma_{NS}$ | Proportion N turnover recycled in symbiont | -- | $`r defpars$sigmaNS`$ |
 | $\sigma_{CS}$ | Proportion symbiont metabolic CO~2~ recycled to photosynthesis | -- | $`r defpars$sigmaCS`$ |
-| $j_{Xm}$ | Maximum prey assimilation rate from host feeding | molX C-mol H^-1^ d^-1^ | $`r defpars$jXm`$ |
-| $K_X$ | Half-saturation constant for prey assimilation | molX L^-1^ | $`r defpars$KX`$ |
+| $j_{Xm}$ | Maximum prey assimilation rate from host feeding | C-mol X C-mol H^-1^ d^-1^ | $`r defpars$jXm`$ |
+| $K_X$ | Half-saturation constant for prey assimilation | C-mol X L^-1^ | $`r defpars$KX`$ |
 | $j_{Nm}$ | Maximum host DIN uptake rate | mol N C-mol H^-1^ d^-1^ | $`r defpars$jNm`$ |
 | $K_N$ | Half-saturation constant for host DIN uptake | mol N L^-1^ | $`r defpars$KN`$ |
 | $k_{CO_2}$ | Efficacy of CO~2~ delivery to photosynthesis by host CCMs | mol CO~2~ mol C^-1^ | $`r defpars$kCO2`$ |

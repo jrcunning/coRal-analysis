@@ -64,18 +64,18 @@ N:C ratio (dimensionless)
 
 #### $j_{HT}^0$: Specific turnover rate of host biomass {-}
 @Jacobson:2016bk parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate of 0.03 mol C~E~ mol C~V~^-1^ d^-1^, where subscripts E and V refer to reserve and structural biomass. We assume (simplistically) the same rate per unit of total biomass:
-```{r jHT, echo=T}
+```{r jHT, echo=F}
 0.03
 ```
-CmolH CmolH^-1^ d^-1^
+C-mol H C-mol H^-1^ d^-1^
 <br><br>
 
 #### $j_{ST}^0$: Specific turnover rate of symbiont biomass {-}
 Values of *Symbiodinium* and other dinoflagellate respiration rates may provide a reasonable approximation of the specific turnover rate of symbiont biomass, yet values calculated from various studies range widely from 0.01 to nearly 0.2. Without data for a more confident estimation of this parameter, we choose a value at the low end of this range, since 0.2 seems unrealistic and many rates may be depressed in symbiotic dinoflagellates relative to their free-living counterparts.
-```{r jST, echo=T}
+```{r jST, echo=F}
 0.03
 ```
-CmolS CmolS^-1^ d^-1^  
+C-mol S C-mol S^-1^ d^-1^  
 <br><br>
 
 #### $\sigma_{NH}, \sigma_{NS}$: Proportions of nitrogen recycled from host and symbiont biomass turnover {-}
@@ -107,12 +107,8 @@ Assume that most metabolic CO~2~ produced within host cells rapidly converts to 
 ```{r jXm}
 77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 24/6
 ```
-molX CmolH^-1^ d^-1^
+C-mol X C-mol H^-1^ d^-1^
 <br><br>
-
-@Osinga:2011di measured a maximum feeding rate of 
-half sat = 294119 nauplii L^-1^
-294119 artemia/L * 6.78e-7 gC/artemia = 0.19941268 gC/L / 12.011g/mol = 0.01656815
 
 
 #### $K_X$: Half-saturation constant of assimilation from host feeding {-}
@@ -120,7 +116,7 @@ For consistency, and due to a lack of available data, we use the same value as @
 ```{r KX}
 1e-6
 ```
-CmolX L^-1^
+C-mol X L^-1^
 <br><br>
 
 #### $j_{Nm}$: Maximum specific DIN uptake rate by host {-}
@@ -128,31 +124,31 @@ CmolX L^-1^
 ```{r jNm1}
 7.22 * h.d * nmolchlA.cm2 * gchlA.molchlA * mg.g / nmol.mol / CmolR.m2_Spis * cm2.m2 / µmol.mol
 ```
-mol NH~4~^+^-N  CmolH^-1^ d^-1^  
+mol N C-mol H^-1^ d^-1^  
 <br>
 @HoeghGuldberg:1999p3974 measured ammonium and dissolved free amino acid uptake in *Pocillopora damicornis* and reported a maximum rate of 91.8 nmol N cm^-2^ h^-1^, which converts to:
 ```{r jNm2}
 91.8 * h.d * cm2.m2 / CmolR.m2_Spis / nmol.mol
 ``` 
-molN CmolH^-1^ d^-1^  
+mol N C-mol H^-1^ d^-1^  
 <br>
 @Godinot:2011jg measured nitrate and ammonium uptake rates in *Stylophora pistillata* under high nutrient concentrations and reported a maximum value of 3.5 µmolN mg chl^-1^ d^-1^ [addition of bars in Fig. 4D,E @ 29°C], which converts to:
 ```{r jNm3}
 3.5 * h.d * 22 / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000
 ```
-molN CmolH^-1^ d^-1^   
+mol N C-mol H^-1^ d^-1^   
 <br>
 @Godinot:2011bm measured ammonium uptake kinetics in *Stylophora pistillata* and reported a maximum rate of 5.42 molN mg chl^-1^ h^-1^, which converts to:
 ```{r jNm4}
 5.42 * h.d * µgchl.cm2_Spis / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000
 ```
-molN CmolH^-1^ d^-1^   
+mol N C-mol H^-1^ d^-1^   
 <br>
 Averaging these reported values, we arrive at:  
 ```{r jNm_avg, echo=F}
 round(mean(c(7.22 * h.d * nmolchlA.cm2 * gchlA.molchlA * mg.g / nmol.mol / CmolR.m2_Spis * cm2.m2 / µmol.mol, 91.8 * h.d * cm2.m2 / CmolR.m2_Spis / nmol.mol, 3.5 * h.d * 22 / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000, 5.42 * h.d * µgchl.cm2_Spis / CmolR.m2_Spis * cm2.m2 / µmol.mol / 1000)), 3)
 ```
-molN CmolH^-1^ d^-1^
+mol N C-mol H^-1^ d^-1^
 <br><br>
 
 #### $K_N$: Half-saturation constant for DIN uptake by host {-}
@@ -162,7 +158,7 @@ Averaging these reported values (weighted by number of species measured), we arr
 ```{r KN}
 (1.84*3 + 0.46*1)/4
 ``` 
-molN L^-1^
+mol N L^-1^
 <br><br>
 
 #### $k_{CO_2}$: Efficacy of CO~2~ delivery by host CCMs {-}
@@ -170,7 +166,7 @@ This parameter represents the relative amount of CO~2~ that can be delivered by 
 ```{r kCO2, echo=F}
 10
 ```
-molCO~2~ molC^-1^
+mol CO~2~ mol C^-1^
 <br><br>
 
 #### $j_{HGm}$: Maximum specific growth rate of host {-}
@@ -178,7 +174,7 @@ We set this to a high value such that constraints on growth are primarily determ
 ```{r jHGm, echo=F}
 1
 ```
-CmolH CmolH^-1^ d^-1^
+C-mol H C-mol H^-1^ d^-1^
 <br><br>
 
 #### $y_{CL}$: Quantum yield of photosynthesis {-}
@@ -186,7 +182,7 @@ The maximum theoretical quantum yield is 0.125 mol C fixed per mol photons. @Bro
 ```{r yCL, echo=F}
 0.1
 ```
-molC molph^-1^
+mol C mol photons^-1^
 <br><br>
 
 #### $y_{C}$: Yield of biomass formation from photosynthate {-}
@@ -204,7 +200,7 @@ Following this macrochemical equation, the amount of CO~2~ produced during bioma
 ```{r astar}
 0.01095 * mg.g * gchlA.gC * gC.molC
 ```
-m^2^ CmolS^-1^
+m^2^ C-mol S^-1^
 <br><br>
 
 #### $k_{NPQ}$: Capacity of non-photochemical quenching {-}
@@ -212,7 +208,7 @@ m^2^ CmolS^-1^
 ```{r kNPQ}
 defpars$jCPm / defpars$yCL * 4
 ```
-mol ph CmolS^-1^ d^-1^
+mol photons C-mol S^-1^ d^-1^
 <br><br>
 
 #### $k_{ROS}$: Amount of excitation energy not quenched by photoehcemistry or NPQ that doubles relative production of ROS {-}
@@ -220,7 +216,7 @@ mol ph CmolS^-1^ d^-1^
 ```{r kROS, echo=F}
 80
 ```
-mol ph CmolS^-1^ d^-1^
+mol photons C-mol S^-1^ d^-1^
 <br><br>    
 
 #### $j_{CPm}$: Maximum specific photosynthesis rate of symbiont {-}
@@ -228,15 +224,15 @@ In theory, this value should be the maximum carboxylation rate of *Symbiodinium*
 ```{r jCPm}
 140 * s.h * h.d * RuBP.CmolS
 ```
-molC CmolS^-1^ d^-1^
+mol C C-mol S^-1^ d^-1^
 <br><br>
 
 #### $j_{SGm}$: Maximum specific growth rate of symbiont {-}
-We use the maximum specific growth rate of *Symbiodinium* that is reported by @Chang:1983p8066:
+We use the maximum specific growth rate of *Symbiodinium* that is reported by @Chang:1983p8066  
 ```{r jSGm, echo=F}
 0.25
 ```
-CmolS CmolS^-1^ d^-1^
+C-mol S C-mol S^-1^ d^-1^
 <br><br>
 
 #### $b$: Scaling parameter for strength of bleaching response {-}
@@ -548,7 +544,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S7
-```{r sens_HLHN, cache=T, echo=F, eval=T, fig.cap="Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_HLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -650,17 +646,17 @@ input <- expand.grid(L=seq(1,60,1), initS=c(0.0001,1))
 
 # Run steady states in parallel
 output1 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=5e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=2e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
 output2 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=1e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=0, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
 output3 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=5e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=1e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
@@ -682,7 +678,7 @@ res4 <- cbind(input, output4)
 par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), tcl=-0.025)
 
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=1e-7 mol/L; X=2e-6 mol/L")
+title("DIN=1e-7 mol/L; X=2e-7 mol/L")
 points(c(48,48,53,53), c(0.42,0.45,0.42,0.45), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
 text(38, 0.435, labels="init. S:H", xpd=T, cex=0.7, srt=90)
 text(46, c(0.42,0.45), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
@@ -704,7 +700,7 @@ p1 <- apply(res1, 1, FUN=function(x) {
 })
 
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=1e-7 mol/L; X=1e-6 mol/L")
+title("DIN=2e-6 mol/L; X=1e-7 mol/L")
 p2 <- apply(res2, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -721,7 +717,7 @@ p2 <- apply(res2, 1, FUN=function(x) {
 })
 
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=1e-6 mol/L; X=2e-6 mol/L")
+title("DIN=2e-6 mol/L; X=1e-6 mol/L")
 p3 <- apply(res3, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
