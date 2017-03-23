@@ -661,7 +661,7 @@ output3 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
 }
 
 output4 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=0, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+  run <- run_coral_ss(env=list(L=input$L[i], X=4e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
   list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
 }
 
@@ -734,7 +734,7 @@ p3 <- apply(res3, 1, FUN=function(x) {
 })
 
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=2e-6 mol/L; X=0 mol/L")
+title("DIN=2e-6 mol/L; X=4e-7 mol/L")
 p4 <- apply(res4, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
