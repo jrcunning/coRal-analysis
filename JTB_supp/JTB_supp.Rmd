@@ -7,7 +7,6 @@ output:
     toc: true
     toc_float: true
     toc_depth: 1
-    code_folding: hide
 bibliography: library.bib
 ---
 
