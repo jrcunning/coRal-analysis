@@ -3,10 +3,10 @@ title: A dynamic bioenergetic model for coral-*Symbiodinium* symbioses and coral
 author:
   - name: Ross Cunning
     email: ross.cunning@gmail.com
-    affiliation: University of Hawaii
+    affiliation: HIMB
     footnote: Corresponding Author
   - name: Erik B. Muller
-    affiliation: UCSB, MSI
+    affiliation: UCSB,MSI
   - name: Ruth D. Gates
     affiliation: HIMB
   - name: Roger M. Nisbet
@@ -299,6 +299,9 @@ These dynamics reveal that the re-establishment of nitrogen-limitation is the mo
 This dynamic bioenergetic model of coral-*Symbiodinium* symbioses mechanistically reproduces patterns in steady-state coral growth and symbiont abundance commonly observed in corals, including higher symbiont abundance with higher nutrients and feeding, lower symbiont abundance with increasing light, and optimal growth at intermediate light levels. Moreover, the model reproduces complex dynamic behaviors including seasonal changes in symbiont density at different nutrient levels, rapid bleaching above a threshold of high light, mitigation of bleaching by heterotrophic feeding, exacerbation of bleaching by elevated nutrients, and an overshoot of symbiont density during recovery from bleaching. These examples demonstrate the model's ability to integrate multiple environmental forcing functions to reproduce complex responses; meanwhile, the diversity of these phenomena suggest the model has captured many of the important features of the system in a unifying mechanistic framework. This model also provides a new conceptual framework for considering coral bleaching as a transition to an alternate stable state, which has important implications for understanding the performance and maintenance of symbiotic interactions. In this context, the 'healthy' stable state represents a scenario in which nitrogen-limitation stabilizes the symbiont to host biomass ratio and maintains positive growth. Conversely, carbon-limitation represents a dysfunctional state wherein positive feedbacks result in a loss of photosynthetic capacity and negative growth. Importantly, these 'control' mechanisms arise entirely passively through feedbacks present in the system.
 
 In addition to the suite of specific examples presented here, the model can be used to explore many different dynamic environmental scenarios, and represents a tool that biologists and ecologists can use to generate hypotheses and make predictions in both experimental and natural settings. Moreover, parameter values can be modified to correspond to different genetic or functional types of coral hosts and *Symbiodinium* partners in order to evaluate variability in system responses. Thus, the diversity of potential applications for this model is high, and we envision this work as a foundation for continued development, which may include more detailed treatments of specific modules (e.g., DIC processing), and the incorporation of more external forcing capabilities (e.g., external DIC, temperature). Importantly, open source R code allows this effort to benefit from contributions from the wider scientific community, including those with empirical and theoretical backgrounds. Ultimately, the continued refinement of these tools is fundamental in elucidating the mechanisms of symbiosis function and dysfunction, and in predicting coral responses to environmental change.
+
+# Acknowledgements
+This work was supported by a NSF Postdoctoral Research Fellowship in Biology to RC (#1400787).
 
 References {#references .unnumbered}
 ==========
