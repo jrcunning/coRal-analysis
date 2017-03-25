@@ -1,6 +1,7 @@
 # Figure 6
 # Bleaching in response to increasing light
 library(coRal)
+library(dplyr)
 
 # Set run time vector
 time <- seq(-2, 80, 0.1)  # if single model run, use time input

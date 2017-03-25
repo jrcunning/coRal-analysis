@@ -1,5 +1,7 @@
 # Fig. 7
 library(coRal)
+library(dplyr)
+library(scales)
 
 time <- seq(1, 200, 0.1)  # Set time
 defpars <- coRal::def_pars()  # Get default parameters
