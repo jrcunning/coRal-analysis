@@ -17,7 +17,7 @@ run_steady_states <- function(pars, at, outfile=NULL, runtime=F, food=0) {
   # Calculate steady states...
   steady_states <- foreach(i=1:nrow(at), .combine='rbind', .packages='dplyr') %dopar% {
     env <- list(L=at[i,]$L, N=at[i,]$N, X=food)
-    run <- run_coral_ss(env=env, pars=pars, dt=0.1)
+    run <- coRal::run_coral_ss(env=env, pars=pars, dt=0.1)
     ss <- lapply(run[c("H", "S")], function(x) x[nrow(x), ])
     gr <- ss$H$dH.Hdt
     sh <- ss$S$S/ss$H$H
