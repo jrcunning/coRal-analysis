@@ -2,14 +2,11 @@
 library(parallel)
 library(doParallel)
 library(foreach)
-
-# Load functions
-sapply(c("R/def_pars.R",
-         "R/run_coral_ss.R"), 
-       source, .GlobalEnv)
+library(dplyr)
+library(coRal)
 
 # Get default parameter values
-defpars <- def_pars()
+defpars <- coRal::def_pars()
 
 # Set up cluster for parallel processing
 cl <- makeCluster(detectCores())  # Initiate cluster
@@ -20,8 +17,10 @@ input <- expand.grid(L=seq(20,50,1), initS=c(0.0001,1))
 
 # Run steady states in parallel
 output <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=1e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
-  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+  run <- coRal::run_coral_ss(env=list(L=input$L[i], X=1e-7, N=1e-7), 
+                             pars=replace(defpars, "initS", input$initS[i]), 
+                             dt=0.1)
+  list(gr=dplyr::last(run$H$dH.Hdt), sh=dplyr::last(run$S$S/run$H$H))
 }
 
 stopCluster(cl)  # Stop cluster

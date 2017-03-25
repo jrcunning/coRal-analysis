@@ -6,9 +6,7 @@ run_steady_states <- function(pars, at, outfile=NULL, runtime=F, food=0) {
   require(doParallel)
   require(reshape2)
   require(dplyr)
-  
-  # Load functions
-  source("R/run_coral_ss.R", local=TRUE)
+  require(coRal)
   
   # Set up cluster for parallel processing
   cl <- makeCluster(detectCores())  # Initiate cluster
@@ -23,11 +21,7 @@ run_steady_states <- function(pars, at, outfile=NULL, runtime=F, food=0) {
     ss <- lapply(run[c("H", "S")], function(x) x[nrow(x), ])
     gr <- ss$H$dH.Hdt
     sh <- ss$S$S/ss$H$H
-    #hl <- with(ss, log(  pmin(S$rhoC*S$S/H$H + H$jX, pars$jHGm) / pmin((H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)  ))
-    #sl <- with(ss, log(  pmin(S$jCP, pars$jSGm)   /   pmin((H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)  ))
-    #ee <- with(ss, max(0, S$jL - (S$jCP/run$pars$yCL + run$pars$kNPQ)))
-    #pl <- with(ss, log(   pmin((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, pars$jCPm)   /   pmin(S$jL * pars$yCL, pars$jCPm)    ))
-    data.frame(gr=gr, sh=sh) #, hl=hl, sl=sl, ee=ee, pl=pl)
+    data.frame(gr=gr, sh=sh)
   }
   stopCluster(cl)  # Stop cluster
   if (runtime==T) print(proc.time() - start)  # Print time elapsed if runtime==T

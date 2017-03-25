@@ -1,29 +1,25 @@
 # Figure 5
 # Seasonal variation in S:H at different DIN levels
 # Values based on Stimson et al. 1997
-
-# Load functions
-sapply(c("R/def_pars.R",
-         "R/init_env.R",
-         "R/run_coral.R",
-         "R/run_coral_ss.R"), 
-       source, .GlobalEnv)
+library(coRal)
 
 # Set parameters
-defpars <- def_pars()  # Get default parameters
+defpars <- coRal::def_pars()  # Get default parameters
 
 # Set run time vector
 time <- seq(1, 365, 0.1)  # if single model run, use time input
 
 # Initialize environments
-env1 <- init_env(time=time, L=c(20,44,2), N=c(0.14e-6,0.14e-6,0), X=c(1e-6,1e-6,0))
-env2 <- init_env(time=time, L=c(20,44,2), N=c(15.14e-6,15.14e-6,0), X=c(1e-6,1e-6,0))
+env1 <- coRal::init_env(time=time, L=c(20,44,2), 
+                        N=c(0.14e-6,0.14e-6,0), X=c(1e-6,1e-6,0))
+env2 <- coRal::init_env(time=time, L=c(20,44,2), 
+                        N=c(15.14e-6,15.14e-6,0), X=c(1e-6,1e-6,0))
 
 # Run simulations
-ss1 <- with(run_coral_ss(env=list(L=32,N=0.14e-6,X=1e-6), pars=defpars, dt=0.1), last(S$S/H$H))
-run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
-ss2 <- with(run_coral_ss(env=list(L=32,N=15.14e-6,X=1e-6), pars=defpars, dt=0.1), last(S$S/H$H))
-run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
+ss1 <- with(coRal::run_coral_ss(env=list(L=32,N=0.14e-6,X=1e-6), pars=defpars, dt=0.1), last(S$S/H$H))
+run1 <- coRal::run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
+ss2 <- with(coRal::run_coral_ss(env=list(L=32,N=15.14e-6,X=1e-6), pars=defpars, dt=0.1), last(S$S/H$H))
+run2 <- coRal::run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
 # Create figure
 png("img/Fig5.png", width=3, height=4, units="in", res=300)

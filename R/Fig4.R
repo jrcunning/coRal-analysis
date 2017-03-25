@@ -1,12 +1,9 @@
-# Load functions
-sapply(c("R/def_pars.R",
-         "R/run_coral_ss.R", 
-         "R/sensitivity.R"), 
-       source, .GlobalEnv)
+# Load sensitivity analysis functions
+library(coRal)
+source("R/sensitivity.R", .GlobalEnv)
 
 # Set up time vector and parameters
-defpars <- def_pars()  # Get default parameters
-defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
+defpars <- coRal::def_pars()  # Get default parameters
 
 # Define environment(s) for conducting sensitivity analysis
 envs <- list(
@@ -25,18 +22,42 @@ cl <- makeCluster(detectCores())  # Initiate cluster
 registerDoParallel(cl)
 
 # Run sensitivity analysis in each environment for each parameter
-jHT0.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jHT0", change=change))
-jNm.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jNm", change=change))
-jHGm.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jHGm", change=change))
-kCO2.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="kCO2", change=change))
-KN.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="KN", change=change))
-jST0.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jST0", change=change))
-kNPQ.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="kNPQ", change=change))
-kROS.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="kROS", change=change))
-astar.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="astar", change=change))
-jCPm.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jCPm", change=change))
-jSGm.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jSGm", change=change))
-b.sens <- foreach(i=1:n, .combine=rbind) %dopar% with(sims[i,], sens(env=envs[[env]], pars=defpars, par="b", change=change))
+jHT0.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jHT0", change=change))
+}
+jNm.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jNm", change=change))
+}
+jHGm.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jHGm", change=change))
+}
+kCO2.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="kCO2", change=change))
+}
+KN.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="KN", change=change))
+}
+jST0.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jST0", change=change))
+}
+kNPQ.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="kNPQ", change=change))
+}
+kROS.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="kROS", change=change))
+}
+astar.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="astar", change=change))
+}
+jCPm.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jCPm", change=change))
+}
+jSGm.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="jSGm", change=change))
+}
+b.sens <- foreach(i=1:n, .combine=rbind) %dopar% {
+  with(sims[i,], sens(env=envs[[env]], pars=defpars, par="b", change=change))
+}
 
 stopCluster(cl)  # Stop cluster
 

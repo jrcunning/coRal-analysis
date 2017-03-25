@@ -1,27 +1,19 @@
 # Figure 6
 # Bleaching in response to increasing light
-
-# Load functions
-sapply(c("R/def_pars.R",
-         "R/init_env.R",
-         "R/run_coral.R",
-         "R/run_coral_ss.R"), 
-       source, .GlobalEnv)
+library(coRal)
 
 # Set run time vector
 time <- seq(-2, 80, 0.1)  # if single model run, use time input
 
 # Initialize environment
-env <- init_env(time=time, L=c(30,50,0), N=c(1e-7,1e-7,0), X=c(0e-6,0e-6,0))
-#L <- list(c(rep(20,100), rep(50,300))[-(1:9)])
-#env <- replace(env, "L", L)
+env <- coRal::init_env(time=time, L=c(30,50,0), N=c(1e-7,1e-7,0), X=c(0e-6,0e-6,0))
 
 # Set parameters
-defpars <- def_pars()  # Get default parameters
+defpars <- coRal::def_pars()  # Get default parameters
 
 # Run simulation
-ss <- with(run_coral_ss(env=list(L=30, N=1e-7, X=0e-6), pars=defpars, dt=0.1), last(S$S/H$H))
-run <- run_coral(time=time, env=env, pars=replace(defpars, "initS", ss))
+ss <- with(coRal::run_coral_ss(env=list(L=30, N=1e-7, X=0e-6), pars=defpars, dt=0.1), last(S$S/H$H))
+run <- coRal::run_coral(time=time, env=env, pars=replace(defpars, "initS", ss))
 
 # Plot results
 png("img/Fig6.png", width=3, height=3, units="in", res=300)

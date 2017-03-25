@@ -3,6 +3,7 @@ plot_steady_states <- function(ss, png=NULL) {
   # Load libraries
   require(reshape2)
   require(dplyr)
+  require(coRal)
   
   # For runs that did NOT reach a steady state of positive growth, set all results to zero
   ss[which(ss$gr <= 0), c("gr", "sh")] <- NA#, "hl", "sl", "ee", "pl")] <- NA
@@ -12,11 +13,7 @@ plot_steady_states <- function(ss, png=NULL) {
   # Reshape steady state results into matrices for plotting cont
   sh <- acast(ss, L~N, value.var="sh")
   gr <- acast(ss, L~N, value.var="gr")
-  #hl <- acast(ss, L~N, value.var="hl")
-  #sl <- acast(ss, L~N, value.var="sl")
-  #ee <- acast(ss, L~N, value.var="ee")
-  #pl <- acast(ss, L~N, value.var="pl")
-  
+
   # Build plotting function
   imagef <- function(r, bin, main, col) {
     par(tcl=-0.2, cex.main=1, cex.axis=0.75, mar=c(2,2,3,3), mgp=c(0,0.1,0))

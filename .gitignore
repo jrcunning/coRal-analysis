@@ -5,6 +5,8 @@ Rmd/tmp*
 JTB_supp/*
 !JTB_supp/JTB_supp.Rmd
 !JTB_supp/JTB_supp.html
-JTB_ms/coauthor_comments
-JTB_ms/coverletter.docx
+JTB_ms/*
+!JTB_ms/JTB_ms.pdf
+!JTB_ms/JTB_ms.text
+!JTB_ms/JTB_ms.Rmd
 sandbox/*
