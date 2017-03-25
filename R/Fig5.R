@@ -1,6 +1,7 @@
 # Figure 5
 library(coRal)
 library(dplyr)
+library(scales)
 
 # Set parameters
 defpars <- coRal::def_pars()  # Get default parameters
