@@ -1,7 +1,7 @@
-all: JTB_ms/JTB_ms.pdf JTB_supp/JTB_supp.html
+all: ms/ms.pdf supp/supp.html
 
-JTB_ms/JTB_ms.pdf: JTB_ms/JTB_ms.Rmd JTB_ms/library.bib img/*.png
-	R -e 'if(Sys.info()[["sysname"]]=="Darwin") { Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc") } else { Sys.setenv(RSTUDIO_PANDOC="/usr/lib/rstudio/bin/pandoc") }; rmarkdown::render("JTB_ms/JTB_ms.Rmd")'
+ms/ms.pdf: ms/ms.Rmd ms/library.bib img/*.png
+	R -e 'if(Sys.info()[["sysname"]]=="Darwin") { Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc") } else { Sys.setenv(RSTUDIO_PANDOC="/usr/lib/rstudio/bin/pandoc") }; rmarkdown::render("ms/ms.Rmd")'
 
 img/Fig2.png: R/Fig2.R 
 	R --vanilla < R/Fig2.R
@@ -24,5 +24,5 @@ img/Fig7.png: R/Fig7.R
 img/Fig8.png: R/Fig8.R
 	R --vanilla < R/Fig8.R
 	
-JTB_supp/JTB_supp.html: JTB_supp/JTB_supp.Rmd JTB_supp/library.bib
-	R -e 'if(Sys.info()[["sysname"]]=="Darwin") { Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc") } else { Sys.setenv(RSTUDIO_PANDOC="/usr/lib/rstudio/bin/pandoc") }; rmarkdown::render("JTB_supp/JTB_supp.Rmd")'
+supp/supp.html: supp/supp.Rmd supp/library.bib
+	R -e 'if(Sys.info()[["sysname"]]=="Darwin") { Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc") } else { Sys.setenv(RSTUDIO_PANDOC="/usr/lib/rstudio/bin/pandoc") }; rmarkdown::render("supp/supp.Rmd")'
