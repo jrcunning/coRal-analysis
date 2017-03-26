@@ -6,7 +6,7 @@ by **Ross Cunning, Erik B. Muller, Ruth D. Gates, and Roger M. Nisbet**
 
 which is available as a pre-print at bioRxiv (link pending), and has been submitted for peer-review at the *Journal of Theoretical Biology*.
 
-In this manuscript, we describe and evaluate a model of coral growth and symbiosis dynamics across gradients of light, nutrients, and prey availability, with a module of photo-oxidative stress that allows for simulation of coral bleaching and recovery. The code for this model has been developed into an R package called **coRal** ([github.com/jrcunning/coRal](github.com/jrcunning/coRal)) to facilitate its further development and application by the scientific community. This repository contains the code used to describe the behavior of the model that is presented in the above manuscript. To use this code, you will need to install the coRal package, which can be accomplished by ```devtools::install_github("jrcunning/coRal")```.
+In this manuscript, we describe and evaluate a model of coral growth and symbiosis dynamics across gradients of light, nutrients, and prey availability, with a module of photo-oxidative stress that allows for simulation of coral bleaching and recovery. The code for this model has been developed into an R package called **coRal** ([github.com/jrcunning/coRal](http://github.com/jrcunning/coRal)) to facilitate its further development and application by the scientific community. This repository contains the code used to describe the behavior of the model that is presented in the above manuscript. To use this code, you will need to install the coRal package, which can be accomplished by ```devtools::install_github("jrcunning/coRal")```.
 
 #### Repository contents:
 
