@@ -45,8 +45,9 @@ if (!file.exists("R/Fig8.RData")) {
 png("img/Fig8.png", width=5, height=5, units="in", res=300)
 par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), tcl=-0.025)
 
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=1e-7 mol/L; X=2e-7 mol/L")
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
+text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+     labels="A.", xpd=NA, font=2, cex=1)
 points(c(48,48,53,53), c(0.42,0.45,0.42,0.45), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
 text(38, 0.435, labels="init. S:H", xpd=T, cex=0.7, srt=90)
 text(46, c(0.42,0.45), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
@@ -67,8 +68,9 @@ p1 <- apply(res1, 1, FUN=function(x) {
   })
 })
 
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=1e-7 mol/L; X=0 mol/L")
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
+text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+     labels="B.", xpd=NA, font=2, cex=1)
 p2 <- apply(res2, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -84,8 +86,9 @@ p2 <- apply(res2, 1, FUN=function(x) {
   })
 })
 
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=2e-6 mol/L; X=2e-7 mol/L")
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
+text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+     labels="C.", xpd=NA, font=2, cex=1)
 p3 <- apply(res3, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -101,8 +104,9 @@ p3 <- apply(res3, 1, FUN=function(x) {
   })
 })
 
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=2e-6 mol/L; X=4e-7 mol/L")
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
+text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+     labels="D.", xpd=NA, font=2, cex=1)
 p4 <- apply(res4, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
