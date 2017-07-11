@@ -17,6 +17,7 @@ This supplement provides justification and derivations from the literature for a
 ```{r setup, include=FALSE}
 require(pander)
 require(stringr)
+require(coRal)
 knitr::opts_knit$set(root.dir = normalizePath(".."))
 knitr::opts_chunk$set(message = F, warning = F, echo=T, results='asis')
 knitr::opts_chunk$set(results = "asis", render=pander)
@@ -27,7 +28,7 @@ knitr::opts_chunk$set(results = "asis", render=pander)
 sapply(c("R/run_steady_states.R", "R/plot_steady_states.R", "R/reported_metrics.R",
          "R/sensitivity.R", "R/conversions.R"), source, .GlobalEnv)
 # Get default parameters
-defpars <- def_pars()
+defpars <- coRal::def_pars()
 ```
 
 -----
@@ -620,10 +621,10 @@ env1 <- init_env(time=time, L=c(20,44,2), N=c(0.14e-6,0.14e-6,0), X=c(1e-6,1e-6,
 env2 <- init_env(time=time, L=c(20,44,2), N=c(15.14e-6,15.14e-6,0), X=c(1e-6,1e-6,0))
 
 # Run simulations
-ss1 <- with(run_coral_ss(env=list(L=32,N=0.14e-6,X=1e-6), pars=defpars, dt=0.1), last(S$S/H$H))
-run1 <- run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
-ss2 <- with(run_coral_ss(env=list(L=32,N=15.14e-6,X=1e-6), pars=defpars, dt=0.1), last(S$S/H$H))
-run2 <- run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
+ss1 <- with(coRal::run_coral_ss(env=list(L=32,N=0.14e-6,X=1e-6), pars=defpars, dt=0.1), dplyr::last(S$S/H$H))
+run1 <- coRal::run_coral(time=time, env=env1, pars=replace(defpars, "initS", ss1))
+ss2 <- with(coRal::run_coral_ss(env=list(L=32,N=15.14e-6,X=1e-6), pars=defpars, dt=0.1), dplyr::last(S$S/H$H))
+run2 <- coRal::run_coral(time=time, env=env2, pars=replace(defpars, "initS", ss2))
 
 par(mfcol=c(6,2), mar=c(2,2,1,4), mgp=c(1,0,0), tcl=0.2, xaxs="i")
 
