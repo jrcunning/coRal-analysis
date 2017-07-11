@@ -1,4 +1,5 @@
 # Figure 8
+library(coRal)
 
 # Run simulations if .RData file does not exist
 if (!file.exists("R/Fig8.RData")) {
