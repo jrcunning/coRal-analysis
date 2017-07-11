@@ -15,7 +15,7 @@ if (!file.exists("R/Fig8.RData")) {
   registerDoParallel(cl)
   
   # Set input values for steady state runs
-  input <- expand.grid(L=seq(1,60,1), initS=c(0.0001,1))
+  input <- expand.grid(L=seq(1,60,2), initS=c(0.0001,1))
   
   # Run steady states in parallel
   output1 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
@@ -53,7 +53,7 @@ if (!file.exists("R/Fig8.RData")) {
 
 # Create plot
 png("img/Fig8.png", width=5, height=5, units="in", res=300)
-par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), tcl=-0.025)
+par(mfrow=c(2,2), tcl=-0.2, cex.main=1, cex.axis=0.6, mar=c(2,2,2,1), mgp=c(1,0.1,0))
 conv <- diff(grconvertX(0:1, 'inches', 'user')) # length of one inch in user coordinates
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
 text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
