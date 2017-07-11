@@ -1,9 +1,7 @@
 library(parallel)
 library(doParallel)
 library(foreach)
-source("R/def_pars.R")
-source("R/run_coral_ss.R")
-source("R/init_env.R")
+library(coRal)
 
 # Sensitivity analysis
 
