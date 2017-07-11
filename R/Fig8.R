@@ -15,22 +15,22 @@ if (!file.exists("R/Fig8.RData")) {
   
   # Run steady states in parallel
   output1 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-    run <- run_coral_ss(env=list(L=input$L[i], X=2e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+    run <- coRal::run_coral_ss(env=list(L=input$L[i], X=2e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
     list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
   }
   
   output2 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-    run <- run_coral_ss(env=list(L=input$L[i], X=0, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+    run <- coRal::run_coral_ss(env=list(L=input$L[i], X=0, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
     list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
   }
   
   output3 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-    run <- run_coral_ss(env=list(L=input$L[i], X=2e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+    run <- coRal::run_coral_ss(env=list(L=input$L[i], X=2e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
     list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
   }
   
   output4 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-    run <- run_coral_ss(env=list(L=input$L[i], X=4e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+    run <- coRal::run_coral_ss(env=list(L=input$L[i], X=4e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
     list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
   }
   
