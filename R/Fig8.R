@@ -53,16 +53,16 @@ if (!file.exists("R/Fig8.RData")) {
 
 # Create plot
 png("img/Fig8.png", width=5, height=5, units="in", res=300)
-par(mfrow=c(2,2), tcl=-0.2, cex.main=1, cex.axis=0.6, mar=c(2,2,2,1), mgp=c(1,0.1,0))
-conv <- diff(grconvertX(0:1, 'inches', 'user')) # length of one inch in user coordinates
+par(mfrow=c(2,2), tcl=-0.2, cex.main=1, cex.axis=0.6, mar=c(2.5,2.5,1.5,0.5), mgp=c(1,0.1,0), cex.lab=0.8)
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
-text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+#conv <- diff(grconvertX(0:1, 'inches', 'user')) # length of one inch in user coordinates
+text(x=par("usr")[1]-8, y=par("usr")[4]+0.025, adj=c(0,0), 
      labels="A.", xpd=NA, font=2, cex=1)
-points(c(48,48,53,53), c(0.42,0.45,0.42,0.45), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
-text(38, 0.435, labels="init. S:H", xpd=T, cex=0.7, srt=90)
-text(46, c(0.42,0.45), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
-text(50, 0.49, labels=c("Steady state growth"), xpd=T, cex=0.7)
-text(c(48,53), 0.47, labels=c("pos.", "neg."), xpd=T, cex=0.7)
+points(c(45,45,52,52), c(0.39,0.43,0.39,0.43), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
+text(30, 0.415, labels="init. S:H", xpd=T, cex=0.7, srt=90)
+text(45, c(0.39,0.43), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
+text(47, 0.49, labels=c("Steady state growth"), xpd=T, cex=0.7)
+text(c(45,52), 0.46, labels=c("pos.", "neg."), xpd=T, cex=0.7)
 p1 <- apply(res1, 1, FUN=function(x) {
   with(x, points(L, sh,
                  col=ifelse(gr>0, "black", "red"), 
@@ -79,7 +79,7 @@ p1 <- apply(res1, 1, FUN=function(x) {
 })
 
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
-text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+text(x=par("usr")[1]-8, y=par("usr")[4]+0.025, adj=c(0,0), 
      labels="B.", xpd=NA, font=2, cex=1)
 p2 <- apply(res2, 1, FUN=function(x) {
   with(x, points(L, sh,
@@ -97,7 +97,7 @@ p2 <- apply(res2, 1, FUN=function(x) {
 })
 
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
-text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+text(x=par("usr")[1]-8, y=par("usr")[4]+0.025, adj=c(0,0), 
      labels="C.", xpd=NA, font=2, cex=1)
 p3 <- apply(res3, 1, FUN=function(x) {
   with(x, points(L, sh,
@@ -115,7 +115,7 @@ p3 <- apply(res3, 1, FUN=function(x) {
 })
 
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
-text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
+text(x=par("usr")[1]-8, y=par("usr")[4]+0.025, adj=c(0,0), 
      labels="D.", xpd=NA, font=2, cex=1)
 p4 <- apply(res4, 1, FUN=function(x) {
   with(x, points(L, sh,
