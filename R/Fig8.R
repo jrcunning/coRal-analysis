@@ -1,5 +1,8 @@
 # Figure 8
 library(coRal)
+library(parallel)
+library(doParallel)
+library(foreach)
 
 # Run simulations if .RData file does not exist
 if (!file.exists("R/Fig8.RData")) {
