@@ -5,7 +5,7 @@ library(doParallel)
 library(foreach)
 library(dplyr)
 
-# Run simulations if .RData file does not exist
+# Run simulations if saved results do not exist
 if (!file.exists("R/Fig8.RData")) {
   # Load default parameters
   defpars <- coRal::def_pars()
@@ -47,12 +47,14 @@ if (!file.exists("R/Fig8.RData")) {
   res4 <- cbind(input, output4)
   
   save(input, res1, res2, res3, res4, file="R/Fig8.RData")
+} else {
+  load("R/Fig8.RData")
 }
 
 # Create plot
 png("img/Fig8.png", width=5, height=5, units="in", res=300)
 par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), tcl=-0.025)
-
+conv <- diff(grconvertX(0:1, 'inches', 'user')) # length of one inch in user coordinates
 plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
 text(x=par("usr")[1]-par("mai")[2]*conv/1.1, y=par("usr")[4]+par("mai")[3]/2.5*conv, adj=c(0,0), 
      labels="A.", xpd=NA, font=2, cex=1)
