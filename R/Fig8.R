@@ -53,8 +53,10 @@ if (!file.exists("R/Fig8.RData")) {
 
 # Create plot
 png("img/Fig8.png", width=5, height=5, units="in", res=300)
-par(mfrow=c(2,2), tcl=-0.2, cex.main=1, cex.axis=0.6, mar=c(2.5,2.5,1.5,0.5), mgp=c(1,0.1,0), cex.lab=0.8)
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
+par(mfrow=c(2,2), tcl=-0.2, cex.main=1, cex.axis=0.6, mar=c(2,2.5,1.5,0.5), mgp=c(1,0.1,0), cex.lab=0.8)
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), 
+     xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), 
+     ylab=expression("Steady state S:H"~(C-mol~S~C-mol~H^{-1})))
 #conv <- diff(grconvertX(0:1, 'inches', 'user')) # length of one inch in user coordinates
 text(x=par("usr")[1]-8, y=par("usr")[4]+0.025, adj=c(0,0), 
      labels="A.", xpd=NA, font=2, cex=1)
@@ -78,7 +80,9 @@ p1 <- apply(res1, 1, FUN=function(x) {
   })
 })
 
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), 
+     xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), 
+     ylab=expression("Steady state S:H"~(C-mol~S~C-mol~H^{-1})))
 text(x=par("usr")[1]-8, y=par("usr")[4]+0.025, adj=c(0,0), 
      labels="B.", xpd=NA, font=2, cex=1)
 p2 <- apply(res2, 1, FUN=function(x) {
@@ -96,7 +100,9 @@ p2 <- apply(res2, 1, FUN=function(x) {
   })
 })
 
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), 
+     xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), 
+     ylab=expression("Steady state S:H"~(C-mol~S~C-mol~H^{-1})))
 text(x=par("usr")[1]-8, y=par("usr")[4]+0.025, adj=c(0,0), 
      labels="C.", xpd=NA, font=2, cex=1)
 p3 <- apply(res3, 1, FUN=function(x) {
@@ -114,7 +120,9 @@ p3 <- apply(res3, 1, FUN=function(x) {
   })
 })
 
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), ylab="Steady state S:H ratio")
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), 
+     xlab=expression("Light" ~ (mol~photons~m^{2}~d^{-1})), 
+     ylab=expression("Steady state S:H"~(C-mol~S~C-mol~H^{-1})))
 text(x=par("usr")[1]-8, y=par("usr")[4]+0.025, adj=c(0,0), 
      labels="D.", xpd=NA, font=2, cex=1)
 p4 <- apply(res4, 1, FUN=function(x) {
