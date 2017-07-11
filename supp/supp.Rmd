@@ -414,7 +414,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S5
-```{r sens_LLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (5 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_LLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (5 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -479,7 +479,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S6
-```{r sens_HLLN, cache=T, echo=F, eval=T, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_HLLN, cache=T, echo=F, eval=T, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -544,7 +544,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S7
-```{r sens_HLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_HLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -740,126 +740,6 @@ with(run2, {
     text(par("usr")[2], 0, labels="N-lim.\nC-lim.", cex=0.75, adj=1)
     legend("topright", legend=c("Host", "Sym"), lty=1, lwd=c(2,1), col="black", bty="n", cex=0.75)
 })
-```
-
------
-
-# Figure S9
-```{r FigS9, cache=T, fig.width=7, fig.height=7, echo=F, message=F, eval=T, render=NULL, fig.cap="**Fig. S9. Hysteresis under different nutrient and feeding regimes.** This figure accompanies Fig. 2 in the main text. These figures show steady state S:H biomass ratios in constant environments with varying DIN and food (X) levels, with initial S:H biomass values of either 1 or 0.0001. Points are colored according to whether the host exhibits positive (black) or negative (red) growth at steady state."}
-
-# Set up cluster for parallel processing
-cl <- makeCluster(detectCores())  # Initiate cluster
-registerDoParallel(cl)
-
-# Set input values for steady state runs
-input <- expand.grid(L=seq(1,60,1), initS=c(0.0001,1))
-
-# Run steady states in parallel
-output1 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=2e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
-  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
-}
-
-output2 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=0, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
-  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
-}
-
-output3 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=2e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
-  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
-}
-
-output4 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
-  run <- run_coral_ss(env=list(L=input$L[i], X=4e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
-  list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
-}
-
-stopCluster(cl)  # Stop cluster
-
-# Collect results
-res1 <- cbind(input, output1)
-res2 <- cbind(input, output2)
-res3 <- cbind(input, output3)
-res4 <- cbind(input, output4)
-
-
-# Create plot
-par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), tcl=-0.025)
-
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=1e-7 mol/L; X=2e-7 mol/L")
-points(c(48,48,53,53), c(0.42,0.45,0.42,0.45), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
-text(38, 0.435, labels="init. S:H", xpd=T, cex=0.7, srt=90)
-text(46, c(0.42,0.45), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
-text(50, 0.49, labels=c("Steady state growth"), xpd=T, cex=0.7)
-text(c(48,53), 0.47, labels=c("pos.", "neg."), xpd=T, cex=0.7)
-p1 <- apply(res1, 1, FUN=function(x) {
-  with(x, points(L, sh,
-                 col=ifelse(gr>0, "black", "red"), 
-                 pch=ifelse(initS==1, 19, 1), 
-                 cex=ifelse(initS==1, 0.4, 1)))
-  with(x, if (sh > 0.5) {
-    points(L, 0.5, pch="^", 
-           col=ifelse(gr>0, "black", "red"))
-    points(L, 0.49, 
-           col=ifelse(gr>0, "black", "red"),
-           pch=ifelse(initS==1, 19, 1), 
-           cex=ifelse(initS==1, 0.4, 1))
-  })
-})
-
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=1e-7 mol/L; X=0 mol/L")
-p2 <- apply(res2, 1, FUN=function(x) {
-  with(x, points(L, sh,
-                 col=ifelse(gr>0, "black", "red"), 
-                 pch=ifelse(initS==1, 19, 1), 
-                 cex=ifelse(initS==1, 0.4, 1)))
-  with(x, if (sh > 0.5) {
-    points(L, 0.5, pch="^", 
-           col=ifelse(gr>0, "black", "red"))
-    points(L, 0.49, 
-           col=ifelse(gr>0, "black", "red"),
-           pch=ifelse(initS==1, 19, 1), 
-           cex=ifelse(initS==1, 0.4, 1))
-  })
-})
-
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=2e-6 mol/L; X=2e-7 mol/L")
-p3 <- apply(res3, 1, FUN=function(x) {
-  with(x, points(L, sh,
-                 col=ifelse(gr>0, "black", "red"), 
-                 pch=ifelse(initS==1, 19, 1), 
-                 cex=ifelse(initS==1, 0.4, 1)))
-  with(x, if (sh > 0.5) {
-    points(L, 0.5, pch="^", 
-           col=ifelse(gr>0, "black", "red"))
-    points(L, 0.49, 
-           col=ifelse(gr>0, "black", "red"),
-           pch=ifelse(initS==1, 19, 1), 
-           cex=ifelse(initS==1, 0.4, 1))
-  })
-})
-
-plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
-title("DIN=2e-6 mol/L; X=4e-7 mol/L")
-p4 <- apply(res4, 1, FUN=function(x) {
-  with(x, points(L, sh,
-                 col=ifelse(gr>0, "black", "red"), 
-                 pch=ifelse(initS==1, 19, 1), 
-                 cex=ifelse(initS==1, 0.4, 1)))
-  with(x, if (sh > 0.5) {
-    points(L, 0.5, pch="^", 
-           col=ifelse(gr>0, "black", "red"))
-    points(L, 0.49, 
-           col=ifelse(gr>0, "black", "red"),
-           pch=ifelse(initS==1, 19, 1), 
-           cex=ifelse(initS==1, 0.4, 1))
-  })
-})
-
 ```
 
 -----

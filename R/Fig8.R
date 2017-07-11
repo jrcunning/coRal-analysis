@@ -1,87 +1,121 @@
-# Load functions
-library(coRal)
+# Figure 8
 
-# Set parameters and time
-defpars <- coRal::def_pars()  # Get default parameters
-time <- seq(0, 250, 0.1)
+# Run simulations if .RData file does not exist
+if (!file.exists("R/Fig8.RData")) {
+  # Set up cluster for parallel processing
+  cl <- makeCluster(detectCores())  # Initiate cluster
+  registerDoParallel(cl)
+  
+  # Set input values for steady state runs
+  input <- expand.grid(L=seq(1,60,1), initS=c(0.0001,1))
+  
+  # Run steady states in parallel
+  output1 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
+    run <- run_coral_ss(env=list(L=input$L[i], X=2e-7, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+    list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+  }
+  
+  output2 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
+    run <- run_coral_ss(env=list(L=input$L[i], X=0, N=1e-7), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+    list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+  }
+  
+  output3 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
+    run <- run_coral_ss(env=list(L=input$L[i], X=2e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+    list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+  }
+  
+  output4 <- foreach(i=1:nrow(input), .combine=rbind) %dopar% {
+    run <- run_coral_ss(env=list(L=input$L[i], X=4e-7, N=2e-6), pars=replace(defpars, "initS", input$initS[i]), dt=0.1)
+    list(gr=last(run$H$dH.Hdt), sh=last(run$S$S/run$H$H))
+  }
+  
+  stopCluster(cl)  # Stop cluster
+  
+  # Collect results
+  res1 <- cbind(input, output1)
+  res2 <- cbind(input, output2)
+  res3 <- cbind(input, output3)
+  res4 <- cbind(input, output4)
+  
+  save(input, res1, res2, res3, res4, file="R/Fig8.RData")
+}
 
-# Set up limitation calculation
-limcoef <- function(x,y,m) log(pmin(x, m)/pmin(y, m))
+# Create plot
+png("img/Fig8.png", width=5, height=5, units="in", res=300)
+par(mfrow=c(2,2), mar=c(3,3,1,1), mgp=c(1.5,0.5,0), tcl=-0.025)
 
-# Run no overshoot
-env1 <- init_env(time=time, L=c(20,20,0), N=c(1e-7,1e-7,0), X=c(1e-7,1e-7,0))
-run1 <- run_coral(time=time, env=env1, pars=replace(defpars, c("initS", "nNX"), c(0.001, 0.1)))
-run1 <- within(run1, {
-  pl <- limcoef((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, S$jL * pars$yCL, pars$jCPm)
-  sl <- limcoef(pars$yC*S$jCP, (H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)
-  hl <- limcoef(pars$yC*S$rhoC*S$S/H$H + H$jX, (H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)
-})
-# Run overshoot
-env2 <- init_env(time=time, L=c(20,20,0), N=c(1e-7,1e-7,0), X=c(1e-7,1e-7,0))
-run2 <- run_coral(time=time, env=env2, pars=replace(defpars, c("initS", "nNX"), c(0.001, 0.175)))
-run2 <- within(run2, {
-  pl <- limcoef((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, S$jL * pars$yCL, pars$jCPm)
-  sl <- limcoef(pars$yC*S$jCP, (H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)
-  hl <- limcoef(pars$yC*S$rhoC*S$S/H$H + H$jX, (H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)
-})
-# Run larger overshoot
-env3 <- init_env(time=time, L=c(20,20,0), N=c(1e-7,1e-7,0), X=c(1e-7,1e-7,0))
-run3 <- run_coral(time=time, env=env3, pars=replace(defpars, c("initS", "nNX"), c(0.001, 0.22)))
-run3 <- within(run3, {
-  pl <- limcoef((H$jCO2 + H$rCH)*H$H/S$S + S$rCS, S$jL * pars$yCL, pars$jCPm)
-  sl <- limcoef(pars$yC*S$jCP, (H$rhoN*H$H/S$S + S$rNS)/pars$nNS, pars$jSGm)
-  hl <- limcoef(pars$yC*S$rhoC*S$S/H$H + H$jX, (H$jN + pars$nNX*H$jX + H$rNH) / pars$nNH, pars$jHGm)
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
+title("DIN=1e-7 mol/L; X=2e-7 mol/L")
+points(c(48,48,53,53), c(0.42,0.45,0.42,0.45), pch=c(19,1,19,1), cex=c(0.4,1,0.4,1), col=c("black","black","red","red"), xpd=T)
+text(38, 0.435, labels="init. S:H", xpd=T, cex=0.7, srt=90)
+text(46, c(0.42,0.45), labels=c("0.1", "0.0001"), xpd=T, pos=2, cex=0.7)
+text(50, 0.49, labels=c("Steady state growth"), xpd=T, cex=0.7)
+text(c(48,53), 0.47, labels=c("pos.", "neg."), xpd=T, cex=0.7)
+p1 <- apply(res1, 1, FUN=function(x) {
+  with(x, points(L, sh,
+                 col=ifelse(gr>0, "black", "red"), 
+                 pch=ifelse(initS==1, 19, 1), 
+                 cex=ifelse(initS==1, 0.4, 1)))
+  with(x, if (sh > 0.5) {
+    points(L, 0.5, pch="^", 
+           col=ifelse(gr>0, "black", "red"))
+    points(L, 0.49, 
+           col=ifelse(gr>0, "black", "red"),
+           pch=ifelse(initS==1, 19, 1), 
+           cex=ifelse(initS==1, 0.4, 1))
+  })
 })
 
-# Set initial growth to 0 for plotting purposes
-run1$H$dH.Hdt[1] <- 0
-run2$H$dH.Hdt[1] <- 0
-run3$H$dH.Hdt[1] <- 0
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
+title("DIN=1e-7 mol/L; X=0 mol/L")
+p2 <- apply(res2, 1, FUN=function(x) {
+  with(x, points(L, sh,
+                 col=ifelse(gr>0, "black", "red"), 
+                 pch=ifelse(initS==1, 19, 1), 
+                 cex=ifelse(initS==1, 0.4, 1)))
+  with(x, if (sh > 0.5) {
+    points(L, 0.5, pch="^", 
+           col=ifelse(gr>0, "black", "red"))
+    points(L, 0.49, 
+           col=ifelse(gr>0, "black", "red"),
+           pch=ifelse(initS==1, 19, 1), 
+           cex=ifelse(initS==1, 0.4, 1))
+  })
+})
 
-# Plot
-png("img/Fig8.png", width=6, height=3.2, units="in", res=300)
-layout(mat=matrix(c(1,2,3,4,5,6), ncol=3))
-par(mgp=c(1.2,0.2,0), cex=0.66, tcl=0.25, xaxs="i", yaxs="i")
-with(run1, {
-  par(mar=c(1.25,2.5,2,0.5))
-  plot(S$S/H$H ~ time, type="l", lty=3, ylim=c(0,0.6), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
-  legend("topright", bty="n", lty=c(0,3,1), lwd=1.5, col=c(NA, "black","black"), cex=c(0.8,0.6,0.6),
-         legend=c("Host growth", "negative", "positive"), y.intersp=c(0,1,1), seg.len=1)
-  lines(time[H$dH.Hdt>0], (S$S/H$H)[H$dH.Hdt>0])
-  par(mar=c(0,0.5,2.5,0)); title("A.", adj=0)
-  par(mar=c(2.5,2.5,0.75,0.5))
-  plot(time, pl, type="l", ylim=c(-4,4), xlim=range(time), col="gray", bty="n", xlab="Days", ylab="Limitation coefficient")
-  lines(time, sl, col="green")
-  lines(time, hl, col="brown")
-  abline(h=0, lty=2)
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
+title("DIN=2e-6 mol/L; X=2e-7 mol/L")
+p3 <- apply(res3, 1, FUN=function(x) {
+  with(x, points(L, sh,
+                 col=ifelse(gr>0, "black", "red"), 
+                 pch=ifelse(initS==1, 19, 1), 
+                 cex=ifelse(initS==1, 0.4, 1)))
+  with(x, if (sh > 0.5) {
+    points(L, 0.5, pch="^", 
+           col=ifelse(gr>0, "black", "red"))
+    points(L, 0.49, 
+           col=ifelse(gr>0, "black", "red"),
+           pch=ifelse(initS==1, 19, 1), 
+           cex=ifelse(initS==1, 0.4, 1))
+  })
 })
-legend("topleft", bty="n", xpd=NA, inset=c(0.1, -0.15), seg.len=1,
-       legend=c(">0 = N-limitation", "Symbiont", "Host", "<0 = C-limitation"), cex=c(0.6,0.8,0.8,0.6), pt.cex=1.25, 
-       lty=c(0,1,1,0), lwd=1.5, col=c("black", "green", "brown", "black"), pch=c(NA,NA,NA,NA), y.intersp=c(0,0.5,0.7,1.1))
-legend("topleft", bty="n", xpd=NA, inset=c(0.5,-0.125), seg.len=1,
-       legend=c(">0 = Light-limitation", "Photosynthesis", "<0 = CO2-limitation"), cex=c(0.6,0.8,0.6), pt.cex=1.25, 
-       lty=c(0,1,0), lwd=1.5, col=c("black", "gray", "black"), pch=c(NA,NA,NA), y.intersp=c(0,0.5,1))
-with(run2, {
-  par(mar=c(1.25,2.5,2,0.5))
-  plot(S$S/H$H ~ time, type="l", lty=3, ylim=c(0,0.6), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
-  lines(time[H$dH.Hdt>0], (S$S/H$H)[H$dH.Hdt>0])
-  par(mar=c(0,0.5,2.5,0)); title("B.", adj=0)
-  par(mar=c(2.5,2.5,0.75,0.5))
-  plot(time, pl, type="l", ylim=c(-4,4), xlim=range(time), col="gray", bty="n", xlab="Days", ylab="Limitation coefficient")
-  lines(time, sl, col="green")
-  lines(time, hl, col="brown")
-  abline(h=0, lty=2)
-})
-with(run3, {
-  par(mar=c(1.25,2.5,2,0.5))
-  plot(S$S/H$H ~ time, type="l", lty=3, ylim=c(0,0.6), bty="n", xaxt="n", xlab="", ylab="S:H biomass")
-  lines(time[H$dH.Hdt>0], (S$S/H$H)[H$dH.Hdt>0])
-  par(mar=c(0,0.5,2.5,0)); title("C.", adj=0)
-  par(mar=c(2.5,2.5,0.75,0.5))
-  plot(time, pl, type="l", ylim=c(-4,4), xlim=range(time), col="gray", bty="n", xlab="Days", ylab="Limitation coefficient")
-  lines(time, sl, col="green")
-  lines(time, hl, col="brown")
-  abline(h=0, lty=2)
+
+plot(NA, xlim=range(input$L), ylim=c(0,0.5), xlab="Light", ylab="Steady state S:H ratio")
+title("DIN=2e-6 mol/L; X=4e-7 mol/L")
+p4 <- apply(res4, 1, FUN=function(x) {
+  with(x, points(L, sh,
+                 col=ifelse(gr>0, "black", "red"), 
+                 pch=ifelse(initS==1, 19, 1), 
+                 cex=ifelse(initS==1, 0.4, 1)))
+  with(x, if (sh > 0.5) {
+    points(L, 0.5, pch="^", 
+           col=ifelse(gr>0, "black", "red"))
+    points(L, 0.49, 
+           col=ifelse(gr>0, "black", "red"),
+           pch=ifelse(initS==1, 19, 1), 
+           cex=ifelse(initS==1, 0.4, 1))
+  })
 })
 dev.off()
 
