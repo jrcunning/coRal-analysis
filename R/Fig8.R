@@ -6,6 +6,9 @@ library(foreach)
 
 # Run simulations if .RData file does not exist
 if (!file.exists("R/Fig8.RData")) {
+  # Load default parameters
+  defpars <- coRal::def_pars()
+  
   # Set up cluster for parallel processing
   cl <- makeCluster(detectCores())  # Initiate cluster
   registerDoParallel(cl)
