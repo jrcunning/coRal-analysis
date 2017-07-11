@@ -24,5 +24,8 @@ img/Fig7.png: R/Fig7.R
 img/Fig8.png: R/Fig8.R
 	R --vanilla < R/Fig8.R
 	
+img/Fig9.png: R/Fig9.R
+	R --vanilla < R/Fig9.R
+	
 supp/supp.html: supp/supp.Rmd supp/library.bib
 	R -e 'if(Sys.info()[["sysname"]]=="Darwin") { Sys.setenv(RSTUDIO_PANDOC="/Applications/RStudio.app/Contents/MacOS/pandoc") } else { Sys.setenv(RSTUDIO_PANDOC="/usr/lib/rstudio/bin/pandoc") }; rmarkdown::render("supp/supp.Rmd")'
