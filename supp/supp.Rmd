@@ -278,7 +278,7 @@ text(0.05,2.8, fiteq, adj=0)
 
 # Figure S2 
 ```{r run1_PI, cache=F, fig.height=4, fig.width=7, echo=F, fig.cap="**Fig. S2. Photosynthesis-Irradiance curves of modeled symbiont.** The rates of light energy quenching through photochemistry (red line) and non-photochemical quenching (black line), and the relative production of reactive oxygen species (orange line) are plotted as a function of the scalar irradiance experienced by the symbiont (note different y-axes for each line). These curves represent the behavior of the photosynthesis SU independent of the host and without CO~2~ limitation of photosynthesis (*j~CO2~* set to a very high value). The structure of the photosynthesis SU, with the negative feedback between excess light and photosynthesis rate, produces the classic shape of a P-I curve demonstrating photoinhibition, suggesting the mechanism is robust."}
-sym_PI(pars=def_pars())
+sympi <- sym_PI(pars=def_pars())
 ```
 
 -----
