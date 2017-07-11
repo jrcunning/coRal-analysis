@@ -24,9 +24,8 @@ knitr::opts_chunk$set(results = "asis", render=pander)
 
 ```{r initialize, include=FALSE}
 # Source default parameters and functions
-sapply(c("R/conversions.R", "R/def_pars.R", "R/init_env.R", "R/plot_results.R",
-         "R/run_coral.R", "R/run_coral_ss.R", "R/sym_PI.R", "R/run_steady_states.R", 
-         "R/plot_steady_states.R", "R/sensitivity.R"), source, .GlobalEnv)
+sapply(c("R/run_steady_states.R", "R/plot_steady_states.R", "R/reported_metrics.R",
+         "R/sensitivity.R", "R/conversions.R"), source, .GlobalEnv)
 # Get default parameters
 defpars <- def_pars()
 ```
