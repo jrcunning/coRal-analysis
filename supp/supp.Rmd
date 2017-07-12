@@ -1,6 +1,6 @@
 ---
 title: "Supplementary Information for:"
-subtitle: A simplified dynamic bioenergetic model for coral-*Symbiodinium* symbioses and coral bleaching as an alternate stable state
+subtitle: A dynamic bioenergetic model for coral-*Symbiodinium* symbioses and coral bleaching as an alternate stable state
 author: "Ross Cunning, Erik B. Muller, Ruth D. Gates, Roger M. Nisbet"
 output:
   html_document:
@@ -13,7 +13,7 @@ bibliography: library.bib
 
 -----
 
-This supplement provides justification and derivations from the literature for all parameter values used in the model, as well as additional figures that demonstrate the structure and behavior of the model and its specific components.
+This supplement provides justification and derivations from the literature for all parameter values used in the model, as well as additional figures that demonstrate the structure and behavior of the model and its specific components. R code for each chunk of output in this document can be shown and hidden using the right-aligned "Code" buttons, or for the entire document using the button at the top. This HTML output was knit from an RMarkdown document that can be found [here](https://github.com/jrcunning/coRal-analysis/blob/master/supp/supp.Rmd).
 
 ```{r setup, include=FALSE}
 require(pander)
