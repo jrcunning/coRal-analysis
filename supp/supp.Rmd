@@ -279,14 +279,14 @@ text(0.05,2.8, fiteq, adj=0)
 -----
 
 # Figure S2 
-```{r run1_PI, cache=F, fig.height=4, fig.width=7, echo=F, fig.cap="**Fig. S2. Photosynthesis-Irradiance curves of modeled symbiont.** The rates of light energy quenching through photochemistry (red line) and non-photochemical quenching (black line), and the relative production of reactive oxygen species (orange line) are plotted as a function of the scalar irradiance experienced by the symbiont (note different y-axes for each line). These curves represent the behavior of the photosynthesis SU independent of the host and without CO~2~ limitation of photosynthesis (*j~CO2~* set to a very high value). The structure of the photosynthesis SU, with the negative feedback between excess light and photosynthesis rate, produces the classic shape of a P-I curve demonstrating photoinhibition, suggesting the mechanism is robust."}
+```{r run1_PI, cache=F, fig.height=4, fig.width=7, fig.cap="**Fig. S2. Photosynthesis-Irradiance curves of modeled symbiont.** The rates of light energy quenching through photochemistry (red line) and non-photochemical quenching (black line), and the relative production of reactive oxygen species (orange line) are plotted as a function of the scalar irradiance experienced by the symbiont (note different y-axes for each line). These curves represent the behavior of the photosynthesis SU independent of the host and without CO~2~ limitation of photosynthesis (*j~CO2~* set to a very high value). The structure of the photosynthesis SU, with the negative feedback between excess light and photosynthesis rate, produces the classic shape of a P-I curve demonstrating photoinhibition, suggesting the mechanism is robust."}
 sympi <- sym_PI(pars=def_pars())
 ```
 
 -----
 
 # Figure S3 
-```{r sens_ILHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S3. Sensitivity analysis under high DIN (4e-6 M) and intermediate light (20 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_ILHN, cache=T, eval=T, fig.cap="**Fig. S3. Sensitivity analysis under high DIN (4e-6 M) and intermediate light (20 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -351,7 +351,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S4 
-```{r sens_LLLN, cache=T, echo=F, eval=T, fig.cap="**Sensitivity analysis under low DIN (1e-7 M) and low light (5 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
+```{r sens_LLLN, cache=T, eval=T, fig.cap="**Sensitivity analysis under low DIN (1e-7 M) and low light (5 mol m^-2^ d^-1^).** See Fig. 4 in main text."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -416,7 +416,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S5
-```{r sens_LLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (5 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
+```{r sens_LLHN, cache=T, eval=T, fig.cap="**Fig. S5. Sensitivity analysis under high DIN (4e-6 M) and low light (5 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -481,7 +481,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S6
-```{r sens_HLLN, cache=T, echo=F, eval=T, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
+```{r sens_HLLN, cache=T, eval=T, fig.cap="**Fig. S6. Sensitivity analysis under low DIN (1e-7 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -546,7 +546,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S7
-```{r sens_HLHN, cache=T, echo=F, eval=T, fig.cap="**Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
+```{r sens_HLHN, cache=T, eval=T, fig.cap="**Fig. S7. Sensitivity analysis under high DIN (4e-6 M) and high light (30 mol m^-2^ d^-1^).** See Fig. 4 in main text. Open circles represent points at which the parameter value causes the system to move into the negative growth stable state."}
 # Set up time vector and parameters
 defpars <- def_pars()  # Get default parameters
 defpars <- replace(defpars, "initS", 1)  # Start with high S biomass to avoid alternate steady state of negative growth
@@ -611,7 +611,7 @@ sens.plot(response=c("grchange", "shchange"), pars=c("kNPQ", "kROS", "b"), cols=
 -----
 
 # Figure S8
-```{r FigS8, cache=T, fig.width=7, fig.height=7, echo=F, eval=T, fig.cap="**Fig. S8. Full system dynamics of seasonal light variation at two nutrient levels.** This figure accompanies Figure 5 in the main text, and shows additional model fluxes that demonstrate the mechanisms underlying the changes in the system state in these simulations."}
+```{r FigS8, cache=T, fig.width=7, fig.height=7, eval=T, fig.cap="**Fig. S8. Full system dynamics of seasonal light variation at two nutrient levels.** This figure accompanies Figure 5 in the main text, and shows additional model fluxes that demonstrate the mechanisms underlying the changes in the system state in these simulations."}
 # Set parameters
 defpars <- def_pars()  # Get default parameters
 
