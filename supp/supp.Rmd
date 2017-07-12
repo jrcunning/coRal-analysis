@@ -63,7 +63,7 @@ N:C ratio (dimensionless)
 <br><br>
 
 #### $j_{HT}^0$: Specific turnover rate of host biomass {-}
-@Jacobson:2016bk parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate of 0.03 mol C~E~ mol C~V~^-1^ d^-1^, where subscripts E and V refer to reserve and structural biomass. We assume (simplistically) the same rate per unit of total biomass:
+@Jacobson:2016bk parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate of 0.03 mol C~E~ mol C~V~^-1^ d^-1^, where subscripts E and V refer to reserve and structural biomass. We assume (simplistically) the same rate per unit of total biomass:  
 ```{r jHT, echo=F}
 0.03
 ```
@@ -71,7 +71,7 @@ C-mol H C-mol H^-1^ d^-1^
 <br><br>
 
 #### $j_{ST}^0$: Specific turnover rate of symbiont biomass {-}
-Values of *Symbiodinium* and other dinoflagellate respiration rates may provide a reasonable approximation of the specific turnover rate of symbiont biomass, yet values calculated from various studies range widely from 0.01 to nearly 0.2. Without data for a more confident estimation of this parameter, we choose a value at the low end of this range, since 0.2 seems unrealistic and many rates may be depressed in symbiotic dinoflagellates relative to their free-living counterparts.
+Values of *Symbiodinium* and other dinoflagellate respiration rates may provide a reasonable approximation of the specific turnover rate of symbiont biomass, yet values calculated from various studies range widely from 0.01 to nearly 0.2. Without data for a more confident estimation of this parameter, we choose a value at the low end of this range, since 0.2 seems unrealistic and many rates may be depressed in symbiotic dinoflagellates relative to their free-living counterparts.  
 ```{r jST, echo=F}
 0.03
 ```
@@ -87,7 +87,7 @@ c(0.9, 0.9)
 <br><br>
 
 #### $\sigma_{CS}$: Proportion of metabolic CO~2~ produced by symbiont recycled passively to photosynthesis {-}
-Assume that CO~2~ produced within symbiont cells is recycled with high efficiency, potentially aided by symbiont carbon concentrating mechanisms.  
+Assume that CO~2~ produced within symbiont cells is recycled with high efficiency, potentially aided by symbiont carbon concentrating mechanisms:  
 ```{r sigmaCS, echo=F}
 0.9
 ```
@@ -95,7 +95,7 @@ Assume that CO~2~ produced within symbiont cells is recycled with high efficienc
 <br><br>
 
 #### $\sigma_{CH}$: Proportion of metabolic CO~2~ produced by host recycled passively to photosynthesis {-}
-Assume that most metabolic CO~2~ produced within host cells rapidly converts to HCO~3~^-^ at intracellular pH ~ 7.2 [@Venn:2009hy], and that only ~10% actually remains as CO~2~ [@Zeebe:2001wz] that could diffusively supply photosynthesis. This passive supply is differentiated from all active host carbon concentrating mechanisms (CCMs) that facilitate CO~2~ supply to photosynthesis, which are separately treated collectively as the $jCO~2~$ flux.  
+Assume that most metabolic CO~2~ produced within host cells rapidly converts to HCO~3~^-^ at intracellular pH ~ 7.2 [@Venn:2009hy], and that only ~10% actually remains as CO~2~ [@Zeebe:2001wz] that could diffusively supply photosynthesis. This passive supply is differentiated from all active host carbon concentrating mechanisms (CCMs) that facilitate CO~2~ supply to photosynthesis, which are separately treated collectively as the $j_{CO_2}$ flux.  
 ```{r sigmaCH, echo=F}
 0.1
 ```
@@ -103,7 +103,7 @@ Assume that most metabolic CO~2~ produced within host cells rapidly converts to 
 <br><br>    
 
 #### $j_{Xm}$: Maximum specific rate of assimilation from host feeding {-}
-@Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific carbon assimilation rate of 77.6 µgC cm^-2^ 6h^-1^.
+@Wijgerde:2011du measured depletion of carbon from captured prey in *Galaxea fascicularis* (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific carbon assimilation rate of 77.6 µgC cm^-2^ 6h^-1^, which converts to:  
 ```{r jXm}
 77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 24/6
 ```
@@ -112,7 +112,7 @@ C-mol X C-mol H^-1^ d^-1^
 
 
 #### $K_X$: Half-saturation constant of assimilation from host feeding {-}
-For consistency, and due to a lack of available data, we use the same value as @Muller:2009io.
+For consistency, and due to a lack of available data, we use the same value as @Muller:2009io:  
 ```{r KX}
 1e-6
 ```
@@ -162,7 +162,7 @@ mol N L^-1^
 <br><br>
 
 #### $k_{CO_2}$: Efficacy of CO~2~ delivery by host CCMs {-}
-This parameter represents the relative amount of CO~2~ that can be delivered by the host to photosynthesis given the reducing power generated from 1 mol of fixed carbon. We assume that the host uses a portion of its fixed carbon to generate ATP which is then used to activate a variety of carbon concentrating mechanisms (see @Wooldridge:2013tj). We assume these CCMs are efficient and can deliver an order of magnitude more CO~2~ relative to the fixed carbon available.  
+This parameter represents the relative amount of CO~2~ that can be delivered by the host to photosynthesis given the reducing power generated from 1 mol of fixed carbon. We assume that the host uses a portion of its fixed carbon to generate ATP which is then used to activate a variety of carbon concentrating mechanisms (see @Wooldridge:2013tj). We assume these CCMs are efficient and can deliver an order of magnitude more CO~2~ relative to the fixed carbon available:  
 ```{r kCO2, echo=F}
 10
 ```
@@ -170,7 +170,7 @@ mol CO~2~ mol C^-1^
 <br><br>
 
 #### $j_{HGm}$: Maximum specific growth rate of host {-}
-We set this to a high value such that constraints on growth are primarily determined by substrate availabilities rather than the maximum value.  
+We set this to a high value such that constraints on growth are primarily determined by substrate availabilities rather than the maximum value:  
 ```{r jHGm, echo=F}
 1
 ```
@@ -178,7 +178,7 @@ C-mol H C-mol H^-1^ d^-1^
 <br><br>
 
 #### $y_{CL}$: Quantum yield of photosynthesis {-}
-The maximum theoretical quantum yield is 0.125 mol C fixed per mol photons. @Brodersen:2014gw presented a balanced light budget based on microenvironmental photobiology of *Montastrea curta*, and reported a quantum yield of 0.102 O~2~ photon^-1^.  
+The maximum theoretical quantum yield is 0.125 mol C fixed per mol photons. @Brodersen:2014gw presented a balanced light budget based on microenvironmental photobiology of *Montastrea curta*, and reported a quantum yield of 0.102 O~2~ photon^-1^:  
 ```{r yCL, echo=F}
 0.1
 ```
@@ -186,7 +186,8 @@ mol C mol photons^-1^
 <br><br>
 
 #### $y_{C}$: Yield of biomass formation from photosynthate {-}
-This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH~2~O), ammonia (NH~3~) and O~2~ to form biomass, water, and CO~2~. Because of thermodynamic constraints, there is an energetic overhead on converting carbon into biomass. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using $y_{C}$ < 1. We take a value of 0.8 following @Muller:2009io.
+This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH~2~O), ammonia (NH~3~) and O~2~ to form biomass, water, and CO~2~. Because of thermodynamic constraints, there is an energetic overhead on converting carbon into biomass. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using $y_{C}$ < 1. We take a value of 0.8 following @Muller:2009io:  
+
 ```{r yC, echo=F}
 0.8
 ```
@@ -220,7 +221,7 @@ mol photons C-mol S^-1^ d^-1^
 <br><br>    
 
 #### $j_{CPm}$: Maximum specific photosynthesis rate of symbiont {-}
-In theory, this value should be the maximum carboxylation rate of *Symbiodinium* Rubisco (RuBP). @Leggat:2004vx report a maximum carboxylation rate at 29°C of 140 CO~2~ RuBP^-1^ s^-1^ [Max. value, p. 143], which converts to:
+In theory, this value should be the maximum carboxylation rate of *Symbiodinium* Rubisco (RuBP). @Leggat:2004vx report a maximum carboxylation rate at 29°C of 140 CO~2~ RuBP^-1^ s^-1^ [Max. value, p. 143], which converts to:  
 ```{r jCPm}
 140 * s.h * h.d * RuBP.CmolS
 ```
@@ -228,7 +229,7 @@ mol C C-mol S^-1^ d^-1^
 <br><br>
 
 #### $j_{SGm}$: Maximum specific growth rate of symbiont {-}
-We use the maximum specific growth rate of *Symbiodinium* that is reported by @Chang:1983p8066  
+We use the maximum specific growth rate of *Symbiodinium* that is reported by @Chang:1983p8066:  
 ```{r jSGm, echo=F}
 0.25
 ```
@@ -236,7 +237,7 @@ C-mol S C-mol S^-1^ d^-1^
 <br><br>
 
 #### $b$: Scaling parameter for strength of bleaching response {-}
-This value determines the magnitude of symbiont biomass loss (considered as expulsion of symbionts during bleaching) in response to ROS. In this context, relative ROS concentrations are assumed to trigger symbiont expulsion via unknown signaling mechanisms. Larger values of this parameter cause greater biomass loss in response to ROS signaling (i.e., a more severe bleaching response). Since this represents symbionts being expelled from the system, we use a value about two orders of magnitude higher than the turnover rate due to maintenance.
+This value determines the magnitude of symbiont biomass loss (considered as expulsion of symbionts during bleaching) in response to ROS. In this context, relative ROS concentrations are assumed to trigger symbiont expulsion via unknown signaling mechanisms. Larger values of this parameter cause greater biomass loss in response to ROS signaling (i.e., a more severe bleaching response). Since this represents symbionts being expelled from the system, we use a value about two orders of magnitude higher than the turnover rate due to maintenance:  
 ```{r b, echo=F}
 5
 ```
