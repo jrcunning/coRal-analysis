@@ -247,11 +247,13 @@ div.tocify {
 </div>
 <div id="j_ht0-specific-turnover-rate-of-host-biomass" class="section level4 unnumbered">
 <h4><span class="math inline">\(j_{HT}^0\)</span>: Specific turnover rate of host biomass</h4>
-<p><span class="citation">Jacobson, Edmunds, and Muller (2016)</span> parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate of 0.03 mol C<sub>E</sub> mol C<sub>V</sub><sup>-1</sup> d<sup>-1</sup>, where subscripts E and V refer to reserve and structural biomass. We assume (simplistically) the same rate per unit of total biomass: <em>0.03</em> C-mol H C-mol H<sup>-1</sup> d<sup>-1</sup> <br><br></p>
+<p><span class="citation">Jacobson, Edmunds, and Muller (2016)</span> parameterized a DEB model for coral symbiosis, and reported a specific maintenance rate of 0.03 mol C<sub>E</sub> mol C<sub>V</sub><sup>-1</sup> d<sup>-1</sup>, where subscripts E and V refer to reserve and structural biomass. We assume (simplistically) the same rate per unit of total biomass:<br />
+<em>0.03</em> C-mol H C-mol H<sup>-1</sup> d<sup>-1</sup> <br><br></p>
 </div>
 <div id="j_st0-specific-turnover-rate-of-symbiont-biomass" class="section level4 unnumbered">
 <h4><span class="math inline">\(j_{ST}^0\)</span>: Specific turnover rate of symbiont biomass</h4>
-<p>Values of <em>Symbiodinium</em> and other dinoflagellate respiration rates may provide a reasonable approximation of the specific turnover rate of symbiont biomass, yet values calculated from various studies range widely from 0.01 to nearly 0.2. Without data for a more confident estimation of this parameter, we choose a value at the low end of this range, since 0.2 seems unrealistic and many rates may be depressed in symbiotic dinoflagellates relative to their free-living counterparts. <em>0.03</em> C-mol S C-mol S<sup>-1</sup> d<sup>-1</sup><br />
+<p>Values of <em>Symbiodinium</em> and other dinoflagellate respiration rates may provide a reasonable approximation of the specific turnover rate of symbiont biomass, yet values calculated from various studies range widely from 0.01 to nearly 0.2. Without data for a more confident estimation of this parameter, we choose a value at the low end of this range, since 0.2 seems unrealistic and many rates may be depressed in symbiotic dinoflagellates relative to their free-living counterparts.<br />
+<em>0.03</em> C-mol S C-mol S<sup>-1</sup> d<sup>-1</sup><br />
 <br><br></p>
 </div>
 <div id="sigma_nh-sigma_ns-proportions-of-nitrogen-recycled-from-host-and-symbiont-biomass-turnover" class="section level4 unnumbered">
@@ -261,23 +263,23 @@ div.tocify {
 </div>
 <div id="sigma_cs-proportion-of-metabolic-co2-produced-by-symbiont-recycled-passively-to-photosynthesis" class="section level4 unnumbered">
 <h4><span class="math inline">\(\sigma_{CS}\)</span>: Proportion of metabolic CO<sub>2</sub> produced by symbiont recycled passively to photosynthesis</h4>
-<p>Assume that CO<sub>2</sub> produced within symbiont cells is recycled with high efficiency, potentially aided by symbiont carbon concentrating mechanisms.<br />
+<p>Assume that CO<sub>2</sub> produced within symbiont cells is recycled with high efficiency, potentially aided by symbiont carbon concentrating mechanisms:<br />
 <em>0.9</em> (dimensionless) <br><br></p>
 </div>
 <div id="sigma_ch-proportion-of-metabolic-co2-produced-by-host-recycled-passively-to-photosynthesis" class="section level4 unnumbered">
 <h4><span class="math inline">\(\sigma_{CH}\)</span>: Proportion of metabolic CO<sub>2</sub> produced by host recycled passively to photosynthesis</h4>
-<p>Assume that most metabolic CO<sub>2</sub> produced within host cells rapidly converts to HCO<sub>3</sub><sup>-</sup> at intracellular pH ~ 7.2 <span class="citation">(Venn et al. 2009)</span>, and that only ~10% actually remains as CO<sub>2</sub> <span class="citation">(Zeebe and Wolf-Gladrow 2001)</span> that could diffusively supply photosynthesis. This passive supply is differentiated from all active host carbon concentrating mechanisms (CCMs) that facilitate CO<sub>2</sub> supply to photosynthesis, which are separately treated collectively as the <span class="math inline">\(jCO~2~\)</span> flux.<br />
+<p>Assume that most metabolic CO<sub>2</sub> produced within host cells rapidly converts to HCO<sub>3</sub><sup>-</sup> at intracellular pH ~ 7.2 <span class="citation">(Venn et al. 2009)</span>, and that only ~10% actually remains as CO<sub>2</sub> <span class="citation">(Zeebe and Wolf-Gladrow 2001)</span> that could diffusively supply photosynthesis. This passive supply is differentiated from all active host carbon concentrating mechanisms (CCMs) that facilitate CO<sub>2</sub> supply to photosynthesis, which are separately treated collectively as the <span class="math inline">\(j_{CO_2}\)</span> flux.<br />
 <em>0.1</em> (dimensionless) <br><br></p>
 </div>
 <div id="j_xm-maximum-specific-rate-of-assimilation-from-host-feeding" class="section level4 unnumbered">
 <h4><span class="math inline">\(j_{Xm}\)</span>: Maximum specific rate of assimilation from host feeding</h4>
-<p><span class="citation">Wijgerde et al. (2011)</span> measured depletion of carbon from captured prey in <em>Galaxea fascicularis</em> (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific carbon assimilation rate of 77.6 µgC cm<sup>-2</sup> 6h<sup>-1</sup>.</p>
+<p><span class="citation">Wijgerde et al. (2011)</span> measured depletion of carbon from captured prey in <em>Galaxea fascicularis</em> (including both intracoelenteric and extracoelenteric feeding), reporting a maximum specific carbon assimilation rate of 77.6 µgC cm<sup>-2</sup> 6h<sup>-1</sup>, which converts to:</p>
 <pre class="r"><code>77.6 / µg.g / gC.molC * cm2.m2 / CmolR.m2_Gfas * 24/6</code></pre>
 <p><em>0.1292</em> C-mol X C-mol H<sup>-1</sup> d<sup>-1</sup> <br><br></p>
 </div>
 <div id="k_x-half-saturation-constant-of-assimilation-from-host-feeding" class="section level4 unnumbered">
 <h4><span class="math inline">\(K_X\)</span>: Half-saturation constant of assimilation from host feeding</h4>
-<p>For consistency, and due to a lack of available data, we use the same value as <span class="citation">Muller et al. (2009)</span>.</p>
+<p>For consistency, and due to a lack of available data, we use the same value as @Muller:2009io:</p>
 <pre class="r"><code>1e-6</code></pre>
 <p><em>1e-06</em> C-mol X L<sup>-1</sup> <br><br></p>
 </div>
@@ -308,23 +310,24 @@ Averaging these reported values (weighted by number of species measured), we arr
 </div>
 <div id="k_co_2-efficacy-of-co2-delivery-by-host-ccms" class="section level4 unnumbered">
 <h4><span class="math inline">\(k_{CO_2}\)</span>: Efficacy of CO<sub>2</sub> delivery by host CCMs</h4>
-<p>This parameter represents the relative amount of CO<sub>2</sub> that can be delivered by the host to photosynthesis given the reducing power generated from 1 mol of fixed carbon. We assume that the host uses a portion of its fixed carbon to generate ATP which is then used to activate a variety of carbon concentrating mechanisms (see <span class="citation">Wooldridge (2013)</span>). We assume these CCMs are efficient and can deliver an order of magnitude more CO<sub>2</sub> relative to the fixed carbon available.<br />
+<p>This parameter represents the relative amount of CO<sub>2</sub> that can be delivered by the host to photosynthesis given the reducing power generated from 1 mol of fixed carbon. We assume that the host uses a portion of its fixed carbon to generate ATP which is then used to activate a variety of carbon concentrating mechanisms (see <span class="citation">Wooldridge (2013)</span>). We assume these CCMs are efficient and can deliver an order of magnitude more CO<sub>2</sub> relative to the fixed carbon available:<br />
 <em>10</em> mol CO<sub>2</sub> mol C<sup>-1</sup> <br><br></p>
 </div>
 <div id="j_hgm-maximum-specific-growth-rate-of-host" class="section level4 unnumbered">
 <h4><span class="math inline">\(j_{HGm}\)</span>: Maximum specific growth rate of host</h4>
-<p>We set this to a high value such that constraints on growth are primarily determined by substrate availabilities rather than the maximum value.<br />
+<p>We set this to a high value such that constraints on growth are primarily determined by substrate availabilities rather than the maximum value:<br />
 <em>1</em> C-mol H C-mol H<sup>-1</sup> d<sup>-1</sup> <br><br></p>
 </div>
 <div id="y_cl-quantum-yield-of-photosynthesis" class="section level4 unnumbered">
 <h4><span class="math inline">\(y_{CL}\)</span>: Quantum yield of photosynthesis</h4>
-<p>The maximum theoretical quantum yield is 0.125 mol C fixed per mol photons. <span class="citation">Brodersen et al. (2014)</span> presented a balanced light budget based on microenvironmental photobiology of <em>Montastrea curta</em>, and reported a quantum yield of 0.102 O<sub>2</sub> photon<sup>-1</sup>.<br />
+<p>The maximum theoretical quantum yield is 0.125 mol C fixed per mol photons. <span class="citation">Brodersen et al. (2014)</span> presented a balanced light budget based on microenvironmental photobiology of <em>Montastrea curta</em>, and reported a quantum yield of 0.102 O<sub>2</sub> photon<sup>-1</sup>:<br />
 <em>0.1</em> mol C mol photons<sup>-1</sup> <br><br></p>
 </div>
 <div id="y_c-yield-of-biomass-formation-from-photosynthate" class="section level4 unnumbered">
 <h4><span class="math inline">\(y_{C}\)</span>: Yield of biomass formation from photosynthate</h4>
-<p>This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH<sub>2</sub>O), ammonia (NH<sub>3</sub>) and O<sub>2</sub> to form biomass, water, and CO<sub>2</sub>. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using <span class="math inline">\(y_{C}\)</span> &lt; 1. We take a value of 0.8 following <span class="citation">Muller et al. (2009)</span>. <em>0.8</em> C-mol mol C<sup>-1</sup></p>
-<p>Following this macrochemical equation, the amount of CO<sub>2</sub> produced during biomass formation can be specified as <span class="math inline">\((1-y_C)j_P/y_C\)</span>, where j_P is the production flux of the SU (see equations 13 and 14 in the main text). <br><br></p>
+<p>This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH<sub>2</sub>O), ammonia (NH<sub>3</sub>) and O<sub>2</sub> to form biomass, water, and CO<sub>2</sub>. Because of thermodynamic constraints, there is an energetic overhead on converting carbon into biomass. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using <span class="math inline">\(y_{C}\)</span> &lt; 1. We take a value of 0.8 following @Muller:2009io:</p>
+<p><em>0.8</em> C-mol mol C<sup>-1</sup></p>
+<p>If <span class="math inline">\(y_C\)</span> represents the yield (in C-mol) of biomass per C-mol photosynthate, we assume that the energetic cost of this conversion, met from respiration, will lead to simultaneous production of <span class="math inline">\((1 – y_C)\)</span> C-mol of CO<sub>2</sub>. Thus the ratio of the overhead contribution to CO<sub>2</sub> flux to the growth flux is <span class="math inline">\((1 – y_C)/y_C\)</span>, and hence the CO<sub>2</sub> flux (<span class="math inline">\(j_{CO_2}\)</span>) can be specified in terms of the growth flux (<span class="math inline">\(j_G\)</span>) as <span class="math inline">\(j_{CO_2} = {(1-y_C) j_G \over y_C}\)</span> (see equations 13 and 14 in the main text). <br><br></p>
 </div>
 <div id="bara-effective-light-absorbing-cross-section-of-symbiont" class="section level4 unnumbered">
 <h4><span class="math inline">\(\bar{a}^*\)</span>: Effective light-absorbing cross-section of symbiont</h4>
@@ -351,12 +354,13 @@ Averaging these reported values (weighted by number of species measured), we arr
 </div>
 <div id="j_sgm-maximum-specific-growth-rate-of-symbiont" class="section level4 unnumbered">
 <h4><span class="math inline">\(j_{SGm}\)</span>: Maximum specific growth rate of symbiont</h4>
-<p>We use the maximum specific growth rate of <em>Symbiodinium</em> that is reported by <span class="citation">Chang, Prézelin, and Trench (1983)</span><br />
+<p>We use the maximum specific growth rate of <em>Symbiodinium</em> that is reported by @Chang:1983p8066:<br />
 <em>0.25</em> C-mol S C-mol S<sup>-1</sup> d<sup>-1</sup> <br><br></p>
 </div>
 <div id="b-scaling-parameter-for-strength-of-bleaching-response" class="section level4 unnumbered">
 <h4><span class="math inline">\(b\)</span>: Scaling parameter for strength of bleaching response</h4>
-<p>This value determines the magnitude of symbiont biomass loss (considered as expulsion of symbionts during bleaching) in response to ROS. In this context, relative ROS concentrations are assumed to trigger symbiont expulsion via unknown signaling mechanisms. Larger values of this parameter cause greater biomass loss in response to ROS signaling (i.e., a more severe bleaching response). Since this represents symbionts being expelled from the system, we use a value about two orders of magnitude higher than the turnover rate due to maintenance. <em>5</em> (dimensionless) <br><br></p>
+<p>This value determines the magnitude of symbiont biomass loss (considered as expulsion of symbionts during bleaching) in response to ROS. In this context, relative ROS concentrations are assumed to trigger symbiont expulsion via unknown signaling mechanisms. Larger values of this parameter cause greater biomass loss in response to ROS signaling (i.e., a more severe bleaching response). Since this represents symbionts being expelled from the system, we use a value about two orders of magnitude higher than the turnover rate due to maintenance:<br />
+<em>5</em> (dimensionless) <br><br></p>
 </div>
 </div>
 <div id="conversion-factors-used-in-parameter-derivation" class="section level2">
@@ -477,9 +481,6 @@ CmolS.cellS &lt;- pgC.cellS / pg.g / gC.molC</code></pre>
 <div id="refs" class="references">
 <div id="ref-Brodersen:2014gw">
 <p>Brodersen, Kasper Elgetti, Mads Lichtenberg, Peter J Ralph, Michael Kühl, and Daniel Wangpraseurt. 2014. “Radiative energy budget reveals high photosynthetic efficiency in symbiont-bearing corals.” <em>Journal of The …</em> 11 (93). The Royal Society: 20130997–7. doi:<a href="https://doi.org/10.1098/rsif.2013.0997">10.1098/rsif.2013.0997</a>.</p>
-</div>
-<div id="ref-Chang:1983p8066">
-<p>Chang, S S, Barbara B Prézelin, and Robert K Trench. 1983. “Mechanisms of photoadaptation in three strains of the symbiotic dinoflagellate Symbiodinium microadriaticum.” <em>Marine Biology</em> 76 (3): 219–29. <a href="http://www.scopus.com/inward/record.url?partnerID=yv4JPVwI&amp;eid=2-s2.0-0344912923&amp;md5=865c49fa1ec8a42e9262027b9ebdd74b" class="uri">http://www.scopus.com/inward/record.url?partnerID=yv4JPVwI&amp;eid=2-s2.0-0344912923&amp;md5=865c49fa1ec8a42e9262027b9ebdd74b</a>.</p>
 </div>
 <div id="ref-Godinot:2011bm">
 <p>Godinot, Claire, Renaud Grover, Denis Allemand, and Christine Ferrier-Pagès. 2011. “High phosphate uptake requirements of the scleractinian coral Stylophora pistillata.” <em>The Journal of Experimental Biology</em> 214 (16). The Company of Biologists Ltd: 2749–54. doi:<a href="https://doi.org/10.1242/jeb.054239">10.1242/jeb.054239</a>.</p>
