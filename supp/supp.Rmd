@@ -4,6 +4,7 @@ subtitle: A simplified dynamic bioenergetic model for coral-*Symbiodinium* symbi
 author: "Ross Cunning, Erik B. Muller, Ruth D. Gates, Roger M. Nisbet"
 output:
   html_document:
+    code_folding: hide
     toc: true
     toc_float: true
     toc_depth: 1
@@ -112,7 +113,7 @@ C-mol X C-mol H^-1^ d^-1^
 
 
 #### $K_X$: Half-saturation constant of assimilation from host feeding {-}
-For consistency, and due to a lack of available data, we use the same value as @Muller:2009io:  
+For consistency, and due to a lack of available data, we use the same value as @Muller:2009io :  
 ```{r KX}
 1e-6
 ```
@@ -186,7 +187,7 @@ mol C mol photons^-1^
 <br><br>
 
 #### $y_{C}$: Yield of biomass formation from photosynthate {-}
-This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH~2~O), ammonia (NH~3~) and O~2~ to form biomass, water, and CO~2~. Because of thermodynamic constraints, there is an energetic overhead on converting carbon into biomass. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using $y_{C}$ < 1. We take a value of 0.8 following @Muller:2009io:  
+This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH~2~O), ammonia (NH~3~) and O~2~ to form biomass, water, and CO~2~. Because of thermodynamic constraints, there is an energetic overhead on converting carbon into biomass. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using $y_{C}$ < 1. We take a value of 0.8 following @Muller:2009io :  
 
 ```{r yC, echo=F}
 0.8
@@ -229,7 +230,7 @@ mol C C-mol S^-1^ d^-1^
 <br><br>
 
 #### $j_{SGm}$: Maximum specific growth rate of symbiont {-}
-We use the maximum specific growth rate of *Symbiodinium* that is reported by @Chang:1983p8066:  
+We use the maximum specific growth rate of *Symbiodinium* that is reported by @Chang:1983p8066 :  
 ```{r jSGm, echo=F}
 0.25
 ```
