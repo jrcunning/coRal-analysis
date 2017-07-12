@@ -20,7 +20,7 @@ require(stringr)
 require(coRal)
 knitr::opts_knit$set(root.dir = normalizePath(".."))
 knitr::opts_chunk$set(message = F, warning = F, echo=T, results='asis')
-knitr::opts_chunk$set(results = "asis", render=pander)
+knitr::opts_chunk$set(results = "asis", render=pander, cache=T)
 ```
 
 ```{r initialize, include=FALSE}
@@ -186,13 +186,13 @@ mol C mol photons^-1^
 <br><br>
 
 #### $y_{C}$: Yield of biomass formation from photosynthate {-}
-This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH~2~O), ammonia (NH~3~) and O~2~ to form biomass, water, and CO~2~. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using $y_{C}$ < 1. We take a value of 0.8 following @Muller:2009io.
+This coefficient specifies the efficiency of conversion of photosynthate into biomass at the biomass synthesizing units, which combine photosynthate (CH~2~O), ammonia (NH~3~) and O~2~ to form biomass, water, and CO~2~. Because of thermodynamic constraints, there is an energetic overhead on converting carbon into biomass. In order to balance this macrochemical equation, there must be a carbon loss, which is accounted for using $y_{C}$ < 1. We take a value of 0.8 following @Muller:2009io.
 ```{r yC, echo=F}
 0.8
 ```
 C-mol mol C^-1^
 
-Following this macrochemical equation, the amount of CO~2~ produced during biomass formation can be specified as $(1-y_C)j_P/y_C$, where j_P is the production flux of the SU (see equations 13 and 14 in the main text).
+If $y_C$ represents the yield (in C-mol) of biomass per C-mol photosynthate, we assume that the energetic cost of this conversion, met from respiration, will lead to simultaneous production of $(1 – y_C)$ C-mol of CO~2~. Thus the ratio of the overhead contribution to CO~2~ flux to the growth flux is $(1 – y_C)/y_C$, and hence the CO~2~ flux ($j_{CO_2}$) can be specified in terms of the growth flux ($j_G$) as $j_{CO_2} = {(1-y_C) j_G \over y_C}$ (see equations 13 and 14 in the main text).
 <br><br>
 
 #### $\bar{a}^*$: Effective light-absorbing cross-section of symbiont {-}
