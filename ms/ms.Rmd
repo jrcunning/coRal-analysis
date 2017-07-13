@@ -24,6 +24,9 @@ bibliography: library.bib
 output: 
   rticles::elsevier_article:
     fig_caption: yes
+header-includes:
+    - \usepackage{lineno}
+    - \linenumbers
 ---
 ```{r setup, include=FALSE}
 library(reshape2); library(dplyr)
