@@ -201,7 +201,7 @@ application in three primary ways:
   Importantly, this formulation introduces a link between
   CO\textsubscript{2}-limitation of photosynthesis and bleaching, and
   potential synergistic roles for heterotrophy and nutrient availability
-  in influencing bleaching responses (Wooldridge 2014b)
+  in influencing bleaching responses (Wooldridge 2014b).
 \item
   \emph{Reduce theoretical and mathematical complexity.} Following the
   logic of Jager, Martin, and Zimmer (2013), we exclude certain features
@@ -222,7 +222,7 @@ application in three primary ways:
   facilitate the continued development and application of theoretical
   modeling tools for coral symbioses, we provide access to the model in
   the form of an R package called coRal
-  \url{github.com/jrcunning/coRal}, which users may install to run and
+  (\url{github.com/jrcunning/coRal}), which users may install to run and
   visualize model simulations. With an accessible and modular framework,
   we envision this code base as a resource for further development by
   the scientific community to include additional complexity and
@@ -787,11 +787,11 @@ thus specified by Michaelis-Menten kinetics using a maximum uptake rate
 \begin{equation} j_N = {{j_{Nm} \cdot N} \over {N + K_N}} \end{equation}
 
 Coral biomass formation is then specified by a parallel complementary SU
-(formula in Fig. 3.7 of Kooijman (2010){]}). The general form of this
-equation is \((m^{-1} + x^{-1} + y^{-1} - (x + y)^{-1})^{-1}\), where
-\(m\) is the maximum production flux, and \(x\) and \(y\) are the input
-fluxes of the two substrates. Coral biomass is thus produced from carbon
-and nitrogen according to:
+(formula in Fig. 3.7 of Kooijman 2010). The general form for a
+production flux is \((m^{-1} + x^{-1} + y^{-1} - (x + y)^{-1})^{-1}\),
+where \(m\) is the maximum production flux, and \(x\) and \(y\) are the
+input fluxes of the two substrates. Coral biomass is thus produced from
+carbon and nitrogen according to:
 
 \begin{equation} j_{HG} = \bigg({1 \over j_{HGm}} + {1 \over {y_{C}\rho_C{S \over H} + j_X}} + {1 \over {(j_N + n_{NX}j_X + r_{NH})n_{NH}^{-1}}} - {1 \over {y_{C}{\rho_C{S \over H} + j_X} + (j_N + n_{NX}j_X + r_{NH})n_{NH}^{-1}}}\bigg)^{-1} \end{equation}
 
@@ -799,7 +799,7 @@ where \(\rho_C\) is fixed carbon shared by the symbiont (see Eq. 21),
 and \(r_{NH}\) is recycled nitrogen liberated by host biomass turnover
 (see Eq. 7). The parameter \(y_C\) specifies the yield of biomass from
 organic carbon, which we take to be 0.8 to satisfy redox balance (see
-Muller et al. (2009)).
+Muller et al. 2009).
 
 Host biomass turnover is equal to the specific maintenance rate of host
 biomass,
@@ -902,11 +902,11 @@ Fixed carbon is then produced by the photosynthesis SU according to:
 \begin{equation} j_{CP} = \bigg({1 \over j_{CPm}} + {1 \over {y_{CL} j_L }} + {1 \over {(j_{CO_2} + r_{CH}){H \over S} + r_{CS}}} - {1 \over {y_{CL} j_L + (j_{CO_2} + r_{CH}){H \over S} + r_{CS}}}\bigg)^{-1} \cdot c_{ROS}^{-1} \end{equation}
 
 where \(j_{CPm}\) is the maximum specific rate of photosynthesis, and
-\(c_{ROS}\) is the relative rate of reactive oxygen species production
-(see Eq. 18). Dividing the photosynthetic rate by \(c_{ROS}\) causes a
-decline in response to photooxidative stress at high light levels, and
-the emergent outcome of this SU formulation demonstrates a classic
-photoinhibition response (Fig. S2).
+\(c_{ROS}\) is the relative rate (\(\ge1\)) of reactive oxygen species
+production (see Eq. 18). Dividing the photosynthetic rate by \(c_{ROS}\)
+causes a decline in response to photooxidative stress at high light
+levels, and the emergent outcome of this SU formulation demonstrates a
+classic photoinhibition response (Fig. S2).
 
 Light energy absorbed in excess of what is used to fix carbon is
 specified by the SU rejection flux, according to:
@@ -1016,11 +1016,11 @@ discretized system corresponding to Euler integration of the
 differential equations, with those fluxes that represent flows of
 elemental matter implemented by assuming that transfer of material
 between components of the system takes one time step. Thus, for example,
-CO\textsubscript{2} rejected from the host SU at time \(t\) arrives at
-the photosynthesis SU at time \(t + \Delta t\).
+carbon rejected from the symbiont SU at time \(t\) arrives at the host
+SU at time \(t + \Delta t\).
 
 Simulations using the discretized scheme were performed using R code
-developed in the coRal R package \url{github.com/jrcunning/coRal}. By
+developed in the coRal R package (\url{github.com/jrcunning/coRal}). By
 experimentation, we found that a time step of 0.1 days gave adequate
 precision for most simulations (including used to generate Figs. 2-8 in
 this paper). For steady state estimations, simulations were run until
@@ -1152,7 +1152,7 @@ symbiont expulsion) (see Eynaud, Nisbet, and Muller 2011). Together,
 these impacts reduce the symbiont to host biomass ratio (Fig. 3B), as
 occurs during coral bleaching. This reduction in symbionts consequently
 reduces the flux of fixed carbon to the host, resulting in increasing
-carbon-limitation (Fig. 3B) and eventual cessation of growth (Fig. 3A).
+carbon-limitation and eventual cessation of growth (Fig. 3A).
 
 The incorporation of photooxidative stress in the model sets an upper
 limit to the amount of light at which a stable symbiotic interaction can
@@ -1429,14 +1429,17 @@ under which recovery is possible, Fig. 8C).
 \includegraphics{../img/Fig8.png}
 \caption{Hysteresis under different nutrient and feeding regimes. Steady
 state S:H biomass ratios in constant environments with (A) low DIN (1e-7
-M) and low food (2e-7 M), (B) low DIN (1e-7 M) and no food, (C) high DIN
-(2e-6 M) and low food (2e-7 M), and (D) high DIN (2e-6 M) and high food
-(4e-7 M). In each panel, steady states are shown starting from both high
-initial S:H biomass (1, i.e.~healthy corals - closed circles) and low
-initial initial S:H biomass (0.0001, i.e.~bleached corals - open
-circles). Points are colored according to whether the host exhibits
-positive (black) or negative (red) growth at steady state. Arrows above
-points indicate values beyond the y-axis range.}
+mol N L\textsuperscript{-1}) and low food (2e-7 C-molX
+L\textsuperscript{-1}), (B) low DIN (1e-7 mol N L\textsuperscript{-1})
+and no food, (C) high DIN (2e-6 mol N L\textsuperscript{-1}) and low
+food (2e-7 C-molX L\textsuperscript{-1}), and (D) high DIN (2e-6 mol N
+L\textsuperscript{-1}) and high food (4e-7 C-molX
+L\textsuperscript{-1}). In each panel, steady states are shown starting
+from both high initial S:H biomass (1, i.e.~healthy corals - closed
+circles) and low initial initial S:H biomass (0.0001, i.e.~bleached
+corals - open circles). Points are colored according to whether the host
+exhibits positive (black) or negative (red) growth at steady state.
+Arrows above points indicate values beyond the y-axis range.}
 \end{figure}
 
 Dynamic simulations of recovery reveal another interesting behavior of
@@ -1507,11 +1510,11 @@ These dynamics reveal that the re-establishment of nitrogen-limitation
 is the most important diagnostic of recovery to a `healthy' state, as
 this is when positive growth rates are resumed. A high S:H biomass ratio
 alone does not necessarily indicate that a `healthy' state has been
-reached, since the carbon-limited state may still persist (e.g.~Fig. 8B,
-8C). This could explain why corals that have recovered their symbiont
+reached, since the carbon-limited state may still persist (e.g.~Fig.
+9B,C). This could explain why corals that have recovered their symbiont
 populations after bleaching may still exhibit energetic deficits and
 physiological impacts, possibly for months to years (Levitan et al.
-2014, Hughes and Grottoli (2013))). These findings suggest that host
+2014; Hughes and Grottoli 2013). These findings suggest that host
 acquisition of carbon from a source other than the symbiont may be
 extremely important for the system to recover from bleaching. Indeed,
 host feeding has been shown to promote a more rapid return to
