@@ -252,7 +252,7 @@ This value determines the magnitude of symbiont biomass loss (considered as expu
 ------
 
 # Figure S1 
-```{r lightamp, fig.width=5, fig.height=5, eval=T, include=T, echo=F, fig.cap="**Fig. S1. Light amplification and self-shading.** The amplification factor (A) is the ratio of internal scalar irradiance experienced by *Symbiodinium* to the external downwelling irradiance, and is greater than 1 due to multiple scattering of incident light by the coral skeleton. The amplification factor decreases as a function of symbiont abundance (converted to symbiont to host biomass ratio) due to self-shading. Data are from Marcelino et al. (2013) using skeletons from three different coral species: pdam=*Pocillopora damicornis*; plob=*Porites lobata*; shys=*Seriatopora hystrix*."}
+```{r lightamp, fig.width=5, fig.height=5, eval=T, include=T, fig.cap="**Fig. S1. Light amplification and self-shading.** The amplification factor (A) is the ratio of internal scalar irradiance experienced by *Symbiodinium* to the external downwelling irradiance, and is greater than 1 due to multiple scattering of incident light by the coral skeleton. The amplification factor decreases as a function of symbiont abundance (converted to symbiont to host biomass ratio) due to self-shading. Data are from Marcelino et al. (2013) using skeletons from three different coral species: pdam=*Pocillopora damicornis*; plob=*Porites lobata*; shys=*Seriatopora hystrix*."}
 
 # Import data from Marcelino et al. 2013
 md <- read.csv("data/marcelino2013_fig2a.csv")
