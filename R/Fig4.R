@@ -18,7 +18,7 @@ sims <- expand.grid(env=names(envs), change=levs)
 n <- nrow(sims)
 
 # Set up cluster for parallel processing
-cl <- makeCluster(detectCores())  # Initiate cluster
+cl <- makeCluster(detectCores(), setup_timeout = 0.5)  # Initiate cluster
 registerDoParallel(cl)
 
 # Run sensitivity analysis in each environment for each parameter

@@ -9,7 +9,7 @@ run_steady_states <- function(pars, at, outfile=NULL, runtime=F, food=0) {
   require(coRal)
   
   # Set up cluster for parallel processing
-  cl <- makeCluster(detectCores())  # Initiate cluster
+  cl <- makeCluster(detectCores(), setup_timeout = 0.5)  # Initiate cluster
   registerDoParallel(cl)
   
   # Run simulations in parallel for each combination of "at" values

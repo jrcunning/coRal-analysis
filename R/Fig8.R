@@ -11,7 +11,7 @@ if (!file.exists("R/Fig8.RData")) {
   defpars <- coRal::def_pars()
   
   # Set up cluster for parallel processing
-  cl <- makeCluster(detectCores())  # Initiate cluster
+  cl <- makeCluster(detectCores(), setup_timeout = 0.5)  # Initiate cluster
   registerDoParallel(cl)
   
   # Set input values for steady state runs
